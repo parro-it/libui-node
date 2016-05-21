@@ -1,0 +1,22 @@
+{
+  "name": "libui-node",
+  "version": "0.0.0",
+  "description": "",
+  "repository": "parro-it/libui-node",
+  "license": "MIT",
+  "author": "parro-it",
+  "scripts": {
+    "test": "ava && xo"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">=5"
+  },
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "ava": "^0.14.0",
+    "xo": "^0.14.0"
+  }
+}
