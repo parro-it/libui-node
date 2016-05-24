@@ -67,6 +67,23 @@ NAN_METHOD(NewWindow) {
 
 }
 
+NAN_METHOD(WindowSetMargined) {
+
+	EXPECT_ARGUMENT_COUNT(2)
+	EXPECT_BOOLEAN_ARGUMENT(1,margined)
+
+	uiWindow *win = (uiWindow *) ptrFromArg(info, 0);
+
+	Nan::Maybe<int> maybeMargined = Nan::To<int>(info[1]);
+
+	if (!maybeMargined.IsNothing()) {
+		int margined = maybeMargined.FromJust();
+		uiWindowSetMargined(win, margined);
+	}
+}
+
+
+
 NAN_METHOD(Init) {
 	uiInitOptions o;
 	memset(&o, 0, sizeof (uiInitOptions));
@@ -101,16 +118,10 @@ static Persistent<Function> persistentCallback;
 
 static int onClosing(uiWindow *w, void *data)
 {
-
 	Local<Function> callback = Local<Function>::New(Isolate::GetCurrent(), persistentCallback);
-	printf("callback address in fn %p\n", data);
 	Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, 0, NULL);
-	printf("callbacked!\n");
 	return 0;
 }
-
-
-
 
 NAN_METHOD(WindowOnClosing) {
 	EXPECT_ARGUMENT_COUNT(2)
@@ -163,6 +174,11 @@ NAN_MODULE_INIT(InitModule) {
 	Nan::Set(target,
 		Nan::New("main").ToLocalChecked(),
 		Nan::New<v8::FunctionTemplate>(Main)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("windowSetMargined").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(WindowSetMargined)->GetFunction()
 	);
 }
 
