@@ -1,7 +1,5 @@
-import test from 'ava';
-import libuiNode from './';
+const libuiNode = require('./build/Release/ui');
 
-test('it work!', t => {
-	const result = libuiNode();
-	t.is(result, 42);
-});
+libuiNode.init();
+const win = libuiNode.newWindow('Test window', 800, 600, true);
+libuiNode.show(win);

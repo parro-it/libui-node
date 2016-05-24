@@ -18,5 +18,9 @@
   "devDependencies": {
     "ava": "^0.14.0",
     "xo": "^0.14.0"
+  },
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^2.3.3"
   }
 }
