@@ -1,5 +1,2 @@
-'use strict';
-
-module.exports = function libuiNode() {
-	return 42;
-};
+const bindings = require('bindings');
+module.exports = bindings('ui');

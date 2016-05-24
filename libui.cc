@@ -3,95 +3,55 @@
 
 using namespace v8;
 
-/*
-void Pow(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
-	if (info.Length() < 2) {
-		Nan::ThrowTypeError("Wrong number of arguments");
-		return;
-	}
-
-	if (!info[0]->IsNumber() || !info[1]->IsNumber()) {
-		Nan::ThrowTypeError("Both arguments should be numbers");
-		return;
-	}
-
-	double arg0 = info[0]->NumberValue();
-	double arg1 = info[1]->NumberValue();
-	v8::Local<v8::Number> num = Nan::New(pow(arg0, arg1));
-
-	info.GetReturnValue().Set(num);
+void returnPtr(char** ptr, const Nan::FunctionCallbackInfo<v8::Value>& info) {
+    Nan::MaybeLocal<v8::Object> buff = Nan::CopyBuffer((char*) ptr, sizeof(ptr));
+    info.GetReturnValue().Set(buff.ToLocalChecked());
 }
 
-typedef struct {
-   std::string s0;
-   std::string s1;
-} full_name;
-
-void BuildFullName(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
-	if (info.Length() < 2) {
-		Nan::ThrowTypeError("nome e cognome");
-		return;
-	}
-
-	if (!info[0]->IsString() || !info[1]->IsString()) {
-		Nan::ThrowTypeError("Both arguments should be string");
-		return;
-	}
-
-	String::Utf8Value s0(info[0]->ToString());
-	String::Utf8Value s1(info[1]->ToString());
-	full_name *fn = (full_name *) malloc(sizeof(full_name));
-	fn->s0 = std::string(*s0);
-	fn->s1 = std::string(*s1);
-
-	info.GetReturnValue().Set(Nan::NewBuffer((char*)fn, sizeof(full_name)).ToLocalChecked());
+char* ptrFromArg(const Nan::FunctionCallbackInfo<v8::Value>& info, int pos) {
+    Local<Object> bufferObj    = info[pos]->ToObject();
+    char** bufferData = (char**) node::Buffer::Data(bufferObj);
+    return *bufferData;
 }
 
-
-void GetFullName(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
-	if (info.Length() < 1) {
-		Nan::ThrowTypeError("una struct");
-		return;
+#define EXPECT_ARGUMENT_COUNT(N) \
+	if (info.Length() < N) { \
+		Nan::ThrowTypeError("Too few arguments, expected " #N); \
+		return; \
 	}
 
-	Local<Object> bufferObj    = info[0]->ToObject();
-	full_name *fn = (full_name *) node::Buffer::Data(bufferObj);
-
-	std::string result = fn->s0 + " " + fn->s1;
-	Nan::MaybeLocal<v8::String> ret = Nan::New(result.c_str());
-	info.GetReturnValue().Set( ret.ToLocalChecked() );
-}
-
-*/
-void newWindow(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
-	if (info.Length() < 4) {
-		Nan::ThrowTypeError("too few arguments");
-		return;
+#define EXPECT_NUMBER_ARGUMENT(POS,NAME) \
+	if (!info[POS]->IsNumber()) { \
+		Nan::ThrowTypeError(#NAME " should be a number"); \
+		return; \
 	}
 
-	if (!info[0]->IsString()) {
-		Nan::ThrowTypeError("title should be string");
-		return;
+#define EXPECT_STRING_ARGUMENT(POS,NAME) \
+	if (!info[POS]->IsString()) { \
+		Nan::ThrowTypeError(#NAME " should be a string"); \
+		return; \
 	}
 
-	if (!info[1]->IsNumber()) {
-		Nan::ThrowTypeError("width should be a number");
-		return;
+#define EXPECT_STRING_ARGUMENT(POS,NAME) \
+	if (!info[POS]->IsString()) { \
+		Nan::ThrowTypeError(#NAME " should be a string"); \
+		return; \
 	}
 
-	if (!info[2]->IsNumber()) {
-		Nan::ThrowTypeError("height should be a number");
-		return;
+#define EXPECT_BOOLEAN_ARGUMENT(POS,NAME) \
+	if (!info[POS]->IsBoolean()) { \
+		Nan::ThrowTypeError(#NAME " should be a boolean"); \
+		return; \
 	}
 
-	if (!info[3]->IsBoolean()) {
-		Nan::ThrowTypeError("hasMenubar should be a boolean");
-		return;
-	}
+
+NAN_METHOD(NewWindow) {
+
+	EXPECT_ARGUMENT_COUNT(4)
+	EXPECT_STRING_ARGUMENT(0,title)
+	EXPECT_NUMBER_ARGUMENT(1,width)
+	EXPECT_NUMBER_ARGUMENT(2,height)
+	EXPECT_BOOLEAN_ARGUMENT(3,hasMenubar)
 
 	String::Utf8Value sTitle(info[0]->ToString());
 	std::string stdsTitle = std::string(*sTitle);
@@ -99,18 +59,15 @@ void newWindow(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	const char* title = stdsTitle.c_str();
 	int width = info[1]->IntegerValue();
 	int height = info[2]->IntegerValue();
-	int hasMenubar = info[2]->BooleanValue();
+	int hasMenubar = info[3]->BooleanValue();
 
 	uiWindow *mainwin = uiNewWindow(title, width, height, hasMenubar);
-	info.GetReturnValue().Set(
-		Nan::NewBuffer(
-			(char *) mainwin,
-			sizeof(char *)
-		).ToLocalChecked()
-	);
+
+	returnPtr((char **) &mainwin, info);
+
 }
 
-void init(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(Init) {
 	uiInitOptions o;
 	memset(&o, 0, sizeof (uiInitOptions));
 	const char *err = uiInit(&o);
@@ -120,35 +77,56 @@ void init(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	}
 }
 
-void show(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+NAN_METHOD(Show) {
 	if (info.Length() < 1) {
 		Nan::ThrowTypeError("too few arguments");
 		return;
 	}
 
-	Local<Object> bufferObj    = info[0]->ToObject();
-	uiWindow *mainwin = (uiWindow *) node::Buffer::Data(bufferObj);
+	uiWindow *mainwin = (uiWindow *) ptrFromArg(info, 0);
 	uiControlShow(uiControl(mainwin));
 	uiMain();
-	uiUninit();
-
+	// uiUninit();
 }
 
-void Init(v8::Local<v8::Object> exports) {
-	exports->Set(
+
+NAN_METHOD(ControlShow) {
+	EXPECT_ARGUMENT_COUNT(1)
+
+	uiWindow *mainwin = (uiWindow *) ptrFromArg(info, 0);
+	uiControlShow(uiControl(mainwin));
+}
+
+NAN_METHOD(Main) {
+	uiMain();
+}
+
+
+NAN_MODULE_INIT(InitModule) {
+	Nan::Set(target,
 		Nan::New("newWindow").ToLocalChecked(),
-		Nan::New<v8::FunctionTemplate>(newWindow)->GetFunction()
+		Nan::New<v8::FunctionTemplate>(NewWindow)->GetFunction()
 	);
 
-	exports->Set(
+	Nan::Set(target,
 		Nan::New("init").ToLocalChecked(),
-		Nan::New<v8::FunctionTemplate>(init)->GetFunction()
+		Nan::New<v8::FunctionTemplate>(Init)->GetFunction()
 	);
 
-	exports->Set(
+	Nan::Set(target,
 		Nan::New("show").ToLocalChecked(),
-		Nan::New<v8::FunctionTemplate>(show)->GetFunction()
+		Nan::New<v8::FunctionTemplate>(Show)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("controlShow").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(ControlShow)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("main").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(Main)->GetFunction()
 	);
 }
 
-NODE_MODULE(pow, Init)
+NODE_MODULE(libui, InitModule)
