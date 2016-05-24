@@ -67,6 +67,21 @@ NAN_METHOD(NewWindow) {
 
 }
 
+
+NAN_METHOD(NewEntry) {
+	uiEntry *entry = uiNewEntry();
+	returnPtr((char **) &entry, info);
+}
+
+NAN_METHOD(WindowSetChild) {
+	uiWindow *win = (uiWindow *) ptrFromArg(info, 0);
+	uiControl *entry = (uiControl *) ptrFromArg(info, 1);
+	uiWindowSetChild(win, entry);
+
+}
+
+
+
 NAN_METHOD(WindowSetMargined) {
 
 	EXPECT_ARGUMENT_COUNT(2)
@@ -179,6 +194,16 @@ NAN_MODULE_INIT(InitModule) {
 	Nan::Set(target,
 		Nan::New("windowSetMargined").ToLocalChecked(),
 		Nan::New<v8::FunctionTemplate>(WindowSetMargined)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("newEntry").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(NewEntry)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("windowSetChild").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(WindowSetChild)->GetFunction()
 	);
 }
 
