@@ -6,7 +6,7 @@
             "include_dirs": [
                 "<!(node -e \"require('nan')\")"
             ],
-	        "libraries": ["../libui/out/libui.so"]
+	        "libraries": ["../libui.so"]
         }
     ]
 }

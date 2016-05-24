@@ -6,7 +6,9 @@
   "license": "MIT",
   "author": "parro-it",
   "scripts": {
-    "test": "ava && xo"
+    "test": "ava && xo",
+    "start": "LD_LIBRARY_PATH=. node test.js",
+    "build-libui": "cd libui;make clean;make OS=unix;mv out/libui.* .."
   },
   "keywords": [],
   "engines": {
@@ -21,6 +23,7 @@
   },
   "gypfile": true,
   "dependencies": {
+    "bindings": "^1.2.1",
     "nan": "^2.3.3"
   }
 }

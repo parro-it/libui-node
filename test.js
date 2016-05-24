@@ -1,4 +1,5 @@
-const libuiNode = require('./build/Release/ui');
+const bindings = require('bindings');
+const libuiNode = bindings('ui');
 
 libuiNode.init();
 const win = libuiNode.newWindow('Test window', 800, 600, true);
