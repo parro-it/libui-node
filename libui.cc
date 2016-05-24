@@ -77,32 +77,74 @@ NAN_METHOD(Init) {
 	}
 }
 
-NAN_METHOD(Show) {
-	if (info.Length() < 1) {
-		Nan::ThrowTypeError("too few arguments");
-		return;
-	}
-
-	uiWindow *mainwin = (uiWindow *) ptrFromArg(info, 0);
-	uiControlShow(uiControl(mainwin));
-	uiMain();
-	// uiUninit();
-}
-
-
 NAN_METHOD(ControlShow) {
 	EXPECT_ARGUMENT_COUNT(1)
 
-	uiWindow *mainwin = (uiWindow *) ptrFromArg(info, 0);
-	uiControlShow(uiControl(mainwin));
+	uiWindow *win = (uiWindow *) ptrFromArg(info, 0);
+	uiControlShow(uiControl(win));
+}
+
+
+NAN_METHOD(ControlDestroy) {
+	EXPECT_ARGUMENT_COUNT(1)
+
+	uiWindow *win = (uiWindow *) ptrFromArg(info, 0);
+	uiControlDestroy(uiControl(win));
 }
 
 NAN_METHOD(Main) {
 	uiMain();
 }
 
+static Persistent<Function> persistentCallback;
+
+
+static int onClosing(uiWindow *w, void *data)
+{
+
+	Local<Function> callback = Local<Function>::New(Isolate::GetCurrent(), persistentCallback);
+	printf("callback address in fn %p\n", data);
+	Nan::MakeCallback(Nan::GetCurrentContext()->Global(), callback, 0, NULL);
+	printf("callbacked!\n");
+	return 0;
+}
+
+
+
+
+NAN_METHOD(WindowOnClosing) {
+	EXPECT_ARGUMENT_COUNT(2)
+
+	uiWindow *win = (uiWindow *) ptrFromArg(info, 0);
+	Local<Function> callback = info[1].As<Function>();
+	persistentCallback.Reset(Isolate::GetCurrent(), callback);
+
+	uiWindowOnClosing(win, onClosing, NULL);
+}
+
+
+NAN_METHOD(Quit) {
+	uiQuit();
+}
+
+
 
 NAN_MODULE_INIT(InitModule) {
+	Nan::Set(target,
+		Nan::New("windowOnClosing").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(WindowOnClosing)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("controlDestroy").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(ControlDestroy)->GetFunction()
+	);
+
+	Nan::Set(target,
+		Nan::New("quit").ToLocalChecked(),
+		Nan::New<v8::FunctionTemplate>(Quit)->GetFunction()
+	);
+
 	Nan::Set(target,
 		Nan::New("newWindow").ToLocalChecked(),
 		Nan::New<v8::FunctionTemplate>(NewWindow)->GetFunction()
@@ -111,11 +153,6 @@ NAN_MODULE_INIT(InitModule) {
 	Nan::Set(target,
 		Nan::New("init").ToLocalChecked(),
 		Nan::New<v8::FunctionTemplate>(Init)->GetFunction()
-	);
-
-	Nan::Set(target,
-		Nan::New("show").ToLocalChecked(),
-		Nan::New<v8::FunctionTemplate>(Show)->GetFunction()
 	);
 
 	Nan::Set(target,

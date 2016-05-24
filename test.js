@@ -13,6 +13,18 @@ test('controlShow - throw if too few arguments', t => {
 	t.is(err.message, 'Too few arguments, expected 1');
 });
 
+test('controlDestroy - throw if too few arguments', t => {
+	const err = t.throws(() => libui.controlDestroy());
+	t.true(err instanceof TypeError);
+	t.is(err.message, 'Too few arguments, expected 1');
+});
+
+test('windowOnClosing - throw if too few arguments', t => {
+	const err = t.throws(() => libui.windowOnClosing());
+	t.true(err instanceof TypeError);
+	t.is(err.message, 'Too few arguments, expected 2');
+});
+
 test('newWindow - throw if width is not a number', t => {
 	const err = t.throws(() => libui.newWindow('Test window', '', 600, true));
 	t.true(err instanceof TypeError);
