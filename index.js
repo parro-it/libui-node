@@ -1,2 +1,2 @@
 const bindings = require('bindings');
-module.exports = bindings('ui');
+module.exports = bindings('libui');
