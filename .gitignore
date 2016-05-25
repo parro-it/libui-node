@@ -87,3 +87,6 @@ build
 *.so
 *.so.*
 
+
+*.dylib
+

@@ -8,7 +8,8 @@
 	"scripts": {
 		"test": "LD_LIBRARY_PATH=. ava && xo",
 		"start": "LD_LIBRARY_PATH=. node example.js",
-		"build-libui": "cd libui;make clean;make OS=unix;mv out/libui.* .."
+		"build-libui-unix": "cd libui;make clean;make OS=unix;mv out/libui.* ..",
+		"build-libui-darwin": "cd libui;make clean;make OS=darwin;mv out/libui.* .."
 	},
 	"keywords": [],
 	"engines": {
