@@ -90,3 +90,4 @@ build
 
 *.dylib
 
+auto*.gypi

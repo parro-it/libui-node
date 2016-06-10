@@ -17,11 +17,12 @@
     }
   ],
   "scripts": {
-    "test": "ava && xo",
+    "test": "LD_LIBRARY_PATH=./libui/build/out ava && xo",
     "start": "LD_LIBRARY_PATH=./libui/build/out node example.js",
     "autogypi": "autogypi",
     "node-gyp": "node-gyp",
-    "configure": "npm run -- autogypi --init-gyp -p nbind -s src/Ui.cc",
+    "install": "npm run build:libui && autogypi && npm run build",
+    "build:libui": "mkdir -p libui/build && cd libui/build && cmake .. && make && cd ../..",
     "build": "node-gyp configure build || echo failed"
   },
   "keywords": [
