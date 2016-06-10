@@ -69,6 +69,16 @@ class UiCheckbox : public UiControl {
 };
 
 
+class UiSlider : public UiControl {
+	public:
+		UiSlider(int min, int max);
+		DEFINE_CONTROL_METHODS()
+
+		int getValue();
+		void setValue(int value);
+};
+
+
 class UiSpinbox : public UiControl {
 	public:
 		UiSpinbox(int min, int max);

@@ -23,6 +23,13 @@ hBox2.append(new libui.UiLabel('Number'), 0);
 hBox2.append(spin, 1);
 box.append(hBox2, 0);
 
+const hBox3 = new libui.UiHorizontalBox();
+const slider = new libui.UiSlider(0, 100);
+slider.value = 33;
+hBox3.append(new libui.UiLabel('Number'), 0);
+hBox3.append(slider, 1);
+box.append(hBox3, 0);
+
 const buttons = new libui.UiHorizontalBox();
 buttons.append(new libui.UiButton('Ok'), 0);
 buttons.append(new libui.UiButton('Maybe'), 0);
