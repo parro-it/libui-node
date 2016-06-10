@@ -285,5 +285,37 @@ class UiWindow {
 		void setChild(UiControl *control);
 };
 
+/*
+class UiMenu {
+	private:
+		uiWindow *win;
+
+	public:
+		UiWindow(const char* title, int width, int height, int hasMenubar);
+		void show();
+		void close();
+		void setMargined(int margined);
+		int getMargined();
+		void setChild(UiControl *control);
+};
+
+
+
+_UI_EXTERN void uiMenuItemEnable(uiMenuItem *m);
+_UI_EXTERN void uiMenuItemDisable(uiMenuItem *m);
+_UI_EXTERN void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data);
+_UI_EXTERN int uiMenuItemChecked(uiMenuItem *m);
+_UI_EXTERN void uiMenuItemSetChecked(uiMenuItem *m, int checked);
+
+typedef struct uiMenu uiMenu;
+#define uiMenu(this) ((uiMenu *) (this))
+_UI_EXTERN uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name);
+_UI_EXTERN uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name);
+_UI_EXTERN uiMenuItem *uiMenuAppendQuitItem(uiMenu *m);
+_UI_EXTERN uiMenuItem *uiMenuAppendPreferencesItem(uiMenu *m);
+_UI_EXTERN uiMenuItem *uiMenuAppendAboutItem(uiMenu *m);
+_UI_EXTERN void uiMenuAppendSeparator(uiMenu *m);
+_UI_EXTERN uiMenu *uiNewMenu(const char *name);
+*/
 
 #endif
