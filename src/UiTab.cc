@@ -16,11 +16,47 @@ void UiTab::append(const char *text, UiControl *child) {
 	);
 }
 
+void UiTab::insertAt(const char *name, int before, UiControl *child) {
+	uiTabInsertAt(
+		(uiTab *) getHandle(),
+		name,
+		before,
+		child->getHandle()
+	);
+}
+
+void UiTab::deleteAt(int index) {
+	uiTabDelete(
+		(uiTab *) getHandle(),
+		index
+	);
+}
+
+int UiTab::numPages() {
+	return uiTabNumPages((uiTab *) getHandle());
+}
+
+int UiTab::getMargined(int page) {
+	return uiTabMargined((uiTab *) getHandle(), page);
+}
+
+void UiTab::setMargined(int page, int margined) {
+	uiTabSetMargined(
+		(uiTab *) getHandle(),
+		page,
+		margined
+	);
+}
 
 NBIND_CLASS(UiTab) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 	method(append);
+	method(numPages);
+	method(deleteAt);
+	method(insertAt);
+	method(getMargined);
+	method(setMargined);
 }
 
 

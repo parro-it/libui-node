@@ -5,10 +5,11 @@
 				"auto.gypi"
 			],
 			"sources": [
-				"src/UiBox.cc",
-				"src/UiEntry.cc",
 				"src/UiGroup.cc",
 				"src/UiTab.cc",
+				"src/UiCheckbox.cc",
+				"src/UiBox.cc",
+				"src/UiEntry.cc",
 				"src/UiMultilineEntry.cc",
 				"src/UiDateTimePicker.cc",
 				"src/UiRadioButtons.cc",
@@ -23,7 +24,6 @@
 				"src/UiControl.cc",
 				"src/UiLabel.cc",
 				"src/UiButton.cc",
-				"src/UiCheckbox.cc"
 			],
 			"libraries": [
 				"../libui/build/out/libui.so"

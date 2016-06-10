@@ -54,6 +54,11 @@ class UiTab : public UiControl {
 	public:
 		UiTab();
 		void append(const char *text, UiControl *child);
+		void insertAt(const char *name, int before, UiControl *child);
+		void deleteAt(int index);
+		int numPages();
+		int getMargined(int page);
+		void setMargined(int page, int margined);
 
 		DEFINE_CONTROL_METHODS()
 };
@@ -157,6 +162,10 @@ class UiGroup : public UiControl {
 	public:
 		UiGroup(const char *text);
 		void setChild(UiControl *control);
+		int getMargined();
+		void setMargined(int margined);
+		const char * getTitle();
+		void setTitle(const char * title);
 		DEFINE_CONTROL_METHODS()
 };
 
@@ -174,6 +183,10 @@ class UiCheckbox : public UiControl {
 	public:
 		UiCheckbox(const char *text);
 		DEFINE_CONTROL_METHODS()
+		void setText(const char * text);
+		const char * getText();
+		void setChecked(int checked);
+		int getChecked();
 };
 
 
