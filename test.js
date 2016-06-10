@@ -1,5 +1,5 @@
 import test from 'ava';
-import libui from '.';
+import libui from './index';
 
 test('newWindow - throw if too few arguments', t => {
 	const err = t.throws(() => libui.newWindow('Test window', 800, 600));
