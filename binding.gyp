@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiTab.cc",
 				"src/UiMultilineEntry.cc",
 				"src/UiDateTimePicker.cc",
 				"src/UiRadioButtons.cc",

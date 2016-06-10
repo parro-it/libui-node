@@ -50,6 +50,15 @@ class UiRadioButtons : public UiControl {
 };
 
 
+class UiTab : public UiControl {
+	public:
+		UiTab();
+		void append(const char *text, UiControl *child);
+
+		DEFINE_CONTROL_METHODS()
+};
+
+
 
 class UiMultilineEntry : public UiControl {
 	public:

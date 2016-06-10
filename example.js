@@ -53,7 +53,12 @@ box.append(new libui.UiProgressBar(), 0);
 
 box.append(buttons, 0);
 
-win.setChild(box);
+const tabs = new libui.UiTab();
+
+tabs.append('controls', box);
+tabs.append('text', new libui.UiMultilineEntry());
+
+win.setChild(tabs);
 win.show();
 libui.Ui.main();
 
