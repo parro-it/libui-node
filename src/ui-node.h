@@ -28,6 +28,40 @@
 	getset(getEnabled, setEnabled);
 
 
+#define DEFINE_ENTRY_METHODS() \
+	void setText(const char *  text); \
+	const char *  getText(); \
+	void setReadOnly(int readOnly); \
+	int getReadOnly();
+
+#define INHERITS_ENTRY_METHODS(CLASS) \
+	void CLASS::setText(const char *  text) { UiEntryBase::setText(text); } \
+	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
+	void CLASS::setReadOnly(int readOnly) { UiEntryBase::setReadOnly(readOnly); }\
+	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); }
+
+#define DECLARE_ENTRY_METHODS() \
+	getset(getText, setText); \
+	getset(getReadOnly, setReadOnly);
+
+
+#define DEFINE_BOX_METHODS() \
+	void append(UiControl *control, int stretchy); \
+	void deleteAt(int index); \
+	int getPadded(); \
+	void setPadded(int padded);
+
+#define INHERITS_BOX_METHODS(CLASS) \
+	void CLASS::append(UiControl *control, int stretchy) { UiBox::append(control, stretchy); } \
+	void CLASS::deleteAt(int index) { UiBox::deleteAt(index); } \
+	int CLASS::getPadded() { return UiBox::getPadded(); } \
+	void CLASS::setPadded(int padded) { UiBox::setPadded(padded); }
+
+#define DECLARE_BOX_METHODS() \
+	getset(getPadded, setPadded); \
+	method(append); \
+	method(deleteAt);
+
 class UiControl {
 	private:
 		uiControl *handle;
@@ -45,9 +79,12 @@ class UiRadioButtons : public UiControl {
 	public:
 		UiRadioButtons();
 		void append(const char *text);
+		int getSelected();
+		void setSelected(int n);
 
 		DEFINE_CONTROL_METHODS()
 };
+
 
 
 class UiTab : public UiControl {
@@ -68,8 +105,12 @@ class UiTab : public UiControl {
 class UiMultilineEntry : public UiControl {
 	public:
 		UiMultilineEntry();
-
 		DEFINE_CONTROL_METHODS()
+		void setText(const char *  text);
+		const char * getText();
+		void setReadOnly(int readOnly);
+		int getReadOnly();
+		void append(const char *text);
 };
 
 
@@ -102,22 +143,6 @@ class UiEditableCombobox : public UiControl {
 
 };
 
-
-#define DEFINE_ENTRY_METHODS() \
-	void setText(const char *  text); \
-	const char *  getText(); \
-	void setReadOnly(int readOnly); \
-	int getReadOnly();
-
-#define INHERITS_ENTRY_METHODS(CLASS) \
-	void CLASS::setText(const char *  text) { UiEntryBase::setText(text); } \
-	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
-	void CLASS::setReadOnly(int readOnly) { UiEntryBase::setReadOnly(readOnly); }\
-	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); }
-
-#define DECLARE_ENTRY_METHODS() \
-	getset(getText, setText); \
-	getset(getReadOnly, setReadOnly);
 
 
 class UiEntryBase : public UiControl {
@@ -226,26 +251,6 @@ class UiSpinbox : public UiControl {
 		int getValue();
 		void setValue(int value);
 };
-
-
-#define DEFINE_BOX_METHODS() \
-	void append(UiControl *control, int stretchy); \
-	void deleteAt(int index); \
-	int getPadded(); \
-	void setPadded(int padded);
-
-#define INHERITS_BOX_METHODS(CLASS) \
-	void CLASS::append(UiControl *control, int stretchy) { UiBox::append(control, stretchy); } \
-	void CLASS::deleteAt(int index) { UiBox::deleteAt(index); } \
-	int CLASS::getPadded() { return UiBox::getPadded(); } \
-	void CLASS::setPadded(int padded) { UiBox::setPadded(padded); }
-
-#define DECLARE_BOX_METHODS() \
-	getset(getPadded, setPadded); \
-	method(append); \
-	method(deleteAt);
-
-
 
 class UiBox : public UiControl {
 	public:
