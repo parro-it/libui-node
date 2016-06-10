@@ -8,8 +8,25 @@ UiEditableCombobox::UiEditableCombobox() : UiControl( (uiControl*) uiNewEditable
 
 INHERITS_CONTROL_METHODS(UiEditableCombobox)
 
+void UiEditableCombobox::append(const char *text) {
+	uiEditableComboboxAppend(
+		(uiEditableCombobox *) getHandle(),
+		text
+	);
+}
+
+void UiEditableCombobox::setText(const char * text) {
+	uiEditableComboboxSetText((uiEditableCombobox *) getHandle(), text);
+}
+
+const char * UiEditableCombobox::getText() {
+	return uiEditableComboboxText((uiEditableCombobox *) getHandle());
+}
+
 NBIND_CLASS(UiEditableCombobox) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
-}
+	method(append);
+	getset(getText, setText);
 
+}

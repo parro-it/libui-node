@@ -77,7 +77,12 @@ class UiCombobox : public UiControl {
 	public:
 		UiCombobox();
 		DEFINE_CONTROL_METHODS()
+		void append(const char *text);
+		int getSelected();
+		void setSelected(int n);
 };
+
+
 
 
 class UiDateTimePicker : public UiControl {
@@ -91,6 +96,10 @@ class UiEditableCombobox : public UiControl {
 	public:
 		UiEditableCombobox();
 		DEFINE_CONTROL_METHODS()
+		void append(const char *text);
+		const char * getText();
+		void setText(const char *text);
+
 };
 
 
@@ -194,6 +203,8 @@ class UiProgressBar : public UiControl {
 	public:
 		UiProgressBar();
 		DEFINE_CONTROL_METHODS()
+
+		void setValue(int value);
 };
 
 

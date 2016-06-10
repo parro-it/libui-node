@@ -15,7 +15,13 @@ box.append(hBox, 0);
 box.append(new libui.UiSearchEntry(), 0);
 box.append(new libui.UiPasswordEntry(), 0);
 
-box.append(new libui.UiCombobox(), 1);
+const cmb = new libui.UiCombobox();
+
+cmb.append('item 1');
+cmb.append('item 2');
+cmb.append('item 3');
+
+box.append(cmb, 0);
 box.append(new libui.UiDateTimePicker(), 1);
 box.append(new libui.UiEditableCombobox(), 1);
 box.append(new libui.UiCheckbox('Optionally'), 1);
