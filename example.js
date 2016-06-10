@@ -42,6 +42,8 @@ hBox3.append(new libui.UiLabel('Number'), 0);
 hBox3.append(slider, 1);
 box.append(hBox3, 0);
 
+box.append(new libui.UiMultilineEntry(), 0);
+
 const buttons = new libui.UiHorizontalBox();
 buttons.append(new libui.UiButton('Ok'), 0);
 buttons.append(new libui.UiButton('Maybe'), 0);

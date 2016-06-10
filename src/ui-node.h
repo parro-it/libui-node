@@ -51,6 +51,14 @@ class UiRadioButtons : public UiControl {
 
 
 
+class UiMultilineEntry : public UiControl {
+	public:
+		UiMultilineEntry();
+
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiCombobox : public UiControl {
 	public:
 		UiCombobox();
