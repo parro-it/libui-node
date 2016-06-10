@@ -148,6 +148,8 @@ class UiLabel : public UiControl {
 	public:
 		UiLabel(const char *text);
 		DEFINE_CONTROL_METHODS()
+		void setText(const char * text);
+		const char * getText();
 };
 
 
@@ -163,6 +165,8 @@ class UiButton : public UiControl {
 	public:
 		UiButton(const char *text);
 		DEFINE_CONTROL_METHODS()
+		void setText(const char * text);
+		const char * getText();
 };
 
 
