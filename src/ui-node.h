@@ -55,6 +55,13 @@ class UiLabel : public UiControl {
 };
 
 
+class UiButton : public UiControl {
+	public:
+		UiButton(const char *text);
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiBox : public UiControl {
 	public:
 		UiBox(uiControl *hnd);

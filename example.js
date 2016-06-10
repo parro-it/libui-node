@@ -13,6 +13,13 @@ hBox.append(e1, 1);
 box.append(new libui.UiEntry(), 1);
 box.append(hBox, 0);
 box.append(new libui.UiEntry(), 0);
+
+const buttons = new libui.UiHorizontalBox();
+buttons.append(new libui.UiButton('Ok'), 0);
+buttons.append(new libui.UiButton('Maybe'), 0);
+buttons.append(new libui.UiButton('Cancel'), 0);
+box.append(buttons, 0);
+
 win.setChild(box);
 win.show();
 libui.Ui.main();
