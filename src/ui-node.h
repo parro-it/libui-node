@@ -62,6 +62,13 @@ class UiButton : public UiControl {
 };
 
 
+class UiCheckbox : public UiControl {
+	public:
+		UiCheckbox(const char *text);
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiBox : public UiControl {
 	public:
 		UiBox(uiControl *hnd);

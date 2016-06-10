@@ -11,6 +11,7 @@
 				"src/UiEntry.cc",
 				"src/UiLabel.cc",
 				"src/UiButton.cc",
+				"src/UiCheckbox.cc",
 				"src/UiBox.cc"
 			],
 			"libraries": [
