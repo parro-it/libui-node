@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiSpinbox.cc",
 				"src/Ui.cc",
 				"src/UiWindow.cc",
 				"src/UiControl.cc",
