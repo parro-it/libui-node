@@ -41,6 +41,20 @@ class UiControl {
 
 
 
+class UiCombobox : public UiControl {
+	public:
+		UiCombobox();
+		DEFINE_CONTROL_METHODS()
+};
+
+
+class UiEditableCombobox : public UiControl {
+	public:
+		UiEditableCombobox();
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiEntry : public UiControl {
 	public:
 		UiEntry();

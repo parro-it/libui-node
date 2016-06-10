@@ -5,7 +5,8 @@
 				"auto.gypi"
 			],
 			"sources": [
-
+				"src/UiCombobox.cc",
+				"src/UiEditableCombobox.cc",
 				"src/UiSeparator.cc",
 				"src/UiProgressBar.cc",
 				"src/UiSlider.cc",
