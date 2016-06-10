@@ -2,6 +2,8 @@
 #ifndef ui_node
 #define ui_node
 
+#include "nbind/api.h"
+
 #define DEFINE_CONTROL_METHODS() \
 	void destroy(); \
 	void setParent (UiControl *parent); \
