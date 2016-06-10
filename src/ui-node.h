@@ -89,10 +89,51 @@ class UiEditableCombobox : public UiControl {
 };
 
 
-class UiEntry : public UiControl {
+#define DEFINE_ENTRY_METHODS() \
+	void setText(const char *  text); \
+	const char *  getText(); \
+	void setReadOnly(int readOnly); \
+	int getReadOnly();
+
+#define INHERITS_ENTRY_METHODS(CLASS) \
+	void CLASS::setText(const char *  text) { UiEntryBase::setText(text); } \
+	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
+	void CLASS::setReadOnly(int readOnly) { UiEntryBase::setReadOnly(readOnly); }\
+	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); }
+
+#define DECLARE_ENTRY_METHODS() \
+	getset(getText, setText); \
+	getset(getReadOnly, setReadOnly);
+
+
+class UiEntryBase : public UiControl {
+	public:
+		UiEntryBase(uiControl *);
+		DEFINE_CONTROL_METHODS()
+		DEFINE_ENTRY_METHODS()
+};
+
+class UiEntry : public UiEntryBase {
 	public:
 		UiEntry();
 		DEFINE_CONTROL_METHODS()
+		DEFINE_ENTRY_METHODS()
+};
+
+
+class UiPasswordEntry : public UiEntryBase {
+	public:
+		UiPasswordEntry();
+		DEFINE_CONTROL_METHODS()
+		DEFINE_ENTRY_METHODS()
+};
+
+
+class UiSearchEntry : public UiEntryBase {
+	public:
+		UiSearchEntry();
+		DEFINE_CONTROL_METHODS()
+		DEFINE_ENTRY_METHODS()
 };
 
 

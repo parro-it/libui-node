@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiEntry.cc",
 				"src/UiGroup.cc",
 				"src/UiTab.cc",
 				"src/UiMultilineEntry.cc",
@@ -19,7 +20,6 @@
 				"src/Ui.cc",
 				"src/UiWindow.cc",
 				"src/UiControl.cc",
-				"src/UiEntry.cc",
 				"src/UiLabel.cc",
 				"src/UiButton.cc",
 				"src/UiCheckbox.cc",
