@@ -58,6 +58,13 @@ class UiCombobox : public UiControl {
 };
 
 
+class UiDateTimePicker : public UiControl {
+	public:
+		UiDateTimePicker();
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiEditableCombobox : public UiControl {
 	public:
 		UiEditableCombobox();

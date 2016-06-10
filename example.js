@@ -15,6 +15,7 @@ box.append(hBox, 0);
 box.append(new libui.UiEntry(), 0);
 
 box.append(new libui.UiCombobox(), 1);
+box.append(new libui.UiDateTimePicker(), 1);
 box.append(new libui.UiEditableCombobox(), 1);
 box.append(new libui.UiCheckbox('Optionally'), 1);
 
