@@ -35,6 +35,8 @@ buttons.append(new libui.UiButton('Ok'), 0);
 buttons.append(new libui.UiButton('Maybe'), 0);
 buttons.append(new libui.UiButton('Cancel'), 0);
 
+box.append(new libui.UiProgressBar(), 0);
+
 box.append(buttons, 0);
 
 win.setChild(box);

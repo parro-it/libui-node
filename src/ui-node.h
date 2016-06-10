@@ -69,6 +69,13 @@ class UiCheckbox : public UiControl {
 };
 
 
+class UiProgressBar : public UiControl {
+	public:
+		UiProgressBar();
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiSlider : public UiControl {
 	public:
 		UiSlider(int min, int max);
