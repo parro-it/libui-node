@@ -9,6 +9,7 @@
 				"src/UiWindow.cc",
 				"src/UiControl.cc",
 				"src/UiEntry.cc",
+				"src/UiLabel.cc",
 				"src/UiBox.cc"
 			],
 			"libraries": [

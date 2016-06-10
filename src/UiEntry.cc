@@ -6,20 +6,10 @@
 
 UiEntry::UiEntry() : UiControl( (uiControl*) uiNewEntry() ) {}
 
-void UiEntry::destroy() { UiControl::destroy(); }
-void UiEntry::setParent(UiControl *parent) { UiControl::setParent(parent); }
-int UiEntry::toplevel() { return UiControl::toplevel(); }
-int UiEntry::getVisible() { return UiControl::getVisible(); }
-void UiEntry::setVisible(int visible) { UiControl::setVisible(visible); }
-int UiEntry::getEnabled() { return UiControl::getEnabled(); }
-void UiEntry::setEnabled(int enabled) { UiControl::setEnabled(enabled); }
+INHERITS_CONTROL_METHODS(UiEntry)
 
 NBIND_CLASS(UiEntry) {
 	construct<>();
-	method(destroy);
-	method(setParent);
-	method(toplevel);
-	getset(getVisible, setVisible);
-	getset(getEnabled, setEnabled);
+	DECLARE_CONTROL_METHODS()
 }
 

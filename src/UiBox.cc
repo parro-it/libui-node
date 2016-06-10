@@ -3,7 +3,7 @@
 #include "nbind/nbind.h"
 #include "ui-node.h"
 
-UiBox::UiBox() : UiControl( (uiControl*) uiNewVerticalBox() ) {}
+UiBox::UiBox(uiControl *control) : UiControl( control ) {}
 
 void UiBox::append(UiControl *control, int stretchy) {
 	uiBoxAppend(
@@ -13,24 +13,35 @@ void UiBox::append(UiControl *control, int stretchy) {
 	);
 }
 
+UiVerticalBox::UiVerticalBox() : UiBox( (uiControl*) uiNewVerticalBox() ) {}
 
-void UiBox::destroy() { UiControl::destroy(); }
-void UiBox::setParent(UiControl *parent) { UiControl::setParent(parent); }
-int UiBox::toplevel() { return UiControl::toplevel(); }
-int UiBox::getVisible() { return UiControl::getVisible(); }
-void UiBox::setVisible(int visible) { UiControl::setVisible(visible); }
-int UiBox::getEnabled() { return UiControl::getEnabled(); }
-void UiBox::setEnabled(int enabled) { UiControl::setEnabled(enabled); }
+void UiVerticalBox::append(UiControl *control, int stretchy) {
+	UiBox::append(control, stretchy);
+}
+
+INHERITS_CONTROL_METHODS(UiVerticalBox)
 
 
-NBIND_CLASS(UiBox) {
+UiHorizontalBox::UiHorizontalBox() : UiBox( (uiControl*) uiNewHorizontalBox() ) {}
+
+void UiHorizontalBox::append(UiControl *control, int stretchy) {
+	UiBox::append(control, stretchy);
+}
+
+INHERITS_CONTROL_METHODS(UiHorizontalBox)
+
+
+NBIND_CLASS(UiVerticalBox) {
 	construct<>();
+	DECLARE_CONTROL_METHODS()
 	method(append);
-	method(destroy);
-	method(setParent);
-	method(toplevel);
-	getset(getVisible, setVisible);
-	getset(getEnabled, setEnabled);
+}
+
+
+NBIND_CLASS(UiHorizontalBox) {
+	construct<>();
+	DECLARE_CONTROL_METHODS()
+	method(append);
 }
 
 
