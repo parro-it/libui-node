@@ -48,6 +48,13 @@ class UiEntry : public UiControl {
 };
 
 
+class UiSeparator : public UiControl {
+	public:
+		UiSeparator();
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiLabel : public UiControl {
 	public:
 		UiLabel(const char *text);

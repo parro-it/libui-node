@@ -15,6 +15,7 @@ box.append(hBox, 0);
 box.append(new libui.UiEntry(), 0);
 
 box.append(new libui.UiCheckbox('Optionally'), 1);
+box.append(new libui.UiSeparator(), 1);
 
 const hBox2 = new libui.UiHorizontalBox();
 const spin = new libui.UiSpinbox(0, 100);

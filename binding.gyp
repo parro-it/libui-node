@@ -5,6 +5,8 @@
 				"auto.gypi"
 			],
 			"sources": [
+
+				"src/UiSeparator.cc",
 				"src/UiProgressBar.cc",
 				"src/UiSlider.cc",
 				"src/UiSpinbox.cc",
