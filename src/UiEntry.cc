@@ -22,10 +22,19 @@ int UiEntryBase::getReadOnly() {
 }
 
 
+
 UiEntry::UiEntry() : UiEntryBase( (uiControl*) uiNewEntry() ) {}
 
 INHERITS_CONTROL_METHODS(UiEntry)
 INHERITS_ENTRY_METHODS(UiEntry)
+
+void UiEntry::onChange(nbind::cbFunction & cb) {
+	uiEntryOnChanged(
+		(uiEntry *) getHandle(),
+		UiEntry_onChange,
+		&cb
+	);
+}
 
 NBIND_CLASS(UiEntry) {
 	construct<>();
