@@ -110,6 +110,14 @@ class UiLabel : public UiControl {
 };
 
 
+class UiGroup : public UiControl {
+	public:
+		UiGroup(const char *text);
+		void setChild(UiControl *control);
+		DEFINE_CONTROL_METHODS()
+};
+
+
 class UiButton : public UiControl {
 	public:
 		UiButton(const char *text);
