@@ -25,10 +25,21 @@
 				"src/UiCheckbox.cc",
 				"src/UiBox.cc"
 			],
-			"libraries": [
-				"../libui/build/out/libui.so"
-
-			]
+			"conditions": [
+				["OS!='mac'", {
+					"libraries": [
+						"../libui/build/out/libui.so"
+					]
+				}]
+			],
+			"xcode_settings": {
+				"OTHER_LDFLAGS": [
+					"-Llibui/build/out",
+					"-lui",
+					"-rpath",
+					"libui/build/out"
+				]
+			}
 		}
 	],
 	"includes": [
