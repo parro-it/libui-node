@@ -18,6 +18,13 @@ box.append(new libui.UiCombobox(), 1);
 box.append(new libui.UiEditableCombobox(), 1);
 box.append(new libui.UiCheckbox('Optionally'), 1);
 
+const radios = new libui.UiRadioButtons();
+radios.append('option 1');
+radios.append('option 2');
+radios.append('option 3');
+
+box.append(radios, 1);
+
 box.append(new libui.UiSeparator(), 1);
 
 const hBox2 = new libui.UiHorizontalBox();

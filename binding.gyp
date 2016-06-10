@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiRadioButtons.cc",
 				"src/UiCombobox.cc",
 				"src/UiEditableCombobox.cc",
 				"src/UiSeparator.cc",

@@ -41,6 +41,16 @@ class UiControl {
 
 
 
+class UiRadioButtons : public UiControl {
+	public:
+		UiRadioButtons();
+		void append(const char *text);
+
+		DEFINE_CONTROL_METHODS()
+};
+
+
+
 class UiCombobox : public UiControl {
 	public:
 		UiCombobox();
