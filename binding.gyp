@@ -1,12 +1,23 @@
 {
 	"targets": [
 		{
-			"target_name": "liblibui",
-			"sources": [ "libui.cc" ],
-			"include_dirs": [
-				"<!(node -e \"require('nan')\")"
+			"includes": [
+				"auto.gypi"
 			],
-			"libraries": ["-Wl,-rpath, ../libui/out/libui.so.0"]
+			"sources": [
+				"src/Ui.cc",
+				"src/UiWindow.cc",
+				"src/UiControl.cc",
+				"src/UiEntry.cc",
+				"src/UiBox.cc"
+			],
+			"libraries": [
+				"../libui/build/out/libui.so"
+
+			]
 		}
+	],
+	"includes": [
+		"auto-top.gypi"
 	]
 }

@@ -1,2 +1,4 @@
-const bindings = require('bindings');
-module.exports = bindings('libui');
+const nbind = require('nbind');
+const binding = nbind.init();
+
+module.exports = binding.lib;

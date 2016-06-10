@@ -1,46 +1,47 @@
 {
-	"name": "libui-node",
-	"version": "0.0.0",
-	"description": "Node.js bindings for libui",
-	"repository": "parro-it/libui-node",
-	"license": "MIT",
-	"contributors": [
+  "name": "libui-node",
+  "version": "0.0.0",
+  "description": "Node.js bindings for libui",
+  "repository": "parro-it/libui-node",
+  "license": "MIT",
+  "contributors": [
     {
-	    "name": "Chan Guan Hao",
-	    "email": "guanhao3797@gmail.com",
-	    "url": "http://mavenave.me"
-  	},
-  	{
-	    "name": "Andrea Parodi",
-	    "email": "andrea@parro.it",
-	    "url": "http://www.parro.it"
-  	}
-
+      "name": "Chan Guan Hao",
+      "email": "guanhao3797@gmail.com",
+      "url": "http://mavenave.me"
+    },
+    {
+      "name": "Andrea Parodi",
+      "email": "andrea@parro.it",
+      "url": "http://www.parro.it"
+    }
   ],
-	"scripts": {
-		"test": "LD_LIBRARY_PATH=./libui/out ava && xo",
-		"start": "LD_LIBRARY_PATH=./libui/out node example.js",
-		"build-libui": "cd libui && make clean && make",
-		"build": "node-gyp build"
-	},
-	"keywords": [
-		"libui",
+  "scripts": {
+    "test": "ava && xo",
+    "start": "LD_LIBRARY_PATH=./libui/build/out node example.js",
+    "autogypi": "autogypi",
+    "node-gyp": "node-gyp",
+    "configure": "npm run -- autogypi --init-gyp -p nbind -s src/Ui.cc",
+    "build": "node-gyp configure build || echo failed"
+  },
+  "keywords": [
+    "libui",
     "desktop",
     "GUI"
   ],
-	"engines": {
-		"node": ">=5"
-	},
-	"files": [
-		"index.js"
-	],
-	"devDependencies": {
-		"ava": "^0.14.0",
-		"xo": "^0.14.0"
-	},
-	"gypfile": true,
-	"dependencies": {
-		"bindings": "^1.2.1",
-		"nan": "^2.3.3"
-	}
+  "engines": {
+    "node": ">=5"
+  },
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "ava": "^0.14.0",
+    "xo": "^0.14.0"
+  },
+  "dependencies": {
+    "autogypi": "^0.2.2",
+    "nbind": "^0.2.1",
+    "node-gyp": "^3.3.1"
+  }
 }
