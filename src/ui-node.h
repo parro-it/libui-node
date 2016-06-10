@@ -204,23 +204,42 @@ class UiSpinbox : public UiControl {
 };
 
 
+#define DEFINE_BOX_METHODS() \
+	void append(UiControl *control, int stretchy); \
+	void deleteAt(int index); \
+	int getPadded(); \
+	void setPadded(int padded);
+
+#define INHERITS_BOX_METHODS(CLASS) \
+	void CLASS::append(UiControl *control, int stretchy) { UiBox::append(control, stretchy); } \
+	void CLASS::deleteAt(int index) { UiBox::deleteAt(index); } \
+	int CLASS::getPadded() { return UiBox::getPadded(); } \
+	void CLASS::setPadded(int padded) { UiBox::setPadded(padded); }
+
+#define DECLARE_BOX_METHODS() \
+	getset(getPadded, setPadded); \
+	method(append); \
+	method(deleteAt);
+
+
+
 class UiBox : public UiControl {
 	public:
 		UiBox(uiControl *hnd);
-		void append(UiControl *control, int stretchy);
+	DEFINE_BOX_METHODS()
 };
 
 class UiVerticalBox : public UiBox {
 	public:
 		UiVerticalBox();
-		void append(UiControl *control, int stretchy);
+		DEFINE_BOX_METHODS()
 		DEFINE_CONTROL_METHODS()
 };
 
 class UiHorizontalBox : public UiBox {
 	public:
 		UiHorizontalBox();
-		void append(UiControl *control, int stretchy);
+		DEFINE_BOX_METHODS()
 		DEFINE_CONTROL_METHODS()
 };
 

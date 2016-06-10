@@ -13,35 +13,44 @@ void UiBox::append(UiControl *control, int stretchy) {
 	);
 }
 
-UiVerticalBox::UiVerticalBox() : UiBox( (uiControl*) uiNewVerticalBox() ) {}
-
-void UiVerticalBox::append(UiControl *control, int stretchy) {
-	UiBox::append(control, stretchy);
+void UiBox::deleteAt(int index) {
+	uiBoxDelete(
+		(uiBox *) getHandle(),
+		index
+	);
 }
 
+void UiBox::setPadded(int padded) {
+	uiBoxSetPadded((uiBox *) getHandle(), padded);
+}
+
+int UiBox::getPadded() {
+	return uiBoxPadded((uiBox *) getHandle());
+}
+
+
+UiVerticalBox::UiVerticalBox() : UiBox( (uiControl*) uiNewVerticalBox() ) {}
+
 INHERITS_CONTROL_METHODS(UiVerticalBox)
+INHERITS_BOX_METHODS(UiVerticalBox)
 
 
 UiHorizontalBox::UiHorizontalBox() : UiBox( (uiControl*) uiNewHorizontalBox() ) {}
 
-void UiHorizontalBox::append(UiControl *control, int stretchy) {
-	UiBox::append(control, stretchy);
-}
-
 INHERITS_CONTROL_METHODS(UiHorizontalBox)
+INHERITS_BOX_METHODS(UiHorizontalBox)
 
 
 NBIND_CLASS(UiVerticalBox) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
-	method(append);
+	DECLARE_BOX_METHODS()
 }
-
 
 NBIND_CLASS(UiHorizontalBox) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
-	method(append);
+	DECLARE_BOX_METHODS()
 }
 
 
