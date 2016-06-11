@@ -9,11 +9,15 @@ const status1 = new libui.UiLabel('status 1');
 const status2 = new libui.UiLabel('status 2');
 const btnQuit = new libui.UiButton('Quit');
 
-entry.onChange(() => {
+win.onClosing(() => {
+	libui.stopLoop();
+});
+
+entry.onChanged(() => {
 	status1.text = entry.text;
 });
 
-entry.onChange(() => {
+entry.onChanged(() => {
 	status2.text = entry.text;
 });
 
