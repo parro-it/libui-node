@@ -34,17 +34,22 @@
 	void setText(const char *  text); \
 	const char *  getText(); \
 	void setReadOnly(int readOnly); \
-	int getReadOnly();
+	int getReadOnly(); \
+	void onChange(nbind::cbFunction & cb);
+
+
 
 #define INHERITS_ENTRY_METHODS(CLASS) \
 	void CLASS::setText(const char *  text) { UiEntryBase::setText(text); } \
 	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
 	void CLASS::setReadOnly(int readOnly) { UiEntryBase::setReadOnly(readOnly); }\
-	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); }
+	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); } \
+	void CLASS::onChange(nbind::cbFunction & cb) { UiEntryBase::onChange(cb); }
 
 #define DECLARE_ENTRY_METHODS() \
 	getset(getText, setText); \
-	getset(getReadOnly, setReadOnly);
+	getset(getReadOnly, setReadOnly); \
+	method(onChange);
 
 
 #define DEFINE_BOX_METHODS() \
@@ -148,6 +153,9 @@ class UiEditableCombobox : public UiControl {
 
 
 class UiEntryBase : public UiControl {
+	private:
+		nbind::cbFunction * onChangeCallback = NULL;
+
 	public:
 		UiEntryBase(uiControl *);
 		DEFINE_CONTROL_METHODS()
@@ -155,13 +163,11 @@ class UiEntryBase : public UiControl {
 };
 
 class UiEntry : public UiEntryBase {
-	private:
-		nbind::cbFunction * onChangeCallback;
 	public:
 		UiEntry();
 		DEFINE_CONTROL_METHODS()
 		DEFINE_ENTRY_METHODS()
-		void onChange(nbind::cbFunction & cb);
+
 };
 
 

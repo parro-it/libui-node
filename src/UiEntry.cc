@@ -6,6 +6,9 @@ UiEntryBase::UiEntryBase(uiControl* hnd) : UiControl( hnd ) {}
 
 void UiEntryBase::setText(const char * text) {
 	uiEntrySetText((uiEntry *) getHandle(), text);
+	if (onChangeCallback != NULL) {
+		(*onChangeCallback)();
+	}
 }
 
 const char * UiEntryBase::getText() {
@@ -23,18 +26,11 @@ int UiEntryBase::getReadOnly() {
 static void UiEntry_onChange(uiEntry *w, void *data)
 {
 	nbind::cbFunction *cb = (nbind::cbFunction *) data;
-	printf ("\nUiEntry_onChange: %p\n", &cb);
 	(*cb)();
 }
 
 
-UiEntry::UiEntry() : UiEntryBase( (uiControl*) uiNewEntry() ) {}
-
-INHERITS_CONTROL_METHODS(UiEntry)
-INHERITS_ENTRY_METHODS(UiEntry)
-
-void UiEntry::onChange(nbind::cbFunction & cb) {
-	printf ("\nonChange: %p\n", &cb);
+void UiEntryBase::onChange(nbind::cbFunction & cb) {
 	onChangeCallback = new nbind::cbFunction(cb);
 	uiEntryOnChanged(
 		(uiEntry *) getHandle(),
@@ -42,6 +38,12 @@ void UiEntry::onChange(nbind::cbFunction & cb) {
 		onChangeCallback
 	);
 }
+
+UiEntry::UiEntry() : UiEntryBase( (uiControl*) uiNewEntry() ) {}
+
+INHERITS_CONTROL_METHODS(UiEntry)
+INHERITS_ENTRY_METHODS(UiEntry)
+
 
 
 
@@ -76,5 +78,4 @@ NBIND_CLASS(UiEntry) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 	DECLARE_ENTRY_METHODS()
-	method(onChange);
 }

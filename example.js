@@ -69,5 +69,5 @@ tabs.append('text', new libui.UiMultilineEntry());
 
 win.setChild(tabs);
 win.show();
-libui.start();
+libui.startLoop();
 
