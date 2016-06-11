@@ -17,8 +17,8 @@
     }
   ],
   "scripts": {
-    "test": "LD_LIBRARY_PATH=./libui/build/out ava && xo",
-    "start": "LD_LIBRARY_PATH=./libui/build/out node example.js",
+    "test": "export NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out ava && xo",
+    "start": "export NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node example.js",
     "autogypi": "autogypi",
     "node-gyp": "node-gyp",
     "install": "npm run build:libui && autogypi && npm run build",
