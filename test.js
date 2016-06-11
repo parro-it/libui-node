@@ -17,12 +17,7 @@ test('setting Entry text emit onChange', async (t) => {
 		libui.stopLoop();
 	});
 
-	const win = new libui.UiWindow('Test window', 800, 600, false);
-	win.setChild(entry);
-	win.show();
-
-	const loopRunning = libui.startLoop();
+	libui.startLoop();
 	entry.text = 'changed';
-	await loopRunning;
 	t.true(emitted);
 });
