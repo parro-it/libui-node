@@ -273,6 +273,8 @@ class UiProgressBar : public UiControl {
 
 
 class UiSlider : public UiControl {
+	DEFINE_EVENT(onChanged)
+
 	public:
 		UiSlider(int min, int max);
 		DEFINE_CONTROL_METHODS()

@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiSlider.cc",
 				"src/UiSpinbox.cc",
 				"src/UiCheckbox.cc",
 				"src/UiWindow.cc",
@@ -19,7 +20,6 @@
 				"src/UiDateTimePicker.cc",
 				"src/UiSeparator.cc",
 				"src/UiProgressBar.cc",
-				"src/UiSlider.cc",
 				"src/Ui.cc",
 				"src/UiControl.cc",
 				"src/UiLabel.cc",

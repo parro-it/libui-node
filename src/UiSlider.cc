@@ -15,6 +15,8 @@ void UiSlider::setValue(int value) {
 	uiSliderSetValue((uiSlider*) getHandle(),value);
 }
 
+IMPLEMENT_EVENT(UiSlider, uiSlider, onChanged, uiSliderOnChanged)
+
 
 INHERITS_CONTROL_METHODS(UiSlider)
 
@@ -22,5 +24,6 @@ NBIND_CLASS(UiSlider) {
 	construct<int, int>();
 	DECLARE_CONTROL_METHODS()
 	getset(getValue, setValue);
+	method(onChanged);
 }
 
