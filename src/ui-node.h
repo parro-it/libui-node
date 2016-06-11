@@ -216,12 +216,18 @@ class UiGroup : public UiControl {
 
 
 class UiButton : public UiControl {
+	private:
+		nbind::cbFunction * onClickedCallback = NULL;
+
 	public:
 		UiButton(const char *text);
 		DEFINE_CONTROL_METHODS()
 		void setText(const char * text);
 		const char * getText();
+		void onClicked(nbind::cbFunction & cb);
 };
+
+
 
 
 class UiCheckbox : public UiControl {

@@ -18,9 +18,29 @@ const char * UiButton::getText() {
 	return uiButtonText((uiButton *) getHandle());
 }
 
+
+static void UiButton_onClicked(uiButton *w, void *data)
+{
+	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+	(*cb)();
+}
+
+
+void UiButton::onClicked(nbind::cbFunction & cb) {
+	onClickedCallback = new nbind::cbFunction(cb);
+	uiButtonOnClicked(
+		(uiButton *) getHandle(),
+		UiButton_onClicked,
+		onClickedCallback
+	);
+}
+
+
+
 NBIND_CLASS(UiButton) {
 	construct<const char *>();
 	DECLARE_CONTROL_METHODS()
 	getset(getText, setText);
+	method(onClicked);
 }
 

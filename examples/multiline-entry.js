@@ -11,12 +11,14 @@ const btnQuit = new libui.UiButton('Quit');
 
 entry.onChange(() => {
 	status1.text = entry.text;
-	// libui.stopLoop();
 });
 
 entry.onChange(() => {
 	status2.text = entry.text;
-	// libui.stopLoop();
+});
+
+btnQuit.onClicked(() => {
+	libui.stopLoop();
 });
 
 box.append(entry, 1);
