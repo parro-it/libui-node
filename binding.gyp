@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiDialogs.cc",
 				"src/UiMenu.cc",
 				"src/UiCombobox.cc",
 				"src/UiSlider.cc",

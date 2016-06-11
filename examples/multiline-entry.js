@@ -12,6 +12,7 @@ const win = new libui.UiWindow('Test window', 800, 600, true);
 win.margined = 1;
 
 exit.onClicked(() => {
+	libui.UiDialogs.msgBox(win, 'Be aware!', 'The app will quit now...');
 	libui.stopLoop();
 });
 
