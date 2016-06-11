@@ -6,8 +6,8 @@ UiEntryBase::UiEntryBase(uiControl* hnd) : UiControl( hnd ) {}
 
 void UiEntryBase::setText(const char * text) {
 	uiEntrySetText((uiEntry *) getHandle(), text);
-	if (onChangeCallback != NULL) {
-		(*onChangeCallback)();
+	if (onChangedCallback != NULL) {
+		(*onChangedCallback)();
 	}
 }
 
@@ -23,29 +23,13 @@ int UiEntryBase::getReadOnly() {
 	return uiEntryReadOnly((uiEntry *) getHandle());
 }
 
-static void UiEntry_onChange(uiEntry *w, void *data)
-{
-	nbind::cbFunction *cb = (nbind::cbFunction *) data;
-	(*cb)();
-}
+IMPLEMENT_EVENT(UiEntryBase, uiEntry, onChanged, uiEntryOnChanged)
 
-
-void UiEntryBase::onChange(nbind::cbFunction & cb) {
-	onChangeCallback = new nbind::cbFunction(cb);
-	uiEntryOnChanged(
-		(uiEntry *) getHandle(),
-		UiEntry_onChange,
-		onChangeCallback
-	);
-}
 
 UiEntry::UiEntry() : UiEntryBase( (uiControl*) uiNewEntry() ) {}
 
 INHERITS_CONTROL_METHODS(UiEntry)
 INHERITS_ENTRY_METHODS(UiEntry)
-
-
-
 
 UiPasswordEntry::UiPasswordEntry() : UiEntryBase( (uiControl*) uiNewPasswordEntry() ) {}
 

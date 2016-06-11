@@ -19,22 +19,7 @@ const char * UiButton::getText() {
 }
 
 
-static void UiButton_onClicked(uiButton *w, void *data)
-{
-	nbind::cbFunction *cb = (nbind::cbFunction *) data;
-	(*cb)();
-}
-
-
-void UiButton::onClicked(nbind::cbFunction & cb) {
-	onClickedCallback = new nbind::cbFunction(cb);
-	uiButtonOnClicked(
-		(uiButton *) getHandle(),
-		UiButton_onClicked,
-		onClickedCallback
-	);
-}
-
+IMPLEMENT_EVENT(UiButton, uiButton, onClicked, uiButtonOnClicked)
 
 
 NBIND_CLASS(UiButton) {

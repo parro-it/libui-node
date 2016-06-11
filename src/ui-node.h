@@ -4,6 +4,28 @@
 
 #include "nbind/api.h"
 
+
+#define DEFINE_EVENT(NAME) \
+	private: \
+		nbind::cbFunction * NAME ## Callback = NULL; \
+	public: \
+		void NAME(nbind::cbFunction & cb); \
+
+
+#define IMPLEMENT_EVENT(CLASS, WIDGET, NAME, LIBUI_FUN) \
+	static void CLASS ## _ ## NAME(WIDGET *w, void *data) { \
+		nbind::cbFunction *cb = (nbind::cbFunction *) data; \
+		(*cb)(); \
+	} \
+ 	void CLASS::NAME(nbind::cbFunction & cb) { \
+		NAME ## Callback = new nbind::cbFunction(cb); \
+		LIBUI_FUN( \
+			(WIDGET *) getHandle(), \
+			CLASS ## _ ## NAME, \
+			NAME ## Callback \
+		); \
+	}
+
 #define DEFINE_CONTROL_METHODS() \
 	void destroy(); \
 	void setParent (UiControl *parent); \
@@ -35,7 +57,6 @@
 	const char *  getText(); \
 	void setReadOnly(int readOnly); \
 	int getReadOnly(); \
-	void onChange(nbind::cbFunction & cb);
 
 
 
@@ -44,12 +65,12 @@
 	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
 	void CLASS::setReadOnly(int readOnly) { UiEntryBase::setReadOnly(readOnly); }\
 	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); } \
-	void CLASS::onChange(nbind::cbFunction & cb) { UiEntryBase::onChange(cb); }
+	void CLASS::onChanged(nbind::cbFunction & cb) { UiEntryBase::onChanged(cb); }
 
 #define DECLARE_ENTRY_METHODS() \
 	getset(getText, setText); \
 	getset(getReadOnly, setReadOnly); \
-	method(onChange);
+	method(onChanged);
 
 
 #define DEFINE_BOX_METHODS() \
@@ -153,8 +174,7 @@ class UiEditableCombobox : public UiControl {
 
 
 class UiEntryBase : public UiControl {
-	private:
-		nbind::cbFunction * onChangeCallback = NULL;
+	DEFINE_EVENT(onChanged)
 
 	public:
 		UiEntryBase(uiControl *);
@@ -167,7 +187,7 @@ class UiEntry : public UiEntryBase {
 		UiEntry();
 		DEFINE_CONTROL_METHODS()
 		DEFINE_ENTRY_METHODS()
-
+		void onChanged(nbind::cbFunction & cb);
 };
 
 
@@ -176,6 +196,7 @@ class UiPasswordEntry : public UiEntryBase {
 		UiPasswordEntry();
 		DEFINE_CONTROL_METHODS()
 		DEFINE_ENTRY_METHODS()
+		void onChanged(nbind::cbFunction & cb);
 };
 
 
@@ -184,6 +205,7 @@ class UiSearchEntry : public UiEntryBase {
 		UiSearchEntry();
 		DEFINE_CONTROL_METHODS()
 		DEFINE_ENTRY_METHODS()
+		void onChanged(nbind::cbFunction & cb);
 };
 
 
@@ -216,15 +238,13 @@ class UiGroup : public UiControl {
 
 
 class UiButton : public UiControl {
-	private:
-		nbind::cbFunction * onClickedCallback = NULL;
+	DEFINE_EVENT(onClicked)
 
 	public:
 		UiButton(const char *text);
 		DEFINE_CONTROL_METHODS()
 		void setText(const char * text);
 		const char * getText();
-		void onClicked(nbind::cbFunction & cb);
 };
 
 
@@ -290,11 +310,14 @@ class UiHorizontalBox : public UiBox {
 };
 
 class UiWindow {
+	DEFINE_EVENT(onClosing)
+
 	private:
 		uiWindow *win;
 
 	public:
 		UiWindow(const char* title, int width, int height, int hasMenubar);
+		uiWindow * getHandle();
 		void show();
 		void close();
 		void setMargined(int margined);

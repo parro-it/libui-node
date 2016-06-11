@@ -4,15 +4,28 @@
 #include "nbind/nbind.h"
 
 
-static int closing(uiWindow *w, void *data)
-{
-	uiControlDestroy(uiControl(w));
+
+static int UiWindow_onClosing(uiWindow *w, void *data) {
+	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+	(*cb)();
 	return 0;
+}
+
+void UiWindow::onClosing(nbind::cbFunction & cb) {
+	onClosingCallback = new nbind::cbFunction(cb);
+	uiWindowOnClosing(
+		(uiWindow *) getHandle(),
+		UiWindow_onClosing,
+		onClosingCallback
+	);
 }
 
 UiWindow::UiWindow(const char* title, int width, int height, int hasMenubar) {
 	win = uiNewWindow(title, width, height, hasMenubar);
-	uiWindowOnClosing(win, closing, NULL);
+}
+
+uiWindow * UiWindow::getHandle() {
+	return win;
 }
 
 void UiWindow::show() {
@@ -40,6 +53,7 @@ NBIND_CLASS(UiWindow) {
   method(show);
   method(close);
   method(setChild);
+  method(onClosing);
   getset(getMargined, setMargined);
 }
 
