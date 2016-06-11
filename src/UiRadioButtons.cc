@@ -8,6 +8,7 @@ UiRadioButtons::UiRadioButtons() : UiControl( (uiControl*) uiNewRadioButtons() )
 
 INHERITS_CONTROL_METHODS(UiRadioButtons)
 
+IMPLEMENT_EVENT(UiRadioButtons, uiRadioButtons, onSelected, uiRadioButtonsOnSelected)
 
 
 int UiRadioButtons::getSelected() {
@@ -32,6 +33,7 @@ NBIND_CLASS(UiRadioButtons) {
 	DECLARE_CONTROL_METHODS()
 	method(append);
 	getset(getSelected, setSelected);
+	method(onSelected);
 }
 
 

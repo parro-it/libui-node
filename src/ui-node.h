@@ -104,6 +104,8 @@ class UiControl {
 
 
 class UiRadioButtons : public UiControl {
+	DEFINE_EVENT(onSelected)
+
 	public:
 		UiRadioButtons();
 		void append(const char *text);
@@ -131,6 +133,9 @@ class UiTab : public UiControl {
 
 
 class UiMultilineEntry : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+
 	public:
 		UiMultilineEntry();
 		DEFINE_CONTROL_METHODS()

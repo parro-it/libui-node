@@ -8,6 +8,9 @@ UiMultilineEntry::UiMultilineEntry() : UiControl( (uiControl*) uiNewMultilineEnt
 
 INHERITS_CONTROL_METHODS(UiMultilineEntry)
 
+IMPLEMENT_EVENT(UiMultilineEntry, uiMultilineEntry, onChanged, uiMultilineEntryOnChanged)
+
+
 void UiMultilineEntry::setText(const char * text) {
 	uiMultilineEntrySetText((uiMultilineEntry *) getHandle(), text);
 }
@@ -38,6 +41,7 @@ NBIND_CLASS(UiMultilineEntry) {
 	getset(getText, setText);
 	getset(getReadOnly, setReadOnly);
 	method(append);
+	method(onChanged);
 
 }
 
