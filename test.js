@@ -20,10 +20,17 @@ test.skip('newWindow - throw if width is not a number', t => {
 test('newWindow - throw if too few arguments', t => {
 	libui.Ui.init();
 	let emitted;
+
 	const entry = new libui.UiEntry();
 	entry.onChange(() => {
 		emitted = true;
+		libui.Ui.quit();
 	});
-	entry.text = 'some value';
+
+	const win = new libui.UiWindow('Test window', 800, 600, false);
+	win.setChild(entry);
+	win.show();
+
+	libui.Ui.main();
 	t.true(emitted);
 });

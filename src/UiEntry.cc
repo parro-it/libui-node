@@ -23,6 +23,7 @@ int UiEntryBase::getReadOnly() {
 static void UiEntry_onChange(uiEntry *w, void *data)
 {
 	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+	printf ("\nUiEntry_onChange: %p\n", &cb);
 	(*cb)();
 }
 
@@ -33,11 +34,12 @@ INHERITS_CONTROL_METHODS(UiEntry)
 INHERITS_ENTRY_METHODS(UiEntry)
 
 void UiEntry::onChange(nbind::cbFunction & cb) {
-	onChangeCallback = &cb;
+	printf ("\nonChange: %p\n", &cb);
+	onChangeCallback = new nbind::cbFunction(cb);
 	uiEntryOnChanged(
 		(uiEntry *) getHandle(),
 		UiEntry_onChange,
-		&cb
+		onChangeCallback
 	);
 }
 
