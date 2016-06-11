@@ -12,7 +12,7 @@ test('setting Entry text emit onChange', async (t) => {
 	let emitted;
 
 	const entry = new libui.UiEntry();
-	entry.onChange(() => {
+	entry.onChanged(() => {
 		emitted = true;
 		libui.stopLoop();
 	});
