@@ -2,6 +2,8 @@
 #ifndef ui_node
 #define ui_node
 
+#include "nbind/api.h"
+
 #define DEFINE_CONTROL_METHODS() \
 	void destroy(); \
 	void setParent (UiControl *parent); \
@@ -153,10 +155,13 @@ class UiEntryBase : public UiControl {
 };
 
 class UiEntry : public UiEntryBase {
+	private:
+		nbind::cbFunction * onChangeCallback;
 	public:
 		UiEntry();
 		DEFINE_CONTROL_METHODS()
 		DEFINE_ENTRY_METHODS()
+		void onChange(nbind::cbFunction & cb);
 };
 
 
