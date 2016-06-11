@@ -1,4 +1,4 @@
-const libui = require('./index.js');
+const libui = require('../index.js');
 libui.Ui.init();
 const win = new libui.UiWindow('Test window', 800, 600, false);
 win.margined = 1;

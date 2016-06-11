@@ -17,8 +17,8 @@
     }
   ],
   "scripts": {
-    "test": "export NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out ava && xo",
-    "start": "export NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node example.js",
+    "test": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out ava && xo",
+    "start": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/multiline-entry.js",
     "autogypi": "autogypi",
     "node-gyp": "node-gyp",
     "install": "npm run build:libui && autogypi && npm run build",
