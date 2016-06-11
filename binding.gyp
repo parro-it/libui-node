@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiMenu.cc",
 				"src/UiCombobox.cc",
 				"src/UiSlider.cc",
 				"src/UiSpinbox.cc",

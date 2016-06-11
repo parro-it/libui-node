@@ -340,37 +340,37 @@ class UiWindow {
 		void setChild(UiControl *control);
 };
 
-/*
-class UiMenu {
+
+class UiMenuItem {
+	DEFINE_EVENT(onClicked)
+
 	private:
-		uiWindow *win;
+		uiMenuItem *handle;
 
 	public:
-		UiWindow(const char* title, int width, int height, int hasMenubar);
-		void show();
-		void close();
-		void setMargined(int margined);
-		int getMargined();
-		void setChild(UiControl *control);
+		UiMenuItem(uiMenuItem *hnd);
+		void enable();
+		void disable();
+		int getChecked();
+		void setChecked(int checked);
+};
+
+class UiMenu {
+	private:
+		uiMenu *handle;
+
+	public:
+		UiMenu(const char *name);
+		UiMenuItem * appendItem(const char *name);
+		UiMenuItem * appendCheckItem(const char *name);
+		UiMenuItem * appendQuitItem();
+		UiMenuItem * appendPreferencesItem();
+		UiMenuItem * appendAboutItem();
+		void appendSeparator();
 };
 
 
 
-_UI_EXTERN void uiMenuItemEnable(uiMenuItem *m);
-_UI_EXTERN void uiMenuItemDisable(uiMenuItem *m);
-_UI_EXTERN void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data);
-_UI_EXTERN int uiMenuItemChecked(uiMenuItem *m);
-_UI_EXTERN void uiMenuItemSetChecked(uiMenuItem *m, int checked);
 
-typedef struct uiMenu uiMenu;
-#define uiMenu(this) ((uiMenu *) (this))
-_UI_EXTERN uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name);
-_UI_EXTERN uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name);
-_UI_EXTERN uiMenuItem *uiMenuAppendQuitItem(uiMenu *m);
-_UI_EXTERN uiMenuItem *uiMenuAppendPreferencesItem(uiMenu *m);
-_UI_EXTERN uiMenuItem *uiMenuAppendAboutItem(uiMenu *m);
-_UI_EXTERN void uiMenuAppendSeparator(uiMenu *m);
-_UI_EXTERN uiMenu *uiNewMenu(const char *name);
-*/
 
 #endif

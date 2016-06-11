@@ -1,12 +1,19 @@
 const libui = require('../index.js');
 libui.Ui.init();
-const win = new libui.UiWindow('Test window', 800, 600, false);
-win.margined = 1;
 
 const box = new libui.UiVerticalBox();
 const entry = new libui.UiMultilineEntry();
 const status = new libui.UiLabel('status 1');
 const btnQuit = new libui.UiButton('Quit');
+const menu = new libui.UiMenu('File');
+const exit = menu.appendItem('Exit');
+const win = new libui.UiWindow('Test window', 800, 600, true);
+
+win.margined = 1;
+
+exit.onClicked(() => {
+	libui.stopLoop();
+});
 
 win.onClosing(() => {
 	libui.stopLoop();
