@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiCombobox.cc",
 				"src/UiSlider.cc",
 				"src/UiSpinbox.cc",
 				"src/UiCheckbox.cc",
@@ -12,7 +13,6 @@
 				"src/UiEntry.cc",
 				"src/UiMultilineEntry.cc",
 				"src/UiRadioButtons.cc",
-				"src/UiCombobox.cc",
 				"src/UiEditableCombobox.cc",
 				"src/UiGroup.cc",
 				"src/UiTab.cc",

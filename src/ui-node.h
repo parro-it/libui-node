@@ -143,6 +143,8 @@ class UiMultilineEntry : public UiControl {
 
 
 class UiCombobox : public UiControl {
+	DEFINE_EVENT(onSelected)
+
 	public:
 		UiCombobox();
 		DEFINE_CONTROL_METHODS()
@@ -162,6 +164,8 @@ class UiDateTimePicker : public UiControl {
 
 
 class UiEditableCombobox : public UiControl {
+	DEFINE_EVENT(onChanged)
+
 	public:
 		UiEditableCombobox();
 		DEFINE_CONTROL_METHODS()

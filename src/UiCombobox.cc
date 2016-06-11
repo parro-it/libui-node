@@ -8,6 +8,8 @@ UiCombobox::UiCombobox() : UiControl( (uiControl*) uiNewCombobox() ) {}
 
 INHERITS_CONTROL_METHODS(UiCombobox)
 
+IMPLEMENT_EVENT(UiCombobox, uiCombobox, onSelected, uiComboboxOnSelected)
+
 void UiCombobox::append(const char *text) {
 	uiComboboxAppend(
 		(uiCombobox *) getHandle(),
@@ -32,5 +34,6 @@ NBIND_CLASS(UiCombobox) {
 	DECLARE_CONTROL_METHODS()
 	method(append);
 	getset(getSelected, setSelected);
+	method(onSelected);
 }
 

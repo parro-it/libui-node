@@ -8,6 +8,9 @@ UiEditableCombobox::UiEditableCombobox() : UiControl( (uiControl*) uiNewEditable
 
 INHERITS_CONTROL_METHODS(UiEditableCombobox)
 
+IMPLEMENT_EVENT(UiEditableCombobox, uiEditableCombobox, onChanged, uiEditableComboboxOnChanged)
+
+
 void UiEditableCombobox::append(const char *text) {
 	uiEditableComboboxAppend(
 		(uiEditableCombobox *) getHandle(),
@@ -28,5 +31,5 @@ NBIND_CLASS(UiEditableCombobox) {
 	DECLARE_CONTROL_METHODS()
 	method(append);
 	getset(getText, setText);
-
+	method(onChanged);
 }
