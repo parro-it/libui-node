@@ -3,6 +3,8 @@
 #include "nbind/nbind.h"
 #include "ui-node.h"
 
+IMPLEMENT_EVENT(UiCheckbox, uiCheckbox, onToggled, uiCheckboxOnToggled)
+
 
 UiCheckbox::UiCheckbox(const char *text) : UiControl( (uiControl*) uiNewCheckbox(text) ) {}
 
@@ -30,5 +32,6 @@ NBIND_CLASS(UiCheckbox) {
 	DECLARE_CONTROL_METHODS()
 	getset(getChecked, setChecked);
 	getset(getText, setText);
+	method(onToggled);
 }
 

@@ -15,6 +15,7 @@ void UiSpinbox::setValue(int value) {
 	uiSpinboxSetValue((uiSpinbox*) getHandle(),value);
 }
 
+IMPLEMENT_EVENT(UiSpinbox, uiSpinbox, onChanged, uiSpinboxOnChanged)
 
 INHERITS_CONTROL_METHODS(UiSpinbox)
 
@@ -22,5 +23,6 @@ NBIND_CLASS(UiSpinbox) {
 	construct<int, int>();
 	DECLARE_CONTROL_METHODS()
 	getset(getValue, setValue);
+	method(onChanged)
 }
 

@@ -251,6 +251,8 @@ class UiButton : public UiControl {
 
 
 class UiCheckbox : public UiControl {
+	DEFINE_EVENT(onToggled)
+
 	public:
 		UiCheckbox(const char *text);
 		DEFINE_CONTROL_METHODS()
@@ -281,6 +283,8 @@ class UiSlider : public UiControl {
 
 
 class UiSpinbox : public UiControl {
+	DEFINE_EVENT(onChanged)
+
 	public:
 		UiSpinbox(int min, int max);
 		DEFINE_CONTROL_METHODS()
