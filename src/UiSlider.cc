@@ -15,6 +15,9 @@ int UiSlider::getValue() {
 
 void UiSlider::setValue(int value) {
 	uiSliderSetValue((uiSlider*) getHandle(),value);
+	if (onChangedCallback != NULL) {
+		(*onChangedCallback)();
+	}
 }
 
 IMPLEMENT_EVENT(UiSlider, uiSlider, onChanged, uiSliderOnChanged)

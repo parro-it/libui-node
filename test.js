@@ -1,6 +1,8 @@
 import test from 'ava';
 import libui from './index';
 
+libui.Ui.init();
+
 test('new UiWindow - throw if too few arguments', t => {
 	const err = t.throws(() => new libui.UiWindow('Test window'));
 	t.true(err instanceof Error);
@@ -8,7 +10,6 @@ test('new UiWindow - throw if too few arguments', t => {
 });
 
 test('setting Entry text emit onChange', async (t) => {
-	libui.Ui.init();
 	let emitted;
 
 	const entry = new libui.UiEntry();
@@ -22,7 +23,29 @@ test('setting Entry text emit onChange', async (t) => {
 	t.true(emitted);
 });
 
-function checkPropertyTest(Class, propertyName, type, builder = () => new Class()) {
+function checkEvent(Class, eventName, propertyName, propertyType, builder = () => new Class()) {
+	return [`Widget ${Class.name} has event ${eventName}`, t => {
+		let emitted = false;
+
+		const widget = builder();
+		widget[eventName](() => {
+			emitted = true;
+			libui.stopLoop();
+		});
+
+		libui.startLoop();
+		if (propertyType === Boolean) {
+			widget[propertyName] = true;
+		} else if (propertyType === String) {
+			widget[propertyName] = 'some value';
+		} else if (propertyType === Number) {
+			widget[propertyName] = 2;
+		}
+		t.true(emitted);
+	}];
+}
+
+function checkProperty(Class, propertyName, type, builder = () => new Class()) {
 	return [`Widget ${Class.name} has property ${propertyName}`, t => {
 		const widget = builder();
 		const setterName = 'set' + propertyName[0].toUpperCase() + propertyName.slice(1);
@@ -86,55 +109,55 @@ function checkPropertyTest(Class, propertyName, type, builder = () => new Class(
 /* eslint-disable ava/test-title */
 /* eslint-disable ava/no-identical-title */
 
-test(...checkPropertyTest(libui.UiEntry, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiEntry, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiEntry, 'readOnly', Boolean));
-test(...checkPropertyTest(libui.UiEntry, 'text', String));
+test(...checkProperty(libui.UiEntry, 'visible', Boolean));
+test(...checkProperty(libui.UiEntry, 'enabled', Boolean));
+test(...checkProperty(libui.UiEntry, 'readOnly', Boolean));
+test(...checkProperty(libui.UiEntry, 'text', String));
 
-test(...checkPropertyTest(libui.UiMultilineEntry, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiMultilineEntry, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiMultilineEntry, 'readOnly', Boolean));
-test(...checkPropertyTest(libui.UiMultilineEntry, 'text', String));
+test(...checkProperty(libui.UiMultilineEntry, 'visible', Boolean));
+test(...checkProperty(libui.UiMultilineEntry, 'enabled', Boolean));
+test(...checkProperty(libui.UiMultilineEntry, 'readOnly', Boolean));
+test(...checkProperty(libui.UiMultilineEntry, 'text', String));
 
-test(...checkPropertyTest(libui.UiLabel, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiLabel, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiLabel, 'text', String));
+test(...checkProperty(libui.UiLabel, 'visible', Boolean));
+test(...checkProperty(libui.UiLabel, 'enabled', Boolean));
+test(...checkProperty(libui.UiLabel, 'text', String));
 
-test(...checkPropertyTest(libui.UiSeparator, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiSeparator, 'enabled', Boolean));
+test(...checkProperty(libui.UiSeparator, 'visible', Boolean));
+test(...checkProperty(libui.UiSeparator, 'enabled', Boolean));
 
-test(...checkPropertyTest(libui.UiSeparator, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiSeparator, 'enabled', Boolean));
+test(...checkProperty(libui.UiSeparator, 'visible', Boolean));
+test(...checkProperty(libui.UiSeparator, 'enabled', Boolean));
 
-test(...checkPropertyTest(libui.UiDatePicker, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiDatePicker, 'enabled', Boolean));
+test(...checkProperty(libui.UiDatePicker, 'visible', Boolean));
+test(...checkProperty(libui.UiDatePicker, 'enabled', Boolean));
 
-test(...checkPropertyTest(libui.UiTimePicker, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiTimePicker, 'enabled', Boolean));
+test(...checkProperty(libui.UiTimePicker, 'visible', Boolean));
+test(...checkProperty(libui.UiTimePicker, 'enabled', Boolean));
 
-test(...checkPropertyTest(libui.UiDateTimePicker, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiDateTimePicker, 'enabled', Boolean));
+test(...checkProperty(libui.UiDateTimePicker, 'visible', Boolean));
+test(...checkProperty(libui.UiDateTimePicker, 'enabled', Boolean));
 
-test(...checkPropertyTest(libui.UiButton, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiButton, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiButton, 'text', String));
+test(...checkProperty(libui.UiButton, 'visible', Boolean));
+test(...checkProperty(libui.UiButton, 'enabled', Boolean));
+test(...checkProperty(libui.UiButton, 'text', String));
 
-test(...checkPropertyTest(libui.UiCheckbox, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiCheckbox, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiCheckbox, 'checked', Boolean));
-test(...checkPropertyTest(libui.UiCheckbox, 'text', String));
+test(...checkProperty(libui.UiCheckbox, 'visible', Boolean));
+test(...checkProperty(libui.UiCheckbox, 'enabled', Boolean));
+test(...checkProperty(libui.UiCheckbox, 'checked', Boolean));
+test(...checkProperty(libui.UiCheckbox, 'text', String));
 
-test(...checkPropertyTest(libui.UiSpinbox, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiSpinbox, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiSpinbox, 'value', Number));
+test(...checkProperty(libui.UiSpinbox, 'visible', Boolean));
+test(...checkProperty(libui.UiSpinbox, 'enabled', Boolean));
+test(...checkProperty(libui.UiSpinbox, 'value', Number));
 
-test(...checkPropertyTest(libui.UiSlider, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiSlider, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiSlider, 'value', Number));
+test(...checkProperty(libui.UiSlider, 'visible', Boolean));
+test(...checkProperty(libui.UiSlider, 'enabled', Boolean));
+test(...checkProperty(libui.UiSlider, 'value', Number));
 
-test(...checkPropertyTest(libui.UiProgressBar, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiProgressBar, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiProgressBar, 'value', Number));
+test(...checkProperty(libui.UiProgressBar, 'visible', Boolean));
+test(...checkProperty(libui.UiProgressBar, 'enabled', Boolean));
+test(...checkProperty(libui.UiProgressBar, 'value', Number));
 
 const comboBuilder = () => {
 	const cmb = new libui.UiCombobox();
@@ -152,17 +175,19 @@ const radioBuilder = () => {
 	return cmb;
 };
 
-test(...checkPropertyTest(libui.UiCombobox, 'visible', Boolean, comboBuilder));
-test(...checkPropertyTest(libui.UiCombobox, 'enabled', Boolean, comboBuilder));
-test(...checkPropertyTest(libui.UiCombobox, 'selected', Number, comboBuilder));
+test(...checkProperty(libui.UiCombobox, 'visible', Boolean, comboBuilder));
+test(...checkProperty(libui.UiCombobox, 'enabled', Boolean, comboBuilder));
+test(...checkProperty(libui.UiCombobox, 'selected', Number, comboBuilder));
 
-test(...checkPropertyTest(libui.UiRadioButtons, 'visible', Boolean, radioBuilder));
-test(...checkPropertyTest(libui.UiRadioButtons, 'enabled', Boolean, radioBuilder));
-test(...checkPropertyTest(libui.UiRadioButtons, 'selected', Number, radioBuilder));
+test(...checkProperty(libui.UiRadioButtons, 'visible', Boolean, radioBuilder));
+test(...checkProperty(libui.UiRadioButtons, 'enabled', Boolean, radioBuilder));
+test(...checkProperty(libui.UiRadioButtons, 'selected', Number, radioBuilder));
 
-test(...checkPropertyTest(libui.UiEditableCombobox, 'visible', Boolean));
-test(...checkPropertyTest(libui.UiEditableCombobox, 'enabled', Boolean));
-test(...checkPropertyTest(libui.UiEditableCombobox, 'text', String));
+test(...checkProperty(libui.UiEditableCombobox, 'visible', Boolean));
+test(...checkProperty(libui.UiEditableCombobox, 'enabled', Boolean));
+test(...checkProperty(libui.UiEditableCombobox, 'text', String));
+
+test(...checkEvent(libui.UiSlider, 'onChanged', 'value', Number));
 
 /*
 
