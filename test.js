@@ -35,13 +35,32 @@ function checkPropertyTest(Class, propertyName, type, builder = () => new Class(
 		if (type === Boolean) {
 			setter(true);
 			t.true(getter());
+			t.true(widget[propertyName]);
+
 			setter(false);
+			t.false(getter());
+			t.false(widget[propertyName]);
+
+			widget[propertyName] = true;
+			t.true(getter());
+
+			widget[propertyName] = false;
 			t.false(getter());
 		}
 
 		if (type === String) {
 			setter('some value');
+			t.is(widget[propertyName], 'some value');
 			t.is(getter(), 'some value');
+
+			setter('');
+			t.is(getter(), '');
+			t.is(widget[propertyName], '');
+
+			widget[propertyName] = 'some value';
+			t.is(getter(), 'some value');
+
+			widget[propertyName] = '';
 			setter('');
 			t.is(getter(), '');
 		}
@@ -49,7 +68,16 @@ function checkPropertyTest(Class, propertyName, type, builder = () => new Class(
 		if (type === Number) {
 			setter(2);
 			t.is(getter(), 2);
+			t.is(widget[propertyName], 2);
+
 			setter(0);
+			t.is(getter(), 0);
+			t.is(widget[propertyName], 0);
+
+			widget[propertyName] = 2;
+			t.is(getter(), 2);
+
+			widget[propertyName] = 0;
 			t.is(getter(), 0);
 		}
 	}];
