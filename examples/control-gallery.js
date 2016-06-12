@@ -19,10 +19,19 @@ const {
 	editableCombobox,
 	radioButtons,
 	tab,
-	menu
+	menu,
+	multilineEntry
 } = require('./utils.js');
 
 libui.Ui.init();
+
+const lorem =
+`Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+reprehenderit
+`;
 
 const onClosing = () => libui.stopLoop();
 
@@ -131,9 +140,18 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 					'Radio Button 3'
 				),
 				tab({stretchy: true},
-					'Page 1',
-					'Page 2',
-					'Page 3'
+					multilineEntry({
+						text: lorem,
+						tabTitle: 'Page 1'
+					}),
+					multilineEntry({
+						text: lorem.slice(10),
+						tabTitle: 'Page 2'
+					}),
+					multilineEntry({
+						text: lorem.slice(20),
+						tabTitle: 'Page 3'
+					})
 				)
 			)
 		)

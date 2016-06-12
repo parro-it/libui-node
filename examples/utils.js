@@ -55,7 +55,7 @@ const EventHandler = Symbol('EventHandler');
 function mkControl(Class, defaults) {
 	const contructor = (props) => {
 		const ctrl = new Class();
-
+		ctrl.props = props;
 		for (const propName of Object.keys(defaults)) {
 			const defaultValue = defaults[propName];
 			if (defaultValue === EventHandler) {
@@ -275,12 +275,8 @@ const tab = (props, ...children) => {
 	})(props);
 
 	for (const child of children) {
-		ctrl.append(child, multilineEntry({text: `
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-			sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-			Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-			nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-			reprehenderit`}));
+		const title = child.props.tabTitle || '';
+		ctrl.append(title, child);
 	}
 
 	return ctrl;
