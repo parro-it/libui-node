@@ -5,6 +5,7 @@
 
 
 UiButton::UiButton(const char *text) : UiControl( (uiControl*) uiNewButton(text) ) {}
+UiButton::UiButton() : UiControl( (uiControl*) uiNewButton("") ) {}
 
 INHERITS_CONTROL_METHODS(UiButton)
 
@@ -24,6 +25,7 @@ IMPLEMENT_EVENT(UiButton, uiButton, onClicked, uiButtonOnClicked)
 
 NBIND_CLASS(UiButton) {
 	construct<const char *>();
+	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getText, setText);
 	method(onClicked);

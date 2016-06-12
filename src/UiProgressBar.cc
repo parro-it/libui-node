@@ -8,7 +8,8 @@ UiProgressBar::UiProgressBar() : UiControl( (uiControl*) uiNewProgressBar() ) {}
 
 INHERITS_CONTROL_METHODS(UiProgressBar)
 
-void UiProgressBar::setValue(int value) {
+void UiProgressBar::setValue(int val) {
+	value = val;
 	uiProgressBarSetValue(
 		(uiProgressBar *) getHandle(),
 		value
@@ -16,9 +17,14 @@ void UiProgressBar::setValue(int value) {
 }
 
 
+int UiProgressBar::getValue() {
+	return value;
+}
+
+
 NBIND_CLASS(UiProgressBar) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
-	method(setValue);
+	getset(getValue, setValue);
 }
 

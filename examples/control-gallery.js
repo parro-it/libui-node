@@ -1,73 +1,141 @@
 const libui = require('../index.js');
+const {
+	datePicker,
+	dateTimePicker,
+	timePicker,
+	separator,
+	label,
+	window,
+	entry,
+	hBox,
+	group,
+	button,
+	checkBox,
+	spinbox,
+	slider,
+	progressBar,
+	vBox,
+	combobox,
+	editableCombobox,
+	radioButtons,
+	tab,
+	menu
+} = require('./utils.js');
+
 libui.Ui.init();
-const win = new libui.UiWindow('Test window', 800, 600, false);
-win.margined = 1;
 
-const box = new libui.UiVerticalBox();
-const hBox = new libui.UiHorizontalBox();
-const e1 = new libui.UiEntry();
-e1.enabled = 0;
-hBox.append(new libui.UiLabel('ciao'), 0);
-hBox.append(e1, 1);
+const onClosing = () => libui.stopLoop();
 
-box.append(new libui.UiEntry(), 1);
-box.append(hBox, 0);
-box.append(new libui.UiSearchEntry(), 0);
-box.append(new libui.UiPasswordEntry(), 0);
+let win;
+let spin;
+let slide;
+let progress;
 
-const cmb = new libui.UiCombobox();
+const updateValue = value => {
+	spin.value = value;
+	slide.value = value;
+	progress.value = value;
+};
 
-cmb.append('item 1');
-cmb.append('item 2');
-cmb.append('item 3');
+menu([{
+	label: 'File',
+	submenu: [
+		{
+			label: 'Open',
+			click: () => {
+				const filename = libui.UiDialogs.openFile(win);
+				if (filename) {
+					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
+				} else {
+					libui.UiDialogs.msgBoxError(win, 'No file selected', 'Don\'t be alarmed!');
+				}
+			}
+		}, {
+			label: 'Save',
+			click: () => {
+				const filename = libui.UiDialogs.saveFile(win);
+				if (filename) {
+					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
+				} else {
+					libui.UiDialogs.msgBoxError(win, 'No file selected', 'Don\'t be alarmed!');
+				}
+			}
+		}, {
+			role: 'quit'
+		}
+	]
+}, {
+	label: 'Edit',
+	submenu: [
+		{
+			label: 'Checkable Item',
+			type: 'checkbox'
+		}, {
+			type: 'separator'
+		}, {
+			label: 'Disabled Item',
+			click: () => {}
+		}, {
+			role: 'preferences'
+		}
+	]
+}, {
+	label: 'Help',
+	submenu: [
+		{
+			label: 'Help',
+			click: () => {}
+		}, {
+			role: 'about'
+		}
+	]
+}]);
 
-box.append(cmb, 0);
-box.append(new libui.UiDateTimePicker(), 1);
-box.append(new libui.UiEditableCombobox(), 1);
-box.append(new libui.UiCheckbox('Optionally'), 1);
+win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 480, onClosing},
+	hBox({},
+		group({margined: true, title: 'Basic Controls'},
+			button({text: 'Button'}),
+			checkBox({text: 'Checkbox'}),
+			entry({text: 'Entry'}),
+			label({text: 'Label'}),
+			separator({}),
+			datePicker({}),
+			dateTimePicker({}),
+			timePicker({})
+		),
 
-const group = new libui.UiGroup('Options');
-const radios = new libui.UiRadioButtons();
-radios.append('option 1');
-radios.append('option 2');
-radios.append('option 3');
+		vBox({},
+			group({margined: true, title: 'Numbers'},
+				spin = spinbox({onChanged: () => updateValue(spin.value)}),
+				slide = slider({onChanged: () => updateValue(slide.value)}),
+				progress = progressBar({})
+			),
 
-group.setChild(radios);
-box.append(group, 1);
+			group({margined: true, title: 'Lists', stretchy: true},
+				combobox({},
+					'Combobox Item 1',
+					'Combobox Item 2',
+					'Combobox Item 3'
+				),
+				editableCombobox({},
+					'Editable Item 1',
+					'Editable Item 2',
+					'Editable Item 3'
+				),
+				radioButtons({},
+					'Radio Button 1',
+					'Radio Button 2',
+					'Radio Button 3'
+				),
+				tab({stretchy: true},
+					'Page 1',
+					'Page 2',
+					'Page 3'
+				)
+			)
+		)
+	)
+);
 
-box.append(new libui.UiSeparator(), 1);
-
-const hBox2 = new libui.UiHorizontalBox();
-const spin = new libui.UiSpinbox(0, 100);
-spin.value = 33;
-hBox2.append(new libui.UiLabel('Number'), 0);
-hBox2.append(spin, 1);
-box.append(hBox2, 0);
-
-const hBox3 = new libui.UiHorizontalBox();
-const slider = new libui.UiSlider(0, 100);
-slider.value = 33;
-hBox3.append(new libui.UiLabel('Number'), 0);
-hBox3.append(slider, 1);
-box.append(hBox3, 0);
-
-box.append(new libui.UiMultilineEntry(), 0);
-
-const buttons = new libui.UiHorizontalBox();
-buttons.append(new libui.UiButton('Ok'), 0);
-buttons.append(new libui.UiButton('Maybe'), 0);
-buttons.append(new libui.UiButton('Cancel'), 0);
-
-box.append(new libui.UiProgressBar(), 0);
-
-box.append(buttons, 0);
-
-const tabs = new libui.UiTab();
-
-tabs.append('controls', box);
-tabs.append('text', new libui.UiMultilineEntry());
-
-win.setChild(tabs);
 win.show();
 libui.startLoop();
-

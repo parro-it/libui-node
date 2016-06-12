@@ -7,6 +7,8 @@
 UiSlider::UiSlider(int min, int max) :
 	UiControl( (uiControl*) uiNewSlider(min, max) ) {}
 
+UiSlider::UiSlider() : UiControl( (uiControl*) uiNewSlider(0, 100) ) {}
+
 int UiSlider::getValue() {
 	return uiSliderValue((uiSlider*) getHandle());
 }
@@ -22,6 +24,7 @@ INHERITS_CONTROL_METHODS(UiSlider)
 
 NBIND_CLASS(UiSlider) {
 	construct<int, int>();
+	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getValue, setValue);
 	method(onChanged);

@@ -167,6 +167,18 @@ class UiDateTimePicker : public UiControl {
 		DEFINE_CONTROL_METHODS()
 };
 
+class UiDatePicker : public UiControl {
+	public:
+		UiDatePicker();
+		DEFINE_CONTROL_METHODS()
+};
+
+class UiTimePicker : public UiControl {
+	public:
+		UiTimePicker();
+		DEFINE_CONTROL_METHODS()
+};
+
 
 class UiEditableCombobox : public UiControl {
 	DEFINE_EVENT(onChanged)
@@ -227,6 +239,7 @@ class UiSeparator : public UiControl {
 
 class UiLabel : public UiControl {
 	public:
+		UiLabel();
 		UiLabel(const char *text);
 		DEFINE_CONTROL_METHODS()
 		void setText(const char * text);
@@ -251,6 +264,7 @@ class UiButton : public UiControl {
 
 	public:
 		UiButton(const char *text);
+		UiButton();
 		DEFINE_CONTROL_METHODS()
 		void setText(const char * text);
 		const char * getText();
@@ -264,6 +278,7 @@ class UiCheckbox : public UiControl {
 
 	public:
 		UiCheckbox(const char *text);
+		UiCheckbox();
 		DEFINE_CONTROL_METHODS()
 		void setText(const char * text);
 		const char * getText();
@@ -273,10 +288,13 @@ class UiCheckbox : public UiControl {
 
 
 class UiProgressBar : public UiControl {
+	private:
+		int value = 0;
+
 	public:
 		UiProgressBar();
 		DEFINE_CONTROL_METHODS()
-
+		int getValue();
 		void setValue(int value);
 };
 
@@ -286,6 +304,7 @@ class UiSlider : public UiControl {
 
 	public:
 		UiSlider(int min, int max);
+		UiSlider();
 		DEFINE_CONTROL_METHODS()
 
 		int getValue();
@@ -298,6 +317,7 @@ class UiSpinbox : public UiControl {
 
 	public:
 		UiSpinbox(int min, int max);
+		UiSpinbox();
 		DEFINE_CONTROL_METHODS()
 
 		int getValue();

@@ -7,6 +7,10 @@
 UiSpinbox::UiSpinbox(int min, int max) :
 	UiControl( (uiControl*) uiNewSpinbox(min, max) ) {}
 
+UiSpinbox::UiSpinbox() :
+	UiControl( (uiControl*) uiNewSpinbox(0, 100) ) {}
+
+
 int UiSpinbox::getValue() {
 	return uiSpinboxValue((uiSpinbox*) getHandle());
 }
@@ -21,6 +25,7 @@ INHERITS_CONTROL_METHODS(UiSpinbox)
 
 NBIND_CLASS(UiSpinbox) {
 	construct<int, int>();
+	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getValue, setValue);
 	method(onChanged);

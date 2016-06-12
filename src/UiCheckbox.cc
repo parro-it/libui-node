@@ -7,6 +7,7 @@ IMPLEMENT_EVENT(UiCheckbox, uiCheckbox, onToggled, uiCheckboxOnToggled)
 
 
 UiCheckbox::UiCheckbox(const char *text) : UiControl( (uiControl*) uiNewCheckbox(text) ) {}
+UiCheckbox::UiCheckbox() : UiControl( (uiControl*) uiNewCheckbox("") ) {}
 
 INHERITS_CONTROL_METHODS(UiCheckbox)
 
@@ -29,6 +30,7 @@ int UiCheckbox::getChecked() {
 
 NBIND_CLASS(UiCheckbox) {
 	construct<const char *>();
+	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getChecked, setChecked);
 	getset(getText, setText);

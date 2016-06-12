@@ -5,6 +5,7 @@
 
 
 UiLabel::UiLabel(const char *text) : UiControl( (uiControl*) uiNewLabel(text) ) {}
+UiLabel::UiLabel() : UiControl( (uiControl*) uiNewLabel("") ) {}
 
 INHERITS_CONTROL_METHODS(UiLabel)
 
@@ -20,6 +21,7 @@ const char * UiLabel::getText() {
 
 NBIND_CLASS(UiLabel) {
 	construct<const char *>();
+	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getText, setText);
 }
