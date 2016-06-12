@@ -50,70 +50,6 @@ function appendAll(children, parent, stretchy = false) {
 	}
 }
 
-function hBox({
-	enabled = true,
-	visible = true,
-	padded = true
-}, ...children) {
-	const ctrl = new libui.UiHorizontalBox();
-
-	ctrl.visible = visible;
-	ctrl.enabled = enabled;
-	ctrl.padded = padded;
-
-	appendAll(children, ctrl, true);
-
-	return ctrl;
-}
-
-function vBox({
-	enabled = true,
-	visible = true,
-	padded = true
-}, ...children) {
-	const ctrl = new libui.UiVerticalBox();
-
-	ctrl.visible = visible;
-	ctrl.enabled = enabled;
-	ctrl.padded = padded;
-
-	appendAll(children, ctrl);
-
-	return ctrl;
-}
-
-function wrapChildren(children) {
-	const childs = Array.from(children);
-
-	if (childs.length === 1) {
-		return childs[0];
-	}
-
-	const box = vBox({});
-	appendAll(childs, box);
-	return box;
-}
-
-function window({
-	title = '',
-	width,
-	height,
-	margined = true,
-	hasMenubar = false,
-	onClosing = null
-}, ...children) {
-	const win = new libui.UiWindow(title, width, height, hasMenubar);
-	win.margined = margined;
-
-	if (onClosing) {
-		win.onClosing(onClosing);
-	}
-
-	win.setChild(wrapChildren(children));
-
-	return win;
-}
-
 const EventHandler = Symbol('EventHandler');
 
 function mkControl(Class, defaults) {
@@ -138,6 +74,62 @@ function mkControl(Class, defaults) {
 	};
 
 	return contructor;
+}
+
+const hBox = (props, ...children) => {
+	const ctrl = mkControl(libui.UiHorizontalBox, {
+		padded: false,
+		enabled: true,
+		visible: true
+	})(props);
+
+	appendAll(children, ctrl, true);
+
+	return ctrl;
+};
+
+const vBox = (props, ...children) => {
+	const ctrl = mkControl(libui.UiVerticalBox, {
+		padded: false,
+		enabled: true,
+		visible: true
+	})(props);
+
+	appendAll(children, ctrl, false);
+
+	return ctrl;
+};
+
+function wrapChildren(children) {
+	const childs = Array.from(children);
+
+	if (childs.length === 1) {
+		return childs[0];
+	}
+
+	const box = vBox({padded: true});
+	appendAll(childs, box);
+	return box;
+}
+
+function window({
+	title = '',
+	width,
+	height,
+	margined = true,
+	hasMenubar = false,
+	onClosing = null
+}, ...children) {
+	const win = new libui.UiWindow(title, width, height, hasMenubar);
+	win.margined = margined;
+
+	if (onClosing) {
+		win.onClosing(onClosing);
+	}
+
+	win.setChild(wrapChildren(children));
+
+	return win;
 }
 
 const group = (props, ...children) => {

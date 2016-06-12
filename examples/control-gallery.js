@@ -32,6 +32,9 @@ let slide;
 let progress;
 
 const updateValue = value => {
+	if (value === spin.value) {
+		return;
+	}
 	spin.value = value;
 	slide.value = value;
 	progress.value = value;
@@ -92,7 +95,7 @@ menu([{
 }]);
 
 win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 480, onClosing},
-	hBox({},
+	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
 			button({text: 'Button'}),
 			checkBox({text: 'Checkbox'}),
@@ -104,7 +107,7 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 			timePicker({})
 		),
 
-		vBox({},
+		vBox({padded: true},
 			group({margined: true, title: 'Numbers'},
 				spin = spinbox({onChanged: () => updateValue(spin.value)}),
 				slide = slider({onChanged: () => updateValue(slide.value)}),
