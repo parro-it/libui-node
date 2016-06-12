@@ -26,6 +26,9 @@ void UiCombobox::setSelected(int n) {
 		(uiCombobox *) getHandle(),
 		n
 	);
+	if (onSelectedCallback != NULL) {
+		(*onSelectedCallback)();
+	}
 }
 
 

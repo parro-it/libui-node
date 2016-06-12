@@ -188,12 +188,9 @@ test(...checkProperty(libui.UiEditableCombobox, 'enabled', Boolean));
 test(...checkProperty(libui.UiEditableCombobox, 'text', String));
 
 test(...checkEvent(libui.UiSlider, 'onChanged', 'value', Number));
+test(...checkEvent(libui.UiCombobox, 'onSelected', 'selected', Number, comboBuilder));
 
 /*
-
-const slider = mkControl(libui.UiSlider, {
-	onChanged: EventHandler
-});
 
 const combobox = (props, ...children) => {
 	const ctrl = mkControl(libui.UiCombobox, {
