@@ -29,25 +29,29 @@
 #define DEFINE_CONTROL_METHODS() \
 	void destroy(); \
 	void setParent (UiControl *parent); \
-	int toplevel(); \
-	int getVisible(); \
-	void setVisible(int visible); \
-	int getEnabled(); \
-	void setEnabled(int enabled);
+	bool toplevel(); \
+	bool getVisible(); \
+	void setVisible(bool visible); \
+	bool getEnabled(); \
+	void setEnabled(bool enabled);
 
 #define INHERITS_CONTROL_METHODS(CLASS) \
 	void CLASS::destroy() { UiControl::destroy(); } \
 	void CLASS::setParent(UiControl *parent) { UiControl::setParent(parent); } \
-	int CLASS::toplevel() { return UiControl::toplevel(); } \
-	int CLASS::getVisible() { return UiControl::getVisible(); } \
-	void CLASS::setVisible(int visible) { UiControl::setVisible(visible); } \
-	int CLASS::getEnabled() { return UiControl::getEnabled(); } \
-	void CLASS::setEnabled(int enabled) { UiControl::setEnabled(enabled); }
+	bool CLASS::toplevel() { return UiControl::toplevel(); } \
+	bool CLASS::getVisible() { return UiControl::getVisible(); } \
+	void CLASS::setVisible(bool visible) { UiControl::setVisible(visible); } \
+	bool CLASS::getEnabled() { return UiControl::getEnabled(); } \
+	void CLASS::setEnabled(bool enabled) { UiControl::setEnabled(enabled); }
 
 #define DECLARE_CONTROL_METHODS() \
 	method(destroy); \
 	method(setParent); \
 	method(toplevel); \
+	method(getVisible); \
+	method(setVisible); \
+	method(getEnabled); \
+	method(setEnabled); \
 	getset(getVisible, setVisible); \
 	getset(getEnabled, setEnabled);
 
@@ -70,7 +74,11 @@
 #define DECLARE_ENTRY_METHODS() \
 	getset(getText, setText); \
 	getset(getReadOnly, setReadOnly); \
-	method(onChanged);
+	method(onChanged); \
+	method(getText); \
+	method(setText); \
+	method(getReadOnly); \
+	method(setReadOnly);
 
 
 #define DEFINE_BOX_METHODS() \
@@ -87,6 +95,8 @@
 
 #define DECLARE_BOX_METHODS() \
 	getset(getPadded, setPadded); \
+	method(getPadded); \
+	method(setPadded); \
 	method(append); \
 	method(deleteAt);
 

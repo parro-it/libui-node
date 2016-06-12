@@ -19,15 +19,15 @@ void UiControl::setParent (UiControl *parent) {
 	uiControlSetParent(handle, parent->getHandle());
 }
 
-int UiControl::toplevel() {
+bool UiControl::toplevel() {
 	return uiControlToplevel(handle);
 }
 
-int UiControl::getVisible() {
+bool UiControl::getVisible() {
 	return uiControlVisible(handle);
 }
 
-void UiControl::setVisible(int visible) {
+void UiControl::setVisible(bool visible) {
 	if (visible == 1) {
 		uiControlShow(handle);
 	} else {
@@ -35,11 +35,11 @@ void UiControl::setVisible(int visible) {
 	}
 }
 
-int UiControl::getEnabled() {
+bool UiControl::getEnabled() {
 	return uiControlEnabled(handle);
 }
 
-void UiControl::setEnabled(int enabled) {
+void UiControl::setEnabled(bool enabled) {
 	if (enabled == 1) {
 		uiControlEnable(handle);
 	} else {
