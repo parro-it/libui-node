@@ -59,16 +59,16 @@
 #define DEFINE_ENTRY_METHODS() \
 	void setText(const char *  text); \
 	const char *  getText(); \
-	void setReadOnly(int readOnly); \
-	int getReadOnly(); \
+	void setReadOnly(bool readOnly); \
+	bool getReadOnly(); \
 
 
 
 #define INHERITS_ENTRY_METHODS(CLASS) \
 	void CLASS::setText(const char *  text) { UiEntryBase::setText(text); } \
 	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
-	void CLASS::setReadOnly(int readOnly) { UiEntryBase::setReadOnly(readOnly); }\
-	int CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); } \
+	void CLASS::setReadOnly(bool readOnly) { UiEntryBase::setReadOnly(readOnly); }\
+	bool CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); } \
 	void CLASS::onChanged(nbind::cbFunction & cb) { UiEntryBase::onChanged(cb); }
 
 #define DECLARE_ENTRY_METHODS() \
@@ -151,8 +151,8 @@ class UiMultilineEntry : public UiControl {
 		DEFINE_CONTROL_METHODS()
 		void setText(const char *  text);
 		const char * getText();
-		void setReadOnly(int readOnly);
-		int getReadOnly();
+		void setReadOnly(bool readOnly);
+		bool getReadOnly();
 		void append(const char *text);
 };
 

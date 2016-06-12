@@ -19,11 +19,11 @@ const char * UiMultilineEntry::getText() {
 	return uiMultilineEntryText((uiMultilineEntry *) getHandle());
 }
 
-void UiMultilineEntry::setReadOnly(int readOnly) {
+void UiMultilineEntry::setReadOnly(bool readOnly) {
 	uiMultilineEntrySetReadOnly((uiMultilineEntry *) getHandle(), readOnly);
 }
 
-int UiMultilineEntry::getReadOnly() {
+bool UiMultilineEntry::getReadOnly() {
 	return uiMultilineEntryReadOnly((uiMultilineEntry *) getHandle());
 }
 
@@ -40,6 +40,10 @@ NBIND_CLASS(UiMultilineEntry) {
 	DECLARE_CONTROL_METHODS()
 	getset(getText, setText);
 	getset(getReadOnly, setReadOnly);
+	method(getText);
+	method(setText);
+	method(getReadOnly);
+	method(setReadOnly);
 	method(append);
 	method(onChanged);
 

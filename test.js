@@ -21,3 +21,159 @@ test('setting Entry text emit onChange', async (t) => {
 	entry.text = 'changed';
 	t.true(emitted);
 });
+
+function checkPropertyTest(Class, propertyName, type) {
+	return [`Widget ${Class.name} has property ${propertyName}`, t => {
+		const widget = new Class();
+		const setterName = 'set' + propertyName[0].toUpperCase() + propertyName.slice(1);
+		const getterName = 'get' + propertyName[0].toUpperCase() + propertyName.slice(1);
+		const setter = widget[setterName].bind(widget);
+		const getter = widget[getterName].bind(widget);
+		t.true(typeof getter === 'function');
+		t.true(typeof setter === 'function');
+
+		if (type === Boolean) {
+			setter(true);
+			t.true(getter());
+			setter(false);
+			t.false(getter());
+		}
+
+		if (type === String) {
+			setter('some value');
+			t.is(getter(), 'some value');
+			setter('');
+			t.is(getter(), '');
+		}
+	}];
+}
+
+/* eslint-disable ava/test-title */
+/* eslint-disable ava/no-identical-title */
+
+test(...checkPropertyTest(libui.UiEntry, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiEntry, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiEntry, 'readOnly', Boolean));
+test(...checkPropertyTest(libui.UiEntry, 'text', String));
+
+test(...checkPropertyTest(libui.UiMultilineEntry, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiMultilineEntry, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiMultilineEntry, 'readOnly', Boolean));
+test(...checkPropertyTest(libui.UiMultilineEntry, 'text', String));
+
+
+/*
+const entry = mkControl(libui.UiEntry, {
+	onChanged: EventHandler
+});
+
+const multilineEntry = mkControl(libui.UiMultilineEntry, {
+	onChanged: EventHandler
+});
+
+const label = mkControl(libui.UiLabel, {
+	enabled: true,
+	text: '',
+	visible: true
+});
+
+const separator = mkControl(libui.UiSeparator, {
+	enabled: true,
+	visible: true
+});
+
+const datePicker = mkControl(libui.UiDatePicker, {
+	enabled: true,
+	visible: true
+});
+
+const timePicker = mkControl(libui.UiTimePicker, {
+	enabled: true,
+	visible: true
+});
+
+const dateTimePicker = mkControl(libui.UiDateTimePicker, {
+	enabled: true,
+	visible: true
+});
+
+const button = mkControl(libui.UiButton, {
+	enabled: true,
+	visible: true,
+	text: '',
+	onClicked: EventHandler
+});
+
+const checkBox = mkControl(libui.UiCheckbox, {
+	enabled: true,
+	visible: true,
+	text: '',
+	checked: false,
+	onToggled: EventHandler
+});
+
+const spinbox = mkControl(libui.UiSpinbox, {
+	enabled: true,
+	visible: true,
+	value: 0,
+	onChanged: EventHandler
+});
+
+const slider = mkControl(libui.UiSlider, {
+	enabled: true,
+	visible: true,
+	value: 0,
+	onChanged: EventHandler
+});
+
+const progressBar = mkControl(libui.UiProgressBar, {
+	enabled: true,
+	visible: true,
+	value: 0
+});
+
+const combobox = (props, ...children) => {
+	const ctrl = mkControl(libui.UiCombobox, {
+		enabled: true,
+		visible: true,
+		selected: 0,
+		onSelected: EventHandler
+	})(props);
+
+	for (const child of children) {
+		ctrl.append(child);
+	}
+
+	return ctrl;
+};
+
+const radioButtons = (props, ...children) => {
+	const ctrl = mkControl(libui.UiRadioButtons, {
+		enabled: true,
+		visible: true,
+		selected: 0,
+		onSelected: EventHandler
+	})(props);
+
+	for (const child of children) {
+		ctrl.append(child);
+	}
+
+	return ctrl;
+};
+
+const editableCombobox = (props, ...children) => {
+	const ctrl = mkControl(libui.UiEditableCombobox, {
+		enabled: true,
+		visible: true,
+		text: '',
+		onChanged: EventHandler
+	})(props);
+
+	for (const child of children) {
+		ctrl.append(child);
+	}
+
+	return ctrl;
+};
+*/

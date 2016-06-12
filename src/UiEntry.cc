@@ -15,11 +15,11 @@ const char * UiEntryBase::getText() {
 	return uiEntryText((uiEntry *) getHandle());
 }
 
-void UiEntryBase::setReadOnly(int readOnly) {
+void UiEntryBase::setReadOnly(bool readOnly) {
 	uiEntrySetReadOnly((uiEntry *) getHandle(), readOnly);
 }
 
-int UiEntryBase::getReadOnly() {
+bool UiEntryBase::getReadOnly() {
 	return uiEntryReadOnly((uiEntry *) getHandle());
 }
 
