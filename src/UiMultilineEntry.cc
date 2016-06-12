@@ -13,6 +13,9 @@ IMPLEMENT_EVENT(UiMultilineEntry, uiMultilineEntry, onChanged, uiMultilineEntryO
 
 void UiMultilineEntry::setText(const char * text) {
 	uiMultilineEntrySetText((uiMultilineEntry *) getHandle(), text);
+	if (onChangedCallback != NULL) {
+		(*onChangedCallback)();
+	}
 }
 
 const char * UiMultilineEntry::getText() {

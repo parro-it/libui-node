@@ -20,7 +20,11 @@ void UiRadioButtons::setSelected(int n) {
 		(uiRadioButtons *) getHandle(),
 		n
 	);
+	if (onSelectedCallback != NULL) {
+		(*onSelectedCallback)();
+	}
 }
+
 void UiRadioButtons::append(const char *text) {
 	uiRadioButtonsAppend(
 		(uiRadioButtons *) getHandle(),

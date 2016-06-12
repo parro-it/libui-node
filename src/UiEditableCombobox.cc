@@ -20,6 +20,9 @@ void UiEditableCombobox::append(const char *text) {
 
 void UiEditableCombobox::setText(const char * text) {
 	uiEditableComboboxSetText((uiEditableCombobox *) getHandle(), text);
+	if (onChangedCallback != NULL) {
+		(*onChangedCallback)();
+	}
 }
 
 const char * UiEditableCombobox::getText() {

@@ -21,6 +21,9 @@ const char * UiCheckbox::getText() {
 
 void UiCheckbox::setChecked(bool checked) {
 	uiCheckboxSetChecked((uiCheckbox *) getHandle(), checked);
+	if (onToggledCallback != NULL) {
+		(*onToggledCallback)();
+	}
 }
 
 bool UiCheckbox::getChecked() {

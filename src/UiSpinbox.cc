@@ -17,6 +17,9 @@ int UiSpinbox::getValue() {
 
 void UiSpinbox::setValue(int value) {
 	uiSpinboxSetValue((uiSpinbox*) getHandle(),value);
+	if (onChangedCallback != NULL) {
+		(*onChangedCallback)();
+	}
 }
 
 IMPLEMENT_EVENT(UiSpinbox, uiSpinbox, onChanged, uiSpinboxOnChanged)

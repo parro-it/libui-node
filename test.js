@@ -9,20 +9,6 @@ test('new UiWindow - throw if too few arguments', t => {
 	t.is(err.message, 'Wrong number of arguments');
 });
 
-test('setting Entry text emit onChange', async (t) => {
-	let emitted;
-
-	const entry = new libui.UiEntry();
-	entry.onChanged(() => {
-		emitted = true;
-		libui.stopLoop();
-	});
-
-	libui.startLoop();
-	entry.text = 'changed';
-	t.true(emitted);
-});
-
 function checkEvent(Class, eventName, propertyName, propertyType, builder = () => new Class()) {
 	return [`Widget ${Class.name} has event ${eventName}`, t => {
 		let emitted = false;
@@ -189,42 +175,8 @@ test(...checkProperty(libui.UiEditableCombobox, 'text', String));
 
 test(...checkEvent(libui.UiSlider, 'onChanged', 'value', Number));
 test(...checkEvent(libui.UiCombobox, 'onSelected', 'selected', Number, comboBuilder));
-
-/*
-
-const combobox = (props, ...children) => {
-	const ctrl = mkControl(libui.UiCombobox, {
-		onSelected: EventHandler
-	})
-
-const radioButtons = (props, ...children) => {
-	const ctrl = mkControl(libui.UiRadioButtons, {
-		onSelected: EventHandler
-	})
-
-const editableCombobox = (props, ...children) => {
-	const ctrl = mkControl(libui.UiEditableCombobox, {
-		onChanged: EventHandler
-	})
-
-const entry = mkControl(libui.UiEntry, {
-	onChanged: EventHandler
-});
-
-const multilineEntry = mkControl(libui.UiMultilineEntry, {
-	onChanged: EventHandler
-});
-
-const button = mkControl(libui.UiButton, {
-	onClicked: EventHandler
-});
-
-const checkBox = mkControl(libui.UiCheckbox, {
-	onToggled: EventHandler
-});
-
-const spinbox = mkControl(libui.UiSpinbox, {
-	onChanged: EventHandler
-});
-
-*/
+test(...checkEvent(libui.UiRadioButtons, 'onSelected', 'selected', Number, radioBuilder));
+test(...checkEvent(libui.UiEditableCombobox, 'onChanged', 'text', String));
+test(...checkEvent(libui.UiEntry, 'onChanged', 'text', String));
+test(...checkEvent(libui.UiSpinbox, 'onChanged', 'value', Number));
+test(...checkEvent(libui.UiCheckbox, 'onToggled', 'checked', Boolean));
