@@ -1,3 +1,4 @@
+const {readFileSync, writeFileSync} = require('fs');
 const libui = require('../index.js');
 libui.Ui.init();
 const {
@@ -21,36 +22,57 @@ const winProps = {
 libui.Ui.init();
 
 let win;
+let editor;
+let status;
+let currentFileName = '';
+
+function newFile() {
+	editor.text = '';
+	currentFileName = '';
+}
+
+function openFile() {
+	const filename = libui.UiDialogs.openFile(win);
+	if (filename) {
+		const content = readFileSync(filename, 'utf8');
+		editor.text = content;
+		currentFileName = filename;
+	}
+}
+
+function saveFileAs() {
+	const filename = libui.UiDialogs.saveFile(win);
+	if (filename) {
+		currentFileName = filename;
+		writeFileSync(currentFileName, editor.text);
+	}
+}
+
+function saveFile() {
+	if (!currentFileName) {
+		return saveFileAs();
+	}
+	writeFileSync(currentFileName, editor.text);
+}
 
 menu([{
 	label: 'File',
 	submenu: [
 		{
+			label: 'New file',
+			click: newFile
+		}, {
 			label: 'Open',
-			click: () => {
-				const filename = libui.UiDialogs.openFile(win);
-				if (filename) {
-					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
-				}
-			}
+			click: openFile
 		}, {
 			label: 'Close current tab',
-			click: () => {
-
-			}
+			click: () => {}
 		}, {
 			label: 'Save',
-			click: () => {
-
-			}
+			click: saveFile
 		}, {
 			label: 'Save as',
-			click: () => {
-				const filename = libui.UiDialogs.saveFile(win);
-				if (filename) {
-					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
-				}
-			}
+			click: saveFileAs
 		}, {
 			role: 'quit'
 		}
@@ -82,9 +104,9 @@ menu([{
 
 win = window(winProps,
 	tab({stretchy: true},
-		multilineEntry({stretchy: true, tabTitle: 'New file'})
+		editor = multilineEntry({stretchy: true, tabTitle: 'New file'})
 	),
-	label({stretchy: false, text: 'File not changed'})
+	status = label({stretchy: false, text: 'File not changed'})
 );
 
 win.show();
