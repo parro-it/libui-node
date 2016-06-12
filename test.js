@@ -65,7 +65,8 @@ test(...checkPropertyTest(libui.UiLabel, 'visible', Boolean));
 test(...checkPropertyTest(libui.UiLabel, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiLabel, 'text', String));
 
-
+test(...checkPropertyTest(libui.UiSeparator, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiSeparator, 'enabled', Boolean));
 
 /*
 const entry = mkControl(libui.UiEntry, {
@@ -74,11 +75,6 @@ const entry = mkControl(libui.UiEntry, {
 
 const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	onChanged: EventHandler
-});
-
-const separator = mkControl(libui.UiSeparator, {
-	enabled: true,
-	visible: true
 });
 
 const datePicker = mkControl(libui.UiDatePicker, {
