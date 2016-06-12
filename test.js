@@ -80,6 +80,9 @@ test(...checkPropertyTest(libui.UiTimePicker, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiDateTimePicker, 'visible', Boolean));
 test(...checkPropertyTest(libui.UiDateTimePicker, 'enabled', Boolean));
 
+test(...checkPropertyTest(libui.UiButton, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiButton, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiButton, 'text', String));
 
 
 /*

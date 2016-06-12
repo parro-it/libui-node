@@ -28,6 +28,8 @@ NBIND_CLASS(UiButton) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getText, setText);
+	method(getText);
+	method(setText);
 	method(onClicked);
 }
 
