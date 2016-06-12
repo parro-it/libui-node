@@ -68,6 +68,20 @@ test(...checkPropertyTest(libui.UiLabel, 'text', String));
 test(...checkPropertyTest(libui.UiSeparator, 'visible', Boolean));
 test(...checkPropertyTest(libui.UiSeparator, 'enabled', Boolean));
 
+test(...checkPropertyTest(libui.UiSeparator, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiSeparator, 'enabled', Boolean));
+
+test(...checkPropertyTest(libui.UiDatePicker, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiDatePicker, 'enabled', Boolean));
+
+test(...checkPropertyTest(libui.UiTimePicker, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiTimePicker, 'enabled', Boolean));
+
+test(...checkPropertyTest(libui.UiDateTimePicker, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiDateTimePicker, 'enabled', Boolean));
+
+
+
 /*
 const entry = mkControl(libui.UiEntry, {
 	onChanged: EventHandler
@@ -77,20 +91,6 @@ const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	onChanged: EventHandler
 });
 
-const datePicker = mkControl(libui.UiDatePicker, {
-	enabled: true,
-	visible: true
-});
-
-const timePicker = mkControl(libui.UiTimePicker, {
-	enabled: true,
-	visible: true
-});
-
-const dateTimePicker = mkControl(libui.UiDateTimePicker, {
-	enabled: true,
-	visible: true
-});
 
 const button = mkControl(libui.UiButton, {
 	enabled: true,
