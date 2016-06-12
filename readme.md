@@ -77,7 +77,8 @@ Since `libui` binaries are relatively small, we plan to precompile them for supp
 
 * Each `libui` widget implementaion is written in it's own C++ file in `src` folder.
 * Each widget is implemented in it's own C++ class, each class is a simple wrapper for related libui C functions.
-* There is an header file called `ui-node.h` that contains all classes definitions.
+* There is an header file called `src/ui-node.h` that contains all classes definitions.
+* Widget events does not follow `node` convention: if you attach an handler to an event, previous one will be overwritten and never be called. This will be resolved on future high-level API repo, where each widget will be an `EventEmitter` instance.
 * We build the project using the awesome [nbind](https://github.com/charto/nbind) tool, that automate the process of linking a straight C++ class to Node.js stuff...
 * All the GUI code run in the node javascript main thread. You must call `libui.startLoop` to start the GUI event loop. It run one step at a time, you can see in [index.js](https://github.com/parro-it/libui-node/blob/master/index.js) how this is implemented.
 
