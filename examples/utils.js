@@ -15,22 +15,26 @@ function menu(template) {
 					mnuObj.appendCheckItem(subMnu.label || '');
 					break;
 				default:
-					switch (subMnu.role) {
-						case 'quit':
-							mnuObj.appendQuitItem();
-							break;
-						case 'about':
-							mnuObj.appendAboutItem();
-							break;
-						case 'preferences':
-							mnuObj.appendPreferencesItem();
-							break;
-						default:
-							const subMnuObj = mnuObj.appendItem(subMnu.label || '');
-							if (subMnu.click) {
-								subMnuObj.onClicked(subMnu.click);
-							}
+					if (subMnu.role) {
+						switch (subMnu.role) {
+							case 'quit':
+								mnuObj.appendQuitItem();
+								break;
+							case 'about':
+								mnuObj.appendAboutItem();
+								break;
+							case 'preferences':
+								mnuObj.appendPreferencesItem();
+								break;
+							default:
+						}
+					} else {
+						const subMnuObj = mnuObj.appendItem(subMnu.label || '');
+						if (subMnu.click) {
+							subMnuObj.onClicked(subMnu.click);
+						}
 					}
+
 			}
 		}
 	}
