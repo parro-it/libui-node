@@ -34,6 +34,8 @@ NBIND_CLASS(UiCombobox) {
 	DECLARE_CONTROL_METHODS()
 	method(append);
 	getset(getSelected, setSelected);
+	method(getSelected);
+	method(setSelected);
 	method(onSelected);
 }
 

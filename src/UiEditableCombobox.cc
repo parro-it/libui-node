@@ -31,5 +31,7 @@ NBIND_CLASS(UiEditableCombobox) {
 	DECLARE_CONTROL_METHODS()
 	method(append);
 	getset(getText, setText);
+	method(getText);
+	method(setText);
 	method(onChanged);
 }

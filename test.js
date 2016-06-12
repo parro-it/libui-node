@@ -22,9 +22,9 @@ test('setting Entry text emit onChange', async (t) => {
 	t.true(emitted);
 });
 
-function checkPropertyTest(Class, propertyName, type) {
+function checkPropertyTest(Class, propertyName, type, builder = () => new Class()) {
 	return [`Widget ${Class.name} has property ${propertyName}`, t => {
-		const widget = new Class();
+		const widget = builder();
 		const setterName = 'set' + propertyName[0].toUpperCase() + propertyName.slice(1);
 		const getterName = 'get' + propertyName[0].toUpperCase() + propertyName.slice(1);
 		const setter = widget[setterName].bind(widget);
@@ -47,8 +47,8 @@ function checkPropertyTest(Class, propertyName, type) {
 		}
 
 		if (type === Number) {
-			setter(42);
-			t.is(getter(), 42);
+			setter(2);
+			t.is(getter(), 2);
 			setter(0);
 			t.is(getter(), 0);
 		}
@@ -108,6 +108,34 @@ test(...checkPropertyTest(libui.UiProgressBar, 'visible', Boolean));
 test(...checkPropertyTest(libui.UiProgressBar, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiProgressBar, 'value', Number));
 
+const comboBuilder = () => {
+	const cmb = new libui.UiCombobox();
+	cmb.append('1');
+	cmb.append('2');
+	cmb.append('3');
+	return cmb;
+};
+
+const radioBuilder = () => {
+	const cmb = new libui.UiRadioButtons();
+	cmb.append('1');
+	cmb.append('2');
+	cmb.append('3');
+	return cmb;
+};
+
+test(...checkPropertyTest(libui.UiCombobox, 'visible', Boolean, comboBuilder));
+test(...checkPropertyTest(libui.UiCombobox, 'enabled', Boolean, comboBuilder));
+test(...checkPropertyTest(libui.UiCombobox, 'selected', Number, comboBuilder));
+
+test(...checkPropertyTest(libui.UiRadioButtons, 'visible', Boolean, radioBuilder));
+test(...checkPropertyTest(libui.UiRadioButtons, 'enabled', Boolean, radioBuilder));
+test(...checkPropertyTest(libui.UiRadioButtons, 'selected', Number, radioBuilder));
+
+test(...checkPropertyTest(libui.UiEditableCombobox, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiEditableCombobox, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiEditableCombobox, 'text', String));
+
 /*
 
 const slider = mkControl(libui.UiSlider, {
@@ -116,25 +144,16 @@ const slider = mkControl(libui.UiSlider, {
 
 const combobox = (props, ...children) => {
 	const ctrl = mkControl(libui.UiCombobox, {
-		enabled: true,
-		visible: true,
-		selected: 0,
 		onSelected: EventHandler
 	})
 
 const radioButtons = (props, ...children) => {
 	const ctrl = mkControl(libui.UiRadioButtons, {
-		enabled: true,
-		visible: true,
-		selected: 0,
 		onSelected: EventHandler
 	})
 
 const editableCombobox = (props, ...children) => {
 	const ctrl = mkControl(libui.UiEditableCombobox, {
-		enabled: true,
-		visible: true,
-		text: '',
 		onChanged: EventHandler
 	})
 
