@@ -27,6 +27,8 @@ NBIND_CLASS(UiSlider) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getValue, setValue);
+	method(getValue);
+	method(setValue);
 	method(onChanged);
 }
 

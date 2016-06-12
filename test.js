@@ -100,7 +100,45 @@ test(...checkPropertyTest(libui.UiSpinbox, 'visible', Boolean));
 test(...checkPropertyTest(libui.UiSpinbox, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiSpinbox, 'value', Number));
 
+test(...checkPropertyTest(libui.UiSlider, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiSlider, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiSlider, 'value', Number));
+
+test(...checkPropertyTest(libui.UiProgressBar, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiProgressBar, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiProgressBar, 'value', Number));
+
 /*
+
+const slider = mkControl(libui.UiSlider, {
+	onChanged: EventHandler
+});
+
+
+const combobox = (props, ...children) => {
+	const ctrl = mkControl(libui.UiCombobox, {
+		enabled: true,
+		visible: true,
+		selected: 0,
+		onSelected: EventHandler
+	})
+
+const radioButtons = (props, ...children) => {
+	const ctrl = mkControl(libui.UiRadioButtons, {
+		enabled: true,
+		visible: true,
+		selected: 0,
+		onSelected: EventHandler
+	})
+
+const editableCombobox = (props, ...children) => {
+	const ctrl = mkControl(libui.UiEditableCombobox, {
+		enabled: true,
+		visible: true,
+		text: '',
+		onChanged: EventHandler
+	})
+
 const entry = mkControl(libui.UiEntry, {
 	onChanged: EventHandler
 });
@@ -121,61 +159,4 @@ const spinbox = mkControl(libui.UiSpinbox, {
 	onChanged: EventHandler
 });
 
-const slider = mkControl(libui.UiSlider, {
-	enabled: true,
-	visible: true,
-	value: 0,
-	onChanged: EventHandler
-});
-
-const progressBar = mkControl(libui.UiProgressBar, {
-	enabled: true,
-	visible: true,
-	value: 0
-});
-
-const combobox = (props, ...children) => {
-	const ctrl = mkControl(libui.UiCombobox, {
-		enabled: true,
-		visible: true,
-		selected: 0,
-		onSelected: EventHandler
-	})(props);
-
-	for (const child of children) {
-		ctrl.append(child);
-	}
-
-	return ctrl;
-};
-
-const radioButtons = (props, ...children) => {
-	const ctrl = mkControl(libui.UiRadioButtons, {
-		enabled: true,
-		visible: true,
-		selected: 0,
-		onSelected: EventHandler
-	})(props);
-
-	for (const child of children) {
-		ctrl.append(child);
-	}
-
-	return ctrl;
-};
-
-const editableCombobox = (props, ...children) => {
-	const ctrl = mkControl(libui.UiEditableCombobox, {
-		enabled: true,
-		visible: true,
-		text: '',
-		onChanged: EventHandler
-	})(props);
-
-	for (const child of children) {
-		ctrl.append(child);
-	}
-
-	return ctrl;
-};
 */
