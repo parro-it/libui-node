@@ -61,6 +61,11 @@ test(...checkPropertyTest(libui.UiMultilineEntry, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiMultilineEntry, 'readOnly', Boolean));
 test(...checkPropertyTest(libui.UiMultilineEntry, 'text', String));
 
+test(...checkPropertyTest(libui.UiLabel, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiLabel, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiLabel, 'text', String));
+
+
 
 /*
 const entry = mkControl(libui.UiEntry, {
@@ -69,12 +74,6 @@ const entry = mkControl(libui.UiEntry, {
 
 const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	onChanged: EventHandler
-});
-
-const label = mkControl(libui.UiLabel, {
-	enabled: true,
-	text: '',
-	visible: true
 });
 
 const separator = mkControl(libui.UiSeparator, {

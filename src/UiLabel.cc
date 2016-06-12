@@ -24,5 +24,7 @@ NBIND_CLASS(UiLabel) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getText, setText);
+	method(getText);
+	method(setText);
 }
 
