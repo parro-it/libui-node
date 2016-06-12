@@ -292,8 +292,8 @@ class UiCheckbox : public UiControl {
 		DEFINE_CONTROL_METHODS()
 		void setText(const char * text);
 		const char * getText();
-		void setChecked(int checked);
-		int getChecked();
+		void setChecked(bool checked);
+		bool getChecked();
 };
 
 

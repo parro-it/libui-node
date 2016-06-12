@@ -19,11 +19,11 @@ const char * UiCheckbox::getText() {
 	return uiCheckboxText((uiCheckbox *) getHandle());
 }
 
-void UiCheckbox::setChecked(int checked) {
+void UiCheckbox::setChecked(bool checked) {
 	uiCheckboxSetChecked((uiCheckbox *) getHandle(), checked);
 }
 
-int UiCheckbox::getChecked() {
+bool UiCheckbox::getChecked() {
 	return uiCheckboxChecked((uiCheckbox *) getHandle());
 }
 
@@ -34,6 +34,10 @@ NBIND_CLASS(UiCheckbox) {
 	DECLARE_CONTROL_METHODS()
 	getset(getChecked, setChecked);
 	getset(getText, setText);
+	method(getChecked);
+	method(setChecked);
+	method(getText);
+	method(setText);
 	method(onToggled);
 }
 

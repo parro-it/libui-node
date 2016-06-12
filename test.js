@@ -84,6 +84,10 @@ test(...checkPropertyTest(libui.UiButton, 'visible', Boolean));
 test(...checkPropertyTest(libui.UiButton, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiButton, 'text', String));
 
+test(...checkPropertyTest(libui.UiCheckbox, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiCheckbox, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiCheckbox, 'checked', Boolean));
+test(...checkPropertyTest(libui.UiCheckbox, 'text', String));
 
 /*
 const entry = mkControl(libui.UiEntry, {
@@ -94,19 +98,11 @@ const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	onChanged: EventHandler
 });
 
-
 const button = mkControl(libui.UiButton, {
-	enabled: true,
-	visible: true,
-	text: '',
 	onClicked: EventHandler
 });
 
 const checkBox = mkControl(libui.UiCheckbox, {
-	enabled: true,
-	visible: true,
-	text: '',
-	checked: false,
 	onToggled: EventHandler
 });
 
