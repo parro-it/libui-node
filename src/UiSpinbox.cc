@@ -28,6 +28,8 @@ NBIND_CLASS(UiSpinbox) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 	getset(getValue, setValue);
+	method(getValue);
+	method(setValue);
 	method(onChanged);
 }
 

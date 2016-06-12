@@ -45,6 +45,13 @@ function checkPropertyTest(Class, propertyName, type) {
 			setter('');
 			t.is(getter(), '');
 		}
+
+		if (type === Number) {
+			setter(42);
+			t.is(getter(), 42);
+			setter(0);
+			t.is(getter(), 0);
+		}
 	}];
 }
 
@@ -89,6 +96,10 @@ test(...checkPropertyTest(libui.UiCheckbox, 'enabled', Boolean));
 test(...checkPropertyTest(libui.UiCheckbox, 'checked', Boolean));
 test(...checkPropertyTest(libui.UiCheckbox, 'text', String));
 
+test(...checkPropertyTest(libui.UiSpinbox, 'visible', Boolean));
+test(...checkPropertyTest(libui.UiSpinbox, 'enabled', Boolean));
+test(...checkPropertyTest(libui.UiSpinbox, 'value', Number));
+
 /*
 const entry = mkControl(libui.UiEntry, {
 	onChanged: EventHandler
@@ -107,9 +118,6 @@ const checkBox = mkControl(libui.UiCheckbox, {
 });
 
 const spinbox = mkControl(libui.UiSpinbox, {
-	enabled: true,
-	visible: true,
-	value: 0,
 	onChanged: EventHandler
 });
 
