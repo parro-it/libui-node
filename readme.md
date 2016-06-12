@@ -75,18 +75,18 @@ Since `libui` binaries are relatively small, we plan to precompile them for supp
 
 # Contribution & design
 
-	* Each `libui` widget implementaion is written in it's own C++ file in `src` folder.
-	* Each widget is implemented in it's own C++ class, each class is a simple wrapper for related libui C functions.
-	* There is an header file called `ui-node.h` that contains all classes definitions.
-	* We build the project using the awesome [nbind](https://github.com/charto/nbind) tool, that automate the process of linking a straight C++ class to Node.js stuff...
-	* All the GUI code run in the node javascript main thread. You must call `libui.startLoop` to start the GUI event loop. It run one step at a time, you can see in [index.js](https://github.com/parro-it/libui-node/blob/master/index.js) how this is implemented.
+* Each `libui` widget implementaion is written in it's own C++ file in `src` folder.
+* Each widget is implemented in it's own C++ class, each class is a simple wrapper for related libui C functions.
+* There is an header file called `ui-node.h` that contains all classes definitions.
+* We build the project using the awesome [nbind](https://github.com/charto/nbind) tool, that automate the process of linking a straight C++ class to Node.js stuff...
+* All the GUI code run in the node javascript main thread. You must call `libui.startLoop` to start the GUI event loop. It run one step at a time, you can see in [index.js](https://github.com/parro-it/libui-node/blob/master/index.js) how this is implemented.
 
 ## Useful NPM scripts
 
-	* test - run AVA tests && XO linting.
-	* start - start the control gallery example
-	* build - rebuild C++ sources
-	* build:libui - rebuild libui sources under `libui` git submodule
+* test - run AVA tests && XO linting.
+* start - start the control gallery example
+* build - rebuild C++ sources
+* build:libui - rebuild libui sources under `libui` git submodule
 
 ## Related projects
 
@@ -98,7 +98,7 @@ Since `libui` binaries are relatively small, we plan to precompile them for supp
 
 [![Andrea Parodi](https://avatars0.githubusercontent.com/u/11197111?s=130)](https://github.com/parro-it) | [![Juha Järvi](https://avatars3.githubusercontent.com/u/778781?s=130)](https://github.com/jjrv) | [![Chan Guan Hao](https://avatars1.githubusercontent.com/u/5748750?s=130)](https://github.com/mavenave)
 ---|---|---
-[Andrea Parodi](https://github.com/parro-it) [Juha Järvi](https://github.com/jjrv) | [Chan Guan Hao](https://github.com/mavenave)
+[Andrea Parodi](https://github.com/parro-it) | [Juha Järvi](https://github.com/jjrv) | [Chan Guan Hao](https://github.com/mavenave)
 
 
 
