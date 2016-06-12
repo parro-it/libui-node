@@ -260,6 +260,7 @@ class UiLabel : public UiControl {
 class UiGroup : public UiControl {
 	public:
 		UiGroup(const char *text);
+		UiGroup();
 		void setChild(UiControl *control);
 		int getMargined();
 		void setMargined(int margined);

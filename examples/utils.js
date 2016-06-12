@@ -114,23 +114,6 @@ function window({
 	return win;
 }
 
-function group({
-	title = '',
-	margined = true,
-	enabled = true,
-	visible = true
-}, ...children) {
-	const ctrl = new libui.UiGroup(title);
-
-	ctrl.margined = margined;
-	ctrl.visible = visible;
-	ctrl.enabled = enabled;
-
-	ctrl.setChild(wrapChildren(children));
-
-	return ctrl;
-}
-
 const EventHandler = Symbol('EventHandler');
 
 function mkControl(Class, defaults) {
@@ -156,6 +139,19 @@ function mkControl(Class, defaults) {
 
 	return contructor;
 }
+
+const group = (props, ...children) => {
+	const ctrl = mkControl(libui.UiGroup, {
+		title: '',
+		margined: true,
+		enabled: true,
+		visible: true
+	})(props);
+
+	ctrl.setChild(wrapChildren(children));
+
+	return ctrl;
+};
 
 const entry = mkControl(libui.UiEntry, {
 	readOnly: false,

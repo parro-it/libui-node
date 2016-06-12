@@ -5,6 +5,7 @@
 
 
 UiGroup::UiGroup(const char *text) : UiControl( (uiControl*) uiNewGroup(text) ) {}
+UiGroup::UiGroup() : UiControl( (uiControl*) uiNewGroup("") ) {}
 
 
 void UiGroup::setChild(UiControl *control) {
@@ -40,6 +41,7 @@ INHERITS_CONTROL_METHODS(UiGroup)
 
 NBIND_CLASS(UiGroup) {
 	construct<const char *>();
+	construct<>();
 	method(setChild);
 	getset(getTitle, setTitle);
 	getset(getMargined, setMargined);
