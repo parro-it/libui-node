@@ -72,6 +72,14 @@ To run the control gallery example, type:
 npm start
 ```
 
+__Note__: There is some problem with then control gallery example on OSX.
+We are investigating it, if you are affected, you can meanwhile try the core-api example:
+
+```bash
+npm run start-core
+```
+
+
 # Usage
 
 Plase look in [examples folder](https://github.com/parro-it/libui-node/tree/master/examples).

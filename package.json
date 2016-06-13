@@ -20,6 +20,7 @@
     "test": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out ava && xo",
     "start": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/control-gallery.js",
     "start-np": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/node-pad.js",
+    "start-core": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/core-api.js",
     "autogypi": "autogypi",
     "node-gyp": "node-gyp",
     "install": "npm run build:libui && autogypi && npm run build",
