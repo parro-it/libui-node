@@ -24,6 +24,13 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 * Unix: GTK+ 3.10 or newer
 * Mac OS X: OS X 10.8 or newer
 
+# Node version requirement
+
+The project run on any node version > 0.12.
+However, some example in examples folder uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6,
+you can check `examples/core-api.js` that use Es5 syntax.
+
+
 # Project status
 
 * All current `libui` API, except for [these ones](https://github.com/parro-it/libui-node/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) are implemented.
