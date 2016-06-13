@@ -1,50 +1,50 @@
 {
-  "name": "libui-node",
-  "version": "0.0.0",
-  "description": "Node.js bindings for libui",
-  "repository": "parro-it/libui-node",
-  "license": "MIT",
-  "contributors": [
-    {
-      "name": "Chan Guan Hao",
-      "email": "guanhao3797@gmail.com",
-      "url": "http://mavenave.me"
-    },
-    {
-      "name": "Andrea Parodi",
-      "email": "andrea@parro.it",
-      "url": "http://www.parro.it"
-    }
-  ],
-  "scripts": {
-    "test": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out ava && xo",
-    "start": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/control-gallery.js",
-    "start-np": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/node-pad.js",
-    "start-core": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/core-api.js",
-    "autogypi": "autogypi",
-    "node-gyp": "node-gyp",
-    "install": "npm run build:libui && autogypi && npm run build",
-    "build:libui": "mkdir -p libui/build && cd libui/build && cmake .. && make && cd ../..",
-    "build": "node-gyp configure build || echo failed"
-  },
-  "keywords": [
-    "libui",
-    "desktop",
-    "GUI"
-  ],
-  "engines": {
-    "node": ">=5"
-  },
-  "files": [
-    "index.js"
-  ],
-  "devDependencies": {
-    "ava": "^0.14.0",
-    "xo": "^0.14.0"
-  },
-  "dependencies": {
-    "autogypi": "^0.2.2",
-    "nbind": "^0.2.1",
-    "node-gyp": "^3.3.1"
-  }
+	"name": "libui-node",
+	"version": "0.0.0",
+	"description": "Node.js bindings for libui",
+	"repository": "parro-it/libui-node",
+	"license": "MIT",
+	"contributors": [
+		{
+			"name": "Chan Guan Hao",
+			"email": "guanhao3797@gmail.com",
+			"url": "http://mavenave.me"
+		},
+		{
+			"name": "Andrea Parodi",
+			"email": "andrea@parro.it",
+			"url": "http://www.parro.it"
+		}
+	],
+	"scripts": {
+		"test": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out ava && xo",
+		"start": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/control-gallery.js",
+		"start-np": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/node-pad.js",
+		"start-core": "NO_AT_BRIDGE=1 LD_LIBRARY_PATH=./libui/build/out node examples/core-api.js",
+		"autogypi": "autogypi",
+		"node-gyp": "node-gyp",
+		"install": "npm run build:libui && autogypi && npm run build",
+		"build:libui": "mkdir -p libui/build && cd libui/build && cmake .. && make && cd ../..",
+		"build": "node-gyp configure build || echo failed"
+	},
+	"keywords": [
+		"libui",
+		"desktop",
+		"GUI"
+	],
+	"engines": {
+		"node": ">=0.12"
+	},
+	"files": [
+		"index.js"
+	],
+	"devDependencies": {
+		"ava": "^0.14.0",
+		"xo": "^0.14.0"
+	},
+	"dependencies": {
+		"autogypi": "^0.2.2",
+		"nbind": "^0.2.1",
+		"node-gyp": "^3.3.1"
+	}
 }
