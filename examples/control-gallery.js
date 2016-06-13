@@ -19,8 +19,8 @@ const {
 	editableCombobox,
 	radioButtons,
 	tab,
-	menu,
-	multilineEntry
+	menu/* ,
+	multilineEntry*/
 } = require('./utils.js');
 
 libui.Ui.init();
