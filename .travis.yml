@@ -1,13 +1,16 @@
-language: node_js
-
 os:
   - linux
   - osx
 
- node_js:
+dist: trusty
+
+language: node_js
+
+
+node_js:
   - 'stable'
 sudo: required
-dist: trusty
+
 
 addons:
   apt:
