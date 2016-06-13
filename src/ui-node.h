@@ -369,8 +369,9 @@ class UiWindow {
 		void setMargined(int margined);
 		int getMargined();
 		void setChild(UiControl *control);
+		void setTitle(const char * title);
+		const char * getTitle();
 };
-
 
 class UiMenuItem {
 	DEFINE_EVENT(onClicked)

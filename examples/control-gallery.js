@@ -52,6 +52,10 @@ const updateValue = value => {
 	progress.value = value;
 };
 
+const changeTitle = () => {
+	win.title = 'Title changed';
+};
+
 menu([{
 	label: 'File',
 	submenu: [
@@ -109,7 +113,7 @@ menu([{
 win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 480, onClosing},
 	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
-			button({text: 'Button'}),
+			button({text: 'Button', onClicked: changeTitle}),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
 			os.platform() === 'darwin' ?

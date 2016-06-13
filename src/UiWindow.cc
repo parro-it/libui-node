@@ -48,6 +48,14 @@ void UiWindow::setChild(UiControl *control) {
 	uiWindowSetChild(win, control->getHandle());
 }
 
+void UiWindow::setTitle(const char * title) {
+	uiWindowSetTitle(win, title);
+}
+
+const char * UiWindow::getTitle() {
+	return uiWindowTitle(win);
+}
+
 NBIND_CLASS(UiWindow) {
   construct<const char *, int, int, int>();
   method(show);
@@ -55,5 +63,10 @@ NBIND_CLASS(UiWindow) {
   method(setChild);
   method(onClosing);
   getset(getMargined, setMargined);
+  getset(getTitle, setTitle);
+  method(getMargined);
+  method(setMargined);
+  method(setTitle);
+  method(getTitle);
 }
 
