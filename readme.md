@@ -40,9 +40,29 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 # Installation
 
 We don't publish new versions to NPM yet.
+When we will, we are planning to download `libui` binaries directly from its github repo. See some details [here](https://github.com/andlabs/libui/issues/124).
+
+Meanwhile, you have to build `libui` on your machine. This require the use of CMake 2.8.11 or newer.
+
+## Install cmake on OSX:
 
 ```bash
-git clone
+brew install cmake
+```
+
+## Install cmake on Debian base Linux distro:
+
+```bash
+apt-get install cmake
+```
+
+You also need to pull the `libui` git submodule to grab it's sources.
+
+
+```bash
+git clone https://github.com/parro-it/libui-node.git
+git submodule init
+git submodule update
 npm install
 ```
 
