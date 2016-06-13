@@ -1,3 +1,4 @@
+var os = require('os');
 const libui = require('../index.js');
 const {
 	datePicker,
@@ -7,6 +8,8 @@ const {
 	label,
 	window,
 	entry,
+	searchEntry,
+	passwordEntry,
 	hBox,
 	group,
 	button,
@@ -109,6 +112,10 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 			button({text: 'Button'}),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
+			os.platform() === 'darwin' ?
+				entry({text: 'Search Entry'}) :
+				searchEntry({text: 'Search Entry'}),
+			passwordEntry({text: 'Password Entry'}),
 			label({text: 'Label'}),
 			separator({}),
 			datePicker({}),

@@ -153,6 +153,22 @@ const entry = mkControl(libui.UiEntry, {
 	onChanged: EventHandler
 });
 
+const searchEntry = mkControl(libui.UiSearchEntry, {
+	readOnly: false,
+	enabled: true,
+	text: '',
+	visible: true,
+	onChanged: EventHandler
+});
+
+const passwordEntry = mkControl(libui.UiPasswordEntry, {
+	readOnly: false,
+	enabled: true,
+	text: '',
+	visible: true,
+	onChanged: EventHandler
+});
+
 const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	readOnly: false,
 	enabled: true,
@@ -286,6 +302,8 @@ module.exports = {
 	window,
 	menu,
 	entry,
+	searchEntry,
+	passwordEntry,
 	vBox,
 	hBox,
 	group,
