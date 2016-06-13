@@ -1,5 +1,10 @@
 language: node_js
-node_js:
+
+os:
+  - linux
+  - osx
+
+ node_js:
   - 'stable'
 sudo: required
 dist: trusty
