@@ -401,8 +401,15 @@ class UiMenu {
 		void appendSeparator();
 };
 
+class UiColorButton : public UiControl {
+	DEFINE_EVENT(onChanged)
 
-
+	public:
+		UiColorButton();
+		long getColor();
+		void setColor( double r, double g, double b, double a);
+		DEFINE_CONTROL_METHODS()
+};
 
 
 #endif

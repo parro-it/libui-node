@@ -13,6 +13,7 @@ const {
 	hBox,
 	group,
 	button,
+	colorButton,
 	checkBox,
 	spinbox,
 	slider,
@@ -114,6 +115,7 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
 			button({text: 'Button', onClicked: changeTitle}),
+			colorButton({}),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
 			os.platform() === 'darwin' ?
