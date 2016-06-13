@@ -36,6 +36,7 @@ function openFile() {
 	if (filename) {
 		const content = readFileSync(filename, 'utf8');
 		editor.text = content;
+		status.text = `Open ${filename}`;
 		currentFileName = filename;
 	}
 }
