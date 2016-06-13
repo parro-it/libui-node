@@ -28,9 +28,9 @@ cmb.append('item 2');
 cmb.append('item 3');
 
 box.append(cmb, 0);
-box.append(new libui.UiDateTimePicker(), 1);
-box.append(new libui.UiEditableCombobox(), 1);
-box.append(new libui.UiCheckbox('Optionally'), 1);
+box.append(new libui.UiDateTimePicker(), 0);
+box.append(new libui.UiEditableCombobox(), 0);
+box.append(new libui.UiCheckbox('Optionally'), 0);
 
 var group = new libui.UiGroup('Options');
 var radios = new libui.UiRadioButtons();
