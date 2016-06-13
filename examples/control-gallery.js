@@ -140,17 +140,20 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 					'Radio Button 3'
 				),
 				tab({stretchy: true},
-					multilineEntry({
-						text: lorem,
-						tabTitle: 'Page 1'
+					entry({
+						text: lorem.slice(5),
+						tabTitle: 'Page 1',
+						stretchy: true
 					}),
-					multilineEntry({
+					entry({
 						text: lorem.slice(10),
-						tabTitle: 'Page 2'
+						tabTitle: 'Page 2',
+						stretchy: true
 					}),
-					multilineEntry({
+					entry({
 						text: lorem.slice(20),
-						tabTitle: 'Page 3'
+						tabTitle: 'Page 3',
+						stretchy: true
 					})
 				)
 			)
@@ -159,4 +162,4 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 );
 
 win.show();
-libui.startLoop();
+libui.Ui.main();
