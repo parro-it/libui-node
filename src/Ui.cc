@@ -7,8 +7,8 @@ struct Ui {
 		uiMain();
 	}
 
-	static void mainStep(int wait) {
-		uiMainStep(wait);
+	static int mainStep(int wait) {
+		return uiMainStep(wait);
 	}
 
 	static void quit() {
