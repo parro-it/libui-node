@@ -403,6 +403,31 @@ class UiMenu {
 
 
 
+class Color {
+	private:
+		double r;
+		double g;
+		double b;
+		double a;
+
+	public:
+		Color(double r, double g, double b, double a);
+		double getR(); void setR(double value);
+		double getG(); void setG(double value);
+		double getB(); void setB(double value);
+		double getA(); void setA(double value);
+		void toJS(nbind::cbOutput output);
+};
+
+class UiColorButton : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+	public:
+		UiColorButton();
+		Color getColor();
+		void setColor(Color value);
+		DEFINE_CONTROL_METHODS()
+};
 
 
 #endif

@@ -26,6 +26,8 @@ function checkEvent(Class, eventName, propertyName, propertyType, builder = () =
 			widget[propertyName] = 'some value';
 		} else if (propertyType === Number) {
 			widget[propertyName] = 2;
+		} else if (propertyType === libui.Color) {
+			widget[propertyName] = new libui.Color(1, 2, 3, 0.4);
 		}
 		t.true(emitted);
 	}];
@@ -72,6 +74,56 @@ function checkProperty(Class, propertyName, type, builder = () => new Class()) {
 			widget[propertyName] = '';
 			setter('');
 			t.is(getter(), '');
+		}
+
+		if (type === libui.Color) {
+			setter(new libui.Color(1, 2, 3, 0.4));
+			const c1 = widget[propertyName];
+			t.is(c1.r, 1);
+			t.is(c1.g, 2);
+			t.is(c1.b, 3);
+			t.is(c1.a, 0.4);
+			const c2 = getter();
+			t.is(c2.r, 1);
+			t.is(c2.g, 2);
+			t.is(c2.b, 3);
+			t.is(c2.a, 0.4);
+
+			setter(new libui.Color(3, 1, 2, 0.5));
+			const c3 = widget[propertyName];
+			t.is(c3.r, 3);
+			t.is(c3.g, 1);
+			t.is(c3.b, 2);
+			t.is(c3.a, 0.5);
+			const c4 = getter();
+			t.is(c4.r, 3);
+			t.is(c4.g, 1);
+			t.is(c4.b, 2);
+			t.is(c4.a, 0.5);
+
+			widget[propertyName] = new libui.Color(1, 2, 3, 0.4);
+			const c5 = widget[propertyName];
+			t.is(c5.r, 1);
+			t.is(c5.g, 2);
+			t.is(c5.b, 3);
+			t.is(c5.a, 0.4);
+			const c6 = getter();
+			t.is(c6.r, 1);
+			t.is(c6.g, 2);
+			t.is(c6.b, 3);
+			t.is(c6.a, 0.4);
+
+			widget[propertyName] = new libui.Color(3, 1, 2, 0.5);
+			const c7 = widget[propertyName];
+			t.is(c7.r, 3);
+			t.is(c7.g, 1);
+			t.is(c7.b, 2);
+			t.is(c7.a, 0.5);
+			const c8 = getter();
+			t.is(c8.r, 3);
+			t.is(c8.g, 1);
+			t.is(c8.b, 2);
+			t.is(c8.a, 0.5);
 		}
 
 		if (type === Number) {
@@ -180,3 +232,6 @@ test(...checkEvent(libui.UiEditableCombobox, 'onChanged', 'text', String));
 test(...checkEvent(libui.UiEntry, 'onChanged', 'text', String));
 test(...checkEvent(libui.UiSpinbox, 'onChanged', 'value', Number));
 test(...checkEvent(libui.UiCheckbox, 'onToggled', 'checked', Boolean));
+
+test(...checkProperty(libui.UiColorButton, 'color', libui.Color));
+test(...checkEvent(libui.UiColorButton, 'onChanged', 'color', libui.Color));
