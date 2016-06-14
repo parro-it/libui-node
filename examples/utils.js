@@ -210,6 +210,11 @@ const button = mkControl(libui.UiButton, {
 	onClicked: EventHandler
 });
 
+const colorButton = mkControl(libui.UiColorButton, {
+	enabled: true,
+	visible: true
+});
+
 const checkBox = mkControl(libui.UiCheckbox, {
 	enabled: true,
 	visible: true,
@@ -298,7 +303,14 @@ const tab = (props, ...children) => {
 	return ctrl;
 };
 
+const colors = {
+	red: new libui.Color(255, 0, 0, 1),
+	green: new libui.Color(0, 255, 0, 1),
+	blue: new libui.Color(0, 0, 255, 1)
+};
+
 module.exports = {
+	colors,
 	window,
 	menu,
 	entry,
@@ -321,5 +333,6 @@ module.exports = {
 	editableCombobox,
 	radioButtons,
 	tab,
-	multilineEntry
+	multilineEntry,
+	colorButton
 };
