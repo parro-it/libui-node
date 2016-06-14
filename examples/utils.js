@@ -304,7 +304,9 @@ const tab = (props, ...children) => {
 };
 
 const colors = {
-	red: new libui.Color(255, 0, 0, 1)
+	red: new libui.Color(255, 0, 0, 1),
+	green: new libui.Color(0, 255, 0, 1),
+	blue: new libui.Color(0, 0, 255, 1)
 };
 
 module.exports = {
