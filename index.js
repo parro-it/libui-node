@@ -30,5 +30,19 @@ function startLoop(cb) {
 	step();
 }
 
+function Color(r, g, b, a) {
+	this.r = r;
+	this.g = g;
+	this.b = b;
+	this.a = a;
+}
+
+Color.prototype.fromJS = function fromJS(output) {
+	output(this.r, this.g, this.b, this.a);
+};
+
+binding.bind('Color', Color);
+
+module.exports.Color = Color;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;

@@ -11,17 +11,17 @@ INHERITS_CONTROL_METHODS(UiColorButton)
 
 IMPLEMENT_EVENT(UiColorButton, uiColorButton, onChanged, uiColorButtonOnChanged)
 
-void UiColorButton::setColor( double r, double g, double b, double a) {
+void UiColorButton::setColor(Color color) {
 	uiColorButtonSetColor(
 		(uiColorButton *) getHandle(),
-		r, g ,b ,a
+		color.r, color.g, color.b ,color.a
 	);
 	if (onChangedCallback != NULL) {
 		(*onChangedCallback)();
 	}
 }
 
-long UiColorButton::getColor() {
+Color UiColorButton::getColor() {
 	double r = 0.0;
 	double g = 0.0;
 	double b = 0.0;
@@ -32,10 +32,7 @@ long UiColorButton::getColor() {
 		&r, &g ,&b ,&a
 	);
 
-	return ((int(r) & 0xff) << 24) +
-		((int(g) & 0xff) << 16) +
-		((int(b) & 0xff) << 8) +
-		(int(a) & 0xff);
+	return new Color(r, g, b, a);
 }
 
 NBIND_CLASS(UiColorButton) {
@@ -44,10 +41,7 @@ NBIND_CLASS(UiColorButton) {
 	method(setColor);
 	method(getColor);
 	method(onChanged);
+	getset(getColor, setColor);
 
-/*	getset(getSelected, setSelected);
-	method(getSelected);
-
-	 */
 }
 
