@@ -13,6 +13,7 @@ const {
 	hBox,
 	group,
 	button,
+	colors,
 	colorButton,
 	checkBox,
 	spinbox,
@@ -43,6 +44,7 @@ let win;
 let spin;
 let slide;
 let progress;
+let colorBtn;
 
 const updateValue = value => {
 	if (value === spin.value) {
@@ -55,6 +57,7 @@ const updateValue = value => {
 
 const changeTitle = () => {
 	win.title = 'Title changed';
+	colorBtn.color = colors.red;
 };
 
 menu([{
@@ -115,7 +118,7 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
 			button({text: 'Button', onClicked: changeTitle}),
-			colorButton({}),
+			colorBtn = colorButton({}),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
 			os.platform() === 'darwin' ?

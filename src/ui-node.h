@@ -416,6 +416,7 @@ class Color {
 		double getG(); void setG(double value);
 		double getB(); void setB(double value);
 		double getA(); void setA(double value);
+		void toJS(nbind::cbOutput output);
 };
 
 class UiColorButton : public UiControl {

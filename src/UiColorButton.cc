@@ -14,7 +14,7 @@ IMPLEMENT_EVENT(UiColorButton, uiColorButton, onChanged, uiColorButtonOnChanged)
 void UiColorButton::setColor(Color color) {
 	uiColorButtonSetColor(
 		(uiColorButton *) getHandle(),
-		color.r, color.g, color.b ,color.a
+		color.getR(), color.getG(), color.getB() ,color.getA()
 	);
 	if (onChangedCallback != NULL) {
 		(*onChangedCallback)();
@@ -32,7 +32,7 @@ Color UiColorButton::getColor() {
 		&r, &g ,&b ,&a
 	);
 
-	return new Color(r, g, b, a);
+	return Color(r, g, b, a);
 }
 
 NBIND_CLASS(UiColorButton) {

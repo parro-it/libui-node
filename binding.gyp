@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/Color.cc",
 				"src/UiColorButton.cc",
 				"src/UiDialogs.cc",
 				"src/UiMenu.cc",

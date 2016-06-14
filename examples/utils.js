@@ -303,7 +303,12 @@ const tab = (props, ...children) => {
 	return ctrl;
 };
 
+const colors = {
+	red: new libui.Color(255, 0, 0, 1)
+};
+
 module.exports = {
+	colors,
 	window,
 	menu,
 	entry,

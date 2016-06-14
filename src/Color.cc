@@ -1,3 +1,5 @@
+#include "../libui/ui.h"
+#include "ui-node.h"
 #include "nbind/nbind.h"
 
 Color::Color(double red, double green, double blue, double alpha) {
@@ -26,7 +28,7 @@ void Color::setG(double value) {
 
 
 double Color::getB() {
-	return b
+	return b;
 }
 
 void Color::setB(double value) {
@@ -42,11 +44,11 @@ void Color::setA(double value) {
 	a = value;
 }
 
-void toJS(nbind::cbOutput output) {
+void Color::toJS(nbind::cbOutput output) {
 	output(r, g, b, a);
 }
 
-NBIND_CLASS(RGBA) {
+NBIND_CLASS(Color) {
   construct<double, double, double, double>();
   method(getR);
   method(setR);
