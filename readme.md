@@ -12,10 +12,15 @@ It is in early stage of development, but is evolving at great pace and is really
 
 It could become an awesome, lightweight alternative to Electron to develop multiplatform GUI.
 
-![Linux](https://cloud.githubusercontent.com/assets/11197111/15990529/68e924f4-3095-11e6-8a13-b91678def555.png)
+<p align="center">
+<h2>Linux</h2>
+<img src ="https://cloud.githubusercontent.com/assets/11197111/15990529/68e924f4-3095-11e6-8a13-b91678def555.png">
+</p>
 
+<center>
+## OSX
 ![OSX](https://cloud.githubusercontent.com/assets/11197111/16003613/bf03b908-315d-11e6-9c67-850ace39ffc1.png)
-
+</center>
 
 
 # Supported platform
