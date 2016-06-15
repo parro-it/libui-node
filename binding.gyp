@@ -31,6 +31,9 @@
 			],
 			"conditions": [
 				["OS!='mac'", {
+					'ldflags': [
+            					'-Wl,-rpath,<(module_root_dir)/libui/build/out',
+          				],
 					"libraries": [
 						"../libui/build/out/libui.so"
 					]
