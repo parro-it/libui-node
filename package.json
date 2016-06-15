@@ -24,7 +24,7 @@
 		"autogypi": "autogypi",
 		"node-gyp": "node-gyp",
 		"install": "npm run build:libui && autogypi && npm run build",
-		"build:libui": "mkdir libui/build && cd libui/build && cmake .. && make && cd ../..",
+		"build:libui": "cd libui && mkdir build && cd build && cmake .. && make",
 		"build": "node-gyp configure build || echo failed"
 	},
 	"keywords": [
