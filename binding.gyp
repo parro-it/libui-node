@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/Size.cc",
 				"src/Point.cc",
 				"src/Color.cc",
 				"src/UiColorButton.cc",

@@ -54,6 +54,18 @@ Point.prototype.fromJS = function fromJS(output) {
 
 binding.bind('Point', Point);
 
+function Size(w, h) {
+	this.w = w;
+	this.h = h;
+}
+
+Size.prototype.fromJS = function fromJS(output) {
+	output(this.w, this.h);
+};
+
+binding.bind('Size', Size);
+
+module.exports.Size = Size;
 module.exports.Point = Point;
 module.exports.Color = Color;
 module.exports.startLoop = startLoop;

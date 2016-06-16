@@ -116,24 +116,31 @@ function point(x, y) {
 	return new libui.Point(x, y);
 }
 
+function size(w, h) {
+	return new libui.Size(w, h);
+}
+
 function window({
 	title = '',
 	width,
 	height,
 	margined = true,
 	hasMenubar = false,
-	onClosing = null,
 	position = point(0, 0),
+	contentSize = size(width, height),
 	centered = false,
 	fullscreen = false,
 	borderless = false,
-	onPositionChanged = null
+	onClosing = null,
+	onPositionChanged = null,
+	onContentSizeChanged = null
 }, ...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.position = position;
 	win.fullscreen = fullscreen;
 	win.borderless = borderless;
+	win.contentSize = contentSize;
 
 	if (onClosing) {
 		win.onClosing(onClosing);
@@ -334,6 +341,7 @@ const colors = {
 };
 
 module.exports = {
+	size,
 	color,
 	colors,
 	point,

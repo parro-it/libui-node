@@ -1,6 +1,7 @@
 var os = require('os');
 const libui = require('../index.js');
 const {
+	size,
 	point,
 	datePicker,
 	dateTimePicker,
@@ -49,7 +50,7 @@ let colorBtn;
 let status;
 
 function onPositionChanged() {
-	status.text = `(${win.position.x}, ${win.position.y})`;
+	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize.w} x ${win.contentSize.h})`;
 }
 
 const updateValue = value => {
@@ -139,6 +140,11 @@ menu([{
 			click: () => {
 				win.borderless = !win.borderless;
 			}
+		}, {
+			label: 'Reset size',
+			click: () => {
+				win.contentSize = size(500, 300);
+			}
 		}
 	]
 }]);
@@ -149,7 +155,8 @@ const winProps = {
 	width: 640,
 	height: 480,
 	onClosing,
-	onPositionChanged
+	onPositionChanged,
+	onContentSizeChanged: onPositionChanged
 };
 
 win = window(winProps,

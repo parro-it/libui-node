@@ -44,6 +44,20 @@ void UiWindow::onClosing(nbind::cbFunction & cb) {
 	);
 }
 
+static void UiWindow_onContentSizeChanged(uiWindow *w, void *data) {
+	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+	(*cb)();
+}
+
+void UiWindow::onContentSizeChanged(nbind::cbFunction & cb) {
+	onContentSizeChangedCallback = new nbind::cbFunction(cb);
+	uiWindowOnContentSizeChanged(
+		(uiWindow *) getHandle(),
+		UiWindow_onContentSizeChanged,
+		onContentSizeChangedCallback
+	);
+}
+
 
 static void UiWindow_onPositionChanged(uiWindow *w, void *data) {
 	nbind::cbFunction *cb = (nbind::cbFunction *) data;
@@ -111,12 +125,27 @@ bool UiWindow::getBorderless() {
 }
 
 
+void UiWindow::setContentSize(Size value) {
+	printf("setting content to (%d x %d)\n", value.getWidth(), value.getHeight());
+	uiWindowSetContentSize(win, value.getWidth(), value.getHeight());
+}
+
+Size UiWindow::getContentSize() {
+	int w = 0;
+	int h = 0;
+	uiWindowContentSize(win, &w, &h);
+	return Size(w, h);
+}
+
+
+
 NBIND_CLASS(UiWindow) {
   construct<const char *, int, int, int>();
   method(show);
   method(close);
   method(setChild);
   method(onClosing);
+  method(onContentSizeChanged);
   getset(getMargined, setMargined);
   getset(getTitle, setTitle);
   getset(getPosition, setPosition);
@@ -124,6 +153,11 @@ NBIND_CLASS(UiWindow) {
   method(setPosition);
   method(onPositionChanged);
   method(center);
+
+  getset(getContentSize, setContentSize);
+  method(getContentSize);
+  method(setContentSize);
+  method(onContentSizeChanged);
 
   getset(getFullscreen, setFullscreen);
   method(getFullscreen);
