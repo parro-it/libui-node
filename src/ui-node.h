@@ -429,5 +429,101 @@ class UiColorButton : public UiControl {
 		DEFINE_CONTROL_METHODS()
 };
 
+// UIArea
+
+
+
+
+
+// TODO document drag captures
+struct UiAreaMouseEvent {
+	// TODO document what these mean for scrolling areas
+	double x;
+	double y;
+
+	// TODO see draw above
+	double AreaWidth;
+	double AreaHeight;
+
+	int Down;
+	int Up;
+	int Count;
+	char Modifiers;
+
+	uint Held1To64;
+
+};
+
+struct UiAreaKeyEvent {
+	char Key;
+	int ExtKey;
+	char Modifier;
+	char Modifiers;
+	int Up;
+};
+
+struct UiAreaDrawParams {
+	void *Context;
+
+	// TODO document that this is only defined for nonscrolling areas
+	double AreaWidth;
+	double AreaHeight;
+
+	double ClipX;
+	double ClipY;
+	double ClipWidth;
+	double ClipHeight;
+};
+
+
+class UiArea  : public UiControl {
+	public:
+		UiArea(
+			nbind::cbFunction &drawCb,
+			nbind::cbFunction &mouseEventCb ,
+			nbind::cbFunction &mouseCrossedCb,
+			nbind::cbFunction &dragBrokenCb,
+			nbind::cbFunction &keyEventCb
+		);
+		UiArea(
+			nbind::cbFunction &drawCb,
+			nbind::cbFunction &mouseEventCb ,
+			nbind::cbFunction &mouseCrossedCb,
+			nbind::cbFunction &dragBrokenCb,
+			nbind::cbFunction &keyEventCb,
+			int width,
+			int height
+		);
+		void setSize(int width, int height);
+		void queueRedrawAll();
+		void scrollTo(double x, double y, double width, double height);
+		DEFINE_CONTROL_METHODS()
+};
+
+typedef struct UiAreaHandler {
+	void (*Draw)(UiAreaHandler *self, UiArea *area, UiAreaDrawParams *params);
+	void (*MouseEvent)(UiAreaHandler *self, UiArea *area, UiAreaMouseEvent *event);
+	void (*MouseCrossed)(UiAreaHandler *self, UiArea *area, int left);
+	void (*DragBroken)(UiAreaHandler *self, UiArea *area);
+	int (*KeyEvent)(UiAreaHandler *self, UiArea *area, UiAreaKeyEvent *event);
+
+	nbind::cbFunction *draw;
+	nbind::cbFunction *mouseEvent;
+	nbind::cbFunction *mouseCrossed;
+	nbind::cbFunction *dragBroken;
+	nbind::cbFunction *keyEvent;
+} UiAreaHandler;
+
+struct UiAreaHandlerFactory {
+	static UiAreaHandler * build(
+		nbind::cbFunction &draw,
+		nbind::cbFunction &mouseEvent ,
+		nbind::cbFunction &mouseCrossed,
+		nbind::cbFunction &dragBroken,
+		nbind::cbFunction &keyEvent
+	);
+};
+
+
 
 #endif
