@@ -112,7 +112,6 @@ function wrapChildren(children) {
 	return box;
 }
 
-
 function point(x, y) {
 	return new libui.Point(x, y);
 }
