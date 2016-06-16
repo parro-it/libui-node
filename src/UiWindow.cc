@@ -95,6 +95,15 @@ const char * UiWindow::getTitle() {
 	return uiWindowTitle(win);
 }
 
+bool UiWindow::getFullscreen() {
+	return uiWindowFullscreen(win);
+}
+
+void UiWindow::setFullscreen(bool value) {
+	uiWindowSetFullscreen(win, value);
+}
+
+
 NBIND_CLASS(UiWindow) {
   construct<const char *, int, int, int>();
   method(show);
@@ -108,5 +117,9 @@ NBIND_CLASS(UiWindow) {
   method(setPosition);
   method(onPositionChanged);
   method(center);
+
+  getset(getFullscreen, setFullscreen);
+  method(getFullscreen);
+  method(setFullscreen);
 }
 

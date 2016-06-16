@@ -125,11 +125,13 @@ function window({
 	onClosing = null,
 	position = point(0, 0),
 	centered = false,
+	fullscreen = false,
 	onPositionChanged = null
 }, ...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.position = position;
+	win.fullscreen = fullscreen;
 
 	if (onClosing) {
 		win.onClosing(onClosing);

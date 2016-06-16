@@ -387,6 +387,8 @@ class UiWindow {
 		Point getPosition();
 		void setPosition(Point position);
 		void center();
+		bool getFullscreen();
+		void setFullscreen(bool value);
 
 };
 

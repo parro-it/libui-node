@@ -129,6 +129,11 @@ menu([{
 			click: () => {
 				win.position = point(0, 0);
 			}
+		}, {
+			label: 'Full screen',
+			click: () => {
+				win.fullscreen = !win.fullscreen;
+			}
 		}
 	]
 }]);
