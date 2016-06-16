@@ -134,6 +134,11 @@ menu([{
 			click: () => {
 				win.fullscreen = !win.fullscreen;
 			}
+		}, {
+			label: 'Borderless',
+			click: () => {
+				win.borderless = !win.borderless;
+			}
 		}
 	]
 }]);

@@ -103,6 +103,13 @@ void UiWindow::setFullscreen(bool value) {
 	uiWindowSetFullscreen(win, value);
 }
 
+void UiWindow::setBorderless(bool value) {
+	uiWindowSetBorderless(win, value);
+}
+bool UiWindow::getBorderless() {
+	return uiWindowBorderless(win);
+}
+
 
 NBIND_CLASS(UiWindow) {
   construct<const char *, int, int, int>();
@@ -121,5 +128,8 @@ NBIND_CLASS(UiWindow) {
   getset(getFullscreen, setFullscreen);
   method(getFullscreen);
   method(setFullscreen);
+  getset(getBorderless, setBorderless);
+  method(getBorderless);
+  method(setBorderless);
 }
 

@@ -389,7 +389,8 @@ class UiWindow {
 		void center();
 		bool getFullscreen();
 		void setFullscreen(bool value);
-
+		bool getBorderless();
+		void setBorderless(bool value);
 };
 
 

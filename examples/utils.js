@@ -126,12 +126,14 @@ function window({
 	position = point(0, 0),
 	centered = false,
 	fullscreen = false,
+	borderless = false,
 	onPositionChanged = null
 }, ...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.position = position;
 	win.fullscreen = fullscreen;
+	win.borderless = borderless;
 
 	if (onClosing) {
 		win.onClosing(onClosing);
