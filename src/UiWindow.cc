@@ -4,6 +4,30 @@
 #include "nbind/nbind.h"
 
 
+Point UiWindow::getPosition() {
+	int x = 0;
+	int y = 0;
+	uiWindowPosition(
+		(uiWindow *) getHandle(),
+		&x,
+		&y
+	);
+	return Point(x, y);
+}
+
+void UiWindow::setPosition(Point position) {
+	uiWindowSetPosition(
+		(uiWindow *) getHandle(),
+		position.getX(),
+		position.getY()
+	);
+}
+
+void UiWindow::center() {
+	uiWindowCenter((uiWindow *) getHandle());
+}
+
+
 
 static int UiWindow_onClosing(uiWindow *w, void *data) {
 	nbind::cbFunction *cb = (nbind::cbFunction *) data;
@@ -17,6 +41,21 @@ void UiWindow::onClosing(nbind::cbFunction & cb) {
 		(uiWindow *) getHandle(),
 		UiWindow_onClosing,
 		onClosingCallback
+	);
+}
+
+
+static void UiWindow_onPositionChanged(uiWindow *w, void *data) {
+	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+	(*cb)();
+}
+
+void UiWindow::onPositionChanged(nbind::cbFunction & cb) {
+	onPositionChangedCallback = new nbind::cbFunction(cb);
+	uiWindowOnPositionChanged(
+		(uiWindow *) getHandle(),
+		UiWindow_onPositionChanged,
+		onPositionChangedCallback
 	);
 }
 
@@ -56,6 +95,22 @@ const char * UiWindow::getTitle() {
 	return uiWindowTitle(win);
 }
 
+bool UiWindow::getFullscreen() {
+	return uiWindowFullscreen(win);
+}
+
+void UiWindow::setFullscreen(bool value) {
+	uiWindowSetFullscreen(win, value);
+}
+
+void UiWindow::setBorderless(bool value) {
+	uiWindowSetBorderless(win, value);
+}
+bool UiWindow::getBorderless() {
+	return uiWindowBorderless(win);
+}
+
+
 NBIND_CLASS(UiWindow) {
   construct<const char *, int, int, int>();
   method(show);
@@ -64,9 +119,17 @@ NBIND_CLASS(UiWindow) {
   method(onClosing);
   getset(getMargined, setMargined);
   getset(getTitle, setTitle);
-  method(getMargined);
-  method(setMargined);
-  method(setTitle);
-  method(getTitle);
+  getset(getPosition, setPosition);
+  method(getPosition);
+  method(setPosition);
+  method(onPositionChanged);
+  method(center);
+
+  getset(getFullscreen, setFullscreen);
+  method(getFullscreen);
+  method(setFullscreen);
+  getset(getBorderless, setBorderless);
+  method(getBorderless);
+  method(setBorderless);
 }
 

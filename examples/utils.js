@@ -112,19 +112,39 @@ function wrapChildren(children) {
 	return box;
 }
 
+function point(x, y) {
+	return new libui.Point(x, y);
+}
+
 function window({
 	title = '',
 	width,
 	height,
 	margined = true,
 	hasMenubar = false,
-	onClosing = null
+	onClosing = null,
+	position = point(0, 0),
+	centered = false,
+	fullscreen = false,
+	borderless = false,
+	onPositionChanged = null
 }, ...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
+	win.position = position;
+	win.fullscreen = fullscreen;
+	win.borderless = borderless;
 
 	if (onClosing) {
 		win.onClosing(onClosing);
+	}
+
+	if (onPositionChanged) {
+		win.onPositionChanged(onPositionChanged);
+	}
+
+	if (centered) {
+		win.center();
 	}
 
 	win.setChild(wrapChildren(children));
@@ -303,6 +323,10 @@ const tab = (props, ...children) => {
 	return ctrl;
 };
 
+function color(r, g, b, a) {
+	return new new libui.Color(r, g, b, a);
+}
+
 const colors = {
 	red: new libui.Color(255, 0, 0, 1),
 	green: new libui.Color(0, 255, 0, 1),
@@ -310,7 +334,9 @@ const colors = {
 };
 
 module.exports = {
+	color,
 	colors,
+	point,
 	window,
 	menu,
 	entry,
