@@ -1,6 +1,7 @@
 var os = require('os');
 const libui = require('../index.js');
 const {
+	point,
 	datePicker,
 	dateTimePicker,
 	timePicker,
@@ -45,6 +46,11 @@ let spin;
 let slide;
 let progress;
 let colorBtn;
+let status;
+
+function onPositionChanged() {
+	status.text = `(${win.position.x}, ${win.position.y})`;
+}
 
 const updateValue = value => {
 	if (value === spin.value) {
@@ -112,9 +118,31 @@ menu([{
 			role: 'about'
 		}
 	]
+}, {
+	label: 'Window',
+	submenu: [
+		{
+			label: 'Center',
+			click: () => win.center()
+		}, {
+			label: 'Top left',
+			click: () => {
+				win.position = point(0, 0);
+			}
+		}
+	]
 }]);
 
-win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 480, onClosing},
+const winProps = {
+	hasMenubar: true,
+	title: 'Control Gallery',
+	width: 640,
+	height: 480,
+	onClosing,
+	onPositionChanged
+};
+
+win = window(winProps,
 	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
 			button({text: 'Button', onClicked: changeTitle}),
@@ -174,8 +202,9 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 				)
 			)
 		)
-	)
+	),
+	status = label({stretchy: true, text: '(0, 0)'})
 );
 
 win.show();
-libui.Ui.main();
+libui.startLoop();

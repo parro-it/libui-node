@@ -43,6 +43,18 @@ Color.prototype.fromJS = function fromJS(output) {
 
 binding.bind('Color', Color);
 
+function Point(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+Point.prototype.fromJS = function fromJS(output) {
+	output(this.x, this.y);
+};
+
+binding.bind('Point', Point);
+
+module.exports.Point = Point;
 module.exports.Color = Color;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;

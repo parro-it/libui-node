@@ -355,8 +355,21 @@ class UiHorizontalBox : public UiBox {
 		DEFINE_CONTROL_METHODS()
 };
 
+class Point {
+	private:
+		int x;
+		int y;
+
+	public:
+		Point(int x, int y);
+		int getX(); void setX(int value);
+		int getY(); void setY(int value);
+		void toJS(nbind::cbOutput output);
+};
+
 class UiWindow {
 	DEFINE_EVENT(onClosing)
+	DEFINE_EVENT(onPositionChanged)
 
 	private:
 		uiWindow *win;
@@ -371,7 +384,14 @@ class UiWindow {
 		void setChild(UiControl *control);
 		void setTitle(const char * title);
 		const char * getTitle();
+		Point getPosition();
+		void setPosition(Point position);
+		void center();
+
 };
+
+
+
 
 class UiMenuItem {
 	DEFINE_EVENT(onClicked)
