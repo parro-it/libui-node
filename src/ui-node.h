@@ -367,9 +367,22 @@ class Point {
 		void toJS(nbind::cbOutput output);
 };
 
+class Size {
+	private:
+		int w;
+		int h;
+
+	public:
+		Size(int w, int h);
+		int getWidth(); void setWidth(int value);
+		int getHeight(); void setHeight(int value);
+		void toJS(nbind::cbOutput output);
+};
+
 class UiWindow {
 	DEFINE_EVENT(onClosing)
 	DEFINE_EVENT(onPositionChanged)
+	DEFINE_EVENT(onContentSizeChanged)
 
 	private:
 		uiWindow *win;
@@ -391,6 +404,8 @@ class UiWindow {
 		void setFullscreen(bool value);
 		bool getBorderless();
 		void setBorderless(bool value);
+		Size getContentSize();
+		void setContentSize(Size value);
 };
 
 
