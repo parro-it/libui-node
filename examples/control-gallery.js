@@ -143,7 +143,7 @@ menu([{
 		}, {
 			label: 'Reset size',
 			click: () => {
-				win.contentSize = size(500, 300);
+				win.contentSize = size(800, 600);
 			}
 		}
 	]
@@ -224,4 +224,4 @@ win = window(winProps,
 );
 
 win.show();
-libui.startLoop();
+libui.Ui.main();
