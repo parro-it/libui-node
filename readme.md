@@ -2,7 +2,7 @@
 
 > libui Node.js bindings.
 
-[![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node.svg)](http://travis-ci.org/parro-it/libui-node)
+[![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node/master.svg)](http://travis-ci.org/parro-it/libui-node)
 [![NPM module](https://img.shields.io/npm/v/libui-node.svg)](https://npmjs.org/package/libui-node)
 [![NPM downloads](https://img.shields.io/npm/dt/libui-node.svg)](https://npmjs.org/package/libui-node)
 
