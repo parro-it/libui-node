@@ -159,6 +159,8 @@ const winProps = {
 	onContentSizeChanged: onPositionChanged
 };
 
+libui.startLoop();
+
 win = window(winProps,
 	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
@@ -224,4 +226,3 @@ win = window(winProps,
 );
 
 win.show();
-libui.Ui.main();

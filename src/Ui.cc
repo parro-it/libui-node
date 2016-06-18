@@ -7,6 +7,10 @@ struct Ui {
 		uiMain();
 	}
 
+	static void mainSteps() {
+		uiMainSteps();
+	}
+
 	static int mainStep(int wait) {
 		return uiMainStep(wait);
 	}
@@ -31,4 +35,5 @@ NBIND_CLASS(Ui) {
 	method(main);
 	method(quit);
 	method(mainStep);
+	method(mainSteps);
 }
