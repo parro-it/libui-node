@@ -5,6 +5,10 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/Size.cc",
+				"src/Point.cc",
+				"src/Color.cc",
+				"src/UiColorButton.cc",
 				"src/UiDialogs.cc",
 				"src/UiMenu.cc",
 				"src/UiCombobox.cc",
@@ -29,6 +33,9 @@
 			],
 			"conditions": [
 				["OS!='mac'", {
+					'ldflags': [
+            					'-Wl,-rpath,<(module_root_dir)/libui/build/out',
+          				],
 					"libraries": [
 						"../libui/build/out/libui.so"
 					]

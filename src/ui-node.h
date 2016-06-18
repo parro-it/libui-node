@@ -355,8 +355,34 @@ class UiHorizontalBox : public UiBox {
 		DEFINE_CONTROL_METHODS()
 };
 
+class Point {
+	private:
+		int x;
+		int y;
+
+	public:
+		Point(int x, int y);
+		int getX(); void setX(int value);
+		int getY(); void setY(int value);
+		void toJS(nbind::cbOutput output);
+};
+
+class Size {
+	private:
+		int w;
+		int h;
+
+	public:
+		Size(int w, int h);
+		int getWidth(); void setWidth(int value);
+		int getHeight(); void setHeight(int value);
+		void toJS(nbind::cbOutput output);
+};
+
 class UiWindow {
 	DEFINE_EVENT(onClosing)
+	DEFINE_EVENT(onPositionChanged)
+	DEFINE_EVENT(onContentSizeChanged)
 
 	private:
 		uiWindow *win;
@@ -369,7 +395,20 @@ class UiWindow {
 		void setMargined(int margined);
 		int getMargined();
 		void setChild(UiControl *control);
+		void setTitle(const char * title);
+		const char * getTitle();
+		Point getPosition();
+		void setPosition(Point position);
+		void center();
+		bool getFullscreen();
+		void setFullscreen(bool value);
+		bool getBorderless();
+		void setBorderless(bool value);
+		Size getContentSize();
+		void setContentSize(Size value);
 };
+
+
 
 
 class UiMenuItem {
@@ -402,6 +441,31 @@ class UiMenu {
 
 
 
+class Color {
+	private:
+		double r;
+		double g;
+		double b;
+		double a;
+
+	public:
+		Color(double r, double g, double b, double a);
+		double getR(); void setR(double value);
+		double getG(); void setG(double value);
+		double getB(); void setB(double value);
+		double getA(); void setA(double value);
+		void toJS(nbind::cbOutput output);
+};
+
+class UiColorButton : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+	public:
+		UiColorButton();
+		Color getColor();
+		void setColor(Color value);
+		DEFINE_CONTROL_METHODS()
+};
 
 
 #endif

@@ -2,7 +2,7 @@
 
 > libui Node.js bindings.
 
-[![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node.svg)](http://travis-ci.org/parro-it/libui-node)
+[![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node/master.svg)](http://travis-ci.org/parro-it/libui-node)
 [![NPM module](https://img.shields.io/npm/v/libui-node.svg)](https://npmjs.org/package/libui-node)
 [![NPM downloads](https://img.shields.io/npm/dt/libui-node.svg)](https://npmjs.org/package/libui-node)
 
@@ -12,10 +12,15 @@ It is in early stage of development, but is evolving at great pace and is really
 
 It could become an awesome, lightweight alternative to Electron to develop multiplatform GUI.
 
-![Linux](https://cloud.githubusercontent.com/assets/11197111/15990529/68e924f4-3095-11e6-8a13-b91678def555.png)
+<p align="center">
+<h2>Linux</h2>
+<img src ="https://cloud.githubusercontent.com/assets/11197111/15990529/68e924f4-3095-11e6-8a13-b91678def555.png">
+</p>
 
+<center>
+## OSX
 ![OSX](https://cloud.githubusercontent.com/assets/11197111/16003613/bf03b908-315d-11e6-9c67-850ace39ffc1.png)
-
+</center>
 
 
 # Supported platform
@@ -23,6 +28,13 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 * Windows: Windows Vista SP2 with Platform Update or newer
 * Unix: GTK+ 3.10 or newer
 * Mac OS X: OS X 10.8 or newer
+
+# Node version requirement
+
+The project run on any node version > 0.12.
+However, some example in examples folder uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6,
+you can check `examples/core-api.js` that use Es5 syntax.
+
 
 # Project status
 

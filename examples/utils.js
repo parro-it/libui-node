@@ -112,19 +112,46 @@ function wrapChildren(children) {
 	return box;
 }
 
+function point(x, y) {
+	return new libui.Point(x, y);
+}
+
+function size(w, h) {
+	return new libui.Size(w, h);
+}
+
 function window({
 	title = '',
 	width,
 	height,
 	margined = true,
 	hasMenubar = false,
-	onClosing = null
+	position = point(0, 0),
+	contentSize = size(width, height),
+	centered = false,
+	fullscreen = false,
+	borderless = false,
+	onClosing = null,
+	onPositionChanged = null,
+	onContentSizeChanged = null
 }, ...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
+	win.position = position;
+	win.fullscreen = fullscreen;
+	win.borderless = borderless;
+	win.contentSize = contentSize;
 
 	if (onClosing) {
 		win.onClosing(onClosing);
+	}
+
+	if (onPositionChanged) {
+		win.onPositionChanged(onPositionChanged);
+	}
+
+	if (centered) {
+		win.center();
 	}
 
 	win.setChild(wrapChildren(children));
@@ -208,6 +235,11 @@ const button = mkControl(libui.UiButton, {
 	visible: true,
 	text: '',
 	onClicked: EventHandler
+});
+
+const colorButton = mkControl(libui.UiColorButton, {
+	enabled: true,
+	visible: true
 });
 
 const checkBox = mkControl(libui.UiCheckbox, {
@@ -298,7 +330,21 @@ const tab = (props, ...children) => {
 	return ctrl;
 };
 
+function color(r, g, b, a) {
+	return new new libui.Color(r, g, b, a);
+}
+
+const colors = {
+	red: new libui.Color(255, 0, 0, 1),
+	green: new libui.Color(0, 255, 0, 1),
+	blue: new libui.Color(0, 0, 255, 1)
+};
+
 module.exports = {
+	size,
+	color,
+	colors,
+	point,
 	window,
 	menu,
 	entry,
@@ -321,5 +367,6 @@ module.exports = {
 	editableCombobox,
 	radioButtons,
 	tab,
-	multilineEntry
+	multilineEntry,
+	colorButton
 };
