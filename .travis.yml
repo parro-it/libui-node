@@ -20,8 +20,9 @@ addons:
       - gcc-4.8
       - g++-4.8
       - libgtk-3-dev
-
+      - cmake
       - xvfb
+
 
 install:
   - export DISPLAY=':99.0'
