@@ -12,6 +12,8 @@
 				"src/UiArea/UiAreaMouseEvent.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/UiAreaHandler.cc",
+				"src/Size.cc",
+				"src/Point.cc",
 				"src/Color.cc",
 				"src/UiColorButton.cc",
 				"src/UiDialogs.cc",
