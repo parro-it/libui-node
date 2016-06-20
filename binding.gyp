@@ -5,6 +5,9 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiArea/UiAreaDrawParams.cc",
+				"src/UiArea/UiAreaKeyEvent.cc",
+				"src/UiArea/UiAreaMouseEvent.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/UiAreaHandler.cc",
 				"src/Color.cc",

@@ -432,47 +432,51 @@ class UiColorButton : public UiControl {
 // UIArea
 
 
+class UiAreaMouseEvent {
+	private:
+		uiAreaMouseEvent *e;
 
-
-
-// TODO document drag captures
-struct UiAreaMouseEvent {
-	// TODO document what these mean for scrolling areas
-	double x;
-	double y;
-
-	// TODO see draw above
-	double AreaWidth;
-	double AreaHeight;
-
-	int Down;
-	int Up;
-	int Count;
-	char Modifiers;
-
-	uint Held1To64;
-
+	public:
+		UiAreaMouseEvent(uiAreaMouseEvent *event);
+		double getX();
+		double getY();
+		double getAreaWidth();
+		double getAreaHeight();
+		int getDown();
+		int getUp();
+		int getCount();
+		int getModifiers();
+		uint getHeld1To64();
 };
 
-struct UiAreaKeyEvent {
-	char Key;
-	int ExtKey;
-	char Modifier;
-	char Modifiers;
-	int Up;
+
+class UiAreaKeyEvent {
+	private:
+		uiAreaKeyEvent *e;
+
+	public:
+		UiAreaKeyEvent(uiAreaKeyEvent *event);
+		char * getKey();
+		int getExtKey();
+		int getModifier();
+		int getModifiers();
+		int getUp();
 };
 
-struct UiAreaDrawParams {
-	void *Context;
 
-	// TODO document that this is only defined for nonscrolling areas
-	double AreaWidth;
-	double AreaHeight;
+class UiAreaDrawParams {
+	private:
+		uiAreaDrawParams *p;
 
-	double ClipX;
-	double ClipY;
-	double ClipWidth;
-	double ClipHeight;
+	public:
+		UiAreaDrawParams(uiAreaDrawParams *params);
+		void * getContext();
+		double getAreaWidth();
+		double getAreaHeight();
+		double getClipX();
+		double getClipY();
+		double getClipWidth();
+		double getClipHeight();
 };
 
 
@@ -501,11 +505,11 @@ class UiArea  : public UiControl {
 };
 
 typedef struct UiAreaHandler {
-	void (*Draw)(UiAreaHandler *self, UiArea *area, UiAreaDrawParams *params);
-	void (*MouseEvent)(UiAreaHandler *self, UiArea *area, UiAreaMouseEvent *event);
+	void (*Draw)(UiAreaHandler *self, UiArea *area, uiAreaDrawParams *params);
+	void (*MouseEvent)(UiAreaHandler *self, UiArea *area, uiAreaMouseEvent *event);
 	void (*MouseCrossed)(UiAreaHandler *self, UiArea *area, int left);
 	void (*DragBroken)(UiAreaHandler *self, UiArea *area);
-	int (*KeyEvent)(UiAreaHandler *self, UiArea *area, UiAreaKeyEvent *event);
+	int (*KeyEvent)(UiAreaHandler *self, UiArea *area, uiAreaKeyEvent *event);
 
 	nbind::cbFunction *draw;
 	nbind::cbFunction *mouseEvent;

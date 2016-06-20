@@ -2,11 +2,11 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-void Draw (UiAreaHandler *self, UiArea *area, UiAreaDrawParams *params) {
+void Draw (UiAreaHandler *self, UiArea *area, uiAreaDrawParams *params) {
 	(*(self->draw))();
 }
 
-void MouseEvent (UiAreaHandler *self, UiArea *area, UiAreaMouseEvent *event) {
+void MouseEvent (UiAreaHandler *self, UiArea *area, uiAreaMouseEvent *event) {
 	(*(self->mouseEvent))();
 }
 
@@ -18,7 +18,7 @@ void DragBroken (UiAreaHandler *self, UiArea *area) {
 	(*(self->dragBroken))();
 }
 
-int KeyEvent (UiAreaHandler *self, UiArea *area, UiAreaKeyEvent *event) {
+int KeyEvent (UiAreaHandler *self, UiArea *area, uiAreaKeyEvent *event) {
 	return (self->keyEvent)->call<int>();
 }
 
