@@ -431,6 +431,42 @@ class UiColorButton : public UiControl {
 
 // UIArea
 
+class DrawBrush {
+	private:
+		Color c;
+		Point s;
+		Point e;
+		int type;
+		std::vector<BrushGradientStop> st;
+
+	public:
+		DrawBrush(Color color, Point start, Point end, int type, std::vector<BrushGradientStop> stops);
+		Color getColor();
+		void setColor(Color value);
+		Point getStart();
+		void setStart(Point value);
+		Point getEnd();
+		void setEnd(Point value);
+		int getType();
+		void setType(int value);
+		std::vector<BrushGradientStop> getStops();
+		void setStops(std::vector<BrushGradientStop> value);
+		void toJS(nbind::cbOutput output);
+		uiDrawBrush * toStruct();
+}
+
+class BrushGradientStop {
+	private:
+		double p;
+		Color c;
+	public:
+		BrushGradientStop(double pos, Color color);
+		Color getColor();
+		void setColor(Color value);
+		double getPos();
+		void setPos(double value);
+		void toJS(nbind::cbOutput output);
+}
 
 class UiAreaMouseEvent {
 	private:

@@ -3,23 +3,23 @@
 #include "nbind/nbind.h"
 
 void Draw (UiAreaHandler *self, UiArea *area, uiAreaDrawParams *params) {
-	(*(self->draw))();
+	(*(self->draw))(self, area, new UiAreaDrawParams(params));
 }
 
 void MouseEvent (UiAreaHandler *self, UiArea *area, uiAreaMouseEvent *event) {
-	(*(self->mouseEvent))();
+	(*(self->mouseEvent))(self, area, new UiAreaMouseEvent(event));
 }
 
 void MouseCrossed (UiAreaHandler *self, UiArea *area, int left) {
-	(*(self->mouseCrossed))();
+	(*(self->mouseCrossed))(self, area, left);
 }
 
 void DragBroken (UiAreaHandler *self, UiArea *area) {
-	(*(self->dragBroken))();
+	(*(self->dragBroken))(self, area);
 }
 
 int KeyEvent (UiAreaHandler *self, UiArea *area, uiAreaKeyEvent *event) {
-	return (self->keyEvent)->call<int>();
+	return (self->keyEvent)->call<int>(self, area, new UiAreaKeyEvent(event));
 }
 
 

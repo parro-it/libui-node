@@ -5,6 +5,8 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiArea/DrawBrush.cc",,
+				"src/UiArea/BrushGradientStop.cc",,
 				"src/UiArea/UiAreaDrawParams.cc",
 				"src/UiArea/UiAreaKeyEvent.cc",
 				"src/UiArea/UiAreaMouseEvent.cc",
