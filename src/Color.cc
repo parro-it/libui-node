@@ -2,6 +2,15 @@
 #include "ui-node.h"
 #include "nbind/nbind.h"
 
+
+
+Color::Color(const Color &other) {
+	r = other.r ;
+	g = other.g ;
+	b = other.b ;
+	a = other.a ;
+}
+
 Color::Color(double red, double green, double blue, double alpha) {
 	r = red;
 	g = green;

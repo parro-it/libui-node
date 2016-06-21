@@ -2,6 +2,11 @@
 #include "ui-node.h"
 #include "nbind/nbind.h"
 
+Point::Point(const Point &other) {
+	x = other.x;
+	y = other.y;
+}
+
 Point::Point(int xCoord, int yCoord) {
 	x = xCoord;
 	y = yCoord;

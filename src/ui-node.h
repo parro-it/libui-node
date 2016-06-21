@@ -361,6 +361,7 @@ class Point {
 		int y;
 
 	public:
+		Point(const Point &other);
 		Point(int x, int y);
 		int getX(); void setX(int value);
 		int getY(); void setY(int value);
@@ -376,6 +377,31 @@ class Size {
 		Size(int w, int h);
 		int getWidth(); void setWidth(int value);
 		int getHeight(); void setHeight(int value);
+		void toJS(nbind::cbOutput output);
+};
+
+class PointDouble {
+	private:
+		double x;
+		double y;
+
+	public:
+		PointDouble(double x, double y);
+		PointDouble(const PointDouble &other);
+		double getX(); void setX(double value);
+		double getY(); void setY(double value);
+		void toJS(nbind::cbOutput output);
+};
+
+class SizeDouble {
+	private:
+		double w;
+		double h;
+
+	public:
+		SizeDouble(double w, double h);
+		double getWidth(); void setWidth(double value);
+		double getHeight(); void setHeight(double value);
 		void toJS(nbind::cbOutput output);
 };
 
@@ -449,6 +475,7 @@ class Color {
 		double a;
 
 	public:
+		Color(const Color &other);
 		Color(double r, double g, double b, double a);
 		double getR(); void setR(double value);
 		double getG(); void setG(double value);
@@ -469,12 +496,57 @@ class UiColorButton : public UiControl {
 
 // UIArea
 
+
+class UiDrawMatrix {
+	private:
+		uiDrawMatrix *m;
+	public:
+		UiDrawMatrix();
+		uiDrawMatrix* getStruct();
+		double getM11();
+		double getM12();
+		double getM21();
+		double getM22();
+		double getM31();
+		double getM32();
+		void setM11(double value);
+		void setM12(double value);
+		void setM21(double value);
+		void setM22(double value);
+		void setM31(double value);
+		void setM32(double value);
+		void setIdentity();
+		void translate(double x, double y);
+		void scale(double xCenter, double yCenter, double x, double y);
+		void rotate(double x, double y, double amount);
+		void skew(double x, double y, double xamount, double yamount);
+		void multiply(UiDrawMatrix *src);
+		int invertible();
+		int invert();
+		PointDouble transformPoint();
+		SizeDouble transformSize();
+};
+
+
+class BrushGradientStop {
+	private:
+		double p;
+		Color c;
+	public:
+		BrushGradientStop(double pos, Color color);
+		Color getColor();
+		void setColor(Color value);
+		double getPos();
+		void setPos(double value);
+		void toJS(nbind::cbOutput output);
+};
+
 class DrawBrush {
 	private:
 		Color c;
 		Point s;
 		Point e;
-		int type;
+		int t;
 		std::vector<BrushGradientStop> st;
 
 	public:
@@ -491,20 +563,8 @@ class DrawBrush {
 		void setStops(std::vector<BrushGradientStop> value);
 		void toJS(nbind::cbOutput output);
 		uiDrawBrush * toStruct();
-}
+};
 
-class BrushGradientStop {
-	private:
-		double p;
-		Color c;
-	public:
-		BrushGradientStop(double pos, Color color);
-		Color getColor();
-		void setColor(Color value);
-		double getPos();
-		void setPos(double value);
-		void toJS(nbind::cbOutput output);
-}
 
 class UiAreaMouseEvent {
 	private:

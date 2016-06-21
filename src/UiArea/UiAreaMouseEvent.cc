@@ -2,9 +2,6 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-
-
-
 UiAreaMouseEvent::UiAreaMouseEvent(uiAreaMouseEvent *event) {
 	e = event;
 }

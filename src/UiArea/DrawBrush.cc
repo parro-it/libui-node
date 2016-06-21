@@ -1,26 +1,34 @@
-#include "../libui/ui.h"
-#include "ui-node.h"
+#include "../../libui/ui.h"
+#include "../ui-node.h"
 #include "nbind/nbind.h"
 
-DrawBrush::DrawBrush(Color color, Point start, Point end, int type, std::vector<BrushGradientStop> stops) {
-	c = color;
-	s = start;
-	e = end;
+DrawBrush::DrawBrush(Color color, Point start, Point end, int type, std::vector<BrushGradientStop> stops) :
+c(color), s(start), e(end)
+ {
 	t = type;
 	st = stops;
 }
+
 uiDrawBrush * DrawBrush::toStruct() {
 	uiDrawBrush * b = new uiDrawBrush();
-	b->R = c->getR();
-	b->G = c->getG();
-	b->B = c->getB();
-	b->A = c->getA();
-	b->X0 = s->getX();
-	b->Y0 = s->getY();
-	b->X1 = e->getX();
-	b->Y1 = e->getY();
+	b->R = c.getR();
+	b->G = c.getG();
+	b->B = c.getB();
+	b->A = c.getA();
+	b->X0 = s.getX();
+	b->Y0 = s.getY();
+	b->X1 = e.getX();
+	b->Y1 = e.getY();
 	b->NumStops = st.size();
-	b->Stops = &st[0];
+	uiDrawBrushGradientStop* stops = new uiDrawBrushGradientStop[st.size()];
+	for (unsigned long i = 0; i < st.size(); i++) {
+		stops[i].Pos = st[i].getPos();
+		stops[i].R = st[i].getColor().getR();
+		stops[i].G = st[i].getColor().getG();
+		stops[i].B = st[i].getColor().getB();
+		stops[i].A = st[i].getColor().getA();
+	}
+	b->Stops = stops;
 	return b;
 }
 
@@ -50,7 +58,7 @@ void DrawBrush::setEnd(Point value) {
 }
 
 int DrawBrush::getType() {
-	return b;
+	return t;
 }
 
 void DrawBrush::setType(int value) {

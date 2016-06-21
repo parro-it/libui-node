@@ -1,10 +1,9 @@
-#include "../libui/ui.h"
-#include "ui-node.h"
+#include "../../libui/ui.h"
+#include "../ui-node.h"
 #include "nbind/nbind.h"
 
-BrushGradientStop::BrushGradientStop(double pos, Color color) {
+BrushGradientStop::BrushGradientStop(double pos, Color color) : c(color) {
 	p = pos;
-	c = color;
 }
 
 Color BrushGradientStop::getColor() {
