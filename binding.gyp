@@ -5,6 +5,8 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiArea/DrawStrokeParams.cc",
+				"src/UiArea/UiDrawContext.cc",
 				"src/UiArea/UiDrawPath.cc",
 				"src/UiArea/DrawBrush.cc",
 				"src/SizeDouble.cc",

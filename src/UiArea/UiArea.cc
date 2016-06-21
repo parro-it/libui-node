@@ -4,10 +4,6 @@
 #include "nbind/api.h"
 
 INHERITS_CONTROL_METHODS(UiArea)
-_UI_EXTERN void uiAreaSetSize(uiArea *a, int width, int height);
-// TODO uiAreaQueueRedraw()
-_UI_EXTERN void uiAreaQueueRedrawAll(uiArea *a);
-_UI_EXTERN void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height);
 
 void UiArea::setSize(int width, int height) {
 	uiAreaSetSize(

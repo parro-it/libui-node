@@ -497,6 +497,35 @@ class UiColorButton : public UiControl {
 // UIArea
 
 
+
+class DrawStrokeParams {
+	private:
+		int Cap;
+		int Join;
+		double Thickness;
+		double MiterLimit;
+		std::vector<double> Dashes;
+		int NumDashes;
+		double DashPhase;
+	public:
+		DrawStrokeParams(int cap, int join, double thickness, double miterLimit,std::vector<double> dashes,int numDashes,double DashPhase);
+		int getCap();
+		int getJoin();
+		double getThickness();
+		double getMiterLimit();
+		std::vector<double> getDashes();
+		int getNumDashes();
+		double getDashPhase();
+		void setCap(int value);
+		void setJoin(int value);
+		void setThickness(double value);
+		void setMiterLimit(double value);
+		void setDashes(std::vector<double> value);
+		void setNumDashes(int value);
+		void setDashPhase(double value);
+		uiDrawStrokeParams *toStruct();
+		void toJS(nbind::cbOutput output);
+};
 class UiDrawMatrix {
 	private:
 		uiDrawMatrix *m;
@@ -611,6 +640,26 @@ class UiAreaDrawParams {
 		double getClipY();
 		double getClipWidth();
 		double getClipHeight();
+};
+
+
+class UiDrawPath {
+	private:
+		uiDrawPath *handle;
+
+	public:
+		uiDrawPath *getHandle();
+		UiDrawPath(int fillMode);
+		void freePath();
+		void newFigure(double x, double y);
+		void newFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative);
+		void lineTo(double x, double y);
+		void arcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative);
+		void bezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY);
+		void closeFigure();
+		void addRectangle(double x, double y, double width, double height);
+		void end();
+
 };
 
 

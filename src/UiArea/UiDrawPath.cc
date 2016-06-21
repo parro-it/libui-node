@@ -3,23 +3,6 @@
 #include "nbind/nbind.h"
 
 
-class UiDrawPath {
-	private:
-		uiDrawPath *handle;
-
-	public:
-		UiDrawPath(int fillMode);
-		void freePath();
-		void newFigure(double x, double y);
-		void newFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative);
-		void lineTo(double x, double y);
-		void arcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative);
-		void bezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY);
-		void closeFigure();
-		void addRectangle(double x, double y, double width, double height);
-		void end();
-};
-
 UiDrawPath::UiDrawPath(int fillMode) {
 	handle = uiDrawNewPath(fillMode);
 }
@@ -62,6 +45,9 @@ void UiDrawPath::end() {
 	uiDrawPathEnd(handle);
 }
 
+uiDrawPath *UiDrawPath::getHandle() {
+	return handle;
+}
 
 NBIND_CLASS(UiDrawPath) {
 	construct<int>();

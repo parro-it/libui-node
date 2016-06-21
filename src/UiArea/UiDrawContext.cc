@@ -1,16 +1,7 @@
+#include "../../libui/ui.h"
+#include "../ui-node.h"
+#include "nbind/nbind.h"
 
-_UI_EXTERN void uiDrawStroke(uiDrawContext *c, uiDrawPath *path, uiDrawBrush *b, uiDrawStrokeParams *p);
-_UI_EXTERN void uiDrawFill(uiDrawContext *c, uiDrawPath *path, uiDrawBrush *b);
-
-_UI_EXTERN void uiDrawTransform(uiDrawContext *c, uiDrawMatrix *m);
-
-// TODO add a uiDrawPathStrokeToFill() or something like that
-_UI_EXTERN void uiDrawClip(uiDrawContext *c, uiDrawPath *path);
-
-_UI_EXTERN void uiDrawSave(uiDrawContext *c);
-_UI_EXTERN void uiDrawRestore(uiDrawContext *c);
-
-_UI_EXTERN void uiDrawText(uiDrawContext *c, double x, double y, uiDrawTextLayout *layout);
 
 
 class UiDrawContext {
@@ -19,12 +10,55 @@ class UiDrawContext {
 
 	public:
 		UiDrawContext(uiDrawContext *ctx);
-		void stroke(UiDrawPath *path, UiDrawBrush *b, uiDrawStrokeParams *p);
-		void fill(uiDrawPath *path, uiDrawBrush *b);
-		void transform(uiDrawMatrix *m);
-		void clip(uiDrawPath *path);
+		void stroke(UiDrawPath *path, DrawBrush *b, DrawStrokeParams *p);
+		void fill(UiDrawPath *path, DrawBrush *b);
+		void transform(UiDrawMatrix *m);
+		void clip(UiDrawPath *path);
 		void save();
 		void restore();
-		void text(double x, double y, uiDrawTextLayout *layout);
+		void text(double x, double y, void *layout);
 
 };
+
+UiDrawContext::UiDrawContext(uiDrawContext *ctx) {
+	c = ctx;
+}
+
+void UiDrawContext::stroke(UiDrawPath *path, DrawBrush *b, DrawStrokeParams *p) {
+	uiDrawStroke(c, path->getHandle(), b->toStruct(), p->toStruct());
+}
+
+void UiDrawContext::fill(UiDrawPath *path, DrawBrush *b) {
+	uiDrawFill(c, path->getHandle(), b->toStruct());
+}
+
+void UiDrawContext::transform(UiDrawMatrix *m) {
+	uiDrawTransform(c, m->getStruct());
+}
+
+void UiDrawContext::clip(UiDrawPath *path) {
+	uiDrawClip(c, path->getHandle());
+}
+
+void UiDrawContext::save() {
+	uiDrawSave(c);
+}
+
+void UiDrawContext::restore() {
+	uiDrawRestore(c);
+}
+
+void UiDrawContext::text(double x, double y, void *layout) {
+	// uiDrawText(c, x, y, layout);
+}
+
+
+NBIND_CLASS(UiDrawContext) {
+	method(stroke);
+	method(fill);
+	method(transform);
+	method(clip);
+	method(save);
+	method(restore);
+	method(text);
+}
