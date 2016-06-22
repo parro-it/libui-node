@@ -43,10 +43,10 @@
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [
-					"-L.",
+					"-L<(module_root_dir)",
 					"-lui",
 					"-rpath",
-					"."
+					"<(module_root_dir)"
 				]
 			}
 		}
