@@ -91,3 +91,8 @@ build
 *.dylib
 
 auto*.gypi
+_libui
+
+*.h
+
+*.dylib

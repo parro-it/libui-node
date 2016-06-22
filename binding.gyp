@@ -34,19 +34,19 @@
 			"conditions": [
 				["OS!='mac'", {
 					'ldflags': [
-            					'-Wl,-rpath,<(module_root_dir)/libui/build/out',
+            					'-Wl,-rpath,<(module_root_dir)',
           				],
 					"libraries": [
-						"../libui/build/out/libui.so"
+						".."
 					]
 				}]
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [
-					"-Llibui/build/out",
+					"-L.",
 					"-lui",
 					"-rpath",
-					"libui/build/out"
+					"."
 				]
 			}
 		}
