@@ -31,14 +31,19 @@
   "keywords": [
     "libui",
     "desktop",
-    "desktop",
+    "multiplatform",
     "GUI"
   ],
   "engines": {
     "node": ">=0.12"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "src",
+    "binding.gyp",
+    "auto-top.gypi",
+    "auto.gypi",
+    "autogypi.json"
   ],
   "devDependencies": {
     "ava": "^0.14.0",
