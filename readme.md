@@ -32,64 +32,44 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 # Node version requirement
 
 The project run on any node version > 0.12.
-However, some example in examples folder uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6,
-you can check `examples/core-api.js` that use Es5 syntax.
-
 
 # Project status
 
-* All current `libui` API, except for [these ones](https://github.com/parro-it/libui-node/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) are implemented.
+* All current `libui` API, except for [these ones](https://github.com/parro-it/libui-node/issues?q=is%3Aissue+is%3Aopen+label%3A%22Missing+bind%22) are implemented.
 * I'm developing on `linux`, so this is the preferred platform to test. OSX should work too, but it's not tested. Windows has yet to be configured in build scripts, but it will be supported in further releases.
-* There are very few tests developed, but they are passing in `Travis` thank you to @jjrv awesome work.
+* There are some tests developed, and they are passing in `Travis` thank you to @jjrv awesome work, both on OSX and on Linux, in Node > 0.12
 * This is not yet battle-tested in a real app, but the control gallery example you saw in the screenshot above is fully working.
-
-# Build Requirements
-
-* All platforms:
-	- CMake 2.8.11 or newer
-* Windows: either
-	-Microsoft Visual Studio 2013 or newer (2013 is needed for va_copy())
-	-MinGW-w64 (other flavors of MinGW may not work)
-* Unix: nothing else specific
-* Mac OS X: nothing else specific, so long as you can build Cocoa programs
 
 # Installation
 
-We don't publish new versions to NPM yet.
-When we will, we are planning to download `libui` binaries directly from its github repo. See some details [here](https://github.com/andlabs/libui/issues/124).
-
-Meanwhile, you have to build `libui` on your machine. This require the use of CMake 2.8.11 or newer.
-
-## Install cmake on OSX:
+We had published a first pre-release to npm.
+You can now install `libui-node` as a simple dependency in your project:
 
 ```bash
-brew install cmake
+npm install -S libui-node
 ```
 
-## Install cmake on Debian base Linux distro:
+`libui` prebuilt binaries are automatically downloaded after install.
 
-```bash
-apt-get install cmake
-```
 
-You also need to pull the `libui` git submodule to grab it's sources.
+# Examples
 
+Some example in examples folder uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6, you can check `examples/core-api.js` that use Es5 syntax.
+
+First, you have to clonse the GitHub repo and npm install it:
 
 ```bash
 git clone https://github.com/parro-it/libui-node.git
-git submodule init
-git submodule update
 npm install
 ```
 
-To run the control gallery example, type:
+Then, to run the control gallery example, type:
 
 ```bash
 npm start
 ```
 
-__Note__: There is some problem with then control gallery example on OSX.
-We are investigating it, if you are affected, you can meanwhile try the core-api example:
+And for the core api, example, type:
 
 ```bash
 npm run start-core
@@ -113,10 +93,6 @@ This new API will support transpilation from JSX to further simplify GUI buildin
 
 These works will become in future the base for a React-Native like project.
 
-## Publishing
-
-Since `libui` binaries are relatively small, we plan to precompile them for supported platforms and publish binaries file directly to NPM, to avoid the native build stage on install.
-
 # Contribution & design
 
 * Each `libui` widget implementaion is written in it's own C++ file in `src` folder.
@@ -131,7 +107,6 @@ Since `libui` binaries are relatively small, we plan to precompile them for supp
 * test - run AVA tests && XO linting.
 * start - start the control gallery example
 * build - rebuild C++ sources
-* build:libui - rebuild libui sources under `libui` git submodule
 
 ## Related projects
 
