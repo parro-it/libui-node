@@ -37,7 +37,7 @@
             					'-Wl,-rpath,<(module_root_dir)',
           				],
 					"libraries": [
-						"<(module_root_dir)"
+						"<(module_root_dir)/libui.so"
 					]
 				}]
 			],
