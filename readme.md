@@ -18,8 +18,8 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 </p>
 
 <center>
-## OSX
-![OSX](https://cloud.githubusercontent.com/assets/11197111/16003613/bf03b908-315d-11e6-9c67-850ace39ffc1.png)
+## macOS
+![macOS](https://cloud.githubusercontent.com/assets/11197111/16003613/bf03b908-315d-11e6-9c67-850ace39ffc1.png)
 </center>
 
 
@@ -36,8 +36,8 @@ The project run on any node version > 0.12.
 # Project status
 
 * All current `libui` API, except for [these ones](https://github.com/parro-it/libui-node/issues?q=is%3Aissue+is%3Aopen+label%3A%22Missing+bind%22) are implemented.
-* I'm developing on `linux`, so this is the preferred platform to test. OSX should work too, but it's not tested. Windows has yet to be configured in build scripts, but it will be supported in further releases.
-* There are some tests developed, and they are passing in `Travis` thank you to @jjrv awesome work, both on OSX and on Linux, in Node > 0.12
+* I'm developing on `linux`, so this is the preferred platform to test. macOS should work too, but it's not tested. Windows has yet to be configured in build scripts, but it will be supported in further releases.
+* There are some tests developed, and they are passing in `Travis` thank you to @jjrv awesome work, both on macOS and on Linux, in Node > 0.12
 * This is not yet battle-tested in a real app, but the control gallery example you saw in the screenshot above is fully working.
 
 # Installation
@@ -51,6 +51,13 @@ npm install -S libui-node
 
 `libui` prebuilt binaries are automatically downloaded after install.
 
+This is tested with:
+
+* Linux 64bit
+* Linux 32bit
+* macOS
+
+Windows built script is not supported for the moment, I yet hadn't get the time to write build script to it.
 
 # Examples
 
