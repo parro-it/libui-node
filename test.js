@@ -147,6 +147,10 @@ function checkProperty(Class, propertyName, type, builder = () => new Class()) {
 /* eslint-disable ava/test-title */
 /* eslint-disable ava/no-identical-title */
 
+test(...checkProperty(libui.UiForm, 'visible', Boolean));
+test(...checkProperty(libui.UiForm, 'enabled', Boolean));
+test(...checkProperty(libui.UiForm, 'padded', Boolean));
+
 test(...checkProperty(libui.UiEntry, 'visible', Boolean));
 test(...checkProperty(libui.UiEntry, 'enabled', Boolean));
 test(...checkProperty(libui.UiEntry, 'readOnly', Boolean));

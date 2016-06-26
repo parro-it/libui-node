@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiForm.cc",
 				"src/Size.cc",
 				"src/Point.cc",
 				"src/Color.cc",
