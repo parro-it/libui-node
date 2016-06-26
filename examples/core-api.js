@@ -28,9 +28,13 @@ cmb.append('item 2');
 cmb.append('item 3');
 
 box.append(cmb, 0);
-box.append(new libui.UiDateTimePicker(), 0);
-box.append(new libui.UiEditableCombobox(), 0);
-box.append(new libui.UiCheckbox('Optionally'), 0);
+var hBox4 = new libui.UiHorizontalBox();
+hBox4.append(new libui.UiDateTimePicker(), 0);
+hBox4.append(new libui.UiVerticalSeparator(), 0);
+hBox4.append(new libui.UiEditableCombobox(), 0);
+hBox4.append(new libui.UiCheckbox('Optionally'), 0);
+
+box.append(hBox4, 0);
 
 var group = new libui.UiGroup('Options');
 var radios = new libui.UiRadioButtons();
@@ -41,7 +45,7 @@ radios.append('option 3');
 group.setChild(radios);
 box.append(group, 1);
 
-box.append(new libui.UiSeparator(), 1);
+box.append(new libui.UiHorizontalSeparator(), 1);
 
 var hBox2 = new libui.UiHorizontalBox();
 var spin = new libui.UiSpinbox(0, 100);

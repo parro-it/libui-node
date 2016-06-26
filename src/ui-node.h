@@ -240,9 +240,15 @@ class UiSearchEntry : public UiEntryBase {
 };
 
 
-class UiSeparator : public UiControl {
+class UiHorizontalSeparator : public UiControl {
 	public:
-		UiSeparator();
+		UiHorizontalSeparator();
+		DEFINE_CONTROL_METHODS()
+};
+
+class UiVerticalSeparator : public UiControl {
+	public:
+		UiVerticalSeparator();
 		DEFINE_CONTROL_METHODS()
 };
 

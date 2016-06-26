@@ -4,12 +4,21 @@
 #include "ui-node.h"
 
 
-UiSeparator::UiSeparator() : UiControl( (uiControl*) uiNewHorizontalSeparator() ) {}
+UiHorizontalSeparator::UiHorizontalSeparator() : UiControl( (uiControl*) uiNewHorizontalSeparator() ) {}
 
-INHERITS_CONTROL_METHODS(UiSeparator)
+INHERITS_CONTROL_METHODS(UiHorizontalSeparator)
 
-NBIND_CLASS(UiSeparator) {
+NBIND_CLASS(UiHorizontalSeparator) {
 	construct<>();
 	DECLARE_CONTROL_METHODS()
 }
 
+
+UiVerticalSeparator::UiVerticalSeparator() : UiControl( (uiControl*) uiNewVerticalSeparator() ) {}
+
+INHERITS_CONTROL_METHODS(UiVerticalSeparator)
+
+NBIND_CLASS(UiVerticalSeparator) {
+	construct<>();
+	DECLARE_CONTROL_METHODS()
+}
