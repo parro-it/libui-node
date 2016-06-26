@@ -409,6 +409,17 @@ class UiWindow {
 };
 
 
+class UiForm : public UiControl {
+	public:
+		UiForm();
+		DEFINE_CONTROL_METHODS()
+		void append( const char *label, UiControl *c, bool stretchy);
+		void deleteAt(int index);
+		bool getPadded();
+		void setPadded(bool padded);
+
+};
+
 
 
 class UiMenuItem {
