@@ -4,7 +4,7 @@
 #include "ui-node.h"
 
 
-UiMultilineEntry::UiMultilineEntry() : UiControl( (uiControl*) uiNewMultilineEntry() ) {}
+UiMultilineEntry::UiMultilineEntry() : UiControl( (uiControl*) uiNewNonWrappingMultilineEntry() ) {}
 
 INHERITS_CONTROL_METHODS(UiMultilineEntry)
 
