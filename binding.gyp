@@ -18,6 +18,7 @@
 				"src/UiArea/UiAreaMouseEvent.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/UiAreaHandler.cc",
+				"src/UiForm.cc",
 				"src/Size.cc",
 				"src/Point.cc",
 				"src/Color.cc",
@@ -47,19 +48,19 @@
 			"conditions": [
 				["OS!='mac'", {
 					'ldflags': [
-            					'-Wl,-rpath,<(module_root_dir)/libui/build/out',
+            					'-Wl,-rpath,<(module_root_dir)',
           				],
 					"libraries": [
-						"../libui/build/out/libui.so"
+						"<(module_root_dir)/libui.so"
 					]
 				}]
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [
-					"-Llibui/build/out",
+					"-L<(module_root_dir)",
 					"-lui",
 					"-rpath",
-					"libui/build/out"
+					"<(module_root_dir)"
 				]
 			}
 		}

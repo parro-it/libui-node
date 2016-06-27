@@ -210,7 +210,7 @@ const label = mkControl(libui.UiLabel, {
 	visible: true
 });
 
-const separator = mkControl(libui.UiSeparator, {
+const separator = mkControl(libui.UiHorizontalSeparator, {
 	enabled: true,
 	visible: true
 });

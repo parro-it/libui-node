@@ -240,9 +240,15 @@ class UiSearchEntry : public UiEntryBase {
 };
 
 
-class UiSeparator : public UiControl {
+class UiHorizontalSeparator : public UiControl {
 	public:
-		UiSeparator();
+		UiHorizontalSeparator();
+		DEFINE_CONTROL_METHODS()
+};
+
+class UiVerticalSeparator : public UiControl {
+	public:
+		UiVerticalSeparator();
 		DEFINE_CONTROL_METHODS()
 };
 
@@ -434,6 +440,17 @@ class UiWindow {
 		void setContentSize(Size value);
 };
 
+
+class UiForm : public UiControl {
+	public:
+		UiForm();
+		DEFINE_CONTROL_METHODS()
+		void append( const char *label, UiControl *c, bool stretchy);
+		void deleteAt(int index);
+		bool getPadded();
+		void setPadded(bool padded);
+
+};
 
 
 

@@ -1,10 +1,10 @@
-#include "../libui/ui.h"
+#include "../ui.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
 #include "ui-node.h"
 
 
-UiMultilineEntry::UiMultilineEntry() : UiControl( (uiControl*) uiNewMultilineEntry() ) {}
+UiMultilineEntry::UiMultilineEntry() : UiControl( (uiControl*) uiNewNonWrappingMultilineEntry() ) {}
 
 INHERITS_CONTROL_METHODS(UiMultilineEntry)
 

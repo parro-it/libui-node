@@ -147,6 +147,10 @@ function checkProperty(Class, propertyName, type, builder = () => new Class()) {
 /* eslint-disable ava/test-title */
 /* eslint-disable ava/no-identical-title */
 
+test(...checkProperty(libui.UiForm, 'visible', Boolean));
+test(...checkProperty(libui.UiForm, 'enabled', Boolean));
+test(...checkProperty(libui.UiForm, 'padded', Boolean));
+
 test(...checkProperty(libui.UiEntry, 'visible', Boolean));
 test(...checkProperty(libui.UiEntry, 'enabled', Boolean));
 test(...checkProperty(libui.UiEntry, 'readOnly', Boolean));
@@ -161,11 +165,11 @@ test(...checkProperty(libui.UiLabel, 'visible', Boolean));
 test(...checkProperty(libui.UiLabel, 'enabled', Boolean));
 test(...checkProperty(libui.UiLabel, 'text', String));
 
-test(...checkProperty(libui.UiSeparator, 'visible', Boolean));
-test(...checkProperty(libui.UiSeparator, 'enabled', Boolean));
+test(...checkProperty(libui.UiVerticalSeparator, 'visible', Boolean));
+test(...checkProperty(libui.UiVerticalSeparator, 'enabled', Boolean));
 
-test(...checkProperty(libui.UiSeparator, 'visible', Boolean));
-test(...checkProperty(libui.UiSeparator, 'enabled', Boolean));
+test(...checkProperty(libui.UiHorizontalSeparator, 'visible', Boolean));
+test(...checkProperty(libui.UiHorizontalSeparator, 'enabled', Boolean));
 
 test(...checkProperty(libui.UiDatePicker, 'visible', Boolean));
 test(...checkProperty(libui.UiDatePicker, 'enabled', Boolean));
