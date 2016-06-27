@@ -517,15 +517,11 @@ class UiColorButton : public UiControl {
 
 class DrawStrokeParams {
 	private:
-		int Cap;
-		int Join;
-		double Thickness;
-		double MiterLimit;
-		std::vector<double> Dashes;
-		int NumDashes;
-		double DashPhase;
+		uiDrawStrokeParams *sp;
+
 	public:
-		DrawStrokeParams(int cap, int join, double thickness, double miterLimit,std::vector<double> dashes,int numDashes,double DashPhase);
+
+		DrawStrokeParams();
 		int getCap();
 		int getJoin();
 		double getThickness();
@@ -541,7 +537,7 @@ class DrawStrokeParams {
 		void setNumDashes(int value);
 		void setDashPhase(double value);
 		uiDrawStrokeParams *toStruct();
-		void toJS(nbind::cbOutput output);
+		// void toJS(nbind::cbOutput output);
 };
 class UiDrawMatrix {
 	private:
@@ -617,7 +613,9 @@ class UiAreaMouseEvent {
 		uiAreaMouseEvent *e;
 
 	public:
-		UiAreaMouseEvent(uiAreaMouseEvent *event);
+		UiAreaMouseEvent();
+		uiAreaMouseEvent * getEvent() const;
+		void setEvent(uiAreaMouseEvent * value);
 		double getX();
 		double getY();
 		double getAreaWidth();
@@ -627,6 +625,8 @@ class UiAreaMouseEvent {
 		int getCount();
 		int getModifiers();
 		uint getHeld1To64();
+
+		void toJS(nbind::cbOutput output);
 };
 
 
@@ -642,23 +642,6 @@ class UiAreaKeyEvent {
 		int getModifiers();
 		int getUp();
 };
-
-
-class UiAreaDrawParams {
-	private:
-		uiAreaDrawParams *p;
-
-	public:
-		UiAreaDrawParams(uiAreaDrawParams *params);
-		void * getContext();
-		double getAreaWidth();
-		double getAreaHeight();
-		double getClipX();
-		double getClipY();
-		double getClipWidth();
-		double getClipHeight();
-};
-
 
 class UiDrawPath {
 	private:
@@ -678,6 +661,39 @@ class UiDrawPath {
 		void end();
 
 };
+
+class UiDrawContext {
+	private:
+		uiDrawContext *c;
+
+	public:
+		UiDrawContext(uiDrawContext *ctx);
+		void stroke(UiDrawPath *path, DrawBrush *b, DrawStrokeParams *p);
+		void fill(UiDrawPath *path, DrawBrush *b);
+		void transform(UiDrawMatrix *m);
+		void clip(UiDrawPath *path);
+		void save();
+		void restore();
+		void text(double x, double y, void *layout);
+
+};
+
+class UiAreaDrawParams {
+	private:
+		uiAreaDrawParams *p;
+
+	public:
+		UiAreaDrawParams(uiAreaDrawParams *params);
+		UiDrawContext * getContext();
+		double getAreaWidth();
+		double getAreaHeight();
+		double getClipX();
+		double getClipY();
+		double getClipWidth();
+		double getClipHeight();
+};
+
+
 
 
 class UiArea  : public UiControl {

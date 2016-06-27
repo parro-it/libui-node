@@ -1,10 +1,19 @@
-#include "../../libui/ui.h"
+#include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-UiAreaMouseEvent::UiAreaMouseEvent(uiAreaMouseEvent *event) {
-	e = event;
+UiAreaMouseEvent::UiAreaMouseEvent() {
 }
+
+
+uiAreaMouseEvent * UiAreaMouseEvent::getEvent() const{
+	return e;
+}
+
+void UiAreaMouseEvent::setEvent(uiAreaMouseEvent * value) {
+	e = value;
+}
+
 
 double UiAreaMouseEvent::getX() {
 	return e->X;
@@ -42,8 +51,12 @@ uint UiAreaMouseEvent::getHeld1To64() {
 	return e->Held1To64;
 }
 
+void UiAreaMouseEvent::toJS(nbind::cbOutput output) {
+	output(e);
+}
 
 NBIND_CLASS(UiAreaMouseEvent) {
+  construct<>();
   method(getX);
   method(getY);
   method(getAreaWidth);
@@ -52,4 +65,5 @@ NBIND_CLASS(UiAreaMouseEvent) {
   method(getCount);
   method(getModifiers);
   method(getHeld1To64);
+  method(toJS);
 }

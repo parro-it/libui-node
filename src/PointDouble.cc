@@ -1,4 +1,4 @@
-#include "../libui/ui.h"
+#include "../ui.h"
 #include "ui-node.h"
 #include "nbind/nbind.h"
 

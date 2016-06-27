@@ -1,82 +1,90 @@
-#include "../../libui/ui.h"
+#include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
 
 
-DrawStrokeParams::DrawStrokeParams(int cap, int join, double thickness, double miterLimit,std::vector<double> dashes,int numDashes,double DashPhase) {
-
+DrawStrokeParams::DrawStrokeParams() {
+	sp = new uiDrawStrokeParams();
 }
 
 int DrawStrokeParams::getCap() {
-	return Cap;
+	return sp->Cap;
 }
 
 int DrawStrokeParams::getJoin() {
-	return Join;
+	return sp->Join;
 }
 
 double DrawStrokeParams::getThickness() {
-	return Thickness;
+	return sp->Thickness;
 }
 
 double DrawStrokeParams::getMiterLimit() {
-	return MiterLimit;
+	return sp->MiterLimit;
 
 }
 
 std::vector<double> DrawStrokeParams::getDashes() {
-	return Dashes;
+	return std::vector<double>(); // std::vector<double>(sp->Dashes);
 }
 
 int DrawStrokeParams::getNumDashes() {
-	return NumDashes;
+	return sp->NumDashes;
 
 }
 
 double DrawStrokeParams::getDashPhase() {
-	return DashPhase;
+	return sp->DashPhase;
 
 }
 
 void DrawStrokeParams::setCap(int value) {
-
+	sp->Cap = value;
 }
 
 void DrawStrokeParams::setJoin(int value) {
-
+	sp->Join = value;
 }
 
 void DrawStrokeParams::setThickness(double value) {
-
+	sp->Thickness = value;
 }
 
 void DrawStrokeParams::setMiterLimit(double value) {
-
+	sp->MiterLimit = value;
 }
 
 void DrawStrokeParams::setDashes(std::vector<double> value) {
-
+	// sp->Dashes = value;
 }
 
 void DrawStrokeParams::setNumDashes(int value) {
-
+	sp->NumDashes = value;
 }
 
 void DrawStrokeParams::setDashPhase(double value) {
-
+	sp->DashPhase = value;
 }
 
 
 uiDrawStrokeParams * DrawStrokeParams::toStruct() {
-	return NULL;
+	return sp;
 }
 
-
+/*
 void DrawStrokeParams::toJS(nbind::cbOutput output) {
-
+	output(
+		sp->Cap,
+		sp->Join,
+		sp->Thickness,
+		sp->MiterLimit,
+		sp->Dashes,
+		sp->NumDashes,
+		sp->DashPhase
+	);
 }
-
+*/
 
 NBIND_CLASS(DrawStrokeParams) {
 	method(getCap);
@@ -93,6 +101,6 @@ NBIND_CLASS(DrawStrokeParams) {
 	method(setDashes);
 	method(setNumDashes);
 	method(setDashPhase);
-	method(toStruct);
-	method(toJS);
+	// method(toStruct);
+	// method(toJS);
 }

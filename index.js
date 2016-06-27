@@ -68,6 +68,16 @@ Size.prototype.fromJS = function fromJS(output) {
 
 binding.bind('Size', Size);
 
+function UiAreaMouseEvent(e) {
+	this.e = e;
+}
+
+UiAreaMouseEvent.prototype.fromJS = function fromJS(output) {
+	output(this.e);
+};
+
+binding.bind('UiAreaMouseEvent', UiAreaMouseEvent);
+
 module.exports.Size = Size;
 module.exports.Point = Point;
 module.exports.Color = Color;

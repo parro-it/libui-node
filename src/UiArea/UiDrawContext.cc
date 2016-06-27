@@ -1,24 +1,6 @@
-#include "../../libui/ui.h"
+#include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
-
-
-
-class UiDrawContext {
-	private:
-		uiDrawContext *c;
-
-	public:
-		UiDrawContext(uiDrawContext *ctx);
-		void stroke(UiDrawPath *path, DrawBrush *b, DrawStrokeParams *p);
-		void fill(UiDrawPath *path, DrawBrush *b);
-		void transform(UiDrawMatrix *m);
-		void clip(UiDrawPath *path);
-		void save();
-		void restore();
-		void text(double x, double y, void *layout);
-
-};
 
 UiDrawContext::UiDrawContext(uiDrawContext *ctx) {
 	c = ctx;

@@ -1,4 +1,4 @@
-#include "../../libui/ui.h"
+#include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
@@ -7,8 +7,8 @@ UiAreaDrawParams::UiAreaDrawParams(uiAreaDrawParams *params) {
 	p = params;
 }
 
-void * UiAreaDrawParams::getContext() {
-	return p->Context;
+UiDrawContext * UiAreaDrawParams::getContext() {
+	return new UiDrawContext(p->Context);
 }
 
 double UiAreaDrawParams::getAreaWidth() {
