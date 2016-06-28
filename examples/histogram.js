@@ -3,12 +3,11 @@ var libui = require('../index.js');
 var mainwin;
 var histogram;
 var colorWhite = 0xFFFFFF;
-var colorRed = 0xFF0000;
+// var colorRed = 0xFF0000;
 var colorBlack = 0x000000;
 var colorDodgerBlue = 0x1E90FF;
 
 var datapoints = [];
-var colorButton;
 var currentPoint = -1;
 
 // some metrics
@@ -27,8 +26,10 @@ function graphSize(clientWidth, clientHeight) {
 }
 
 function pointLocations(width, height, xs, ys) {
-	var xincr, yincr;
-	var i, n;
+	var xincr;
+	var yincr;
+	var i;
+	var n;
 
 	xincr = width / 9;		// 10 - 1 to make the last point be at the end
 	yincr = height / 100;
@@ -74,7 +75,7 @@ var handler = {
 		var brush = buildSolidBrush(colorWhite, 1.0);
 		var sp;
 		var m;
-		var graphR, graphG, graphB, graphA = 0.9;
+		var graphA = 0.9;
 
 		path = new libui.UiDrawPath(uiDrawFillModeWinding);
 		path.addRectangle(0, 0, p.getAreaWidth(), p.getAreaHeight());
@@ -116,7 +117,6 @@ var handler = {
 
 		// now create the fill for the graph below the graph line
 		path = constructGraph(graph.width, graph.height, 1);
-		console.log(brush.getColor())
 		brush.color.a = graphA / 2;
 		p.getContext().fill(path, brush);
 		path.freePath();
@@ -126,45 +126,50 @@ var handler = {
 		brush.color.a = graphA;
 		p.getContext().stroke(path, brush, sp);
 		path.freePath();
-/*
+
 		// now draw the point being hovered over
-		if (currentPoint != -1) {
-			double xs[10], ys[10];
+		if (currentPoint !== -1) {
+			var xs = [];
+			var ys = [];
 
 			pointLocations(graph.width, graph.height, xs, ys);
-			path = uiDrawNewPath(uiDrawFillModeWinding);
-			uiDrawPathNewFigureWithArc(path,
-				xs[currentPoint], ys[currentPoint],
+			path = new libui.UiDrawPath(uiDrawFillModeWinding);
+			path.newFigureWithArc(
+				xs[currentPoint],
+				ys[currentPoint],
 				pointRadius,
-				0, 6.23,		// TODO pi
-				0);
-			uiDrawPathEnd(path);
+				0,
+				6.23,
+				0
+			);
+			path.end();
 			// use the same brush as for the histogram lines
-			uiDrawFill(p->Context, path, &brush);
-			uiDrawFreePath(path);
-		}*/
+			p.getContext().fill(path, brush);
+			path.freePath();
+		}
 	},
 
 	MouseEvent: function handlerMouseEvent(self, area, e) {
-		console.log(e.getX(), e.getY());
-		/*
-		double graph.width, graph.height;
-		double xs[10], ys[10];
-		int i;
+		var xs = [];
+		var ys = [];
+		var i;
 
-		graphSize(e->AreaWidth, e->AreaHeight, &graph.width, &graph.height);
+		var graph = graphSize(e.getAreaWidth(), e.getAreaHeight());
 		pointLocations(graph.width, graph.height, xs, ys);
 
-		for (i = 0; i < 10; i++)
-			if (inPoint(e->X, e->Y, xs[i], ys[i]))
+		for (i = 0; i < 10; i++) {
+			if (inPoint(e.getX(), e.getY(), xs[i], ys[i])) {
 				break;
-		if (i == 10)		// not in a point
+			}
+		}
+
+		if (i === 10) {	// not in a point
 			i = -1;
+		}
 
 		currentPoint = i;
-		// TODO only redraw the relevant area
-		uiAreaQueueRedrawAll(histogram);
-		*/
+
+		redraw();
 	},
 
 	MouseCrossed: function () {},
@@ -197,10 +202,8 @@ function buildSolidBrush(color, alpha) {
 	return brush;
 }
 
-/*
-static int inPoint(double x, double y, double xtest, double ytest)
-{
-	// TODO switch to using a matrix
+function inPoint(x, y, xtest, ytest) {
+	// TO-DO switch to using a matrix
 	x -= xoffLeft;
 	y -= yoffTop;
 	return (x >= xtest - pointRadius) &&
@@ -209,12 +212,9 @@ static int inPoint(double x, double y, double xtest, double ytest)
 		(y <= ytest + pointRadius);
 }
 
-static void onDatapointChanged(uiSpinbox *s, void *data)
-{
-	uiAreaQueueRedrawAll(histogram);
+function redraw() {
+	histogram.queueRedrawAll();
 }
-
-*/
 
 function main() {
 	libui.Ui.init();
@@ -240,7 +240,7 @@ function main() {
 	for (i = 0; i < 10; i++) {
 		datapoints[i] = new libui.UiSpinbox(0, 100);
 		datapoints[i].value = Math.round(Math.random() * 100);
-		// uiSpinboxOnChanged(datapoints[i], onDatapointChanged, NULL);
+		datapoints[i].onChanged(redraw);
 		vbox.append(datapoints[i], 0);
 	}
 
