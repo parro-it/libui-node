@@ -1,7 +1,10 @@
 #include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
-#include "nbind/api.h"
+
+
+std::map <uiArea *, UiArea *> areasMap;
+
 
 INHERITS_CONTROL_METHODS(UiArea)
 
@@ -29,6 +32,7 @@ void UiArea::scrollTo(double x, double y, double width, double height) {
 	);
 }
 
+
 UiArea::UiArea(
 	nbind::cbFunction &drawCb,
 	nbind::cbFunction &mouseEventCb ,
@@ -43,7 +47,11 @@ UiArea::UiArea(
 		dragBrokenCb,
 		keyEventCb
 	)
-)) {}
+)) {
+	areasMap[(uiArea *) getHandle()] = this;
+}
+
+
 
 UiArea::UiArea(
 	nbind::cbFunction &drawCb,
@@ -63,8 +71,11 @@ UiArea::UiArea(
 	),
 	width,
 	height
-)) {}
+)) {
+	areasMap[(uiArea *) getHandle()] = this;
+}
 
+#include "nbind/api.h"
 
 NBIND_CLASS(UiArea) {
 	construct<nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &>();

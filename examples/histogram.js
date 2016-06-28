@@ -70,7 +70,8 @@ function constructGraph(width, height, extend) {
 }
 
 var handler = {
-	Draw: function handlerDraw(self, area, p) {
+	Draw: function handlerDraw(area, p) {
+		console.log('area match:', area === histogram )
 		var path;
 		var brush = buildSolidBrush(colorWhite, 1.0);
 		var sp;
@@ -149,7 +150,8 @@ var handler = {
 		}
 	},
 
-	MouseEvent: function handlerMouseEvent(self, area, e) {
+	MouseEvent: function handlerMouseEvent(area, e) {
+		console.log('area match:', area === histogram )
 		var xs = [];
 		var ys = [];
 		var i;

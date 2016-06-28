@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiArea/UiArea.cc",
 				"src/UiArea/DrawStrokeParams.cc",
 				"src/UiArea/UiDrawContext.cc",
 				"src/UiArea/UiDrawPath.cc",
@@ -16,7 +17,6 @@
 				"src/UiArea/UiAreaDrawParams.cc",
 				"src/UiArea/UiAreaKeyEvent.cc",
 				"src/UiArea/UiAreaMouseEvent.cc",
-				"src/UiArea/UiArea.cc",
 				"src/UiArea/UiAreaHandler.cc",
 				"src/UiForm.cc",
 				"src/Size.cc",

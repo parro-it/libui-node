@@ -2,6 +2,7 @@
 #ifndef ui_node
 #define ui_node
 
+#include <map>
 #include "nbind/api.h"
 
 
@@ -691,8 +692,8 @@ class UiAreaDrawParams {
 
 
 
-
 class UiArea  : public UiControl {
+
 	public:
 		UiArea(
 			nbind::cbFunction &drawCb,
@@ -716,12 +717,14 @@ class UiArea  : public UiControl {
 		DEFINE_CONTROL_METHODS()
 };
 
+extern std::map <uiArea *, UiArea *> areasMap;
+
 typedef struct UiAreaHandler {
-	void (*Draw)(UiAreaHandler *self, UiArea *area, uiAreaDrawParams *params);
-	void (*MouseEvent)(UiAreaHandler *self, UiArea *area, uiAreaMouseEvent *event);
-	void (*MouseCrossed)(UiAreaHandler *self, UiArea *area, int left);
-	void (*DragBroken)(UiAreaHandler *self, UiArea *area);
-	int (*KeyEvent)(UiAreaHandler *self, UiArea *area, uiAreaKeyEvent *event);
+	void (*Draw)(UiAreaHandler *self, uiArea *area, uiAreaDrawParams *params);
+	void (*MouseEvent)(UiAreaHandler *self, uiArea *area, uiAreaMouseEvent *event);
+	void (*MouseCrossed)(UiAreaHandler *self, uiArea *area, int left);
+	void (*DragBroken)(UiAreaHandler *self, uiArea *area);
+	int (*KeyEvent)(UiAreaHandler *self, uiArea *area, uiAreaKeyEvent *event);
 
 	nbind::cbFunction *draw;
 	nbind::cbFunction *mouseEvent;
