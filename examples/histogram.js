@@ -7,7 +7,6 @@ var colorRed = 0xFF0000;
 var colorBlack = 0x000000;
 var colorDodgerBlue = 0x1E90FF;
 
-
 var datapoints = [];
 var colorButton;
 var currentPoint = -1;
@@ -27,13 +26,55 @@ function graphSize(clientWidth, clientHeight) {
 	};
 }
 
+function pointLocations(width, height, xs, ys) {
+	var xincr, yincr;
+	var i, n;
+
+	xincr = width / 9;		// 10 - 1 to make the last point be at the end
+	yincr = height / 100;
+
+	for (i = 0; i < 10; i++) {
+		// get the value of the point
+		n = datapoints[i].value;
+		// because y=0 is the top but n=0 is the bottom, we need to flip
+		n = 100 - n;
+		xs[i] = xincr * i;
+		ys[i] = yincr * n;
+	}
+}
+
+function constructGraph(width, height, extend) {
+	var path;
+	var xs = [];
+	var ys = [];
+	var i;
+
+	pointLocations(width, height, xs, ys);
+
+	path = new libui.UiDrawPath(uiDrawFillModeWinding);
+
+	path.newFigure(xs[0], ys[0]);
+	for (i = 1; i < 10; i++) {
+		path.lineTo(xs[i], ys[i]);
+	}
+
+	if (extend) {
+		path.lineTo(width, height);
+		path.lineTo(0, height);
+		path.closeFigure();
+	}
+
+	path.end();
+	return path;
+}
+
 var handler = {
 	Draw: function handlerDraw(self, area, p) {
 		var path;
 		var brush = buildSolidBrush(colorWhite, 1.0);
 		var sp;
 		var m;
-		var graphR, graphG, graphB, graphA;
+		var graphR, graphG, graphB, graphA = 0.9;
 
 		path = new libui.UiDrawPath(uiDrawFillModeWinding);
 		path.addRectangle(0, 0, p.getAreaWidth(), p.getAreaHeight());
@@ -66,32 +107,26 @@ var handler = {
 		path.freePath();
 
 		// now transform the coordinate space so (0, 0) is the top-left corner of the graph
-		/* m = new libui.UiDrawMatrix();
+		m = new libui.UiDrawMatrix();
 		m.setIdentity();
 		m.translate(xoffLeft, yoffTop);
 		p.getContext().transform(m);
-*/
-/*
-		// now get the color for the graph itself and set up the brush
-		uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA);
-		brush.Type = uiDrawBrushTypeSolid;
-		brush.R = graphR;
-		brush.G = graphG;
-		brush.B = graphB;
-		// we set brush->A below to different values for the fill and stroke
+
+		brush = buildSolidBrush(colorDodgerBlue, 1.0);
 
 		// now create the fill for the graph below the graph line
 		path = constructGraph(graph.width, graph.height, 1);
-		brush.A = graphA / 2;
-		uiDrawFill(p->Context, path, &brush);
-		uiDrawFreePath(path);
+		console.log(brush.getColor())
+		brush.color.a = graphA / 2;
+		p.getContext().fill(path, brush);
+		path.freePath();
 
 		// now draw the histogram line
 		path = constructGraph(graph.width, graph.height, 0);
-		brush.A = graphA;
-		uiDrawStroke(p->Context, path, &brush, &sp);
-		uiDrawFreePath(path);
-
+		brush.color.a = graphA;
+		p.getContext().stroke(path, brush, sp);
+		path.freePath();
+/*
 		// now draw the point being hovered over
 		if (currentPoint != -1) {
 			double xs[10], ys[10];
@@ -108,7 +143,6 @@ var handler = {
 			uiDrawFill(p->Context, path, &brush);
 			uiDrawFreePath(path);
 		}*/
-
 	},
 
 	MouseEvent: function handlerMouseEvent(self, area, e) {
@@ -139,7 +173,6 @@ var handler = {
 
 };
 
-
 // helper to quickly set a brush color
 function buildSolidBrush(color, alpha) {
 	var component;
@@ -164,51 +197,7 @@ function buildSolidBrush(color, alpha) {
 	return brush;
 }
 
-// and some colors
-// names and values from https://msdn.microsoft.com/en-us/library/windows/desktop/dd370907%28v=vs.85%29.aspx
 /*
-static void pointLocations(double width, double height, double *xs, double *ys)
-{
-	double xincr, yincr;
-	int i, n;
-
-	xincr = width / 9;		// 10 - 1 to make the last point be at the end
-	yincr = height / 100;
-
-	for (i = 0; i < 10; i++) {
-		// get the value of the point
-		n = uiSpinboxValue(datapoints[i]);
-		// because y=0 is the top but n=0 is the bottom, we need to flip
-		n = 100 - n;
-		xs[i] = xincr * i;
-		ys[i] = yincr * n;
-	}
-}
-
-static uiDrawPath *constructGraph(double width, double height, int extend)
-{
-	uiDrawPath *path;
-	double xs[10], ys[10];
-	int i;
-
-	pointLocations(width, height, xs, ys);
-
-	path = uiDrawNewPath(uiDrawFillModeWinding);
-
-	uiDrawPathNewFigure(path, xs[0], ys[0]);
-	for (i = 1; i < 10; i++)
-		uiDrawPathLineTo(path, xs[i], ys[i]);
-
-	if (extend) {
-		uiDrawPathLineTo(path, width, height);
-		uiDrawPathLineTo(path, 0, height);
-		uiDrawPathCloseFigure(path);
-	}
-
-	uiDrawPathEnd(path);
-	return path;
-}
-
 static int inPoint(double x, double y, double xtest, double ytest)
 {
 	// TODO switch to using a matrix
@@ -225,31 +214,14 @@ static void onDatapointChanged(uiSpinbox *s, void *data)
 	uiAreaQueueRedrawAll(histogram);
 }
 
-static void onColorChanged(uiColorButton *b, void *data)
-{
-	uiAreaQueueRedrawAll(histogram);
-}
-
-static int onClosing(uiWindow *w, void *data)
-{
-	uiControlDestroy(uiControl(mainwin));
-	uiQuit();
-	return 0;
-}
-
-static int shouldQuit(void *data)
-{
-	uiControlDestroy(uiControl(mainwin));
-	return 1;
-}
 */
 
 function main() {
 	libui.Ui.init();
 
-	var hbox, vbox;
+	var hbox;
+	var vbox;
 	var i;
-	var brush;
 
 	mainwin = new libui.UiWindow("libui Histogram Example", 640, 480, 1);
 	mainwin.margined = true;
@@ -272,19 +244,6 @@ function main() {
 		vbox.append(datapoints[i], 0);
 	}
 
-/*
-	colorButton = uiNewColorButton();
-	// TODO inline these
-	setSolidBrush(&brush, colorDodgerBlue, 1.0);
-	uiColorButtonSetColor(colorButton,
-		brush.R,
-		brush.G,
-		brush.B,
-		brush.A);
-	uiColorButtonOnChanged(colorButton, onColorChanged, NULL);
-	uiBoxAppend(vbox, uiControl(colorButton), 0);
-*/
-
 	histogram = new libui.UiArea(
 		handler.Draw,
 		handler.MouseEvent,
@@ -297,7 +256,6 @@ function main() {
 	mainwin.show();
 
 	libui.startLoop();
-	return 0;
 }
 
 main();
