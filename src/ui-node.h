@@ -613,9 +613,7 @@ class UiAreaMouseEvent {
 		uiAreaMouseEvent *e;
 
 	public:
-		UiAreaMouseEvent();
-		uiAreaMouseEvent * getEvent() const;
-		void setEvent(uiAreaMouseEvent * value);
+		UiAreaMouseEvent(uiAreaMouseEvent * event);
 		double getX();
 		double getY();
 		double getAreaWidth();
@@ -625,8 +623,6 @@ class UiAreaMouseEvent {
 		int getCount();
 		int getModifiers();
 		uint getHeld1To64();
-
-		void toJS(nbind::cbOutput output);
 };
 
 

@@ -4,17 +4,13 @@
 
 
 void Draw (UiAreaHandler *self, UiArea *area, uiAreaDrawParams *params) {
-	printf("Drawing, hnd:%p, area:%p, params:%p\n, draw:%p\n", self, area, params, self->draw);
 	UiAreaDrawParams *pp = new UiAreaDrawParams(params);
-	printf("params created: %p\n", pp);
-	(*self->draw)((void*)NULL,(void*) NULL, (void*) NULL); // (self, area, pp);
-	printf("Drawing called, hnd:%p, area:%p, params:%p\n", self, area, params);
+	(*self->draw)((void *) NULL, (void *) NULL, pp);
 }
 
 void MouseEvent (UiAreaHandler *self, UiArea *area, uiAreaMouseEvent *event) {
-	UiAreaMouseEvent * ev = new UiAreaMouseEvent();
-	ev->setEvent(event);
-	(*(self->mouseEvent))((void*)NULL, (void*)NULL, ev);
+	UiAreaMouseEvent *ev = new UiAreaMouseEvent(event);
+	(*(self->mouseEvent))((void *) NULL, (void *) NULL, ev);
 }
 
 void MouseCrossed (UiAreaHandler *self, UiArea *area, int left) {

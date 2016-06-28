@@ -121,7 +121,8 @@ var handler = {
 
 	},
 
-	MouseEvent: function handlerMouseEvent(area, e) {
+	MouseEvent: function handlerMouseEvent(self, area, e) {
+		console.log(e.getX(), e.getY());
 		/*
 		double graph.width, graph.height;
 		double xs[10], ys[10];
