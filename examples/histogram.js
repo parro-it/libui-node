@@ -3,6 +3,7 @@ var libui = require('../index.js');
 var mainwin;
 var histogram;
 var colorWhite = 0xFFFFFF;
+var colorRed = 0xFF0000;
 var colorBlack = 0x000000;
 var colorDodgerBlue = 0x1E90FF;
 
@@ -28,8 +29,6 @@ function graphSize(clientWidth, clientHeight) {
 
 var handler = {
 	Draw: function handlerDraw(self, area, p) {
-		console.log(0)
-		return;
 		var path;
 		var brush = buildSolidBrush(colorWhite, 1.0);
 		var sp;
@@ -37,37 +36,28 @@ var handler = {
 		var graphR, graphG, graphB, graphA;
 
 		path = new libui.UiDrawPath(uiDrawFillModeWinding);
-		console.log(1)
-		path.addRectangle(0, 0, p.AreaWidth, p.AreaHeight);
-		console.log(2)
+		path.addRectangle(0, 0, p.getAreaWidth(), p.getAreaHeight());
 		path.end();
-		console.log(3)
 		p.getContext().fill(path, brush);
-		console.log(4)
 		path.freePath();
-		console.log(5)
 
 		// figure out dimensions
-		var graph = graphSize(p.AreaWidth, p.AreaHeight);
-		console.log(6)
+		var graph = graphSize(p.getAreaWidth(), p.getAreaHeight());
 
 		// clear sp to avoid passing garbage to uiDrawStroke()
 		// for example, we don't use dashing
-		sp = new libui.Ui.DrawStrokeParams();
-		console.log(7)
+		sp = new libui.DrawStrokeParams();
 
 		// make a stroke for both the axes and the histogram line
-		sp.Cap = 0;
-		sp.Join = 0;
-		sp.Thickness = 2;
-		sp.MiterLimit = 10.0;
+		sp.cap = 0;
+		sp.join = 0;
+		sp.thickness = 2;
+		sp.miterLimit = 10.0;
 
 		// draw the axes
 		brush = buildSolidBrush(colorBlack, 1.0);
-		console.log(8)
 
 		path = new libui.UiDrawPath(uiDrawFillModeWinding);
-
 		path.newFigure(xoffLeft, yoffTop);
 		path.lineTo(xoffLeft, yoffTop + graph.height);
 		path.lineTo(xoffLeft + graph.width, yoffTop + graph.height);
@@ -76,11 +66,11 @@ var handler = {
 		path.freePath();
 
 		// now transform the coordinate space so (0, 0) is the top-left corner of the graph
-		m = new  libui.UiDrawMatrix();
+		/* m = new libui.UiDrawMatrix();
 		m.setIdentity();
 		m.translate(xoffLeft, yoffTop);
 		p.getContext().transform(m);
-
+*/
 /*
 		// now get the color for the graph itself and set up the brush
 		uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA);

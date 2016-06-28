@@ -72,21 +72,10 @@ uiDrawStrokeParams * DrawStrokeParams::toStruct() {
 	return sp;
 }
 
-/*
-void DrawStrokeParams::toJS(nbind::cbOutput output) {
-	output(
-		sp->Cap,
-		sp->Join,
-		sp->Thickness,
-		sp->MiterLimit,
-		sp->Dashes,
-		sp->NumDashes,
-		sp->DashPhase
-	);
-}
-*/
+
 
 NBIND_CLASS(DrawStrokeParams) {
+	construct<>();
 	method(getCap);
 	method(getJoin);
 	method(getThickness);
@@ -101,6 +90,11 @@ NBIND_CLASS(DrawStrokeParams) {
 	method(setDashes);
 	method(setNumDashes);
 	method(setDashPhase);
-	// method(toStruct);
-	// method(toJS);
+	getset(getCap,setCap);
+	getset(getJoin,setJoin);
+	getset(getThickness,setThickness);
+	getset(getMiterLimit,setMiterLimit);
+	getset(getDashes,setDashes);
+	getset(getNumDashes,setNumDashes);
+	getset(getDashPhase,setDashPhase);
 }
