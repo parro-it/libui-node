@@ -586,14 +586,10 @@ class BrushGradientStop {
 
 class DrawBrush {
 	private:
-		Color c;
-		Point s;
-		Point e;
-		int t;
-		std::vector<BrushGradientStop> st;
+		uiDrawBrush * b;
 
 	public:
-		DrawBrush(Color color, Point start, Point end, int type, std::vector<BrushGradientStop> stops);
+		DrawBrush();
 		Color getColor();
 		void setColor(Color value);
 		Point getStart();
@@ -604,7 +600,6 @@ class DrawBrush {
 		void setType(int value);
 		std::vector<BrushGradientStop> getStops();
 		void setStops(std::vector<BrushGradientStop> value);
-		void toJS(nbind::cbOutput output);
 		uiDrawBrush * toStruct();
 };
 

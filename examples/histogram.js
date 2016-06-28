@@ -193,13 +193,9 @@ function buildSolidBrush(color, alpha) {
 	var A = alpha;
 
 	var uiDrawBrushTypeSolid = 0;
-	var brush = new libui.DrawBrush(
-		new libui.Color(R, G, B, A),
-		new libui.Point(0, 0),
-		new libui.Point(0, 0),
-		uiDrawBrushTypeSolid,
-		[]
-	);
+	var brush = new libui.DrawBrush();
+	brush.color =	new libui.Color(R, G, B, A);
+	brush.type = uiDrawBrushTypeSolid;
 
 	return brush;
 }

@@ -2,84 +2,65 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-DrawBrush::DrawBrush(Color color, Point start, Point end, int type, std::vector<BrushGradientStop> stops) :
-c(color), s(start), e(end)
+DrawBrush::DrawBrush()
  {
-	t = type;
-	st = stops;
+	b = new uiDrawBrush();
 }
 
 uiDrawBrush * DrawBrush::toStruct() {
-	uiDrawBrush * b = new uiDrawBrush();
-	b->R = c.getR();
-	b->G = c.getG();
-	b->B = c.getB();
-	b->A = c.getA();
-	b->X0 = s.getX();
-	b->Y0 = s.getY();
-	b->X1 = e.getX();
-	b->Y1 = e.getY();
-	b->NumStops = st.size();
-	uiDrawBrushGradientStop* stops = new uiDrawBrushGradientStop[st.size()];
-	for (unsigned long i = 0; i < st.size(); i++) {
-		stops[i].Pos = st[i].getPos();
-		stops[i].R = st[i].getColor().getR();
-		stops[i].G = st[i].getColor().getG();
-		stops[i].B = st[i].getColor().getB();
-		stops[i].A = st[i].getColor().getA();
-	}
-	b->Stops = stops;
 	return b;
 }
 
 Color DrawBrush::getColor() {
-	return c;
+	return Color(b->R, b->G, b->B, b->A);
 }
 
 void DrawBrush::setColor(Color value) {
-	c = value;
+	b->R = value.getR();
+	b->G = value.getG();
+	b->B = value.getB();
+	b->A = value.getA();
 }
 
 
 Point DrawBrush::getStart() {
-	return s;
+	return Point(b->X0, b->Y0);
 }
 
 void DrawBrush::setStart(Point value) {
-	s = value;
+	b->X0 = value.getX();
+	b->Y0 = value.getY();
 }
 
 Point DrawBrush::getEnd() {
-	return e;
+	return Point(b->X1, b->Y1);
 }
 
 void DrawBrush::setEnd(Point value) {
-	e = value;
+	b->X1 = value.getX();
+	b->Y1 = value.getY();
 }
 
 int DrawBrush::getType() {
-	return t;
+	return b->Type;
 }
 
 void DrawBrush::setType(int value) {
-	t = value;
+	b->Type = value;
 }
 
 
 std::vector<BrushGradientStop> DrawBrush::getStops() {
-	return st;
+	return std::vector<BrushGradientStop>();
 }
 
 void DrawBrush::setStops(std::vector<BrushGradientStop> value) {
-	st = value;
+	// st = value;
 }
 
-void DrawBrush::toJS(nbind::cbOutput output) {
-	output(c, s, e, t, st);
-}
 
 NBIND_CLASS(DrawBrush) {
-  construct<Color, Point, Point, int, std::vector<BrushGradientStop>>();
+  construct<>();
   method(getStart);
   method(setStart);
   method(getColor);
