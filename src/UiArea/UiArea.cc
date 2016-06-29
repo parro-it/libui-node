@@ -75,9 +75,14 @@ UiArea::UiArea(
 	areasMap[(uiArea *) getHandle()] = this;
 }
 
+// Workaround for nbind bug solved in 0.3
+UiArea::UiArea(int dummy) : UiControl(NULL) {}
+
+
 #include "nbind/api.h"
 
 NBIND_CLASS(UiArea) {
+	construct<int>();
 	construct<nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &>();
 	construct<nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &,nbind::cbFunction &, int, int>();
 	DECLARE_CONTROL_METHODS()

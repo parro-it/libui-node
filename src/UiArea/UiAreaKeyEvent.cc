@@ -34,6 +34,7 @@ int UiAreaKeyEvent::getUp() {
 }
 
 NBIND_CLASS(UiAreaKeyEvent) {
+	construct<uiAreaKeyEvent *>();
 	method(getKey);
 	method(getExtKey);
 	method(getModifier);

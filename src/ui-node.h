@@ -690,6 +690,9 @@ class UiAreaDrawParams {
 class UiArea  : public UiControl {
 
 	public:
+		// Workaround for nbind bug solved in 0.3
+		UiArea(int dummy);
+
 		UiArea(
 			nbind::cbFunction &drawCb,
 			nbind::cbFunction &mouseEventCb ,

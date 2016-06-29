@@ -37,6 +37,7 @@ double UiAreaDrawParams::getClipHeight() {
 
 
 NBIND_CLASS(UiAreaDrawParams) {
+	construct<uiAreaDrawParams *>();
 	method(getContext);
 	method(getAreaWidth);
 	method(getAreaHeight);

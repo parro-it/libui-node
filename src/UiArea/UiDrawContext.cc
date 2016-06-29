@@ -36,6 +36,7 @@ void UiDrawContext::text(double x, double y, void *layout) {
 
 
 NBIND_CLASS(UiDrawContext) {
+	construct<uiDrawContext *>();
 	method(stroke);
 	method(fill);
 	method(transform);
