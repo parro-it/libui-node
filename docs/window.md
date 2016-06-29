@@ -43,11 +43,15 @@ See [properties implementation](properties.md) for generic details on how proper
 This property specify if the window content should have a margin or not.
 It defaults to false.
 
-![image](https://cloud.githubusercontent.com/assets/11197111/16465543/9bd37358-3e3f-11e6-89e5-68c918320640.png)
-<small>A window with `margined: false`</small>
 
-![image](https://cloud.githubusercontent.com/assets/11197111/16465525/7dead124-3e3f-11e6-83da-4b4aa322634a.png)
-<small>Same window with `margined: true`</small>
+![image](https://cloud.githubusercontent.com/assets/11197111/16465935/804a30d4-3e41-11e6-8189-150e8cddc152.png)
+
+A window with `margined: false`
+
+
+![image](https://cloud.githubusercontent.com/assets/11197111/16465906/68304cfe-3e41-11e6-8ae0-3123205ee136.png)
+
+Same window with `margined: true`
 
 ## title: String
 
@@ -70,9 +74,10 @@ Whether the window should show in fullscreen or not.
 
 Allow to specify that the window is a frameless one, without borders, title bar and OS window control widgets.
 
-![image](https://cloud.githubusercontent.com/assets/11197111/16465572/c56de93c-3e3f-11e6-9b0c-f5a31f6483fe.png)
 
-<small>A window with `borderless: true`</small>
+![image](https://cloud.githubusercontent.com/assets/11197111/16465986/b1befd0c-3e41-11e6-8421-20c106a096f0.png)
+
+A window with `borderless: true`
 
 # Methods
 
