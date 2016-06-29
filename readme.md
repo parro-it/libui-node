@@ -33,13 +33,6 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 
 The project run on any node version > 0.12.
 
-# Project status
-
-* All current `libui` API, except for [these ones](https://github.com/parro-it/libui-node/issues?q=is%3Aissue+is%3Aopen+label%3A%22Missing+bind%22) are implemented.
-* I'm developing on `linux`, so this is the preferred platform to test. macOS should work too, but it's not tested. Windows has yet to be configured in build scripts, but it will be supported in further releases.
-* There are some tests developed, and they are passing in `Travis` thank you to @jjrv awesome work, both on macOS and on Linux, in Node > 0.12
-* This is not yet battle-tested in a real app, but the control gallery example you saw in the screenshot above is fully working.
-
 # Installation
 
 We had published a first pre-release to npm.
@@ -59,34 +52,43 @@ This is tested with:
 
 Windows built script is not supported for the moment, I yet hadn't get the time to write build script to it.
 
-# Examples
 
-Some example in examples folder uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6, you can check `examples/core-api.js` that use Es5 syntax.
+# Documentation
 
-First, you have to clonse the GitHub repo and npm install it:
+You can find ongoing documentation in [docs folder](docs).
+
+Plase look in [examples folder](https://github.com/parro-it/libui-node/tree/master/examples) for working examples.
+
+Some example uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6, you can check `examples/core-api.js` that use ES5 syntax.
+
+## Run examples
+
+First, you have to clone the GitHub repo and npm install it:
 
 ```bash
 git clone https://github.com/parro-it/libui-node.git
 npm install
 ```
 
-Then, to run the control gallery example, type:
+Then, to run the control gallery example (requires Node.js >= 6), type:
 
 ```bash
 npm start
 ```
 
-And for the core api, example, type:
+For the core api, example, type:
 
 ```bash
 npm run start-core
 ```
 
+# Project status
 
-# Usage
+* All current `libui` API, except for [these ones](https://github.com/parro-it/libui-node/issues?q=is%3Aissue+is%3Aopen+label%3A%22Missing+bind%22) are implemented.
+* I'm developing on `linux`, so this is the preferred platform to test. macOS should work too, but it's not tested. Windows has yet to be configured in build scripts, but it will be supported in further releases.
+* There are some tests developed, and they are passing in `Travis` thank you to @jjrv awesome work, both on macOS and on Linux, in Node > 0.12
+* This is not yet battle-tested in a real app, but the control gallery example you saw in the screenshot above is fully working.
 
-Plase look in [examples folder](https://github.com/parro-it/libui-node/tree/master/examples).
-We will write complete API documentation soon...
 
 
 # Future directions of the project
