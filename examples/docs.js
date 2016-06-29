@@ -3,6 +3,7 @@ const writeFileSync = require('fs').writeFileSync;
 
 const bs = '```js';
 const be = '```';
+const t = '`';
 
 function writeFile(name, description, ...contents) {
 	const path = resolve(__dirname, '../docs', name.slice(2).toLowerCase() + '.md');
@@ -63,7 +64,7 @@ ${contents.filter(c => c.type === 'method').map(c => c.content).join('\n')}
 
 See [events implementation](events.md) for generic details on how events are implemented.
 
-${contents.filter(c => c.type === 'method').map(c => c.content).join('\n')}
+${contents.filter(c => c.type === 'event').map(c => c.content).join('\n')}
 
 `;
 
@@ -90,7 +91,7 @@ function event(name, property) {
 		content: `
 ## ${name}
 
-Emitted whenever property ${property} change.
+Emitted whenever property ${t}${property}${t} change.
 
 `
 	};
@@ -134,7 +135,7 @@ writeFile('UiMultilineEntry', 'A multiline text entry widget.',
 writeFile('UiLabel', 'A static text label.',
 	property('visible', 'Boolean', 'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property('enabled', 'Boolean', 'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
-	property('text', 'String','The static text of the label.\nRead write.')
+	property('text', 'String', 'The static text of the label.\nRead write.')
 );
 
 writeFile('UiVerticalSeparator', 'A vertical line to visually separate widgets.',
@@ -222,7 +223,6 @@ writeFile('UiColorButton', 'A button that open a color palette popup.',
 	property('color', 'Color', 'Return or set the currently selected color'),
 	event('onChanged', 'color', 'Color')
 );
-
 
 /*
 var libui = require('../index.js');

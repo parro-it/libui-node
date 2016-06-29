@@ -8,22 +8,19 @@
 var libui = require('libui');
 
 libui.Ui.init();
-var win = new libui.UiWindow('UiVerticalSeparator example', 320, 60, true);
-win.margined = true;
+var win = new libui.UiWindow('UiVerticalSeparator example', 640, 480, true);
 
 var widget = new libui.UiVerticalSeparator();
-widget.text = 'sample text';
 win.setChild(widget);
 
 win.onClosing(function () {
 	win.close();
-	libui.Ui.quit();
+	libui.stopLoop();
 });
 
 win.show();
 
-libui.Ui.main();
-
+libui.startLoop();
 
 ```
 
@@ -34,4 +31,42 @@ libui.Ui.main();
 > new libui.UiVerticalSeparator()
 
 Create a new UiVerticalSeparator object.
+
+---
+
+# Properties
+
+See [properties implementation](properties.md) for generic details on how properties are implemented.
+
+
+## visible: Boolean
+
+Whether the widget should be visible or hidden. 
+Read write.
+Defaults to `true`.
+
+
+
+## enabled: Boolean
+
+Whether the widget should be enabled or disabled. 
+Read write.
+Defaults to `true`.
+
+
+
+
+---
+
+# Methods
+
+
+
+---
+
+# Events
+
+See [events implementation](events.md) for generic details on how events are implemented.
+
+
 

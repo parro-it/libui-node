@@ -8,22 +8,19 @@
 var libui = require('libui');
 
 libui.Ui.init();
-var win = new libui.UiWindow('UiColorButton example', 320, 60, true);
-win.margined = true;
+var win = new libui.UiWindow('UiColorButton example', 640, 480, true);
 
 var widget = new libui.UiColorButton();
-widget.text = 'sample text';
 win.setChild(widget);
 
 win.onClosing(function () {
 	win.close();
-	libui.Ui.quit();
+	libui.stopLoop();
 });
 
 win.show();
 
-libui.Ui.main();
-
+libui.startLoop();
 
 ```
 
@@ -34,4 +31,37 @@ libui.Ui.main();
 > new libui.UiColorButton()
 
 Create a new UiColorButton object.
+
+---
+
+# Properties
+
+See [properties implementation](properties.md) for generic details on how properties are implemented.
+
+
+## color: Color
+
+Return or set the currently selected color
+
+
+
+
+---
+
+# Methods
+
+
+
+---
+
+# Events
+
+See [events implementation](events.md) for generic details on how events are implemented.
+
+
+## onChanged
+
+Emitted whenever property color change.
+
+
 
