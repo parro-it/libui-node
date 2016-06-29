@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiGrid.cc",
 				"src/UiForm.cc",
 				"src/Size.cc",
 				"src/Point.cc",
