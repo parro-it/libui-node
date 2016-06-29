@@ -70,6 +70,33 @@ Read write.
 # Methods
 
 
+## destroy
+
+Destroy and free the control.
+
+
+
+
+
+## setParent
+
+Change the parent of the control
+
+
+### Arguments
+
+* parent: UiControl - the new parent of the widget or null to detach it.
+
+
+
+
+## toplevel
+
+Return whether the control is a top level one or not.
+
+
+
+
 
 ---
 

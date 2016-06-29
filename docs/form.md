@@ -59,7 +59,7 @@ Defaults to `true`.
 
 ### padded: Boolean
 
-If true, the container insert some space between widgets. 
+If true, the container insert some space between children. 
 Defaults to false.
 
 
@@ -68,6 +68,59 @@ Defaults to false.
 ---
 
 # Methods
+
+
+## append
+
+Append a new child widget as last field with specified label.
+
+
+### Arguments
+
+* label: String - the text to use as label of the field.
+* control: UiControl - the control to append.
+* stretchy: Boolean - whether the child should expand to use all available size.
+
+
+
+
+## deleteAt
+
+Remove a child widget and albel at specified position.
+
+
+### Arguments
+
+* index: Number - the index of the control to remove.
+
+
+
+
+## destroy
+
+Destroy and free the control.
+
+
+
+
+
+## setParent
+
+Change the parent of the control
+
+
+### Arguments
+
+* parent: UiControl - the new parent of the widget or null to detach it.
+
+
+
+
+## toplevel
+
+Return whether the control is a top level one or not.
+
+
 
 
 

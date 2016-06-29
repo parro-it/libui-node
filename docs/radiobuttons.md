@@ -69,6 +69,45 @@ Return or set the current choosed option by index.
 # Methods
 
 
+## append
+
+Append a new radio option as last one with specified text.
+
+
+### Arguments
+
+* text: String - the text to show as radio widget label.
+
+
+
+
+## destroy
+
+Destroy and free the control.
+
+
+
+
+
+## setParent
+
+Change the parent of the control
+
+
+### Arguments
+
+* parent: UiControl - the new parent of the widget or null to detach it.
+
+
+
+
+## toplevel
+
+Return whether the control is a top level one or not.
+
+
+
+
 
 ---
 
@@ -80,6 +119,7 @@ See [events implementation](events.md) for generic details on how events are imp
 ### onSelected
 
 Emitted whenever property `selected` change.
+
 
 
 

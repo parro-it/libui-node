@@ -81,7 +81,7 @@
 	method(getReadOnly); \
 	method(setReadOnly);
 
-
+// TODO - padded should be bool
 #define DEFINE_BOX_METHODS() \
 	void append(UiControl *control, int stretchy); \
 	void deleteAt(int index); \
@@ -127,7 +127,7 @@ class UiRadioButtons : public UiControl {
 };
 
 
-
+// TODO - document
 class UiTab : public UiControl {
 	public:
 		UiTab();
@@ -263,7 +263,7 @@ class UiLabel : public UiControl {
 		const char * getText();
 };
 
-
+// TODO - document
 class UiGroup : public UiControl {
 	public:
 		UiGroup(const char *text);
@@ -456,7 +456,7 @@ class UiForm : public UiControl {
 };
 
 
-
+// TODO - document
 class UiMenuItem {
 	DEFINE_EVENT(onClicked)
 
@@ -471,6 +471,7 @@ class UiMenuItem {
 		void setChecked(int checked);
 };
 
+// TODO - document
 class UiMenu {
 	private:
 		uiMenu *handle;
@@ -688,7 +689,7 @@ class UiAreaDrawParams {
 };
 
 
-
+// TODO - document
 class UiArea  : public UiControl {
 
 	public:
@@ -745,14 +746,7 @@ struct UiAreaHandlerFactory {
 
 
 
-typedef struct uiGrid uiGrid;
-#define uiGrid(this) ((uiGrid *) (this))
-_UI_EXTERN void uiGridAppend(uiGrid *g, uiControl *c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
-_UI_EXTERN void uiGridInsertAt(uiGrid *g, uiControl *c, uiControl *existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign);
-_UI_EXTERN int uiGridPadded(uiGrid *g);
-_UI_EXTERN void uiGridSetPadded(uiGrid *g, int padded);
-_UI_EXTERN uiGrid *uiNewGrid(void);
-
+// TODO - document
 class UiGrid : public UiControl {
 
 	public:

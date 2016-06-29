@@ -1,18 +1,18 @@
 
-# ProgressBar
+# VerticalBox
 
-> Progress bar widget.
+> A container that stack its chidren vertically.
 
-![UiProgressBar example](media/UiProgressBar.png)
+
 
 ```js
 
 var libui = require('libui');
 
 libui.Ui.init();
-var win = new libui.UiWindow('UiProgressBar example', 640, 480, true);
+var win = new libui.UiWindow('UiVerticalBox example', 640, 480, true);
 
-var widget = new libui.UiProgressBar();
+var widget = new libui.UiVerticalBox();
 win.setChild(widget);
 
 win.onClosing(function () {
@@ -30,9 +30,9 @@ libui.startLoop();
 
 # Constructor
 
-> new libui.UiProgressBar()
+> new libui.UiVerticalBox()
 
-Create a new UiProgressBar object.
+Create a new UiVerticalBox object.
 
 ---
 
@@ -57,10 +57,10 @@ Defaults to `true`.
 
 
 
-### value: Number
+### padded: Boolean
 
-The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.
-Read write.
+If true, the container insert some space between children. 
+Defaults to false.
 
 
 
@@ -68,6 +68,31 @@ Read write.
 ---
 
 # Methods
+
+
+## append
+
+Append a new child widget as last one.
+
+
+### Arguments
+
+* control: UiControl - the control to append.
+* stretchy: Boolean - whether the child should expand to use all available size.
+
+
+
+
+## deleteAt
+
+Remove a child widget at specified position.
+
+
+### Arguments
+
+* index: Number - the index of the control to remove.
+
+
 
 
 ## destroy

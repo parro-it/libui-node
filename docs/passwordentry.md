@@ -1,18 +1,18 @@
 
-# ProgressBar
+# PasswordEntry
 
-> Progress bar widget.
+> A single line text entry widget that mask the input, useful to edit passwords or other sensible data.
 
-![UiProgressBar example](media/UiProgressBar.png)
+
 
 ```js
 
 var libui = require('libui');
 
 libui.Ui.init();
-var win = new libui.UiWindow('UiProgressBar example', 640, 480, true);
+var win = new libui.UiWindow('UiPasswordEntry example', 640, 480, true);
 
-var widget = new libui.UiProgressBar();
+var widget = new libui.UiPasswordEntry();
 win.setChild(widget);
 
 win.onClosing(function () {
@@ -30,9 +30,9 @@ libui.startLoop();
 
 # Constructor
 
-> new libui.UiProgressBar()
+> new libui.UiPasswordEntry()
 
-Create a new UiProgressBar object.
+Create a new UiPasswordEntry object.
 
 ---
 
@@ -57,9 +57,17 @@ Defaults to `true`.
 
 
 
-### value: Number
+### readOnly: Boolean
 
-The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.
+Whether the user is allowed to change the entry text. 
+Read write.
+Defaults to `true`.
+
+
+
+### text: String
+
+The current text of the entry.
 Read write.
 
 
@@ -103,6 +111,12 @@ Return whether the control is a top level one or not.
 # Events
 
 See [events implementation](events.md) for generic details on how events are implemented.
+
+
+### onChanged
+
+Emitted whenever property `text` change.
+
 
 
 

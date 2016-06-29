@@ -69,6 +69,45 @@ Return or set the current selected text or the text value of the selected item i
 # Methods
 
 
+## append
+
+Append a new text item to the drop down list.
+
+
+### Arguments
+
+* text: String - the text item to append.
+
+
+
+
+## destroy
+
+Destroy and free the control.
+
+
+
+
+
+## setParent
+
+Change the parent of the control
+
+
+### Arguments
+
+* parent: UiControl - the new parent of the widget or null to detach it.
+
+
+
+
+## toplevel
+
+Return whether the control is a top level one or not.
+
+
+
+
 
 ---
 
@@ -80,6 +119,7 @@ See [events implementation](events.md) for generic details on how events are imp
 ### onChanged
 
 Emitted whenever property `text` change.
+
 
 
 
