@@ -421,10 +421,12 @@ class UiWindow {
 		uiWindow *win;
 
 	public:
+		// TODO - hasMenubar should be bool
 		UiWindow(const char* title, int width, int height, int hasMenubar);
 		uiWindow * getHandle();
 		void show();
 		void close();
+		// TODO - margined should be bool
 		void setMargined(int margined);
 		int getMargined();
 		void setChild(UiControl *control);
