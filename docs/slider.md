@@ -3,6 +3,8 @@
 
 > Horizontal slide to set numerical values.
 
+
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiSlider object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## value: Number
+### value: Number
 
 The current numeric value of the slider.
 Read write.
@@ -76,9 +78,9 @@ Read write.
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onChanged
+### onChanged
 
-Emitted whenever property value change.
+Emitted whenever property `value` change.
 
 
 

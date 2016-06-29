@@ -3,6 +3,8 @@
 
 > An entry widget for numerical values.
 
+![UiSpinbox example](media/UiSpinbox.png)
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiSpinbox object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## value: Number
+### value: Number
 
 The current numeric value of the spinbox.
 Read write.
@@ -76,9 +78,9 @@ Read write.
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onChanged
+### onChanged
 
-Emitted whenever property value change.
+Emitted whenever property `value` change.
 
 
 

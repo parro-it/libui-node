@@ -3,6 +3,8 @@
 
 > A drop down combo box that allow selection from list or free text entry.
 
+![UiEditableCombobox example](media/UiEditableCombobox.png)
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiEditableCombobox object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## text: String
+### text: String
 
 Return or set the current selected text or the text value of the selected item in the list.
 
@@ -75,9 +77,9 @@ Return or set the current selected text or the text value of the selected item i
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onChanged
+### onChanged
 
-Emitted whenever property text change.
+Emitted whenever property `text` change.
 
 
 

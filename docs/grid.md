@@ -3,6 +3,8 @@
 
 > A powerful container that allow to specify size and position of each children.
 
+
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiGrid object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## padded: Boolean
+### padded: Boolean
 
 If true, the container insert some space between widgets. 
 Defaults to false.

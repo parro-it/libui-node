@@ -3,6 +3,8 @@
 
 > A button that open a color palette popup.
 
+![UiColorButton example](media/UiColorButton.png)
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiColorButton object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## color: Color
+### color: Color
 
 Return or set the currently selected color
 
@@ -59,9 +61,9 @@ Return or set the currently selected color
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onChanged
+### onChanged
 
-Emitted whenever property color change.
+Emitted whenever property `color` change.
 
 
 

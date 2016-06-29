@@ -3,6 +3,8 @@
 
 > A checkbox widget.
 
+![UiCheckbox example](media/UiCheckbox.png)
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiCheckbox object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## checked: Boolean
+### checked: Boolean
 
 Whether the checkbox is checked or unchecked.
 Read write.
@@ -63,7 +65,7 @@ Defaults to false
 
 
 
-## text: String
+### text: String
 
 The static text of the button.
 Read write.
@@ -84,9 +86,9 @@ Read write.
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onToggled
+### onToggled
 
-Emitted whenever property checked change.
+Emitted whenever property `checked` change.
 
 
 

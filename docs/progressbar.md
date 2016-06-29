@@ -3,6 +3,8 @@
 
 > Progress bar widget.
 
+![UiProgressBar example](media/UiProgressBar.png)
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiProgressBar object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## value: Number
+### value: Number
 
 The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.
 Read write.

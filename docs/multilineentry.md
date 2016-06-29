@@ -3,6 +3,8 @@
 
 > A multiline text entry widget.
 
+![UiMultilineEntry example](media/UiMultilineEntry.png)
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiMultilineEntry object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## readOnly: Boolean
+### readOnly: Boolean
 
 Whether the user is allowed to change the entry text. 
 Read write.
@@ -63,7 +65,7 @@ Defaults to `true`.
 
 
 
-## text: String
+### text: String
 
 The current text of the multiline entry.
 Read write.
@@ -84,9 +86,9 @@ Read write.
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onChanged
+### onChanged
 
-Emitted whenever property text change.
+Emitted whenever property `text` change.
 
 
 

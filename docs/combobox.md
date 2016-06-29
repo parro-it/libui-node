@@ -3,6 +3,8 @@
 
 > A drop down combo box that allow list selection only.
 
+
+
 ```js
 
 var libui = require('libui');
@@ -39,7 +41,7 @@ Create a new UiCombobox object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-## visible: Boolean
+### visible: Boolean
 
 Whether the widget should be visible or hidden. 
 Read write.
@@ -47,7 +49,7 @@ Defaults to `true`.
 
 
 
-## enabled: Boolean
+### enabled: Boolean
 
 Whether the widget should be enabled or disabled. 
 Read write.
@@ -55,7 +57,7 @@ Defaults to `true`.
 
 
 
-## selected: Number
+### selected: Number
 
 Return or set the current selected item by index.
 
@@ -75,9 +77,9 @@ Return or set the current selected item by index.
 See [events implementation](events.md) for generic details on how events are implemented.
 
 
-## onSelected
+### onSelected
 
-Emitted whenever property selected change.
+Emitted whenever property `selected` change.
 
 
 

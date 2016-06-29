@@ -1,5 +1,6 @@
 const resolve = require('path').resolve;
 const writeFileSync = require('fs').writeFileSync;
+const existsSync = require('fs').existsSync;
 
 const bs = '```js';
 const be = '```';
@@ -7,6 +8,8 @@ const t = '`';
 
 function writeFile(name, description, ...contents) {
 	const path = resolve(__dirname, '../docs', name.slice(2).toLowerCase() + '.md');
+	const imagePath = resolve(__dirname, '../docs/media/', name + '.png');
+	const image = existsSync(imagePath) ? `![${name} example](media/${name}.png)` : '';
 	const code = `
 var libui = require('libui');
 
@@ -30,6 +33,8 @@ libui.startLoop();
 # ${name.slice(2)}
 
 > ${description}
+
+${image}
 
 ${bs}
 ${code}
@@ -77,7 +82,7 @@ function property(name, type, description) {
 	return {
 		type: 'property',
 		content: `
-## ${name}: ${type}
+### ${name}: ${type}
 
 ${description}
 
@@ -89,7 +94,7 @@ function event(name, property) {
 	return {
 		type: 'event',
 		content: `
-## ${name}
+### ${name}
 
 Emitted whenever property ${t}${property}${t} change.
 
