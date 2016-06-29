@@ -67,6 +67,43 @@ const changeTitle = () => {
 	colorBtn.color = colors.red;
 };
 
+const areaHandler = {
+	drawCb() {
+		console.log('drawCb');
+	},
+
+	mouseEventCb() {
+		console.log('mouseEventCb');
+	},
+
+	mouseCrossedCb() {
+		console.log('mouseCrossedCb');
+	},
+
+	dragBrokenCb() {
+		console.log('dragBrokenCb');
+	},
+
+	keyEventCb() {
+		console.log('keyEventCb');
+	}
+};
+
+const area = new libui.UiArea(
+	areaHandler.drawCb,
+	areaHandler.mouseEventCb,
+	areaHandler.mouseCrossedCb,
+	areaHandler.dragBrokenCb,
+	areaHandler.keyEventCb,
+	300,
+	150
+);
+
+area.props = {
+	tabTitle: 'Area',
+	stretchy: true
+};
+
 menu([{
 	label: 'File',
 	submenu: [
@@ -217,7 +254,8 @@ win = window(winProps,
 						text: lorem.slice(20),
 						tabTitle: 'Page 3',
 						stretchy: true
-					})
+					}),
+					area
 				)
 			)
 		)
