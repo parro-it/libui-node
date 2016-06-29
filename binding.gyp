@@ -18,6 +18,7 @@
 				"src/UiArea/UiAreaKeyEvent.cc",
 				"src/UiArea/UiAreaMouseEvent.cc",
 				"src/UiArea/UiAreaHandler.cc",
+				"src/UiGrid.cc",
 				"src/UiForm.cc",
 				"src/Size.cc",
 				"src/Point.cc",
