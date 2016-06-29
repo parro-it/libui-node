@@ -21,6 +21,8 @@ libui.startLoop();
 The UiWindow class is responsible to show and manage native windows.
 UiWindow instance could contains only one control. If you need more, you have to use [Containers](containers.md).
 
+---
+
 # Constructor
 
 > new libui.UiWindow()
@@ -33,6 +35,8 @@ Create a new UiWindow object.
 * width: Number	- width of window in pixels
 * height: Number - height of window in pixels
 * hasMenubar: Boolean - specify that this window has a menu bar. See [Menu](#menubar)
+
+---
 
 # Properties
 
@@ -79,6 +83,8 @@ Allow to specify that the window is a frameless one, without borders, title bar 
 
 A window with `borderless: true`
 
+---
+
 # Methods
 
 ## show
@@ -103,6 +109,7 @@ Allow to specify the control to show in window content area. UiWindow instances 
 
 Center the window on screen, both horizontally and vertically.
 
+---
 
 # Events
 
