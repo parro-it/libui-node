@@ -3,7 +3,6 @@ var libui = require('../index.js');
 var mainwin;
 var histogram;
 var colorWhite = 0xFFFFFF;
-// var colorRed = 0xFF0000;
 var colorBlack = 0x000000;
 var colorDodgerBlue = 0x1E90FF;
 
@@ -71,7 +70,6 @@ function constructGraph(width, height, extend) {
 
 var handler = {
 	Draw: function handlerDraw(area, p) {
-		console.log('area match:', area === histogram )
 		var path;
 		var brush = buildSolidBrush(colorWhite, 1.0);
 		var sp;
@@ -151,7 +149,6 @@ var handler = {
 	},
 
 	MouseEvent: function handlerMouseEvent(area, e) {
-		console.log('area match:', area === histogram )
 		var xs = [];
 		var ys = [];
 		var i;
