@@ -1,4 +1,4 @@
-const {readFileSync, writeFileSync} = require('fs');
+const {readFile, writeFile} = require('fs');
 const libui = require('../index.js');
 libui.Ui.init();
 const {
@@ -34,18 +34,20 @@ function newFile() {
 function openFile() {
 	const filename = libui.UiDialogs.openFile(win);
 	if (filename) {
-		const content = readFileSync(filename, 'utf8');
-		editor.text = content;
-		status.text = `Open ${filename}`;
-		currentFileName = filename;
+		readFile(filename, 'utf8', function (err, content) {
+			editor.text = content;
+			status.text = `Open ${filename}`;
+			currentFileName = filename;
+		});
 	}
 }
 
 function saveFileAs() {
 	const filename = libui.UiDialogs.saveFile(win);
 	if (filename) {
-		currentFileName = filename;
-		writeFileSync(currentFileName, editor.text);
+		writeFile(currentFileName, editor.text, function (err) {
+			currentFileName = filename;
+		});
 	}
 }
 
@@ -53,7 +55,8 @@ function saveFile() {
 	if (!currentFileName) {
 		return saveFileAs();
 	}
-	writeFileSync(currentFileName, editor.text);
+	writeFile(currentFileName, editor.text, function (err) {
+	});
 }
 
 menu([{
