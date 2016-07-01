@@ -370,8 +370,10 @@ class Point {
 	public:
 		Point(const Point &other);
 		Point(int x, int y);
-		int getX(); void setX(int value);
-		int getY(); void setY(int value);
+		int getX();
+		void setX(int value);
+		int getY();
+		void setY(int value);
 		void toJS(nbind::cbOutput output);
 };
 
@@ -382,8 +384,10 @@ class Size {
 
 	public:
 		Size(int w, int h);
-		int getWidth(); void setWidth(int value);
-		int getHeight(); void setHeight(int value);
+		int getWidth();
+		void setWidth(int value);
+		int getHeight();
+		void setHeight(int value);
 		void toJS(nbind::cbOutput output);
 };
 
@@ -395,8 +399,10 @@ class PointDouble {
 	public:
 		PointDouble(double x, double y);
 		PointDouble(const PointDouble &other);
-		double getX(); void setX(double value);
-		double getY(); void setY(double value);
+		double getX();
+		void setX(double value);
+		double getY();
+		void setY(double value);
 		void toJS(nbind::cbOutput output);
 };
 
@@ -407,8 +413,10 @@ class SizeDouble {
 
 	public:
 		SizeDouble(double w, double h);
-		double getWidth(); void setWidth(double value);
-		double getHeight(); void setHeight(double value);
+		double getWidth();
+		void setWidth(double value);
+		double getHeight();
+		void setHeight(double value);
 		void toJS(nbind::cbOutput output);
 };
 
@@ -465,8 +473,8 @@ class UiMenuItem {
 		UiMenuItem(uiMenuItem *hnd);
 		void enable();
 		void disable();
-		int getChecked();
-		void setChecked(int checked);
+		bool getChecked();
+		void setChecked(bool checked);
 };
 
 // TODO - document

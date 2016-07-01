@@ -31,11 +31,11 @@ void UiMenuItem::disable() {
 	uiMenuItemDisable(handle);
 }
 
-int UiMenuItem::getChecked() {
+bool UiMenuItem::getChecked() {
 	return uiMenuItemChecked(handle);
 }
 
-void UiMenuItem::setChecked(int checked) {
+void UiMenuItem::setChecked(bool checked) {
 	uiMenuItemSetChecked(handle, checked);
 }
 
