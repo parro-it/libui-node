@@ -5,7 +5,7 @@
 
 UiBox::UiBox(uiControl *control) : UiControl( control ) {}
 
-void UiBox::append(UiControl *control, int stretchy) {
+void UiBox::append(UiControl *control, bool stretchy) {
 	uiBoxAppend(
 		(uiBox *) getHandle(),
 		control->getHandle(),
@@ -20,11 +20,11 @@ void UiBox::deleteAt(int index) {
 	);
 }
 
-void UiBox::setPadded(int padded) {
+void UiBox::setPadded(bool padded) {
 	uiBoxSetPadded((uiBox *) getHandle(), padded);
 }
 
-int UiBox::getPadded() {
+bool UiBox::getPadded() {
 	return uiBoxPadded((uiBox *) getHandle());
 }
 
