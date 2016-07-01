@@ -35,6 +35,9 @@ function openFile() {
 	const filename = libui.UiDialogs.openFile(win);
 	if (filename) {
 		readFile(filename, 'utf8', function (err, content) {
+			if (err) {
+				return libui.UiDialogs.msgBoxError(win, 'Error while reading file', err.stack);
+			}
 			editor.text = content;
 			status.text = `Open ${filename}`;
 			currentFileName = filename;
@@ -46,6 +49,9 @@ function saveFileAs() {
 	const filename = libui.UiDialogs.saveFile(win);
 	if (filename) {
 		writeFile(currentFileName, editor.text, function (err) {
+			if (err) {
+				return libui.UiDialogs.msgBoxError(win, 'Error while writing file', err.stack);
+			}
 			currentFileName = filename;
 		});
 	}
@@ -55,7 +61,11 @@ function saveFile() {
 	if (!currentFileName) {
 		return saveFileAs();
 	}
+
 	writeFile(currentFileName, editor.text, function (err) {
+		if (err) {
+			return libui.UiDialogs.msgBoxError(win, 'Error while writing file', err.stack);
+		}
 	});
 }
 
