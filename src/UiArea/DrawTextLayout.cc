@@ -21,7 +21,7 @@ double DrawTextLayout::getWidth() {
 }
 
 uiDrawTextLayout * DrawTextLayout::getHandle() {
-	return getHandle();
+	return handle;
 }
 
 SizeDouble DrawTextLayout::getExtents() {

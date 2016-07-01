@@ -3,9 +3,7 @@
 #include "nbind/nbind.h"
 
 
-DrawTextFont::DrawTextFont (uiDrawTextFont * hnd) {
-	handle = hnd;
-}
+DrawTextFont::DrawTextFont () {}
 
 uiDrawTextFont * DrawTextFont::getHandle () {
 	return handle;
@@ -41,20 +39,20 @@ std::vector<char *> DrawTextFont::listFontFamilies() {
 	return result;
 }
 
-DrawTextFont * DrawTextFont::loadClosestFont(const char *family, double size, int weight, int italic, int stretch) {
-	uiDrawTextFontDescriptor descr;
-	descr.Family = family;
-	descr.Size = size;
-	descr.Weight = weight;
-	descr.Italic = italic;
-	descr.Stretch = stretch;
+void DrawTextFont::loadClosestFont(const char *family, double size, int weight, int italic, int stretch) {
+	uiDrawTextFontDescriptor *descr = new uiDrawTextFontDescriptor();
+	descr->Family = family;
+	descr->Size = size;
+	descr->Weight = weight;
+	descr->Italic = italic;
+	descr->Stretch = stretch;
 
-	uiDrawTextFont * hnd = uiDrawLoadClosestFont(&descr);
-
-	return new DrawTextFont(hnd);
+	handle = uiDrawLoadClosestFont(descr);
+//	printf("font handle %p\n", handle);
 }
 
 NBIND_CLASS(DrawTextFont) {
+	construct<>();
 	method(listFontFamilies);
 	method(loadClosestFont);
 	method(free);

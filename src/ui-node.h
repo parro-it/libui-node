@@ -690,7 +690,7 @@ class DrawTextFont {
 		uiDrawTextFont * handle;
 
 	public:
-		DrawTextFont(uiDrawTextFont * hnd);
+		DrawTextFont();
 
 		uiDrawTextFont * getHandle();
 		void free();
@@ -698,7 +698,7 @@ class DrawTextFont {
 		DrawTextFontMetrics * getMetrics();
 
 		static std::vector<char *> listFontFamilies();
-		static DrawTextFont * loadClosestFont(const char *family, double size, int weight, int italic, int stretch);
+		void loadClosestFont(const char *family, double size, int weight, int italic, int stretch);
 };
 
 
