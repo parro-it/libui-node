@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiFontButton.cc",
 				"src/UiArea/DrawTextFont.cc",
 				"src/UiArea/DrawTextFontDescriptor.cc",
 				"src/UiArea/DrawTextFontMetrics.cc",

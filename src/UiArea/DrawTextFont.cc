@@ -4,6 +4,9 @@
 
 
 DrawTextFont::DrawTextFont () {}
+DrawTextFont::DrawTextFont (uiDrawTextFont * h) {
+	handle = h;
+}
 
 uiDrawTextFont * DrawTextFont::getHandle () {
 	return handle;

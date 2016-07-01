@@ -515,6 +515,8 @@ class UiColorButton : public UiControl {
 		DEFINE_CONTROL_METHODS()
 };
 
+
+
 // UIArea
 
 
@@ -691,6 +693,7 @@ class DrawTextFont {
 
 	public:
 		DrawTextFont();
+		DrawTextFont (uiDrawTextFont * h);
 
 		uiDrawTextFont * getHandle();
 		void free();
@@ -701,6 +704,15 @@ class DrawTextFont {
 		void loadClosestFont(const char *family, double size, int weight, int italic, int stretch);
 };
 
+
+class UiFontButton : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+	public:
+		UiFontButton();
+		DrawTextFont * getFont();
+		DEFINE_CONTROL_METHODS()
+};
 
 class DrawTextLayout {
 	private:
