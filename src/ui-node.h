@@ -135,8 +135,8 @@ class UiTab : public UiControl {
 		void insertAt(const char *name, int before, UiControl *child);
 		void deleteAt(int index);
 		int numPages();
-		int getMargined(int page);
-		void setMargined(int page, int margined);
+		bool getMargined(int page);
+		void setMargined(int page, bool margined);
 
 		DEFINE_CONTROL_METHODS()
 };
@@ -269,8 +269,8 @@ class UiGroup : public UiControl {
 		UiGroup(const char *text);
 		UiGroup();
 		void setChild(UiControl *control);
-		int getMargined();
-		void setMargined(int margined);
+		bool getMargined();
+		void setMargined(bool margined);
 		const char * getTitle();
 		void setTitle(const char * title);
 		DEFINE_CONTROL_METHODS()

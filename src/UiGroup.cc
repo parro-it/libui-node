@@ -15,11 +15,11 @@ void UiGroup::setChild(UiControl *control) {
 	);
 }
 
-int UiGroup::getMargined() {
+bool UiGroup::getMargined() {
 	return uiGroupMargined( (uiGroup *) getHandle() );
 }
 
-void UiGroup::setMargined(int margined) {
+void UiGroup::setMargined(bool margined) {
 	uiGroupSetMargined(
 		(uiGroup *) getHandle(),
 		margined
