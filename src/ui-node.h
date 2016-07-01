@@ -67,7 +67,7 @@
 
 #define INHERITS_ENTRY_METHODS(CLASS) \
 	void CLASS::setText(const char *  text) { UiEntryBase::setText(text); } \
-	const char *  CLASS::getText() { return UiEntryBase::getText(); } \
+	const char * CLASS::getText() { return UiEntryBase::getText(); } \
 	void CLASS::setReadOnly(bool readOnly) { UiEntryBase::setReadOnly(readOnly); }\
 	bool CLASS::getReadOnly() { return UiEntryBase::getReadOnly(); } \
 	void CLASS::onChanged(nbind::cbFunction & cb) { UiEntryBase::onChanged(cb); }
@@ -83,16 +83,16 @@
 
 // TODO - padded should be bool
 #define DEFINE_BOX_METHODS() \
-	void append(UiControl *control, int stretchy); \
+	void append(UiControl *control, bool stretchy); \
 	void deleteAt(int index); \
-	int getPadded(); \
-	void setPadded(int padded);
+	bool getPadded(); \
+	void setPadded(bool padded);
 
 #define INHERITS_BOX_METHODS(CLASS) \
-	void CLASS::append(UiControl *control, int stretchy) { UiBox::append(control, stretchy); } \
+	void CLASS::append(UiControl *control, bool stretchy) { UiBox::append(control, stretchy); } \
 	void CLASS::deleteAt(int index) { UiBox::deleteAt(index); } \
-	int CLASS::getPadded() { return UiBox::getPadded(); } \
-	void CLASS::setPadded(int padded) { UiBox::setPadded(padded); }
+	bool CLASS::getPadded() { return UiBox::getPadded(); } \
+	void CLASS::setPadded(bool padded) { UiBox::setPadded(padded); }
 
 #define DECLARE_BOX_METHODS() \
 	getset(getPadded, setPadded); \
@@ -421,14 +421,12 @@ class UiWindow {
 		uiWindow *win;
 
 	public:
-		// TODO - hasMenubar should be bool
-		UiWindow(const char* title, int width, int height, int hasMenubar);
+		UiWindow(const char* title, int width, int height, bool hasMenubar);
 		uiWindow * getHandle();
 		void show();
 		void close();
-		// TODO - margined should be bool
-		void setMargined(int margined);
-		int getMargined();
+		void setMargined(bool margined);
+		bool getMargined();
 		void setChild(UiControl *control);
 		void setTitle(const char * title);
 		const char * getTitle();
