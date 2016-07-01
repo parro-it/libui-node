@@ -504,10 +504,14 @@ class Color {
 	public:
 		Color(const Color &other);
 		Color(double r, double g, double b, double a);
-		double getR(); void setR(double value);
-		double getG(); void setG(double value);
-		double getB(); void setB(double value);
-		double getA(); void setA(double value);
+		double getR();
+		void setR(double value);
+		double getG();
+		void setG(double value);
+		double getB();
+		void setB(double value);
+		double getA();
+		void setA(double value);
 		void toJS(nbind::cbOutput output);
 };
 
