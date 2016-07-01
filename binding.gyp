@@ -5,6 +5,10 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiArea/DrawTextFont.cc",
+				"src/UiArea/DrawTextFontDescriptor.cc",
+				"src/UiArea/DrawTextFontMetrics.cc",
+				"src/UiArea/DrawTextLayout.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/DrawStrokeParams.cc",
 				"src/UiArea/UiDrawContext.cc",
@@ -49,8 +53,8 @@
 			"conditions": [
 				["OS!='mac'", {
 					'ldflags': [
-            					'-Wl,-rpath,<(module_root_dir)',
-          				],
+						'-Wl,-rpath,<(module_root_dir)',
+					],
 					"libraries": [
 						"<(module_root_dir)/libui.so"
 					]

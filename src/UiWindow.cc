@@ -126,7 +126,7 @@ bool UiWindow::getBorderless() {
 
 
 void UiWindow::setContentSize(Size value) {
-	printf("setting content to (%d x %d)\n", value.getWidth(), value.getHeight());
+//	printf("setting content to (%d x %d)\n", value.getWidth(), value.getHeight());
 	uiWindowSetContentSize(win, value.getWidth(), value.getHeight());
 }
 
