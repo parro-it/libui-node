@@ -18,7 +18,7 @@ function startLoop(cb) {
 	function step() {
 		Ui.mainStep(false);
 		if (loopRunning) {
-			setImmediate(step);
+			setTimeout(step);
 		} else if (cb) {
 			cb();
 		}
