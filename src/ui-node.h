@@ -657,6 +657,66 @@ class UiDrawPath {
 
 };
 
+
+class DrawTextFontMetrics {
+	private:
+		uiDrawTextFontMetrics * m;
+
+	public:
+		DrawTextFontMetrics(uiDrawTextFontMetrics * metrics);
+		double getAscent();
+		double getDescent();
+		double getLeading();
+		double getUnderlinePos();
+		double getUnderlineThickness();
+};
+
+class DrawTextFontDescriptor {
+	private:
+		uiDrawTextFontDescriptor * d;
+
+	public:
+		DrawTextFontDescriptor(uiDrawTextFontDescriptor * descr);
+		const char *getFamily();
+		double getSize();
+		int getWeight();
+		int getItalic();
+		int getStretch();
+};
+
+
+class DrawTextFont {
+	private:
+		uiDrawTextFont * handle;
+
+	public:
+		DrawTextFont(uiDrawTextFont * hnd);
+
+		uiDrawTextFont * getHandle();
+		void free();
+		DrawTextFontDescriptor * describe();
+		DrawTextFontMetrics * getMetrics();
+
+		static std::vector<char *> listFontFamilies();
+		static DrawTextFont * loadClosestFont(const char *family, double size, int weight, int italic, int stretch);
+};
+
+
+class DrawTextLayout {
+	private:
+		uiDrawTextLayout * handle;
+		double w;
+
+	public:
+		DrawTextLayout(const char *text, DrawTextFont *defaultFont, double width);
+		void free();
+		void setWidth(double value);
+		double getWidth();
+		SizeDouble getExtents();
+		uiDrawTextLayout * getHandle();
+		void setColor(int startChar, int endChar, Color color);
+};
+
 class UiDrawContext {
 	private:
 		uiDrawContext *c;
@@ -669,7 +729,7 @@ class UiDrawContext {
 		void clip(UiDrawPath *path);
 		void save();
 		void restore();
-		void text(double x, double y, void *layout);
+		void text(double x, double y, DrawTextLayout *layout);
 
 };
 
@@ -758,6 +818,8 @@ class UiGrid : public UiControl {
 
 		DEFINE_CONTROL_METHODS()
 };
+
+
 
 
 #endif

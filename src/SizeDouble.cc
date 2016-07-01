@@ -34,6 +34,7 @@ NBIND_CLASS(SizeDouble) {
   method(setWidth);
   method(getHeight);
   method(setHeight);
+  method(toJS);
 
   getset(getWidth, setWidth);
   getset(getHeight, setHeight);
