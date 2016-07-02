@@ -1,13 +1,13 @@
 
 # libui-node
 
-These pages document the ${t}libui-node${t} classes.
+These pages document the `libui-node` classes.
 
 If you are new to the framework, you should start reading basic documentation on how it work:
 
 * [initialization & event loop](initialization.md) - explains how to initialize the framework and how the event loop works.
-* [properties](properties.md) - explains how widgets properties are implemented by ${t}libui-node${t}.
-* [events](events.md) - explains how widgets events are implemented by ${t}libui-node${t}.
+* [properties](properties.md) - explains how widgets properties are implemented by `libui-node`.
+* [events](events.md) - explains how widgets events are implemented by `libui-node`.
 * [UiWindow](window.md) - explains how to create and manage OS windows.
 * [Containers](containers.md) - explains how you can group widgets in tree hierarchies using different layout strategies.
 
