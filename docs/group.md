@@ -3,7 +3,7 @@
 
 > A container for a single widget that provide a caption and visually group it's children.
 
-
+![UiGroup example](media/UiGroup.png)
 
 ```js
 

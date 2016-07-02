@@ -3,7 +3,7 @@
 
 > A container that show each chidren in a separate tab.
 
-
+![UiTab example](media/UiTab.png)
 
 ```js
 
