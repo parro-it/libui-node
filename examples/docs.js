@@ -462,6 +462,24 @@ writeFile('UiHorizontalBox', 'A container that stack its chidren horizontally.',
 
 writeFileSync(readmePath, readme);
 
+writeFile('UiGroup', 'A container for a single widget that provide a caption and visually group it\'s children.',
+	property('visible', 'Boolean', 'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
+	property('enabled', 'Boolean', 'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
+	property('margined', 'Boolean', 'This property specify if the group content area should have a margin or not.\nDefaults to false.'),
+	property('title', 'String', 'This property specify the caption of the group.\nDefaults to empty string.'),
+	method('setChild', 'Set the child widget of the group.', [
+		'control: UiControl - the control to append.'
+	]),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFileSync(readmePath, readme);
+
 /*
 var libui = require('../index.js');
 

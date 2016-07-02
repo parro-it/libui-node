@@ -43,6 +43,10 @@ NBIND_CLASS(UiGroup) {
 	construct<const char *>();
 	construct<>();
 	method(setChild);
+	method(getTitle);
+	method(setTitle);
+	method(getMargined);
+	method(setMargined);
 	getset(getTitle, setTitle);
 	getset(getMargined, setMargined);
 	DECLARE_CONTROL_METHODS()
