@@ -67,6 +67,7 @@ ${contents.filter(c => c.type === 'property').map(c => c.content).join('\n')}
 # Methods
 
 ${contents.filter(c => c.type === 'method').map(c => c.content).join('\n')}
+${contents.filter(c => c.type === 'property').map(c => c.methods).join('\n')}
 
 ---
 
@@ -84,8 +85,24 @@ ${contents.filter(c => c.type === 'event').map(c => c.content).join('\n')}
 }
 
 function property(name, type, description) {
+	const getterName = 'get' + name[0].toUpperCase() + name.slice(1);
+	const setterName = 'set' + name[0].toUpperCase() + name.slice(1);
 	return {
 		type: 'property',
+		methods: `
+## ${setterName}
+
+Set the value of property ${t}${name}${t}
+
+### Arguments
+
+* value: ${type} - The new value for ${t}${name}${t} property.
+
+## ${getterName}
+
+Return the value of property ${t}${name}${t}
+
+`,
 		content: `
 ### ${name}: ${type}
 

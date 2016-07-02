@@ -95,6 +95,48 @@ Return whether the control is a top level one or not.
 
 
 
+## setVisible
+
+Set the value of property `visible`
+
+### Arguments
+
+* value: Boolean - The new value for `visible` property.
+
+## getVisible
+
+Return the value of property `visible`
+
+
+
+## setEnabled
+
+Set the value of property `enabled`
+
+### Arguments
+
+* value: Boolean - The new value for `enabled` property.
+
+## getEnabled
+
+Return the value of property `enabled`
+
+
+
+## setText
+
+Set the value of property `text`
+
+### Arguments
+
+* value: String - The new value for `text` property.
+
+## getText
+
+Return the value of property `text`
+
+
+
 ---
 
 # Events

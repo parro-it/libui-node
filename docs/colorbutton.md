@@ -78,6 +78,20 @@ Return whether the control is a top level one or not.
 
 
 
+## setColor
+
+Set the value of property `color`
+
+### Arguments
+
+* value: Color - The new value for `color` property.
+
+## getColor
+
+Return the value of property `color`
+
+
+
 ---
 
 # Events
