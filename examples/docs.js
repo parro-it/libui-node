@@ -94,7 +94,7 @@ function property(name, type, description) {
 
 Set the value of property ${t}${name}${t}
 
-### Arguments
+**Arguments**
 
 * value: ${type} - The new value for ${t}${name}${t} property.
 

@@ -82,7 +82,7 @@ Return whether the control is a top level one or not.
 
 Set the value of property `color`
 
-### Arguments
+**Arguments**
 
 * value: Color - The new value for `color` property.
 

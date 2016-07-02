@@ -118,7 +118,7 @@ Return whether the control is a top level one or not.
 
 Set the value of property `visible`
 
-### Arguments
+**Arguments**
 
 * value: Boolean - The new value for `visible` property.
 
@@ -132,7 +132,7 @@ Return the value of property `visible`
 
 Set the value of property `enabled`
 
-### Arguments
+**Arguments**
 
 * value: Boolean - The new value for `enabled` property.
 
@@ -146,7 +146,7 @@ Return the value of property `enabled`
 
 Set the value of property `readOnly`
 
-### Arguments
+**Arguments**
 
 * value: Boolean - The new value for `readOnly` property.
 
@@ -160,7 +160,7 @@ Return the value of property `readOnly`
 
 Set the value of property `text`
 
-### Arguments
+**Arguments**
 
 * value: String - The new value for `text` property.
 

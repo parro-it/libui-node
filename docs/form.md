@@ -123,7 +123,7 @@ Return whether the control is a top level one or not.
 
 Set the value of property `visible`
 
-### Arguments
+**Arguments**
 
 * value: Boolean - The new value for `visible` property.
 
@@ -137,7 +137,7 @@ Return the value of property `visible`
 
 Set the value of property `enabled`
 
-### Arguments
+**Arguments**
 
 * value: Boolean - The new value for `enabled` property.
 
@@ -151,7 +151,7 @@ Return the value of property `enabled`
 
 Set the value of property `padded`
 
-### Arguments
+**Arguments**
 
 * value: Boolean - The new value for `padded` property.
 
