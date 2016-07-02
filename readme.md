@@ -12,10 +12,8 @@ It is in early stage of development, but is evolving at great pace and is really
 
 It could become an awesome, lightweight alternative to Electron to develop multiplatform GUI.
 
-<p align="center">
-<h2>Linux</h2>
-<img src ="https://cloud.githubusercontent.com/assets/11197111/15990529/68e924f4-3095-11e6-8a13-b91678def555.png">
-</p>
+**Linux**
+![Linux](docs/media/Window-Linux.png)
 
 <center>
 ## macOS
