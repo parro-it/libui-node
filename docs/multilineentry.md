@@ -89,11 +89,9 @@ Append specified text to the entry content.
 
 
 
-
 ## destroy
 
 Destroy and free the control.
-
 
 
 
@@ -109,11 +107,9 @@ Change the parent of the control
 
 
 
-
 ## toplevel
 
 Return whether the control is a top level one or not.
-
 
 
 

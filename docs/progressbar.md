@@ -77,7 +77,6 @@ Destroy and free the control.
 
 
 
-
 ## setParent
 
 Change the parent of the control
@@ -89,11 +88,9 @@ Change the parent of the control
 
 
 
-
 ## toplevel
 
 Return whether the control is a top level one or not.
-
 
 
 

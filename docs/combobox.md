@@ -3,7 +3,7 @@
 
 > A drop down combo box that allow list selection only.
 
-
+![UiCombobox example](media/UiCombobox.png)
 
 ```js
 
@@ -80,11 +80,9 @@ Append a new text item to the drop down list.
 
 
 
-
 ## destroy
 
 Destroy and free the control.
-
 
 
 
@@ -100,11 +98,9 @@ Change the parent of the control
 
 
 
-
 ## toplevel
 
 Return whether the control is a top level one or not.
-
 
 
 

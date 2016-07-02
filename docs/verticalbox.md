@@ -3,7 +3,7 @@
 
 > A container that stack its chidren vertically.
 
-
+![UiVerticalBox example](media/UiVerticalBox.png)
 
 ```js
 
@@ -82,7 +82,6 @@ Append a new child widget as last one.
 
 
 
-
 ## deleteAt
 
 Remove a child widget at specified position.
@@ -94,11 +93,9 @@ Remove a child widget at specified position.
 
 
 
-
 ## destroy
 
 Destroy and free the control.
-
 
 
 
@@ -114,11 +111,9 @@ Change the parent of the control
 
 
 
-
 ## toplevel
 
 Return whether the control is a top level one or not.
-
 
 
 

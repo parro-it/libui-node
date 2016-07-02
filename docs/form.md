@@ -3,7 +3,7 @@
 
 > A container that organize children as labeled fields.
 
-
+![UiForm example](media/UiForm.png)
 
 ```js
 
@@ -83,7 +83,6 @@ Append a new child widget as last field with specified label.
 
 
 
-
 ## deleteAt
 
 Remove a child widget and albel at specified position.
@@ -95,11 +94,9 @@ Remove a child widget and albel at specified position.
 
 
 
-
 ## destroy
 
 Destroy and free the control.
-
 
 
 
@@ -115,11 +112,9 @@ Change the parent of the control
 
 
 
-
 ## toplevel
 
 Return whether the control is a top level one or not.
-
 
 
 

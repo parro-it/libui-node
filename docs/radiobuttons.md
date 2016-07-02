@@ -3,7 +3,7 @@
 
 > A widget that represent a group of radio options.
 
-
+![UiRadioButtons example](media/UiRadioButtons.png)
 
 ```js
 
@@ -80,11 +80,9 @@ Append a new radio option as last one with specified text.
 
 
 
-
 ## destroy
 
 Destroy and free the control.
-
 
 
 
@@ -100,11 +98,9 @@ Change the parent of the control
 
 
 
-
 ## toplevel
 
 Return whether the control is a top level one or not.
-
 
 
 

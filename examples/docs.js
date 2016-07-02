@@ -5,11 +5,16 @@ const existsSync = require('fs').existsSync;
 const bs = '```js';
 const be = '```';
 const t = '`';
+let readme = '# libui-node\n\n';
+const readmePath = resolve(__dirname, '../docs/readme.md');
 
 function writeFile(name, description, ...contents) {
-	const path = resolve(__dirname, '../docs', name.slice(2).toLowerCase() + '.md');
+	const filename = name.slice(2).toLowerCase() + '.md';
+	const path = resolve(__dirname, '../docs', filename);
 	const imagePath = resolve(__dirname, '../docs/media/', name + '.png');
 	const image = existsSync(imagePath) ? `![${name} example](media/${name}.png)` : '';
+	readme += `
+* [${name}](${filename}) - ${description}`;
 	const code = `
 var libui = require('libui');
 
@@ -437,6 +442,8 @@ writeFile('UiHorizontalBox', 'A container that stack its chidren horizontally.',
 	]),
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
+
+writeFileSync(readmePath, readme);
 
 /*
 var libui = require('../index.js');
