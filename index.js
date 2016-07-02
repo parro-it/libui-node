@@ -3,6 +3,7 @@ var binding = nbind.init(__dirname);
 var Ui = binding.lib.Ui;
 
 var loopRunning = false;
+var frequencyCheck = null;
 
 module.exports = binding.lib;
 
@@ -21,8 +22,6 @@ function boost() {
 	boosted = true;
 	console.log('boost')
 }
-
-var frequencyCheck = null;
 
 function startLoop(cb) {
 	var counter = 0;
