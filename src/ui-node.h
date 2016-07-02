@@ -126,7 +126,6 @@ class UiRadioButtons : public UiControl {
 };
 
 
-// TODO - document
 class UiTab : public UiControl {
 	public:
 		UiTab();

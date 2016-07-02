@@ -5,7 +5,20 @@ const existsSync = require('fs').existsSync;
 const bs = '```js';
 const be = '```';
 const t = '`';
-let readme = '# libui-node\n\n';
+let readme = `# libui-node
+
+These pages document the ${t}libui-node${t} classes.
+If you are new to the framework, you should start reading basic documentation on how it work:
+
+* [initialization & event loop](initialization.md) - explains how to initialize the framework and how the event loop works.
+* [properties](properties.md) - explains how widgets properties are implemented by ${t}libui-node${t}.
+* [events](events.md) - explains how widgets events are implemented by ${t}libui-node${t}.
+* [UiWindow](window.md) - explains how to create and manage OS windows.
+* [Containers](containers.md) - explains how you can group widgets in tree hierarchies using different layout strategies.
+
+
+
+`;
 const readmePath = resolve(__dirname, '../docs/readme.md');
 
 function writeFile(name, description, ...contents) {
@@ -495,7 +508,6 @@ writeFile('UiHorizontalBox', 'A container that stack its chidren horizontally.',
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-writeFileSync(readmePath, readme);
 
 writeFile('UiGroup', 'A container for a single widget that provide a caption and visually group it\'s children.',
 	property('visible', 'Boolean', 'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
@@ -513,7 +525,7 @@ writeFile('UiGroup', 'A container for a single widget that provide a caption and
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-writeFileSync(readmePath, readme);
+// writeFileSync(readmePath, readme);
 
 /*
 var libui = require('../index.js');
