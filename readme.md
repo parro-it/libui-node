@@ -15,10 +15,8 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 **Linux**
 ![Linux](docs/media/Window-Linux.png)
 
-<center>
-## macOS
-![macOS](https://cloud.githubusercontent.com/assets/11197111/16003613/bf03b908-315d-11e6-9c67-850ace39ffc1.png)
-</center>
+**macOS**
+![macOS](docs/media/Window-macOS.png)
 
 
 # Supported platform
