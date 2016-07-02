@@ -82,7 +82,7 @@ Destroy and free the control.
 Change the parent of the control
 
 
-### Arguments
+**Arguments**
 
 * parent: UiControl - the new parent of the widget or null to detach it.
 

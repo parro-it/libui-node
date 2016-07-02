@@ -68,7 +68,7 @@ Defaults to `true`.
 Append a new child widget as last tab.
 
 
-### Arguments
+**Arguments**
 
 * label: String - the text to show in the new tab caption.
 * control: UiControl - the control to append.
@@ -80,7 +80,7 @@ Append a new child widget as last tab.
 Insert a new child widget before specified position.
 
 
-### Arguments
+**Arguments**
 
 * label: String - the text to show in the new tab caption.
 * before: Number - the control will be inserted before this position
@@ -93,7 +93,7 @@ Insert a new child widget before specified position.
 Remove the tab and widget at specified position.
 
 
-### Arguments
+**Arguments**
 
 * index: Number - the index of the tab to remove.
 
@@ -104,7 +104,7 @@ Remove the tab and widget at specified position.
 Specifies that a tab should use a margin around its content.
 
 
-### Arguments
+**Arguments**
 
 * page: Number - the index of the tab.
 * margined: Boolean - whether to display a margin or not.
@@ -116,7 +116,7 @@ Specifies that a tab should use a margin around its content.
 Return a boolean that indicate if a tab is displaying a margin around its content.
 
 
-### Arguments
+**Arguments**
 
 * page: Number - the index of the tab.
 
@@ -141,7 +141,7 @@ Destroy and free the control.
 Change the parent of the control
 
 
-### Arguments
+**Arguments**
 
 * parent: UiControl - the new parent of the widget or null to detach it.
 

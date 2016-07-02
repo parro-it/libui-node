@@ -75,7 +75,7 @@ Defaults to false.
 Append a new child widget as last field with specified label.
 
 
-### Arguments
+**Arguments**
 
 * label: String - the text to use as label of the field.
 * control: UiControl - the control to append.
@@ -88,7 +88,7 @@ Append a new child widget as last field with specified label.
 Remove a child widget and albel at specified position.
 
 
-### Arguments
+**Arguments**
 
 * index: Number - the index of the control to remove.
 
@@ -106,7 +106,7 @@ Destroy and free the control.
 Change the parent of the control
 
 
-### Arguments
+**Arguments**
 
 * parent: UiControl - the new parent of the widget or null to detach it.
 

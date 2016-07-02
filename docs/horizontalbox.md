@@ -75,7 +75,7 @@ Defaults to false.
 Append a new child widget as last one.
 
 
-### Arguments
+**Arguments**
 
 * control: UiControl - the control to append.
 * stretchy: Boolean - whether the child should expand to use all available size.
@@ -87,7 +87,7 @@ Append a new child widget as last one.
 Remove a child widget at specified position.
 
 
-### Arguments
+**Arguments**
 
 * index: Number - the index of the control to remove.
 
@@ -105,7 +105,7 @@ Destroy and free the control.
 Change the parent of the control
 
 
-### Arguments
+**Arguments**
 
 * parent: UiControl - the new parent of the widget or null to detach it.
 

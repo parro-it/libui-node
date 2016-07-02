@@ -74,7 +74,7 @@ Return or set the current choosed option by index.
 Append a new radio option as last one with specified text.
 
 
-### Arguments
+**Arguments**
 
 * text: String - the text to show as radio widget label.
 
@@ -92,7 +92,7 @@ Destroy and free the control.
 Change the parent of the control
 
 
-### Arguments
+**Arguments**
 
 * parent: UiControl - the new parent of the widget or null to detach it.
 

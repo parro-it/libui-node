@@ -134,7 +134,7 @@ function method(name, description, args) {
 ${description}
 
 ${args ? `
-### Arguments
+**Arguments**
 
 * ${args.join('\n* ')}
 ` : ''}

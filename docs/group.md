@@ -82,7 +82,7 @@ Defaults to empty string.
 Set the child widget of the group.
 
 
-### Arguments
+**Arguments**
 
 * control: UiControl - the control to append.
 
@@ -100,7 +100,7 @@ Destroy and free the control.
 Change the parent of the control
 
 
-### Arguments
+**Arguments**
 
 * parent: UiControl - the new parent of the widget or null to detach it.
 
