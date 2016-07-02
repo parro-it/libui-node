@@ -1,13 +1,18 @@
 
-var libui = require('../index');
+var libui = require('../../index');
 
 libui.Ui.init();
 var win = new libui.UiWindow('UiSlider example', 320, 60, true);
 win.margined = true;
 
 var widget = new libui.UiSlider();
-widget.text = 'sample text';
-win.setChild(widget);
+widget.value = 50;
+
+var cnt = new libui.UiVerticalBox();
+cnt.padded = true;
+cnt.append(widget, false);
+
+win.setChild(cnt);
 
 win.onClosing(function () {
 	win.close();

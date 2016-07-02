@@ -1,12 +1,12 @@
 
-var libui = require('../index');
+var libui = require('../../index');
 
 libui.Ui.init();
 var win = new libui.UiWindow('UiProgressBar example', 320, 60, true);
 win.margined = true;
 
 var widget = new libui.UiProgressBar();
-widget.text = 'sample text';
+widget.value = 50;
 win.setChild(widget);
 
 win.onClosing(function () {

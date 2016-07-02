@@ -1,12 +1,14 @@
 
-var libui = require('../index');
+var libui = require('../../index');
 
 libui.Ui.init();
 var win = new libui.UiWindow('UiRadioButtons example', 320, 60, true);
 win.margined = true;
 
 var widget = new libui.UiRadioButtons();
-widget.text = 'sample text';
+widget.append('Item1');
+widget.append('Item2');
+widget.append('Item3');
 win.setChild(widget);
 
 win.onClosing(function () {

@@ -1,5 +1,5 @@
 
-var libui = require('../index');
+var libui = require('../../index');
 
 libui.Ui.init();
 var win = new libui.UiWindow('UiEntry example', 320, 60, true);
