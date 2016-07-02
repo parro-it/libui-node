@@ -441,6 +441,41 @@ writeFile('UiVerticalBox', 'A container that stack its chidren vertically.',
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
+writeFile('UiTab', 'A container that show each chidren in a separate tab.',
+	property('visible', 'Boolean', 'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
+	property('enabled', 'Boolean', 'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
+	method('append', 'Append a new child widget as last tab.', [
+		'label: String - the text to show in the new tab caption.',
+		'control: UiControl - the control to append.'
+	]),
+	method('insertAt', 'Insert a new child widget before specified position.', [
+		'label: String - the text to show in the new tab caption.',
+		'before: Number - the control will be inserted before this position',
+		'control: UiControl - the control to insert.'
+	]),
+
+	method('deleteAt', 'Remove the tab and widget at specified position.', [
+		'index: Number - the index of the tab to remove.'
+	]),
+
+	method('setMargined', 'Specifies that a tab should use a margin around its content.', [
+		'page: Number - the index of the tab.',
+		'margined: Boolean - whether to display a margin or not.'
+	]),
+
+	method('getMargined', 'Return a boolean that indicate if a tab is displaying a margin around its content.', [
+		'page: Number - the index of the tab.'
+	]),
+
+	method('numPages', 'Return the total number of tab pages contained in the widgets.'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
 writeFile('UiHorizontalBox', 'A container that stack its chidren horizontally.',
 	property('visible', 'Boolean', 'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property('enabled', 'Boolean', 'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),

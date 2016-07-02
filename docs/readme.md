@@ -23,4 +23,6 @@
 * [UiEditableCombobox](editablecombobox.md) - A drop down combo box that allow selection from list or free text entry.
 * [UiColorButton](colorbutton.md) - A button that open a color palette popup.
 * [UiVerticalBox](verticalbox.md) - A container that stack its chidren vertically.
+* [UiTab](tab.md) - A container that show each chidren in a separate tab.
 * [UiHorizontalBox](horizontalbox.md) - A container that stack its chidren horizontally.
+* [UiGroup](group.md) - A container for a single widget that provide a caption and visually group it's children.

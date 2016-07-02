@@ -81,7 +81,6 @@
 	method(getReadOnly); \
 	method(setReadOnly);
 
-// TODO - padded should be bool
 #define DEFINE_BOX_METHODS() \
 	void append(UiControl *control, bool stretchy); \
 	void deleteAt(int index); \
@@ -263,7 +262,6 @@ class UiLabel : public UiControl {
 		const char * getText();
 };
 
-// TODO - document
 class UiGroup : public UiControl {
 	public:
 		UiGroup(const char *text);
