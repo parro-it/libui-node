@@ -110,11 +110,17 @@ menu([{
 		{
 			label: 'Open',
 			click: () => {
+				libui.UiDialogs.msgBox(win, 'File selected', 'ciao');
+				libui.boost();
+				return;
+
 				const filename = libui.UiDialogs.openFile(win);
 				if (filename) {
-					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
+					libui.UiDialogs.msgBox(win, 'File selected', filename);
+					libui.boost();
 				} else {
-					libui.UiDialogs.msgBoxError(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.UiDialogs.msgBox(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.boost();
 				}
 			}
 		}, {
@@ -122,9 +128,11 @@ menu([{
 			click: () => {
 				const filename = libui.UiDialogs.saveFile(win);
 				if (filename) {
-					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
+					libui.UiDialogs.msgBox(win, 'File selected', filename);
+					libui.boost();
 				} else {
-					libui.UiDialogs.msgBoxError(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.UiDialogs.msgBox(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.boost();
 				}
 			}
 		}, {

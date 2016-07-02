@@ -10,16 +10,34 @@ function stopLoop() {
 	if (!loopRunning) {
 		return;
 	}
-	loopRunning = false;
+	clearInterval(frequencyCheck);
+	boost();
 	Ui.quit();
+	console.log('quit done')
 }
 
+var boosted = false;
+function boost() {
+	boosted = true;
+	console.log('boost')
+}
+
+var frequencyCheck = null;
+
 function startLoop(cb) {
+	var counter = 0;
+
 	function step() {
-		Ui.mainStep(false);
-		if (loopRunning) {
-			setTimeout(step);
+		counter++;
+		if (Ui.mainStep(false)) {
+			if (boosted) {
+				setImmediate(step);
+				boosted = false;
+			} else {
+				setTimeout(step);
+			}
 		} else if (cb) {
+			console.log('exit')
 			cb();
 		}
 	}
@@ -27,6 +45,11 @@ function startLoop(cb) {
 	if (loopRunning) {
 		return;
 	}
+
+	frequencyCheck = setInterval(function () {
+		console.log(counter + "Hz");
+		counter = 0;
+	}, 1000);
 
 	loopRunning = true;
 	Ui.mainSteps();
@@ -122,6 +145,7 @@ var textStretch = {
 	ultraExpanded: 8
 };
 
+module.exports.boost = boost;
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
