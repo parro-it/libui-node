@@ -182,11 +182,4 @@ Return the value of property `enabled`
 
 
 
----
-
-# Events
-
-See [events implementation](events.md) for generic details on how events are implemented.
-
-
 

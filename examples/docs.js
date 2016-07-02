@@ -69,14 +69,14 @@ ${contents.filter(c => c.type === 'property').map(c => c.content).join('\n')}
 ${contents.filter(c => c.type === 'method').map(c => c.content).join('\n')}
 ${contents.filter(c => c.type === 'property').map(c => c.methods).join('\n')}
 
----
+${contents.filter(c => c.type === 'event').length === 0 ? '' : `---
 
 # Events
 
 See [events implementation](events.md) for generic details on how events are implemented.
 
 ${contents.filter(c => c.type === 'event').map(c => c.content).join('\n')}
-
+`}
 `;
 
 	writeFileSync(path, template);
