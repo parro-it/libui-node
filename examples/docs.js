@@ -19,7 +19,7 @@ If you are new to the framework, you should start reading basic documentation on
 
 
 `;
-const readmePath = resolve(__dirname, '../docs/readme.md');
+// const readmePath = resolve(__dirname, '../docs/readme.md');
 
 function writeFile(name, description, ...contents) {
 	const filename = name.slice(2).toLowerCase() + '.md';
@@ -507,7 +507,6 @@ writeFile('UiHorizontalBox', 'A container that stack its chidren horizontally.',
 	]),
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
-
 
 writeFile('UiGroup', 'A container for a single widget that provide a caption and visually group it\'s children.',
 	property('visible', 'Boolean', 'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),

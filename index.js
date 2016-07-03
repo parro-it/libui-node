@@ -1,4 +1,5 @@
 var nbind = require('nbind');
+
 var binding = nbind.init(__dirname);
 var Ui = binding.lib.Ui;
 
