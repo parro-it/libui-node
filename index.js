@@ -25,6 +25,8 @@ function boost() {
 }
 
 function startLoop(cb) {
+	binding.lib.EventLoop.start();
+	return;
 	var counter = 0;
 
 	function step() {
