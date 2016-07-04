@@ -31,6 +31,7 @@ function startLoop(cb) {
 		return;
 	}
 	console.log('starting loop');
+	loopRunning = true;
 	binding.lib.EventLoop.start();
 	console.log('loop started');
 	return;
