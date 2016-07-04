@@ -9,12 +9,14 @@ var frequencyCheck = null;
 module.exports = binding.lib;
 
 function stopLoop() {
+
 	if (!loopRunning) {
 		return;
 	}
-	clearInterval(frequencyCheck);
-	boost();
-	Ui.quit();
+	//clearInterval(frequencyCheck);
+	console.log('stopping loop');
+	binding.lib.EventLoop.stop();
+
 	console.log('quit done')
 }
 
@@ -25,7 +27,12 @@ function boost() {
 }
 
 function startLoop(cb) {
+	if (loopRunning) {
+		return;
+	}
+	console.log('starting loop');
 	binding.lib.EventLoop.start();
+	console.log('loop started');
 	return;
 	var counter = 0;
 

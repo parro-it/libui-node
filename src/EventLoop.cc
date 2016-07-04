@@ -11,10 +11,21 @@ void onEventsPending(uv_poll_t* handle, int status, int events) {
 	// printf("status %d, events %d\n", status, events);
 	Nan::HandleScope scope;
 	while(gtk_events_pending()) {
-		gtk_main_iteration_do(FALSE);
+		gtk_main_iteration_do(0);
 	}
-}
 
+}
+uv_poll_t * handle;
+
+
+void quit()
+{
+	printf("gtk_main_quit\n");
+	gtk_main_quit();
+	printf("stopping poll\n");
+	uv_poll_stop(handle);
+	printf("end\n");
+}
 
 struct EventLoop {
 	static void start () {
@@ -32,15 +43,21 @@ struct EventLoop {
 		fd = ConnectionNumber(xDisplay);
 
 
-		uv_poll_t * handle = new uv_poll_t();
+		handle = new uv_poll_t();
 
 		uv_poll_init(uv_default_loop(), handle, fd);
 		uv_poll_start(handle, UV_READABLE, onEventsPending);
 
 	}
+
+	static void stop () {
+		quit();
+		// gdk_threads_add_idle(quit, NULL);
+	}
 };
 
 
 NBIND_CLASS(EventLoop) {
-	method(start);
+		method(start);
+		method(stop);
 }
