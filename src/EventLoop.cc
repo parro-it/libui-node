@@ -25,7 +25,7 @@ struct EventLoop {
 		int fd = uiConnectionNumber();
 		printf("uiConnectionNumber %d\n", fd);
 		handle = new uv_poll_t();
-		printf("uv_poll_t %d\n", fd);
+		printf("uv_poll_t %p\n", handle);
 
 		uv_poll_init(uv_default_loop(), handle, fd);
 		printf("uv_poll_init\n");

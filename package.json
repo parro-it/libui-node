@@ -47,6 +47,8 @@
   ],
   "devDependencies": {
     "ava": "^0.14.0",
+    "humanize": "0.0.9",
+    "proc-stats": "0.0.4",
     "xo": "^0.14.0"
   },
   "dependencies": {
