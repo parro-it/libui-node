@@ -32,6 +32,7 @@
 				'/usr/include/glib-2.0 '
 			],
 			"sources": [
+				"src/arch/darwin/ui-fds.mm",
 				"src/EventLoop.cc",
 				"src/UiFontButton.cc",
 				"src/UiArea/DrawTextFont.cc",
@@ -81,13 +82,21 @@
 			],
 			"conditions": [
 				["OS!='mac'", {
+					"sources": [
+						"src/arch/unix/ui-fds.cc"
+					],
 					'ldflags': [
 						'-Wl,-rpath,<(module_root_dir)',
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.so"
 					]
-				}]
+				}],
+				["OS=='mac'", {
+					"sources": [
+						"src/arch/darwin/ui-fds.m"
+					]
+				}],
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [
