@@ -46,7 +46,7 @@ This is tested with:
 * Linux 32bit
 * macOS
 
-Windows built script is not supported for the moment, I yet hadn't get the time to write build script to it.
+Windows is not supported for the moment, I didn't yet get the time to write build script for it.
 
 
 # Documentation
