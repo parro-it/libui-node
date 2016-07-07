@@ -10,12 +10,10 @@ uv_poll_t * handle;
 
 
 static void onEventsPending(uv_poll_t* handle, int status, int events) {
-	printf("onEventsPending\n");
 	Nan::HandleScope scope;
 	while(uiEventsPending()) {
 		uiMainStep(0);
 	}
-	printf("onEventsPending exited\n");
 }
 
 bool running = false;
