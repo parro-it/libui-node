@@ -81,7 +81,8 @@
 			"conditions": [
 				["OS!='mac'", {
 					"sources": [
-						"src/arch/unix/EventLoop.cc"
+						"src/arch/unix/EventLoop.cc",
+						"src/arch/unix/uiConnectionNumber.cc"
 					],
 					'ldflags': [
 						'-Wl,-rpath,<(module_root_dir)',
