@@ -1,4 +1,4 @@
-#include "../libui/ui.h"
+#include "../ui.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
 #include "ui-node.h"
@@ -36,11 +36,11 @@ int UiTab::numPages() {
 	return uiTabNumPages((uiTab *) getHandle());
 }
 
-int UiTab::getMargined(int page) {
+bool UiTab::getMargined(int page) {
 	return uiTabMargined((uiTab *) getHandle(), page);
 }
 
-void UiTab::setMargined(int page, int margined) {
+void UiTab::setMargined(int page, bool margined) {
 	uiTabSetMargined(
 		(uiTab *) getHandle(),
 		page,

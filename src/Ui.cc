@@ -1,10 +1,14 @@
-#include "../libui/ui.h"
+#include "../ui.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
 
 struct Ui {
 	static void main() {
 		uiMain();
+	}
+
+	static void mainSteps() {
+		uiMainSteps();
 	}
 
 	static int mainStep(int wait) {
@@ -31,4 +35,5 @@ NBIND_CLASS(Ui) {
 	method(main);
 	method(quit);
 	method(mainStep);
+	method(mainSteps);
 }

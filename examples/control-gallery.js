@@ -1,6 +1,8 @@
 var os = require('os');
 const libui = require('../index.js');
 const {
+	size,
+	point,
 	datePicker,
 	dateTimePicker,
 	timePicker,
@@ -13,6 +15,8 @@ const {
 	hBox,
 	group,
 	button,
+	colors,
+	colorButton,
 	checkBox,
 	spinbox,
 	slider,
@@ -42,6 +46,12 @@ let win;
 let spin;
 let slide;
 let progress;
+let colorBtn;
+let status;
+
+function onPositionChanged() {
+	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize.w} x ${win.contentSize.h})`;
+}
 
 const updateValue = value => {
 	if (value === spin.value) {
@@ -54,6 +64,44 @@ const updateValue = value => {
 
 const changeTitle = () => {
 	win.title = 'Title changed';
+	colorBtn.color = colors.red;
+};
+
+const areaHandler = {
+	drawCb() {
+		console.log('drawCb');
+	},
+
+	mouseEventCb() {
+		console.log('mouseEventCb');
+	},
+
+	mouseCrossedCb() {
+		console.log('mouseCrossedCb');
+	},
+
+	dragBrokenCb() {
+		console.log('dragBrokenCb');
+	},
+
+	keyEventCb() {
+		console.log('keyEventCb');
+	}
+};
+
+const area = new libui.UiArea(
+	areaHandler.drawCb,
+	areaHandler.mouseEventCb,
+	areaHandler.mouseCrossedCb,
+	areaHandler.dragBrokenCb,
+	areaHandler.keyEventCb,
+	300,
+	150
+);
+
+area.props = {
+	tabTitle: 'Area',
+	stretchy: true
 };
 
 menu([{
@@ -108,12 +156,53 @@ menu([{
 			role: 'about'
 		}
 	]
+}, {
+	label: 'Window',
+	submenu: [
+		{
+			label: 'Center',
+			click: () => win.center()
+		}, {
+			label: 'Top left',
+			click: () => {
+				win.position = point(0, 0);
+			}
+		}, {
+			label: 'Full screen',
+			click: () => {
+				win.fullscreen = !win.fullscreen;
+			}
+		}, {
+			label: 'Borderless',
+			click: () => {
+				win.borderless = !win.borderless;
+			}
+		}, {
+			label: 'Reset size',
+			click: () => {
+				win.contentSize = size(800, 600);
+			}
+		}
+	]
 }]);
 
-win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 480, onClosing},
+const winProps = {
+	hasMenubar: true,
+	title: 'Control Gallery',
+	width: 640,
+	height: 480,
+	onClosing,
+	onPositionChanged,
+	onContentSizeChanged: onPositionChanged
+};
+
+libui.startLoop();
+
+win = window(winProps,
 	hBox({padded: true},
 		group({margined: true, title: 'Basic Controls'},
 			button({text: 'Button', onClicked: changeTitle}),
+			colorBtn = colorButton({}),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
 			os.platform() === 'darwin' ?
@@ -165,12 +254,13 @@ win = window({hasMenubar: true, title: 'Control Gallery', width: 640, height: 48
 						text: lorem.slice(20),
 						tabTitle: 'Page 3',
 						stretchy: true
-					})
+					}),
+					area
 				)
 			)
 		)
-	)
+	),
+	status = label({stretchy: true, text: '(0, 0)'})
 );
 
 win.show();
-libui.Ui.main();

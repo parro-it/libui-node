@@ -1,4 +1,4 @@
-#include "../libui/ui.h"
+#include "../ui.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
 #include "ui-node.h"
@@ -15,11 +15,11 @@ void UiGroup::setChild(UiControl *control) {
 	);
 }
 
-int UiGroup::getMargined() {
+bool UiGroup::getMargined() {
 	return uiGroupMargined( (uiGroup *) getHandle() );
 }
 
-void UiGroup::setMargined(int margined) {
+void UiGroup::setMargined(bool margined) {
 	uiGroupSetMargined(
 		(uiGroup *) getHandle(),
 		margined
@@ -43,6 +43,10 @@ NBIND_CLASS(UiGroup) {
 	construct<const char *>();
 	construct<>();
 	method(setChild);
+	method(getTitle);
+	method(setTitle);
+	method(getMargined);
+	method(setMargined);
 	getset(getTitle, setTitle);
 	getset(getMargined, setMargined);
 	DECLARE_CONTROL_METHODS()

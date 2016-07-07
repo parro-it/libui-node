@@ -5,6 +5,30 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/UiFontButton.cc",
+				"src/UiArea/DrawTextFont.cc",
+				"src/UiArea/DrawTextFontDescriptor.cc",
+				"src/UiArea/DrawTextFontMetrics.cc",
+				"src/UiArea/DrawTextLayout.cc",
+				"src/UiArea/UiArea.cc",
+				"src/UiArea/DrawStrokeParams.cc",
+				"src/UiArea/UiDrawContext.cc",
+				"src/UiArea/UiDrawPath.cc",
+				"src/UiArea/DrawBrush.cc",
+				"src/SizeDouble.cc",
+				"src/PointDouble.cc",
+				"src/UiArea/DrawMatrix.cc",
+				"src/UiArea/BrushGradientStop.cc",
+				"src/UiArea/UiAreaDrawParams.cc",
+				"src/UiArea/UiAreaKeyEvent.cc",
+				"src/UiArea/UiAreaMouseEvent.cc",
+				"src/UiArea/UiAreaHandler.cc",
+				"src/UiGrid.cc",
+				"src/UiForm.cc",
+				"src/Size.cc",
+				"src/Point.cc",
+				"src/Color.cc",
+				"src/UiColorButton.cc",
 				"src/UiDialogs.cc",
 				"src/UiMenu.cc",
 				"src/UiCombobox.cc",
@@ -29,17 +53,20 @@
 			],
 			"conditions": [
 				["OS!='mac'", {
+					'ldflags': [
+						'-Wl,-rpath,<(module_root_dir)',
+					],
 					"libraries": [
-						"../libui/build/out/libui.so"
+						"<(module_root_dir)/libui.so"
 					]
 				}]
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [
-					"-Llibui/build/out",
+					"-L<(module_root_dir)",
 					"-lui",
 					"-rpath",
-					"libui/build/out"
+					"<(module_root_dir)"
 				]
 			}
 		}
