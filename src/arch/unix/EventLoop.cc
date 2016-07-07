@@ -34,8 +34,10 @@ void pollEvents(void* arg) {
 	uv_async_init(uv_default_loop(),  asyncCall, eventsPending);
 
 	while(running) {
-		poll(&fds, 1, -1);
-		uv_async_send(asyncCall);
+		if (poll(&fds, 1, 100) == 1) {
+			uv_async_send(asyncCall);
+		}
+
 	}
 	uv_close((uv_handle_t*) asyncCall, asyncClosed);
 }
@@ -45,6 +47,8 @@ struct EventLoop {
 		if (running) {
 			return;
 		}
+
+
 		running = true;
 		uiMainSteps();
 
