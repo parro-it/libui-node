@@ -120,10 +120,8 @@ menu([{
 				const filename = libui.UiDialogs.openFile(win);
 				if (filename) {
 					libui.UiDialogs.msgBox(win, 'File selected', filename);
-					libui.boost();
 				} else {
 					libui.UiDialogs.msgBox(win, 'No file selected', 'Don\'t be alarmed!');
-					libui.boost();
 				}
 			}
 		}, {
