@@ -4,7 +4,7 @@
 #include <X11/Xlib.h>
 #include "nbind/nbind.h"
 #include <uv.h>
-#include "../ui.h"
+#include "../../../ui.h"
 
 uv_poll_t * handle;
 
