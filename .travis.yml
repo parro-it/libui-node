@@ -17,7 +17,7 @@ node_js:
 addons:
   apt:
     packages:
-    	- gcc-4.8
+      - gcc-4.8
       - g++-4.8
       - libgtk-3-dev
       - xvfb
