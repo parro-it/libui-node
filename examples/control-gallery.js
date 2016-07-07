@@ -40,14 +40,19 @@ nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
 reprehenderit
 `;
 
-const onClosing = () => libui.stopLoop();
-
 let win;
 let spin;
 let slide;
 let progress;
 let colorBtn;
 let status;
+
+const onClosing = () => {
+	console.log('stopping loop');
+	libui.stopLoop();
+	win.close();
+	console.log('stopped loop');
+};
 
 function onPositionChanged() {
 	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize.w} x ${win.contentSize.h})`;
@@ -110,11 +115,13 @@ menu([{
 		{
 			label: 'Open',
 			click: () => {
+				libui.UiDialogs.msgBox(win, 'File selected', 'ciao');
+
 				const filename = libui.UiDialogs.openFile(win);
 				if (filename) {
-					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
+					libui.UiDialogs.msgBox(win, 'File selected', filename);
 				} else {
-					libui.UiDialogs.msgBoxError(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.UiDialogs.msgBox(win, 'No file selected', 'Don\'t be alarmed!');
 				}
 			}
 		}, {
@@ -122,9 +129,11 @@ menu([{
 			click: () => {
 				const filename = libui.UiDialogs.saveFile(win);
 				if (filename) {
-					libui.UiDialogs.msgBoxError(win, 'File selected', filename);
+					libui.UiDialogs.msgBox(win, 'File selected', filename);
+					libui.boost();
 				} else {
-					libui.UiDialogs.msgBoxError(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.UiDialogs.msgBox(win, 'No file selected', 'Don\'t be alarmed!');
+					libui.boost();
 				}
 			}
 		}, {

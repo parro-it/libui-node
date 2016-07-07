@@ -3,6 +3,7 @@
 		{
 			"includes": [
 				"auto.gypi"
+
 			],
 			"sources": [
 				"src/UiFontButton.cc",
@@ -53,13 +54,48 @@
 			],
 			"conditions": [
 				["OS!='mac'", {
+					"sources": [
+						"src/arch/unix/EventLoop.cc",
+						"src/arch/unix/uiConnectionNumber.cc"
+					],
 					'ldflags': [
 						'-Wl,-rpath,<(module_root_dir)',
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.so"
+					],
+					'include_dirs': [
+						'/usr/include/gtk-3.0',
+						'/usr/include/glib-2.0',
+						'/usr/lib/x86_64-linux-gnu/glib-2.0/include',
+						'/usr/include/at-spi2-atk/2.0 ',
+						'/usr/include/at-spi-2.0 ',
+						'/usr/include/dbus-1.0 ',
+						'/usr/lib/x86_64-linux-gnu/dbus-1.0/include ',
+						'/usr/include/gtk-3.0 ',
+						'/usr/include/gio-unix-2.0/ ',
+						'/usr/include/mirclient ',
+						'/usr/include/mircommon ',
+						'/usr/include/mircookie ',
+						'/usr/include/cairo ',
+						'/usr/include/pango-1.0 ',
+						'/usr/include/harfbuzz ',
+						'/usr/include/pango-1.0 ',
+						'/usr/include/atk-1.0 ',
+						'/usr/include/cairo ',
+						'/usr/include/pixman-1 ',
+						'/usr/include/freetype2 ',
+						'/usr/include/libpng12 ',
+						'/usr/include/gdk-pixbuf-2.0 ',
+						'/usr/include/libpng12 ',
+						'/usr/include/glib-2.0 '
 					]
-				}]
+				}],
+				["OS=='mac'", {
+					"sources": [
+						"src/arch/darwin/EventLoop.mm"
+					]
+				}],
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [

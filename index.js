@@ -1,37 +1,15 @@
 var nbind = require('nbind');
 
 var binding = nbind.init(__dirname);
-var Ui = binding.lib.Ui;
-
-var loopRunning = false;
 
 module.exports = binding.lib;
 
 function stopLoop() {
-	if (!loopRunning) {
-		return;
-	}
-	loopRunning = false;
-	Ui.quit();
+	binding.lib.EventLoop.stop();
 }
 
-function startLoop(cb) {
-	function step() {
-		Ui.mainStep(false);
-		if (loopRunning) {
-			setTimeout(step);
-		} else if (cb) {
-			cb();
-		}
-	}
-
-	if (loopRunning) {
-		return;
-	}
-
-	loopRunning = true;
-	Ui.mainSteps();
-	step();
+function startLoop() {
+	binding.lib.EventLoop.start();
 }
 
 function Color(r, g, b, a) {
