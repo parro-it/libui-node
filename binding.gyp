@@ -53,7 +53,7 @@
 				"src/UiButton.cc",
 			],
 			"conditions": [
-				["OS=='unix'", {
+				["OS=='linux'", {
 					"sources": [
 						"src/arch/unix/EventLoop.cc",
 						"src/arch/unix/uiConnectionNumber.cc"
