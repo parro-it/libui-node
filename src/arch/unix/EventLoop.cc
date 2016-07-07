@@ -1,22 +1,44 @@
 #include <uv.h>
 #include "../../../ui.h"
 #include "nbind/nbind.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/time.h>
+#include <poll.h>
 
-extern int uiConnectionNumber();
 extern int uiEventsPending();
-
-uv_poll_t * handle;
-
+extern int uiConnectionNumber();
 
 
-static void onEventsPending(uv_poll_t* handle, int status, int events) {
+uv_thread_t *thread;
+bool running = false;
+
+void asyncClosed(uv_handle_t* handle) {
+	delete handle;
+}
+
+static void eventsPending(uv_async_t* handle) {
 	Nan::HandleScope scope;
 	while(uiEventsPending()) {
 		uiMainStep(0);
 	}
 }
 
-bool running = false;
+void pollEvents(void* arg) {
+	int fd = uiConnectionNumber();
+	struct pollfd fds;
+	fds.fd = fd;
+	fds.events = POLLIN | POLLPRI;
+
+	uv_async_t * asyncCall = new uv_async_t();
+	uv_async_init(uv_default_loop(),  asyncCall, eventsPending);
+
+	while(running) {
+		poll(&fds, 1, -1);
+		uv_async_send(asyncCall);
+	}
+	uv_close((uv_handle_t*) asyncCall, asyncClosed);
+}
 
 struct EventLoop {
 	static void start () {
@@ -26,12 +48,9 @@ struct EventLoop {
 		running = true;
 		uiMainSteps();
 
-		int fd = uiConnectionNumber();
-		handle = new uv_poll_t();
+		thread = new uv_thread_t();
+		uv_thread_create(thread, pollEvents, NULL);
 
-		uv_poll_init(uv_default_loop(), handle, fd);
-
-		uv_poll_start(handle, UV_READABLE, onEventsPending);
 	}
 
 	static void stop () {
@@ -39,8 +58,10 @@ struct EventLoop {
 			return;
 		}
 		running = false;
+
 		uiQuit();
-		uv_poll_stop(handle);
+		uv_thread_join(thread);
+		delete thread;
 	}
 };
 
