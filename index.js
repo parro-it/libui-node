@@ -1,69 +1,15 @@
 var nbind = require('nbind');
 
 var binding = nbind.init(__dirname);
-var Ui = binding.lib.Ui;
-
-var loopRunning = false;
-var frequencyCheck = null;
 
 module.exports = binding.lib;
 
 function stopLoop() {
-
-	if (!loopRunning) {
-		return;
-	}
-	//clearInterval(frequencyCheck);
-	console.log('stopping loop');
 	binding.lib.EventLoop.stop();
-
-	console.log('quit done')
 }
 
-var boosted = false;
-function boost() {
-	boosted = true;
-	console.log('boost')
-}
-
-function startLoop(cb) {
-	if (loopRunning) {
-		return;
-	}
-	console.log('starting loop');
-	loopRunning = true;
+function startLoop() {
 	binding.lib.EventLoop.start();
-	console.log('loop started');
-	return;
-	var counter = 0;
-
-	function step() {
-		counter++;
-		if (Ui.mainStep(false)) {
-			if (boosted) {
-				setImmediate(step);
-				boosted = false;
-			} else {
-				setTimeout(step);
-			}
-		} else if (cb) {
-			console.log('exit')
-			cb();
-		}
-	}
-
-	if (loopRunning) {
-		return;
-	}
-
-	frequencyCheck = setInterval(function () {
-		console.log(counter + "Hz");
-		counter = 0;
-	}, 1000);
-
-	loopRunning = true;
-	Ui.mainSteps();
-	step();
 }
 
 function Color(r, g, b, a) {
@@ -155,7 +101,6 @@ var textStretch = {
 	ultraExpanded: 8
 };
 
-module.exports.boost = boost;
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;

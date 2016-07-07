@@ -40,7 +40,6 @@ nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
 reprehenderit
 `;
 
-
 let win;
 let spin;
 let slide;
@@ -117,8 +116,6 @@ menu([{
 			label: 'Open',
 			click: () => {
 				libui.UiDialogs.msgBox(win, 'File selected', 'ciao');
-				libui.boost();
-				return;
 
 				const filename = libui.UiDialogs.openFile(win);
 				if (filename) {

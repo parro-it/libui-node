@@ -30,9 +30,14 @@ static void onEventsPending(uv_poll_t* handle, int status, int events) {
 
 }
 
+bool running = false;
 
 struct EventLoop {
 	static void start () {
+		if (running) {
+			return;
+		}
+		running = true;
 		uiMainSteps();
 
 		int fd = uiConnectionNumber();
@@ -46,6 +51,10 @@ struct EventLoop {
 	}
 
 	static void stop () {
+		if (!running) {
+			return;
+		}
+		running = false;
 		uiQuit();
 		uv_poll_stop(handle);
 	}

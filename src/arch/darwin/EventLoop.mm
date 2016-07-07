@@ -51,19 +51,26 @@ void threadClosed(uv_handle_t* handle) {
 
 struct EventLoop {
 	static void start () {
-		uiMainSteps();
+		if (running) {
+			return;
+		}
 		running = true;
+		uiMainSteps();
+
 		thread = new uv_thread_t();
 		uv_thread_create(thread, pollEvents, NULL);
 
 	}
 
 	static void stop () {
-
+		if (!running) {
+			return;
+		}
+		running = false;
 		uiQuit();
 		printf("uiQuit done.\n");
 
-		running = false;
+
 		printf("running = false done.\n");
 		uv_thread_join(thread);
 		printf("thread joined.\n");
