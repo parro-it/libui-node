@@ -1,38 +1,52 @@
-#import <Cocoa/Cocoa.h>
 #include <uv.h>
-#include <mach/mach.h>
-#import <CoreFoundation/CoreFoundation.h>
-#include <mach/mach.h>
-#include <sys/types.h>
-#include <sys/event.h>
-#include <sys/time.h>
-#include <sys/select.h>
-#include <poll.h>
+#include <mach/port.h> /* mach_port_t */
+#include <mach/mach.h> /* mach_port_allocate(), mach_task_self(), mach_port_insert_member(), MACH_PORT_RIGHT_PORT_SET */
+#include <sys/event.h> /* kqueue(), kevent64(), struct kevent64_s, EVFILT_MACHPORT, EV_SET64, EV_ADD */
+#include <sys/time.h> /* struct timespec */
+
+#include <stdio.h>
 #include <errno.h>
+#include <unistd.h> /* close() */
+#include <dispatch/dispatch.h>
 
 extern "C" mach_port_t _dispatch_get_main_queue_port_4CF(void);
-void noop(void) {
-
-}
+extern "C" void _dispatch_main_queue_callback_4CF(void);
 
 int uiConnectionNumber() {
-	mach_port_name_t port = _dispatch_get_main_queue_port_4CF();
-	printf ("mach port: %d\n", port);
-	int kq;
-	struct kevent * evSet = new struct kevent();
-	// struct kevent * list = new struct kevent();
-	struct timespec t = {0, 0};
-	kq = kqueue();
+	int fd;
+	struct kevent64_s event;
+	struct timespec t = (struct timespec){0,0};
 
-	EV_SET(evSet, port, EVFILT_MACHPORT | EVFILT_READ, 0, MACH_RCV_MSG, 0, NULL);
-	int status;
-	if ((status = kevent(kq, evSet, 1, evSet, 1, &t)) == -1)
-		printf("error %d\n", errno);
-	printf ("kevent %d\n", status);
-	return kq;
+	if (-1 == (fd = kqueue()))
+		return (perror("kqueue"), 1);
+	/* TODO: set cloexec */
+
+	mach_port_t x = _dispatch_get_main_queue_port_4CF();
+	printf("PORT 4CF=%d\n", x);
+
+	/* EVFILT_MACHPORT does not allow ports; only portsets */
+	mach_port_t y;
+	if (KERN_SUCCESS != mach_port_allocate(mach_task_self(), MACH_PORT_RIGHT_PORT_SET, &y))
+		return 1;
+
+	printf("PORT SET=%d\n", y);
+
+	EV_SET64(&event, y, EVFILT_MACHPORT, EV_ADD|EV_CLEAR, MACH_RCV_MSG, 0, 0, 0, 0);
+	if (0 != kevent64(fd, &event, 1, NULL, 0, 0, &t))
+		return (perror("kevent"), 1);
+
+	/* XXX: a port can only belong to one portset at once. this needs additional hackery when in a CF-using application */
+	if (KERN_SUCCESS != mach_port_insert_member(mach_task_self(), x, y))
+		return 1;
+
+
+
+	return fd;
+
 }
 
 int uiEventsPending() {
-	return TRUE;
+	printf("uiEventsPending\n");
+	return FALSE;
 }
 

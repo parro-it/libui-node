@@ -19,19 +19,15 @@ uv_poll_t * handle;
 
 struct EventLoop {
 	static void start () {
-
 		uiMainSteps();
 
 		int fd = uiConnectionNumber();
-		printf("uiConnectionNumber %d\n", fd);
 		handle = new uv_poll_t();
-		printf("uv_poll_t %p\n", handle);
 
 		uv_poll_init(uv_default_loop(), handle, fd);
-		printf("uv_poll_init\n");
 
-		uv_poll_start(handle, UV_READABLE, onEventsPending);
-		printf("uv_poll_start\n");
+		uv_poll_start(handle, UV_WRITABLE, onEventsPending);
+		printf("uv_poll_start done.\n");
 
 	}
 
