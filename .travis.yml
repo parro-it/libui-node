@@ -16,6 +16,8 @@ node_js:
 
 addons:
   apt:
+  	sources:
+      - ubuntu-toolchain-r-test
     packages:
       - gcc-4.7
       - g++-4.7
