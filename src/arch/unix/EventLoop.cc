@@ -2,10 +2,9 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
-#include "nbind/nbind.h"
 #include <uv.h>
 #include "../../../ui.h"
-
+#include "nbind/nbind.h"
 uv_poll_t * handle;
 
 int uiConnectionNumber() {
@@ -21,8 +20,6 @@ int uiEventsPending() {
 
 
 static void onEventsPending(uv_poll_t* handle, int status, int events) {
-	printf ("onEventsPending\n");
-
 	Nan::HandleScope scope;
 	while(uiEventsPending()) {
 		uiMainStep(0);
@@ -46,8 +43,6 @@ struct EventLoop {
 		uv_poll_init(uv_default_loop(), handle, fd);
 
 		uv_poll_start(handle, UV_WRITABLE, onEventsPending);
-		printf("uv_poll_start done.\n");
-
 	}
 
 	static void stop () {

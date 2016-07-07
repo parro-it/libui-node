@@ -9,7 +9,6 @@ bool running = false;
 
 void asyncClosed(uv_handle_t* handle) {
 	delete handle;
-	printf("asyncClosed deleted.\n");
 }
 static int uiEventsPending() {
 	NSEvent* event = [NSApp nextEventMatchingMask:NSAnyEventMask
@@ -46,7 +45,6 @@ void pollEvents(void* arg) {
 
 void threadClosed(uv_handle_t* handle) {
 	delete handle;
-	printf("thread deleted.\n");
 }
 
 struct EventLoop {
@@ -67,17 +65,10 @@ struct EventLoop {
 			return;
 		}
 		running = false;
+
 		uiQuit();
-		printf("uiQuit done.\n");
-
-
-		printf("running = false done.\n");
 		uv_thread_join(thread);
-		printf("thread joined.\n");
-
 		delete thread;
-		printf("thread deleted.\n");
-		// uv_close((uv_handle_t*) thread, threadClosed);
 	}
 };
 
