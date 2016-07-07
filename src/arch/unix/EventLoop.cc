@@ -34,7 +34,7 @@ void pollEvents(void* arg) {
 	uv_async_init(uv_default_loop(),  asyncCall, eventsPending);
 
 	while(running) {
-		if (poll(&fds, 1, 100) == 1) {
+		if (poll(&fds, 1, 50) == 1) {
 			uv_async_send(asyncCall);
 		}
 
