@@ -53,7 +53,7 @@
 				"src/UiButton.cc",
 			],
 			"conditions": [
-				["OS!='mac'", {
+				["OS=='unix'", {
 					"sources": [
 						"src/arch/unix/EventLoop.cc",
 						"src/arch/unix/uiConnectionNumber.cc"
@@ -94,17 +94,17 @@
 				["OS=='mac'", {
 					"sources": [
 						"src/arch/darwin/EventLoop.mm"
-					]
+					],
+					"xcode_settings": {
+						"OTHER_LDFLAGS": [
+							"-L<(module_root_dir)",
+							"-lui",
+							"-rpath",
+							"<(module_root_dir)"
+						]
+					}
 				}],
-			],
-			"xcode_settings": {
-				"OTHER_LDFLAGS": [
-					"-L<(module_root_dir)",
-					"-lui",
-					"-rpath",
-					"<(module_root_dir)"
-				]
-			}
+			]
 		}
 	],
 	"includes": [
