@@ -53,6 +53,15 @@
 				"src/UiButton.cc",
 			],
 			"conditions": [
+				["OS=='win'", {
+					"sources": [
+						"src/arch/win32/EventLoop.cc"
+					],
+					"cflags": [
+						"-std=c++11",
+					 	"-stdlib=libc++"
+					]
+				},
 				["OS=='linux'", {
 					"sources": [
 						"src/arch/unix/EventLoop.cc",
