@@ -61,7 +61,7 @@
 						"-std=c++11",
 					 	"-stdlib=libc++"
 					]
-				},
+				}],
 				["OS=='linux'", {
 					"sources": [
 						"src/arch/unix/EventLoop.cc",
