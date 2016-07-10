@@ -60,7 +60,9 @@
 					"libraries": [
 						"<(module_root_dir)/libui.dll"
 					],
-					"cflags": [
+					'ldflags': [
+						'-Wl,-rpath,<(module_root_dir)',
+					],"cflags": [
 						"-std=c++11",
 					 	"-stdlib=libc++"
 					]
