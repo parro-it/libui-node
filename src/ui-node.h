@@ -630,7 +630,7 @@ class UiAreaMouseEvent {
 		int getUp();
 		int getCount();
 		int getModifiers();
-		uint getHeld1To64();
+		unsigned int getHeld1To64();
 };
 
 
