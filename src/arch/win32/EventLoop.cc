@@ -1,6 +1,8 @@
 #include "../../../ui.h"
 #include "nbind/nbind.h"
 
+bool running = false;
+
 struct EventLoop {
 	static void start () {
 		if (running) {
