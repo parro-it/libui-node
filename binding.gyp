@@ -57,6 +57,9 @@
 					"sources": [
 						"src/arch/win32/EventLoop.cc"
 					],
+					"libraries": [
+						"<(module_root_dir)/libui.dll"
+					],
 					"cflags": [
 						"-std=c++11",
 					 	"-stdlib=libc++"
