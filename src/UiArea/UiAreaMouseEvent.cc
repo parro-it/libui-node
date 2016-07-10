@@ -38,7 +38,7 @@ int UiAreaMouseEvent::getModifiers() {
 	return e->Modifiers;
 }
 
-uint UiAreaMouseEvent::getHeld1To64() {
+unsigned int UiAreaMouseEvent::getHeld1To64() {
 	return e->Held1To64;
 }
 
