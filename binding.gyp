@@ -53,13 +53,25 @@
 			],
 			"conditions": [
 				["OS!='mac'", {
+					"sources": [
+						"src/arch/unix/EventLoop.cc",
+						"src/arch/unix/uiConnectionNumber.cc"
+					],
 					'ldflags': [
 						'-Wl,-rpath,<(module_root_dir)',
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.so"
+					],
+					'include_dirs': [
+ 						'<!@(pkg-config gtk+-3.0 --cflags-only-I | sed s/-I//g)'
 					]
-				}]
+				}],
+				["OS=='mac'", {
+					"sources": [
+						"src/arch/darwin/EventLoop.mm"
+					]
+				}],
 			],
 			"xcode_settings": {
 				"OTHER_LDFLAGS": [
