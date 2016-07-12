@@ -58,8 +58,16 @@
 						"src/arch/win32/EventLoop.cc"
 					],
 					"libraries": [
-						"<(module_root_dir)/libui.dll"
+						"<(module_root_dir)/libui.lib"
 					],
+					'msvs_settings': {
+			            'VCCLCompilerTool': {
+			              'AdditionalOptions': [
+			                '/MD',
+			                '/LD'
+			              ]
+			            }
+			          },
 					'ldflags': [
 						'-Wl,-rpath,<(module_root_dir)',
 					],"cflags": [
