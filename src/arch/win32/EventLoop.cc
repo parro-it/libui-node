@@ -10,6 +10,7 @@ struct EventLoop {
 		}
 
 		running = true;
+		uiMain();
 	}
 
 	static void stop () {
@@ -17,7 +18,7 @@ struct EventLoop {
 			return;
 		}
 		running = false;
-
+		uiQuit();
 	}
 };
 
