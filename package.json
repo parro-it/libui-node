@@ -24,7 +24,7 @@
     "start-core": "NO_AT_BRIDGE=1 node examples/core-api.js",
     "autogypi": "autogypi",
     "node-gyp": "node-gyp",
-    "install": "libui-download ${npm_package_libui} && autogypi && npm run build",
+    "install": "libui-download %npm_package_libui% && autogypi && npm run build",
     "build": "node-gyp configure build",
     "clean": "rm -rf build; rm *.h; rm *.dylib"
   },
