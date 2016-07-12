@@ -205,7 +205,7 @@ const winProps = {
 	onContentSizeChanged: onPositionChanged
 };
 
-libui.startLoop();
+
 
 win = window(winProps,
 	hBox({padded: true},
@@ -273,3 +273,4 @@ win = window(winProps,
 );
 
 win.show();
+libui.startLoop();
