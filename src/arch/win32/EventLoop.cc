@@ -5,19 +5,36 @@
 
 bool running = false;
 uv_thread_t *thread;
+uv_async_t * asyncCall;
+
+static void eventsPending(uv_async_t* handle) {
+	Nan::HandleScope scope;
+	while (uiMainStep(0));
+}
 
 LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
+
 	printf("%d\n", nCode);
+	uv_async_send(asyncCall);
 }
 
 
 void pollEvents(void* threadId) {
 	SetWindowsHookEx(
-  		WH_CALLWNDPROC,
-  		onEvents,
-  		NULL,
-  		threadId
+		WH_CALLWNDPROC,
+		onEvents,
+		NULL,
+		(DWORD) threadId
 	);
+
+	asyncCall = new uv_async_t();
+	uv_async_init(uv_default_loop(),  asyncCall, eventsPending);
+
+	MSG msg;
+	while(running && GetMessage(&msg, NULL, 0, 0) > 0) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 }
 
 struct EventLoop {
@@ -27,10 +44,12 @@ struct EventLoop {
 		}
 
 		running = true;
+
+		uiMainSteps();
+
 		thread = new uv_thread_t();
 		int threadId = GetCurrentThreadId();
-		uv_thread_create(thread, pollEvents, threadId);
-		uiMain();
+		uv_thread_create(thread, pollEvents, (void *) threadId);
 	}
 
 	static void stop () {
@@ -39,6 +58,8 @@ struct EventLoop {
 		}
 		running = false;
 		uiQuit();
+		uv_thread_join(thread);
+		delete thread;
 	}
 };
 
