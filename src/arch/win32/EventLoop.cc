@@ -7,6 +7,7 @@ bool running = false;
 uv_thread_t *thread;
 uv_async_t * asyncCall;
 bool runningSteps = false;
+HHOOK hhook;
 
 static void eventsPending(uv_async_t* handle) {
 	Nan::HandleScope scope;
@@ -19,7 +20,7 @@ LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 
 	if (!runningSteps) {
 		runningSteps = true;
-		printf("%d\n", nCode);
+		//printf("%d\n", nCode);
 		uv_async_send(asyncCall);
 	}
 
@@ -29,7 +30,7 @@ LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 
 void pollEvents(void* pThreadId) {
 	int threadId = *((int *) pThreadId);
-	SetWindowsHookEx(
+	hhook = SetWindowsHookEx(
 		WH_CALLWNDPROC,
 		onEvents,
 		NULL,
@@ -66,6 +67,7 @@ struct EventLoop {
 			return;
 		}
 		running = false;
+		UnhookWindowsHookEx(hhook);
 		uiQuit();
 		uv_thread_join(thread);
 		delete thread;
