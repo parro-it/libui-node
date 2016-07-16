@@ -5,7 +5,7 @@
 
 bool running = false;
 uv_thread_t *thread;
-uv_async_t * asyncCall;
+uv_async_t *asyncCall;
 bool runningSteps = false;
 HHOOK hhook;
 
@@ -29,6 +29,9 @@ LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
+void asyncClosed(uv_handle_t* handle) {
+	delete handle;
+}
 
 void pollEvents(void* pThreadId) {
 	int threadId = *((int *) pThreadId);
@@ -50,6 +53,7 @@ void pollEvents(void* pThreadId) {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+	uv_close((uv_handle_t*) asyncCall, asyncClosed);
 	printf("exit background loop\n");
 }
 
@@ -60,12 +64,16 @@ struct EventLoop {
 		}
 
 		running = true;
-
+		printf("uiMainSteps\n");
 		uiMainSteps();
-
+		printf("uiMainSteps done\n");
 		thread = new uv_thread_t();
+		printf("thread alloc\n");
 		int threadId = GetCurrentThreadId();
+		printf("main thread %d\n", threadId);
+
 		uv_thread_create(thread, pollEvents, &threadId);
+		printf("back thread created\n");
 	}
 
 	static void stop () {
@@ -73,9 +81,13 @@ struct EventLoop {
 			return;
 		}
 		running = false;
+		printf("stop\n");
 		UnhookWindowsHookEx(hhook);
+		printf("UnhookWindowsHookEx done\n");
 		uiQuit();
+		printf("uiQuit done\n");
 		uv_thread_join(thread);
+		printf("uv_thread_join done\n");
 		delete thread;
 	}
 };
