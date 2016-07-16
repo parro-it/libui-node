@@ -11,9 +11,9 @@ HHOOK hhook;
 
 static void eventsPending(uv_async_t* handle) {
 	Nan::HandleScope scope;
-	printf("Async event received in main loop. Running steps.\n", nCode);
+	printf("Async event received in main loop. Running steps.\n");
 	while (uiMainStep(0));
-	printf("No more steps to run.\n", nCode);
+	printf("No more steps to run.\n");
 	runningSteps = false;
 }
 
@@ -25,14 +25,14 @@ LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 		printf("Sending async event to main loop\n", nCode);
 		uv_async_send(asyncCall);
 	}
-	rintf("Skipping because main is running steps\n", nCode);
+	printf("Skipping because main is running steps\n", nCode);
 	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
 
 void pollEvents(void* pThreadId) {
 	int threadId = *((int *) pThreadId);
-	rintf("Setting hooks for %d\n", threadId);
+	printf("Setting hooks for %d\n", threadId);
 	hhook = SetWindowsHookEx(
 		WH_CALLWNDPROC,
 		onEvents,
