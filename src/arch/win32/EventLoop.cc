@@ -6,16 +6,24 @@
 bool running = false;
 uv_thread_t *thread;
 uv_async_t * asyncCall;
+bool runningSteps = false;
 
 static void eventsPending(uv_async_t* handle) {
 	Nan::HandleScope scope;
 	while (uiMainStep(0));
+	runningSteps = false;
 }
 
 LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 
-	printf("%d\n", nCode);
-	uv_async_send(asyncCall);
+
+	if (!runningSteps) {
+		runningSteps = true;
+		printf("%d\n", nCode);
+		uv_async_send(asyncCall);
+	}
+
+	return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
 
