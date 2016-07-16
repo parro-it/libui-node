@@ -20,7 +20,7 @@ LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 
 
 void pollEvents(void* pThreadId) {
-	int threadId = *pThreadId;
+	int threadId = *((int *) pThreadId);
 	SetWindowsHookEx(
 		WH_CALLWNDPROC,
 		onEvents,
