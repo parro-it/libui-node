@@ -1,10 +1,10 @@
 #include "../../../ui.h"
 #include "nbind/nbind.h"
 #include <uv.h>
-// #include <Windows.h>
+#include <Windows.h>
 
 bool running = false;
-/*uv_thread_t *thread;
+uv_thread_t *thread;
 
 LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 	printf("%d\n", nCode);
@@ -19,7 +19,7 @@ void pollEvents(void* threadId) {
   		threadId
 	);
 }
-*/
+
 struct EventLoop {
 	static void start () {
 		if (running) {
@@ -27,9 +27,9 @@ struct EventLoop {
 		}
 
 		running = true;
-		//thread = new uv_thread_t();
-		//int threadId = GetCurrentThreadId();
-		//uv_thread_create(thread, pollEvents, threadId);
+		thread = new uv_thread_t();
+		int threadId = GetCurrentThreadId();
+		uv_thread_create(thread, pollEvents, threadId);
 		uiMain();
 	}
 
