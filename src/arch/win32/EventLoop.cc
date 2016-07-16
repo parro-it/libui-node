@@ -19,12 +19,13 @@ LRESULT CALLBACK onEvents(int nCode, WPARAM wParam, LPARAM lParam) {
 }
 
 
-void pollEvents(void* threadId) {
+void pollEvents(void* pThreadId) {
+	int threadId = *pThreadId;
 	SetWindowsHookEx(
 		WH_CALLWNDPROC,
 		onEvents,
 		NULL,
-		(DWORD) threadId
+		threadId
 	);
 
 	asyncCall = new uv_async_t();
@@ -49,7 +50,7 @@ struct EventLoop {
 
 		thread = new uv_thread_t();
 		int threadId = GetCurrentThreadId();
-		uv_thread_create(thread, pollEvents, (void *) threadId);
+		uv_thread_create(thread, pollEvents, &threadId);
 	}
 
 	static void stop () {
