@@ -3,7 +3,6 @@
 		{
 			"includes": [
 				"auto.gypi"
-
 			],
 			"sources": [
 				"src/UiFontButton.cc",
