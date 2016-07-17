@@ -49,9 +49,10 @@ This is tested with:
 
 * Linux 64bit
 * Linux 32bit
+* Windows 64bit
 * macOS
 
-Windows is not supported for the moment, I didn't yet get the time to write build script for it.
+If you get error on windows, check [this node-gyp issue](https://github.com/nodejs/node-gyp/issues/972)
 
 
 # Documentation
