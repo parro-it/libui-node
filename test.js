@@ -14,7 +14,7 @@ test.before(() => {
 });
 
 test.after(() => {
-	libui.stopLoop();
+	// libui.stopLoop();
 });
 
 function checkEvent(Class, eventName, propertyName, propertyType, builder = () => new Class()) {
