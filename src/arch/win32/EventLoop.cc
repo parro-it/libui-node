@@ -9,6 +9,9 @@ uv_async_t *asyncCall;
 bool runningSteps = false;
 HHOOK hhook;
 
+
+uv_timer_t * keepAliveTimer;
+
 static void eventsPending(uv_async_t* handle) {
 	Nan::HandleScope scope;
 	printf("Async event received in main loop. Running steps.\n");
@@ -60,7 +63,7 @@ void pollEvents(void* pThreadId) {
 	t[0] = OpenThread(THREAD_ALL_ACCESS, false, threadId);
 	printf("running:%d\n", t[0]);
 	while(running) {
-		int retWait = WaitForMultipleObjectsEx(1, t, INFINITE, QS_ALLINPUT, MWMO_INPUTAVAILABLE);
+		int retWait = MsgWaitForMultipleObjectsEx(1, t, INFINITE, QS_ALLINPUT, MWMO_INPUTAVAILABLE);
 		if (retWait == -1) {
 			printf("retWait error:%d\n", GetLastError());
 		} else {
@@ -89,12 +92,11 @@ void pollEvents(void* pThreadId) {
 }
 
 void keepAliveCb(uv_timer_t* handle) {
+	Nan::HandleScope scope;
 	MSG msg;
-	PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE);
-	return;
-	if (GetMessage(&msg, NULL, 0, 0) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+		//printf("Message %d\n", msg.message);
+		uiMainStep(0);
 	}
 		
 }
@@ -109,20 +111,20 @@ struct EventLoop {
 		//printf("uiMainSteps\n");
 		uiMainSteps();
 		//printf("uiMainSteps done\n");
-		thread = new uv_thread_t();
+		//thread = new uv_thread_t();
 		//printf("thread alloc\n");
-		int * threadId = new int();
-		*threadId = GetCurrentThreadId();
+		//_//int * threadId = new int();
+		//7*threadId = GetCurrentThreadId();
 		//printf("main thread %d\n", *threadId);
 
 		
-		int ret = uv_thread_create(thread, pollEvents, threadId);
+		//int ret = uv_thread_create(thread, pollEvents, threadId);
 
 
 		//printf("back thread created %d\n", ret);
 
 
-		uv_timer_t * keepAliveTimer = new uv_timer_t();
+		keepAliveTimer = new uv_timer_t();
 		uv_timer_init(uv_default_loop(), keepAliveTimer);
 		uv_timer_start(keepAliveTimer, keepAliveCb, 100, 100);
 
@@ -140,13 +142,15 @@ struct EventLoop {
 		}
 		running = false;
 		//printf("stop\n");
-		UnhookWindowsHookEx(hhook);
+		//UnhookWindowsHookEx(hhook);
 		//printf("UnhookWindowsHookEx done\n");
 		uiQuit();
 		//printf("uiQuit done\n");
-		uv_thread_join(thread);
+		//uv_thread_join(thread);
 		//printf("uv_thread_join done\n");
-		delete thread;
+		//delete thread;
+		uv_timer_stop(keepAliveTimer);
+
 	}
 };
 
