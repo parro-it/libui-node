@@ -1,6 +1,6 @@
 {
   "name": "libui-node",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Node.js bindings for libui",
   "repository": "parro-it/libui-node",
   "license": "MIT",
