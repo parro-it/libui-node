@@ -10,6 +10,7 @@ bool running = false;
 void asyncClosed(uv_handle_t* handle) {
 	delete handle;
 }
+
 static int uiEventsPending() {
 	NSEvent* event = [NSApp nextEventMatchingMask:NSAnyEventMask
 			untilDate: [NSDate distantPast]
@@ -39,8 +40,6 @@ void pollEvents(void* arg) {
 		usleep(1000 * 50);
 	}
 	uv_close((uv_handle_t*) asyncCall, asyncClosed);
-
-
 }
 
 void threadClosed(uv_handle_t* handle) {
@@ -57,7 +56,6 @@ struct EventLoop {
 
 		thread = new uv_thread_t();
 		uv_thread_create(thread, pollEvents, NULL);
-
 	}
 
 	static void stop () {

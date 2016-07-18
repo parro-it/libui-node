@@ -3,6 +3,8 @@
 > libui Node.js bindings.
 
 [![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node/master.svg)](http://travis-ci.org/parro-it/libui-node)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/ebcssfrpaypfwha4?svg=true)](https://ci.appveyor.com/project/parro-it/libui-node)
+
 [![NPM module](https://img.shields.io/npm/v/libui-node.svg)](https://npmjs.org/package/libui-node)
 [![NPM downloads](https://img.shields.io/npm/dt/libui-node.svg)](https://npmjs.org/package/libui-node)
 
@@ -17,6 +19,9 @@ It could become an awesome, lightweight alternative to Electron to develop multi
 
 **macOS**
 ![macOS](docs/media/Window-macOS.png)
+
+**Windows**
+![Windows](docs/media/Window-Windows.png)
 
 
 # Supported platform
@@ -44,9 +49,10 @@ This is tested with:
 
 * Linux 64bit
 * Linux 32bit
+* Windows 64bit
 * macOS
 
-Windows is not supported for the moment, I didn't yet get the time to write build script for it.
+If you get error on windows, check [this node-gyp issue](https://github.com/nodejs/node-gyp/issues/972)
 
 
 # Documentation

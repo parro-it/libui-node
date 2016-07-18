@@ -9,6 +9,14 @@ test('new UiWindow - throw if too few arguments', t => {
 	t.is(err.message, 'Wrong number of arguments');
 });
 
+test.before(() => {
+	libui.startLoop();
+});
+
+test.after(() => {
+	// libui.stopLoop();
+});
+
 function checkEvent(Class, eventName, propertyName, propertyType, builder = () => new Class()) {
 	return [`Widget ${Class.name} has event ${eventName}`, t => {
 		let emitted = false;
@@ -16,10 +24,8 @@ function checkEvent(Class, eventName, propertyName, propertyType, builder = () =
 		const widget = builder();
 		widget[eventName](() => {
 			emitted = true;
-			libui.stopLoop();
 		});
 
-		libui.startLoop();
 		if (propertyType === Boolean) {
 			widget[propertyName] = true;
 		} else if (propertyType === String) {

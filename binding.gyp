@@ -52,7 +52,29 @@
 				"src/UiButton.cc",
 			],
 			"conditions": [
-				["OS!='mac'", {
+				["OS=='win'", {
+					"sources": [
+						"src/arch/win32/EventLoop.cc"
+					],
+					"libraries": [
+						"<(module_root_dir)/libui.lib"
+					],
+					'msvs_settings': {
+			            'VCCLCompilerTool': {
+			              'AdditionalOptions': [
+			                '/MD',
+			                '/LD'
+			              ]
+			            }
+			          },
+					'ldflags': [
+						'-Wl,-rpath,<(module_root_dir)',
+					],"cflags": [
+						"-std=c++11",
+					 	"-stdlib=libc++"
+					]
+				}],
+				["OS=='linux'", {
 					"sources": [
 						"src/arch/unix/EventLoop.cc",
 						"src/arch/unix/uiConnectionNumber.cc"
@@ -64,23 +86,23 @@
 						"<(module_root_dir)/libui.so"
 					],
 					'include_dirs': [
- 						'<!@(pkg-config gtk+-3.0 --cflags-only-I | sed s/-I//g)'
+						'<!@(pkg-config gtk+-3.0 --cflags-only-I | sed s/-I//g)'
 					]
 				}],
 				["OS=='mac'", {
 					"sources": [
 						"src/arch/darwin/EventLoop.mm"
-					]
+					],
+					"xcode_settings": {
+						"OTHER_LDFLAGS": [
+							"-L<(module_root_dir)",
+							"-lui",
+							"-rpath",
+							"<(module_root_dir)"
+						]
+					}
 				}],
-			],
-			"xcode_settings": {
-				"OTHER_LDFLAGS": [
-					"-L<(module_root_dir)",
-					"-lui",
-					"-rpath",
-					"<(module_root_dir)"
-				]
-			}
+			]
 		}
 	],
 	"includes": [
