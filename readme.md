@@ -1,19 +1,19 @@
 # libui-node
 
-[![Join the chat at https://gitter.im/parro-it/libui-node](https://badges.gitter.im/parro-it/libui-node.svg)](https://gitter.im/parro-it/libui-node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > libui Node.js bindings.
 
+> [libui](https://github.com/andlabs/libui) is a simple and portable (but not inflexible) GUI library in C that uses the native GUI technologies of each platform it supports.
+
+> It is in early stage of development, but is evolving at great pace and is really awesome.
+
+> It could become an awesome, lightweight alternative to Electron to develop multiplatform GUI.
+
+[![Join the chat at https://gitter.im/parro-it/libui-node](https://badges.gitter.im/parro-it/libui-node.svg)](https://gitter.im/parro-it/libui-node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node/master.svg)](http://travis-ci.org/parro-it/libui-node)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/ebcssfrpaypfwha4?svg=true)](https://ci.appveyor.com/project/parro-it/libui-node)
 [![NPM module](https://img.shields.io/npm/v/libui-node.svg)](https://npmjs.org/package/libui-node)
 [![NPM downloads](https://img.shields.io/npm/dt/libui-node.svg)](https://npmjs.org/package/libui-node)
-
-[libui](https://github.com/andlabs/libui) is a simple and portable (but not inflexible) GUI library in C that uses the native GUI technologies of each platform it supports.
-
-It is in early stage of development, but is evolving at great pace and is really awesome.
-
-It could become an awesome, lightweight alternative to Electron to develop multiplatform GUI.
 
 **Linux**
 ![Linux](docs/media/Window-Linux.png)
