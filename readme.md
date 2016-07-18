@@ -1,5 +1,7 @@
 # libui-node
 
+[![Join the chat at https://gitter.im/parro-it/libui-node](https://badges.gitter.im/parro-it/libui-node.svg)](https://gitter.im/parro-it/libui-node?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > libui Node.js bindings.
 
 [![Travis Build Status](https://img.shields.io/travis/parro-it/libui-node/master.svg)](http://travis-ci.org/parro-it/libui-node)
