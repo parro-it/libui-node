@@ -11,6 +11,9 @@ UiDrawContext * UiAreaDrawParams::getContext() {
 	return new UiDrawContext(p->Context);
 }
 
+// TODO: make readony properties
+//
+
 double UiAreaDrawParams::getAreaWidth() {
 	return p->AreaWidth;
 }
