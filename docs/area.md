@@ -126,8 +126,9 @@ A naive approach to writing programs for these new displays is to think "well, i
 Instead, what we want out of a high-resolution display is *to show a more detailed view of the same image in the same space*. [The first image on Apple's discussion of the topic](https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Art/backing_store_2x.png) is the perfect example. On the left, you see a low-resolution monitor. Notice how big chunks of the shapes go into the boxes. When the code that maps points to pixels runs, it can't have two colors in one square, so it has to decide what color to use.
 
 # Classes
+---
 
-## UiDrawContext
+# UiDrawContext
 
 > The UiDrawContext class is used for drawing rectangles, text, images and other objects onto the UiArea widget. It provides the 2D rendering context for the drawing surface of a UiArea widget.
 
@@ -143,77 +144,157 @@ To get an object of this interface, use the `getContext` method of the `UiAreaDr
 
 ### stroke
 
-Description
+Draw a path in the context.
 
 **Arguments**
 
-* label: String - the text to use as label of the field.
+* path: UiDrawPath - the path to use for the operation.
+* brush: DrawBrush - the brush to use for the operation.
+* params: DrawStrokeParams - define the kind of line to use.
+
 
 ### fill
 
-Description
+Draw a path filled with a color.
 
 **Arguments**
 
-* label: String - the text to use as label of the field.
+* path: UiDrawPath - the path to use for the operation.
+* brush: DrawBrush - the brush to use for the operation.
 
 ### transform
 
-Description
+Apply a different transform matrix to the context.
 
 **Arguments**
 
-* label: String - the text to use as label of the field.
+* matrix: UiDrawMatrix - the matrix to apply.
 
 ### clip
 
-Description
+Clip a path from the context
 
 **Arguments**
 
-* label: String - the text to use as label of the field.
+* path: UiDrawPath - the path to use for the operation.
 
 ### save
 
-Description
-
-**Arguments**
-
-* label: String - the text to use as label of the field.
+Save the trasformations currently applyed to the context.
 
 ### restore
 
-Description
-
-**Arguments**
-
-* label: String - the text to use as label of the field.
+Restore previously saved trasformations of the context.
 
 ### text
 
-Description
+Draws a given text at the given (x,y) position.
+
+* x: Number - the horizontal position at which to draw the text.
+* y: Number - the vertical position at which to draw the text.
+* layout: DrawTextLayout - the text to draw, complete with font and color information.
+
+
+# UiDrawPath
+
+> Represent a path that could be drawed on a UiDrawContext
+
+## Constructor
 
 **Arguments**
 
-* label: String - the text to use as label of the field.
+* fillMode: UiDrawFillMode
+
+An application fills the interior of a path using one of two fill modes: alternate or winding. The mode determines how to fill and clip the interior of a closed figure.
+
+The default mode is Alternate. To determine the interiors of closed figures in the alternate mode, draw a line from any arbitrary start point in the path to some point obviously outside the path. If the line crosses an odd number of path segments, the starting point is inside the closed region and is therefore part of the fill or clipping area. An even number of crossings means that the point is not in an area to be filled or clipped. An open figure is filled or clipped by using a line to connect the last point to the first point of the figure.
+
+The Winding mode considers the direction of the path segments at each intersection. It adds one for every clockwise intersection, and subtracts one for every counterclockwise intersection. If the result is nonzero, the point is considered inside the fill or clip area. A zero count means that the point lies outside the fill or clip area.
+A figure is considered clockwise or counterclockwise based on the order in which the segments of the figure are drawn.
 
 
-class UiDrawContext {
-	private:
-		uiDrawContext *c;
+## Methods
 
-	public:
-		UiDrawContext(uiDrawContext *ctx);
-		void stroke(UiDrawPath *path, DrawBrush *b, DrawStrokeParams *p);
-		void fill(UiDrawPath *path, DrawBrush *b);
-		void transform(UiDrawMatrix *m);
-		void clip(UiDrawPath *path);
-		void save();
-		void restore();
-		void text(double x, double y, DrawTextLayout *layout);
+### freePath
 
-};
+Dispose a path object.
+
+### newFigure
+
+Starts a new figure at the specified point. Call this method when you want to create a new path.
+
+**Arguments**
+
+* x: Number
+* y: Number
+
+### newFigureWithArc
+
+Starts a new figure and adds an arc to the path which is centered at (`xCenter`, `yCenter`) position with radius `radius` starting at `startAngle` and with sweep angle `sweep` going in the given direction by anticlockwise (defaulting to clockwise) as specified by `negative`.
+
+**Arguments**
+
+* xCenter: Number
+* yCenter: Number
+* radius: Number
+* startAngle: Number
+* sweep: Number
+* negative: Boolean
+
+### lineTo
+
+Connects the last point in the subpath to the x, y coordinates with a straight line.
+
+**Arguments**
+
+* x: Number
+* y: Number
 
 
+### arcTo
+
+Adds an arc to the path which is centered at (`xCenter`, `yCenter`) position with radius `radius` starting at `startAngle` and with sweep angle `sweep` going in the given direction by anticlockwise (defaulting to clockwise) as specified by `negative`.
+
+**Arguments**
+
+* xCenter: Number
+* yCenter: Number
+* radius: Number
+* startAngle: Number
+* sweep: Number
+* negative: Boolean
 
 
+### bezierTo
+
+Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path.
+
+**Arguments**
+
+* c1x: Number
+* c1y: Number
+* c2x: Number
+* c2y: Number
+* endX: Number
+* endY: Number
+
+### addRectangle
+
+Creates a path for a rectangle at position (x, y) with a size that is determined by width and height.
+
+**Arguments**
+
+* x: Number
+* y: Number
+* width: Number
+* height: Number
+
+### end
+
+End the path leaving the figure open.
+
+### closeFigure
+
+Causes the point of the pen to move back to the start of the current sub-path. It tries to draw a straight line from the current point to the start. If the shape has already been closed or has only one point, this function does nothing.
+
+It end the path.
