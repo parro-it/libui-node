@@ -122,12 +122,12 @@ NBIND_CLASS(UiDrawMatrix) {
 	method(setM31);
 	method(setM32);
 
-	method(getM11, setM11);
-	method(getM12, setM12);
-	method(getM21, setM21);
-	method(getM22, setM22);
-	method(getM31, setM31);
-	method(getM32, setM32);
+	getset(getM11, setM11);
+	getset(getM12, setM12);
+	getset(getM21, setM21);
+	getset(getM22, setM22);
+	getset(getM31, setM31);
+	getset(getM32, setM32);
 
 	method(setIdentity);
 	method(translate);
