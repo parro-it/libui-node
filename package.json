@@ -46,15 +46,15 @@
     "autogypi.json"
   ],
   "devDependencies": {
-    "ava": "^0.14.0",
+    "ava": "^0.17.0",
     "humanize": "0.0.9",
     "proc-stats": "0.0.4",
-    "xo": "^0.14.0"
+    "xo": "^0.17.1"
   },
   "dependencies": {
     "autogypi": "^0.2.2",
-    "libui-download": "0.1.0",
-    "nbind": "^0.2.1",
+    "libui-download": "0.1.1",
+    "nbind": "^0.3.5",
     "node-gyp": "^3.3.1"
   }
 }
