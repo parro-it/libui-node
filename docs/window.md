@@ -13,9 +13,8 @@ win.onClosing(function () {
 	libui.stopLoop();
 });
 
-win.show();
-
 libui.startLoop();
+win.show();
 ```
 
 The UiWindow class is responsible to show and manage native windows.
