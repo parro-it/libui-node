@@ -7,24 +7,25 @@
 Point UiWindow::getPosition() {
 	int x = 0;
 	int y = 0;
-	uiWindowPosition(
+/*	uiWindowPosition(
 		(uiWindow *) getHandle(),
 		&x,
 		&y
 	);
+	*/
 	return Point(x, y);
 }
 
 void UiWindow::setPosition(Point position) {
-	uiWindowSetPosition(
+	/*uiWindowSetPosition(
 		(uiWindow *) getHandle(),
 		position.getX(),
 		position.getY()
-	);
+	);*/
 }
 
 void UiWindow::center() {
-	uiWindowCenter((uiWindow *) getHandle());
+	//uiWindowCenter((uiWindow *) getHandle());
 }
 
 
@@ -49,6 +50,7 @@ static void UiWindow_onContentSizeChanged(uiWindow *w, void *data) {
 	(*cb)();
 }
 
+/*
 void UiWindow::onContentSizeChanged(nbind::cbFunction & cb) {
 	onContentSizeChangedCallback = new nbind::cbFunction(cb);
 	uiWindowOnContentSizeChanged(
@@ -57,6 +59,7 @@ void UiWindow::onContentSizeChanged(nbind::cbFunction & cb) {
 		onContentSizeChangedCallback
 	);
 }
+	*/
 
 
 static void UiWindow_onPositionChanged(uiWindow *w, void *data) {
@@ -66,11 +69,11 @@ static void UiWindow_onPositionChanged(uiWindow *w, void *data) {
 
 void UiWindow::onPositionChanged(nbind::cbFunction & cb) {
 	onPositionChangedCallback = new nbind::cbFunction(cb);
-	uiWindowOnPositionChanged(
+	/*uiWindowOnPositionChanged(
 		(uiWindow *) getHandle(),
 		UiWindow_onPositionChanged,
 		onPositionChangedCallback
-	);
+	);*/
 }
 
 UiWindow::UiWindow(const char* title, int width, int height, bool hasMenubar) {
@@ -145,19 +148,19 @@ NBIND_CLASS(UiWindow) {
   method(close);
   method(setChild);
   method(onClosing);
-  method(onContentSizeChanged);
+//  method(onContentSizeChanged);
   getset(getMargined, setMargined);
   getset(getTitle, setTitle);
   getset(getPosition, setPosition);
   method(getPosition);
   method(setPosition);
-  method(onPositionChanged);
+//   method(onPositionChanged);
   method(center);
 
   getset(getContentSize, setContentSize);
   method(getContentSize);
   method(setContentSize);
-  method(onContentSizeChanged);
+//  method(onContentSizeChanged);
 
   getset(getFullscreen, setFullscreen);
   method(getFullscreen);

@@ -1,60 +1,60 @@
 {
-  "name": "libui-node",
-  "version": "0.0.12",
-  "description": "Node.js bindings for libui",
-  "repository": "parro-it/libui-node",
-  "license": "MIT",
-  "libui": "pre11.alpha.4",
-  "contributors": [
-    {
-      "name": "Chan Guan Hao",
-      "email": "guanhao3797@gmail.com",
-      "url": "http://mavenave.me"
-    },
-    {
-      "name": "Andrea Parodi",
-      "email": "andrea@parro.it",
-      "url": "http://www.parro.it"
-    }
-  ],
-  "scripts": {
-    "test": "ava && xo",
-    "start": "node examples/control-gallery.js",
-    "start-np": "node examples/node-pad.js",
-    "start-core": "node examples/core-api.js",
-    "autogypi": "autogypi",
-    "node-gyp": "node-gyp",
-    "install": "libui-download && autogypi && npm run build",
-    "build": "node-gyp configure build",
-    "clean": "rm -rf build; rm *.h; rm *.dylib"
-  },
-  "keywords": [
-    "libui",
-    "desktop",
-    "multiplatform",
-    "GUI"
-  ],
-  "engines": {
-    "node": ">=0.12"
-  },
-  "files": [
-    "index.js",
-    "src",
-    "binding.gyp",
-    "auto-top.gypi",
-    "auto.gypi",
-    "autogypi.json"
-  ],
-  "devDependencies": {
-    "ava": "^0.14.0",
-    "humanize": "0.0.9",
-    "proc-stats": "0.0.4",
-    "xo": "^0.14.0"
-  },
-  "dependencies": {
-    "autogypi": "^0.2.2",
-    "libui-download": "0.1.0",
-    "nbind": "^0.2.1",
-    "node-gyp": "^3.3.1"
-  }
+	"name": "libui-node",
+	"version": "0.0.12",
+	"description": "Node.js bindings for libui",
+	"repository": "parro-it/libui-node",
+	"license": "MIT",
+	"libui": "alpha3.5-004",
+	"contributors": [
+		{
+			"name": "Chan Guan Hao",
+			"email": "guanhao3797@gmail.com",
+			"url": "http://mavenave.me"
+		},
+		{
+			"name": "Andrea Parodi",
+			"email": "andrea@parro.it",
+			"url": "http://www.parro.it"
+		}
+	],
+	"scripts": {
+		"test": "ava && xo",
+		"start": "node examples/control-gallery.js",
+		"start-np": "node examples/node-pad.js",
+		"start-core": "node examples/core-api.js",
+		"autogypi": "autogypi",
+		"node-gyp": "node-gyp",
+		"install": "libui-download && autogypi && npm run build",
+		"build": "node-gyp configure build",
+		"clean": "rm -rf build; rm *.h; rm *.dylib"
+	},
+	"keywords": [
+		"libui",
+		"desktop",
+		"multiplatform",
+		"GUI"
+	],
+	"engines": {
+		"node": ">=0.12"
+	},
+	"files": [
+		"index.js",
+		"src",
+		"binding.gyp",
+		"auto-top.gypi",
+		"auto.gypi",
+		"autogypi.json"
+	],
+	"devDependencies": {
+		"ava": "^0.14.0",
+		"humanize": "0.0.9",
+		"proc-stats": "0.0.4",
+		"xo": "^0.14.0"
+	},
+	"dependencies": {
+		"autogypi": "^0.2.2",
+		"libui-download": "0.1.0",
+		"nbind": "^0.2.1",
+		"node-gyp": "^3.3.1"
+	}
 }

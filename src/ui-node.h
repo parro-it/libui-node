@@ -420,7 +420,7 @@ class SizeDouble {
 class UiWindow {
 	DEFINE_EVENT(onClosing)
 	DEFINE_EVENT(onPositionChanged)
-	DEFINE_EVENT(onContentSizeChanged)
+	// DEFINE_EVENT(onContentSizeChanged)
 
 	private:
 		uiWindow *win;
