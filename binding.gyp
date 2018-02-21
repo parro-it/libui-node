@@ -5,6 +5,7 @@
 				"auto.gypi"
 			],
 			"sources": [
+				"src/EventLoop.cc",
 				"src/UiFontButton.cc",
 				"src/UiArea/DrawTextFont.cc",
 				"src/UiArea/DrawTextFontDescriptor.cc",
@@ -54,7 +55,7 @@
 			"conditions": [
 				["OS=='win'", {
 					"sources": [
-						"src/arch/win32/EventLoop.cc"
+						"src/arch/win32/libui_loop.cc"
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.lib"
@@ -76,8 +77,7 @@
 				}],
 				["OS=='linux'", {
 					"sources": [
-						"src/arch/unix/EventLoop.cc",
-						"src/arch/unix/uiConnectionNumber.cc"
+						"src/arch/unix/libui_loop.cc"
 					],
 					'ldflags': [
 						'-Wl,-rpath,<(module_root_dir)',
@@ -91,7 +91,7 @@
 				}],
 				["OS=='mac'", {
 					"sources": [
-						"src/arch/darwin/EventLoop.mm"
+						"src/arch/darwin/libui_loop.mm"
 					],
 					"xcode_settings": {
 						"OTHER_LDFLAGS": [

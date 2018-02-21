@@ -1,5 +1,3 @@
-#include <gtk/gtk.h>
-
 #include <poll.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -34,6 +32,7 @@
 bool running = false;
 
 extern int uiEventsPending();
+extern int uiLoopWakeup();
 
 uv_thread_t* thread;
 
@@ -71,13 +70,12 @@ static void signalNodeActivity(void* arg) {
 #endif
     } while (r == -1 && errno == EINTR);
     if (r > 0) {
-      // printf("g_main_context_wakeup\n");
-      g_main_context_wakeup(NULL);
+      uiLoopWakeup();
     }
   }
 }
 
-static int idx = 0;
+// static int idx = 0;
 void redraw(uv_timer_t* handle) {
   uv_timer_stop(handle);
   // printf("redraw %d\n", idx++);
@@ -106,7 +104,7 @@ struct EventLoop {
 
     uv_timer_t* handle = (uv_timer_t*)malloc(sizeof(uv_timer_t));
     uv_timer_init(uv_default_loop(), handle);
-    uv_timer_start(handle, redraw, 16, 0);
+    uv_timer_start(handle, redraw, 16, 1000000);
   }
 
   static void stop() {
