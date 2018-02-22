@@ -54,12 +54,14 @@ static void signalNodeActivity(void* arg) {
 
     do {
 #if defined(HAVE_KQUEUE)
-      // printf("KQUEUE\n");
+      // printf("KQUEUE %d\n", timeout);
+      struct kevent event;
 
       struct timespec ts;
       ts.tv_sec = timeout / 1000;
       ts.tv_nsec = (timeout % 1000) * 1000000;
-      r = kevent(fd, NULL, 0, NULL, 0, &ts);
+      r = kevent(fd, NULL, 0, &event, 1, &ts);
+
 #elif defined(HAVE_EPOLL)
       // printf("EPOLL\n");
 
