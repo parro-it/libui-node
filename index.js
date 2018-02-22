@@ -1,6 +1,9 @@
-var nbind = require('nbind');
+console.log("a");
+var nbind = require("nbind");
+console.log("b");
 
-var binding = nbind.init(__dirname);
+var binding = nbind.init().lib;
+console.log("c", binding);
 
 module.exports = binding.lib;
 
@@ -23,7 +26,7 @@ Color.prototype.fromJS = function fromJS(output) {
 	output(this.r, this.g, this.b, this.a);
 };
 
-binding.bind('Color', Color);
+binding.bind("Color", Color);
 
 function Point(x, y) {
 	this.x = x;
@@ -34,7 +37,7 @@ Point.prototype.fromJS = function fromJS(output) {
 	output(this.x, this.y);
 };
 
-binding.bind('Point', Point);
+binding.bind("Point", Point);
 
 function PointDouble(x, y) {
 	this.x = x;
@@ -45,7 +48,7 @@ PointDouble.prototype.fromJS = function fromJS(output) {
 	output(this.x, this.y);
 };
 
-binding.bind('PointDouble', PointDouble);
+binding.bind("PointDouble", PointDouble);
 
 function Size(w, h) {
 	this.w = w;
@@ -56,7 +59,7 @@ Size.prototype.fromJS = function fromJS(output) {
 	output(this.w, this.h);
 };
 
-binding.bind('Size', Size);
+binding.bind("Size", Size);
 
 function SizeDouble(w, h) {
 	this.w = w;
@@ -67,7 +70,7 @@ SizeDouble.prototype.fromJS = function fromJS(output) {
 	output(this.w, this.h);
 };
 
-binding.bind('SizeDouble', SizeDouble);
+binding.bind("SizeDouble", SizeDouble);
 
 var textWeight = {
 	thin: 0,

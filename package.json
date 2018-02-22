@@ -25,7 +25,7 @@
 		"autogypi": "autogypi",
 		"node-gyp": "node-gyp",
 		"install": "libui-download && autogypi && npm run build",
-		"build": "node-gyp --debug configure build",
+		"build": "node-gyp configure build",
 		"clean": "rm -rf build; rm *.h; rm *.dylib"
 	},
 	"keywords": [
@@ -54,7 +54,7 @@
 	"dependencies": {
 		"autogypi": "^0.2.2",
 		"libui-download": "0.1.0",
-		"nbind": "^0.2.1",
+		"nbind": "^0.3.14",
 		"node-gyp": "^3.3.1"
 	}
 }
