@@ -96,3 +96,7 @@ _libui
 *.h
 
 *.dylib
+*.dll
+*.so
+*.exp
+*.lib

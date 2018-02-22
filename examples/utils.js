@@ -1,40 +1,39 @@
-const libui = require('../index.js');
+const libui = require("../index.js");
 const globalMenus = [];
 
 function menu(template) {
 	for (const mnu of template) {
-		const mnuObj = new libui.UiMenu(mnu.label || '');
+		const mnuObj = new libui.UiMenu(mnu.label || "");
 		globalMenus.push(mnuObj);
 
 		for (const subMnu of mnu.submenu || []) {
 			switch (subMnu.type) {
-				case 'separator':
+				case "separator":
 					mnuObj.appendSeparator();
 					break;
-				case 'checkbox':
-					mnuObj.appendCheckItem(subMnu.label || '');
+				case "checkbox":
+					mnuObj.appendCheckItem(subMnu.label || "");
 					break;
 				default:
 					if (subMnu.role) {
 						switch (subMnu.role) {
-							case 'quit':
+							case "quit":
 								mnuObj.appendQuitItem();
 								break;
-							case 'about':
+							case "about":
 								mnuObj.appendAboutItem();
 								break;
-							case 'preferences':
+							case "preferences":
 								mnuObj.appendPreferencesItem();
 								break;
 							default:
 						}
 					} else {
-						const subMnuObj = mnuObj.appendItem(subMnu.label || '');
+						const subMnuObj = mnuObj.appendItem(subMnu.label || "");
 						if (subMnu.click) {
 							subMnuObj.onClicked(subMnu.click);
 						}
 					}
-
 			}
 		}
 	}
@@ -42,18 +41,17 @@ function menu(template) {
 
 function appendAll(children, parent, stretchy = false) {
 	for (const ctrl of children) {
-		const stretch = ctrl.stretchy === undefined ?
-			stretchy :
-			Boolean(ctrl.stretchy);
+		const stretch =
+			ctrl.stretchy === undefined ? stretchy : Boolean(ctrl.stretchy);
 
 		parent.append(ctrl, stretch);
 	}
 }
 
-const EventHandler = Symbol('EventHandler');
+const EventHandler = Symbol("EventHandler");
 
 function mkControl(Class, defaults) {
-	const contructor = (props) => {
+	const contructor = props => {
 		const ctrl = new Class();
 		ctrl.props = props;
 		for (const propName of Object.keys(defaults)) {
@@ -62,7 +60,10 @@ function mkControl(Class, defaults) {
 				if (props[propName]) {
 					ctrl[propName](props[propName]);
 				}
-			} else if (props[propName] !== undefined && props[propName] !== defaultValue) {
+			} else if (
+				props[propName] !== undefined &&
+				props[propName] !== defaultValue
+			) {
 				ctrl[propName] = props[propName];
 			}
 		}
@@ -107,7 +108,7 @@ function wrapChildren(children) {
 		return childs[0];
 	}
 
-	const box = vBox({padded: true});
+	const box = vBox({ padded: true });
 	appendAll(childs, box);
 	return box;
 }
@@ -120,21 +121,24 @@ function size(w, h) {
 	return new libui.Size(w, h);
 }
 
-function window({
-	title = '',
-	width,
-	height,
-	margined = true,
-	hasMenubar = false,
-	position = point(0, 0),
-	contentSize = size(width, height),
-	centered = false,
-	fullscreen = false,
-	borderless = false,
-	onClosing = null,
-	onPositionChanged = null,
-	onContentSizeChanged = null
-}, ...children) {
+function window(
+	{
+		title = "",
+		width,
+		height,
+		margined = true,
+		hasMenubar = false,
+		position = point(0, 0),
+		contentSize = size(width, height),
+		centered = false,
+		fullscreen = false,
+		borderless = false,
+		onClosing = null,
+		onPositionChanged = null,
+		onContentSizeChanged = null
+	},
+	...children
+) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.fullscreen = fullscreen;
@@ -147,7 +151,7 @@ function window({
 	}
 
 	if (onPositionChanged) {
-		win.onPositionChanged(onPositionChanged);
+		// win.onPositionChanged(onPositionChanged);
 	}
 
 	if (centered) {
@@ -161,7 +165,7 @@ function window({
 
 const group = (props, ...children) => {
 	const ctrl = mkControl(libui.UiGroup, {
-		title: '',
+		title: "",
 		margined: true,
 		enabled: true,
 		visible: true
@@ -175,7 +179,7 @@ const group = (props, ...children) => {
 const entry = mkControl(libui.UiEntry, {
 	readOnly: false,
 	enabled: true,
-	text: '',
+	text: "",
 	visible: true,
 	onChanged: EventHandler
 });
@@ -183,7 +187,7 @@ const entry = mkControl(libui.UiEntry, {
 const searchEntry = mkControl(libui.UiSearchEntry, {
 	readOnly: false,
 	enabled: true,
-	text: '',
+	text: "",
 	visible: true,
 	onChanged: EventHandler
 });
@@ -191,7 +195,7 @@ const searchEntry = mkControl(libui.UiSearchEntry, {
 const passwordEntry = mkControl(libui.UiPasswordEntry, {
 	readOnly: false,
 	enabled: true,
-	text: '',
+	text: "",
 	visible: true,
 	onChanged: EventHandler
 });
@@ -199,14 +203,14 @@ const passwordEntry = mkControl(libui.UiPasswordEntry, {
 const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	readOnly: false,
 	enabled: true,
-	text: '',
+	text: "",
 	visible: true,
 	onChanged: EventHandler
 });
 
 const label = mkControl(libui.UiLabel, {
 	enabled: true,
-	text: '',
+	text: "",
 	visible: true
 });
 
@@ -233,7 +237,7 @@ const dateTimePicker = mkControl(libui.UiDateTimePicker, {
 const button = mkControl(libui.UiButton, {
 	enabled: true,
 	visible: true,
-	text: '',
+	text: "",
 	onClicked: EventHandler
 });
 
@@ -245,7 +249,7 @@ const colorButton = mkControl(libui.UiColorButton, {
 const checkBox = mkControl(libui.UiCheckbox, {
 	enabled: true,
 	visible: true,
-	text: '',
+	text: "",
 	checked: false,
 	onToggled: EventHandler
 });
@@ -304,7 +308,7 @@ const editableCombobox = (props, ...children) => {
 	const ctrl = mkControl(libui.UiEditableCombobox, {
 		enabled: true,
 		visible: true,
-		text: '',
+		text: "",
 		onChanged: EventHandler
 	})(props);
 
@@ -323,7 +327,7 @@ const tab = (props, ...children) => {
 	})(props);
 
 	for (const child of children) {
-		const title = child.props.tabTitle || '';
+		const title = child.props.tabTitle || "";
 		ctrl.append(title, child);
 	}
 
@@ -331,7 +335,7 @@ const tab = (props, ...children) => {
 };
 
 function color(r, g, b, a) {
-	return new new libui.Color(r, g, b, a);
+	return new new libui.Color(r, g, b, a)();
 }
 
 const colors = {
