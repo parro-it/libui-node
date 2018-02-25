@@ -65,7 +65,6 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   ULONG_PTR key;
   OVERLAPPED* overlapped;
 
-  GetQueuedCompletionStatus(loop->iocp, &bytes, &key, &overlapped, timeout);
-
-  return 1;
+  return GetQueuedCompletionStatus(loop->iocp, &bytes, &key, &overlapped,
+                                   timeout);
 }
