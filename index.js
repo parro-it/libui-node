@@ -1,6 +1,6 @@
 var nbind = require("nbind");
-
-var binding = nbind.init();
+console.log({ __dirname });
+var binding = nbind.init(__dirname);
 
 module.exports = binding.lib;
 

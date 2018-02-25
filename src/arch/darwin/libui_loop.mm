@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <uv.h>
 void noop(void* data) {}
 
 int uiLoopWakeup() {
@@ -21,7 +22,13 @@ int uiEventsPending() {
   return nil != event;
 }
 
-int waitForNodeEvents(int nodeBackendFd, int timeout) {
+int waitForNodeEvents(uv_loop_t* loop, int timeout) {
+  int nodeBackendFd = uv_backend_fd(loop);
+  if (nodeBackendFd == -1) {
+    fprintf(stderr, "Invalid node backend fd.\n");
+    return 0;
+  }
+
   struct kevent event;
   struct timespec ts;
   ts.tv_sec = timeout / 1000;

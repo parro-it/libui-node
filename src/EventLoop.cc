@@ -7,20 +7,18 @@ bool running = false;
 
 extern int uiEventsPending();
 extern int uiLoopWakeup();
-extern int waitForNodeEvents(int nodeBackendFd, int timeout);
+extern int waitForNodeEvents(uv_loop_t* loop, int timeout);
 
 uv_thread_t* thread;
 
 static void signalNodeActivity(void* arg) {
   int r = 0;
-  int fd;
   int timeout;
   // printf("signalNodeActivity\n");
 
   while (running) {
     // printf("signalNodeActivity check\n");
 
-    fd = uv_backend_fd(uv_default_loop());
     timeout = uv_backend_timeout(uv_default_loop());
 
     if (timeout == 0) {
@@ -28,7 +26,7 @@ static void signalNodeActivity(void* arg) {
     }
 
     do {
-      r = waitForNodeEvents(fd, timeout);
+      r = waitForNodeEvents(uv_default_loop(), timeout);
     } while (r == -1 && errno == EINTR);
 
     if (r > 0) {
