@@ -1,4 +1,3 @@
-#include <poll.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -6,33 +5,20 @@
 #include "../../../ui.h"
 #include "nbind/nbind.h"
 
-#ifndef HAVE_KQUEUE
-#if defined(__APPLE__) || defined(__DragonFly__) || defined(__FreeBSD__) || \
-    defined(__FreeBSD_kernel__) || defined(__OpenBSD__) || defined(__NetBSD__)
-#define HAVE_KQUEUE 1
-#endif
-#endif
-
 #ifndef HAVE_EPOLL
 #if defined(__linux__)
 #define HAVE_EPOLL 1
 #endif
 #endif
 
-#if defined(HAVE_KQUEUE)
-#include <sys/event.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#endif
-
 #if defined(HAVE_EPOLL)
-#include <sys/epoll.h>
 #endif
 
 bool running = false;
 
 extern int uiEventsPending();
 extern int uiLoopWakeup();
+extern int waitForNodeEvents(int nodeBackendFd, int timeout);
 
 uv_thread_t* thread;
 
@@ -53,24 +39,9 @@ static void signalNodeActivity(void* arg) {
     }
 
     do {
-#if defined(HAVE_KQUEUE)
-      // printf("KQUEUE %d\n", timeout);
-      struct kevent event;
-
-      struct timespec ts;
-      ts.tv_sec = timeout / 1000;
-      ts.tv_nsec = (timeout % 1000) * 1000000;
-      r = kevent(fd, NULL, 0, &event, 1, &ts);
-
-#elif defined(HAVE_EPOLL)
-      // printf("EPOLL\n");
-
-      {
-        struct epoll_event ev;
-        r = epoll_wait(fd, &ev, 1, timeout);
-      }
-#endif
+      r = waitForNodeEvents(fd, timeout);
     } while (r == -1 && errno == EINTR);
+
     if (r > 0) {
       uiLoopWakeup();
     }

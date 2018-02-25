@@ -1,15 +1,16 @@
 #import <Cocoa/Cocoa.h>
 #include <unistd.h>
-#include <uv.h>
-#include "../../../ui.h"
-#include "nbind/nbind.h"
+
+#include <sys/event.h>
+#include <sys/time.h>
+#include <sys/types.h>
 
 void noop(void* data) {}
 
 int uiLoopWakeup() {
   dispatch_async(dispatch_get_main_queue(), ^{
-    NSLog(@"Got to main thread.");
-  });
+                     // NSLog(@"Got to main thread.");
+                 });
   return 0;
 }
 
@@ -20,4 +21,12 @@ int uiEventsPending() {
                                         dequeue:YES];
   [NSApp sendEvent:event];
   return nil != event;
+}
+
+int waitForNodeEvents(int nodeBackendFd, int timeout) {
+  struct kevent event;
+  struct timespec ts;
+  ts.tv_sec = timeout / 1000;
+  ts.tv_nsec = (timeout % 1000) * 1000000;
+  return kevent(nodeBackendFd, NULL, 0, &event, 1, &ts);
 }
