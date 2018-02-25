@@ -1,18 +1,7 @@
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
+
 #include <uv.h>
 #include "../../../ui.h"
 #include "nbind/nbind.h"
-
-#ifndef HAVE_EPOLL
-#if defined(__linux__)
-#define HAVE_EPOLL 1
-#endif
-#endif
-
-#if defined(HAVE_EPOLL)
-#endif
 
 bool running = false;
 
