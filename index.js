@@ -1,9 +1,6 @@
-console.log("a");
 var nbind = require("nbind");
-console.log("b");
 
-var binding = nbind.init().lib;
-console.log("c", binding);
+var binding = nbind.init();
 
 module.exports = binding.lib;
 

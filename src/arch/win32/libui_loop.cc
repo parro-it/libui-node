@@ -3,9 +3,12 @@
 #include "../../../ui.h"
 #include "nbind/nbind.h"
 
-void noop(void *data) {}
+void noop(void* data) {}
 
-int uiLoopWakeup() { uiQueueMain(noop, NULL); }
+int uiLoopWakeup() {
+  uiQueueMain(noop, NULL);
+  return 0;
+}
 
 int uiEventsPending() {
   MSG msg;

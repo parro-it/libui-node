@@ -3,30 +3,23 @@
 #include "nbind/nbind.h"
 #include "ui-node.h"
 
-
-UiProgressBar::UiProgressBar() : UiControl( (uiControl*) uiNewProgressBar() ) {}
+UiProgressBar::UiProgressBar() : UiControl((uiControl*)uiNewProgressBar()) {}
 
 INHERITS_CONTROL_METHODS(UiProgressBar)
 
 void UiProgressBar::setValue(int val) {
-	value = val;
-	uiProgressBarSetValue(
-		(uiProgressBar *) getHandle(),
-		value
-	);
+  value = val;
+  uiProgressBarSetValue((uiProgressBar*)getHandle(), value);
 }
-
 
 int UiProgressBar::getValue() {
-	return value;
+  return value;
 }
-
 
 NBIND_CLASS(UiProgressBar) {
-	construct<>();
-	DECLARE_CONTROL_METHODS()
-	getset(getValue, setValue);
-	method(getValue);
-	method(setValue);
+  construct<>();
+  DECLARE_CHILD_CONTROL_METHODS()
+  getset(getValue, setValue);
+  method(getValue);
+  method(setValue);
 }
-

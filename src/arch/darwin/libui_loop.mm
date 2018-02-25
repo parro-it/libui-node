@@ -10,6 +10,7 @@ int uiLoopWakeup() {
   dispatch_async(dispatch_get_main_queue(), ^{
     NSLog(@"Got to main thread.");
   });
+  return 0;
 }
 
 int uiEventsPending() {

@@ -40,8 +40,19 @@
   bool CLASS::getEnabled() { return UiControl::getEnabled(); }               \
   void CLASS::setEnabled(bool enabled) { UiControl::setEnabled(enabled); }
 
+#define DECLARE_CHILD_CONTROL_METHODS() \
+  inherit(UiControl);                   \
+  method(destroy);                      \
+  method(setParent);                    \
+  method(toplevel);                     \
+  method(getVisible);                   \
+  method(setVisible);                   \
+  method(getEnabled);                   \
+  method(setEnabled);                   \
+  getset(getVisible, setVisible);       \
+  getset(getEnabled, setEnabled);
+
 #define DECLARE_CONTROL_METHODS() \
-  inherit(UiControl);             \
   method(destroy);                \
   method(setParent);              \
   method(toplevel);               \

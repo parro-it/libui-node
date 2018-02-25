@@ -3,22 +3,22 @@
 #include "nbind/nbind.h"
 #include "ui-node.h"
 
-
-UiHorizontalSeparator::UiHorizontalSeparator() : UiControl( (uiControl*) uiNewHorizontalSeparator() ) {}
+UiHorizontalSeparator::UiHorizontalSeparator()
+		: UiControl((uiControl*)uiNewHorizontalSeparator()) {}
 
 INHERITS_CONTROL_METHODS(UiHorizontalSeparator)
 
 NBIND_CLASS(UiHorizontalSeparator) {
 	construct<>();
-	DECLARE_CONTROL_METHODS()
+	DECLARE_CHILD_CONTROL_METHODS()
 }
 
-
-UiVerticalSeparator::UiVerticalSeparator() : UiControl( (uiControl*) uiNewVerticalSeparator() ) {}
+UiVerticalSeparator::UiVerticalSeparator()
+		: UiControl((uiControl*)uiNewVerticalSeparator()) {}
 
 INHERITS_CONTROL_METHODS(UiVerticalSeparator)
 
 NBIND_CLASS(UiVerticalSeparator) {
 	construct<>();
-	DECLARE_CONTROL_METHODS()
+	DECLARE_CHILD_CONTROL_METHODS()
 }
