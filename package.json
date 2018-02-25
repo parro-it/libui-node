@@ -7,14 +7,8 @@
 	"libui": "alpha3.5-004",
 	"contributors": [
 		{
-			"name": "Chan Guan Hao",
-			"email": "guanhao3797@gmail.com",
-			"url": "http://mavenave.me"
-		},
-		{
 			"name": "Andrea Parodi",
-			"email": "andrea@parro.it",
-			"url": "http://www.parro.it"
+			"email": "andrea@parro.it"
 		}
 	],
 	"scripts": {
@@ -26,7 +20,7 @@
 		"node-gyp": "node-gyp",
 		"install": "libui-download && autogypi && npm run build",
 		"build": "node-gyp configure build",
-		"clean": "rm -rf build; rm *.h; rm *.dylib"
+		"clean": "rm -rf build; rm -rf node_modules;"
 	},
 	"keywords": [
 		"libui",
