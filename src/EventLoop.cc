@@ -21,14 +21,8 @@ static uv_timer_t* redrawTimer;
 */
 static void backgroundNodeEventsPoller(void* arg) {
   while (running) {
-    /* query node for the desired timout */
-    int timeout = uv_backend_timeout(uv_default_loop());
-
-    /* if timeout is 0, wait for 1s by default */
-    if (timeout == 0) {
-      timeout = 1000;
-    }
-
+    /* wait for 1s by default */
+    int timeout = 100;
     int pendingEvents;
 
     /* wait for pending */
@@ -83,6 +77,32 @@ static void init() {
   }
 }
 
+/* This function start the event loop and exit immediately */
+void stopAsync(uv_timer_t* handle) {
+  /* if the loop is already running, this is a noop */
+  if (!running) {
+    return;
+  }
+  running = false;
+
+  /* stop redraw handler */
+  uv_timer_stop(redrawTimer);
+  uv_close((uv_handle_t*)redrawTimer, NULL);
+
+  uv_timer_stop(handle);
+  uv_close((uv_handle_t*)handle, NULL);
+
+  /* await for the background thread to finish */
+  uv_thread_join(thread);
+
+  delete handle;
+  delete redrawTimer;
+  delete thread;
+
+  /* quit libui event loop */
+  uiQuit();
+}
+
 struct EventLoop {
   /* This function start the event loop and exit immediately */
   static void start() {
@@ -102,28 +122,16 @@ struct EventLoop {
     uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
 
     /* start redraw timer */
-    redrawTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+    redrawTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), redrawTimer);
     redraw(redrawTimer);
   }
 
   /* This function start the event loop and exit immediately */
   static void stop() {
-    /* if the loop is already running, this is a noop */
-    if (!running) {
-      return;
-    }
-    running = false;
-
-    /* stop redraw handler */
-    uv_timer_stop(redrawTimer);
-    uv_close((uv_handle_t*)redrawTimer, NULL);
-
-    /* await for the background thread to finish */
-    uv_thread_join(thread);
-
-    /* quit libui event loop */
-    uiQuit();
+    uv_timer_t* closeTimer = new uv_timer_t();
+    uv_timer_init(uv_default_loop(), closeTimer);
+    uv_timer_start(closeTimer, stopAsync, 100, 0);
   }
 };
 
