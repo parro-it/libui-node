@@ -3,14 +3,13 @@
 #include "../../../ui.h"
 #include "nbind/nbind.h"
 
-bool running = false;
-
 extern int uiEventsPending();
 extern int uiLoopWakeup();
 extern int waitForNodeEvents(uv_loop_t* loop, int timeout);
 
-uv_thread_t* thread;
-
+static std::atomic<bool> running;
+static uv_thread_t* thread;
+static uv_timer_t* redrawTimer;
 /*
    This function is executed in the
    background thread and is responsible to continuosly polling
@@ -67,6 +66,15 @@ void redraw(uv_timer_t* handle) {
   /* schedule another call to redraw as soon as possible */
   uv_timer_start(handle, redraw, 1, 0);
 }
+static void init() {
+  uiInitOptions o;
+  memset(&o, 0, sizeof(uiInitOptions));
+  const char* err = uiInit(&o);
+  if (err != NULL) {
+    NBIND_ERR(err);
+    uiFreeInitError(err);
+  }
+}
 
 struct EventLoop {
   /* This function start the event loop and exit immediately */
@@ -75,6 +83,8 @@ struct EventLoop {
     if (running) {
       return;
     }
+
+    init();
 
     running = true;
     /* init libui event loop */
@@ -85,9 +95,9 @@ struct EventLoop {
     uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
 
     /* start redraw timer */
-    uv_timer_t* handle = (uv_timer_t*)malloc(sizeof(uv_timer_t));
-    uv_timer_init(uv_default_loop(), handle);
-    redraw(handle);
+    redrawTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+    uv_timer_init(uv_default_loop(), redrawTimer);
+    redraw(redrawTimer);
   }
 
   /* This function start the event loop and exit immediately */
@@ -97,9 +107,19 @@ struct EventLoop {
       return;
     }
     running = false;
+    printf("stopping\n");
+
+    /* stop redraw handler */
+    uv_timer_stop(redrawTimer);
+
+    /* await for the background thread to finish */
+    uv_thread_join(thread);
+
+    printf("background thread end.\n");
 
     /* quit libui event loop */
     uiQuit();
+    printf("ui loop quit.\n");
   }
 };
 

@@ -30,8 +30,6 @@ const {
 	multilineEntry*/
 } = require("./utils.js");
 
-libui.Ui.init();
-
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -49,7 +47,6 @@ let status;
 const onClosing = () => {
 	console.log("stopping loop");
 	libui.stopLoop();
-	win.close();
 	console.log("stopped loop");
 };
 
@@ -258,24 +255,14 @@ win = window(
 
 			group(
 				{ margined: true, title: "Lists", stretchy: true },
-				combobox(
-					{},
-					"Combobox Item 1",
-					"Combobox Item 2",
-					"Combobox Item 3"
-				),
+				combobox({}, "Combobox Item 1", "Combobox Item 2", "Combobox Item 3"),
 				editableCombobox(
 					{},
 					"Editable Item 1",
 					"Editable Item 2",
 					"Editable Item 3"
 				),
-				radioButtons(
-					{},
-					"Radio Button 1",
-					"Radio Button 2",
-					"Radio Button 3"
-				),
+				radioButtons({}, "Radio Button 1", "Radio Button 2", "Radio Button 3"),
 				tab(
 					{ stretchy: true },
 					entry({
