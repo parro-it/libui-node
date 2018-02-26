@@ -1,6 +1,6 @@
 const {readFile, writeFile} = require('fs');
 const libui = require('../index.js');
-libui.Ui.init();
+
 const {
 	label,
 	window,

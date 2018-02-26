@@ -108,7 +108,7 @@ function wrapChildren(children) {
 		return childs[0];
 	}
 
-	const box = vBox({ padded: true });
+	const box = vBox({padded: true});
 	appendAll(childs, box);
 	return box;
 }

@@ -1,16 +1,13 @@
-console.log("1");
+
 var os = require("os");
-console.log("2");
-
 var libui = require("../index.js");
-console.log("2l");
-
-libui.Ui.init();
-console.log("3");
 
 var win = new libui.UiWindow("Test window", 800, 600, false);
 win.margined = 1;
-/*
+win.onClosing(function () {
+	libui.stopLoop();
+});
+
 var box = new libui.UiVerticalBox();
 var hBox = new libui.UiHorizontalBox();
 var e1 = new libui.UiEntry();
@@ -85,8 +82,6 @@ tabs.append("controls", box);
 tabs.append("text", new libui.UiMultilineEntry());
 
 win.setChild(tabs);
-*/
+
 win.show();
 libui.startLoop();
-console.log("gdg");
-setInterval(() => {}, 160000);
