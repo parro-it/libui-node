@@ -16,8 +16,7 @@ int uiEventsPending() {
   NSEvent* event = [NSApp nextEventMatchingMask:NSAnyEventMask
                                       untilDate:[NSDate distantPast]
                                          inMode:NSDefaultRunLoopMode
-                                        dequeue:YES];
-  [NSApp sendEvent:event];
+                                        dequeue:NO];
   return nil != event;
 }
 

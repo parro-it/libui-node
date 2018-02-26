@@ -7,6 +7,8 @@ extern int uiLoopWakeup();
 extern int waitForNodeEvents(uv_loop_t* loop, int timeout);
 
 static std::atomic<bool> running;
+static std::atomic<bool> guiBlocked;
+
 static uv_thread_t* thread;
 static uv_timer_t* redrawTimer;
 /*
@@ -34,7 +36,7 @@ static void backgroundNodeEventsPoller(void* arg) {
       pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
     } while (pendingEvents == -1 && errno == EINTR);
 
-    if (pendingEvents > 0) {
+    if (guiBlocked && pendingEvents > 0) {
       uiLoopWakeup();
     }
   }
@@ -58,7 +60,9 @@ void redraw(uv_timer_t* handle) {
   Nan::HandleScope scope;
 
   /* Blocking call that wait for a node or GUI event pending */
+  guiBlocked = true;
   uiMainStep(true);
+  guiBlocked = false;
 
   /* dequeue and run every event pending */
   while (uiEventsPending()) {
