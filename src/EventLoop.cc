@@ -52,6 +52,9 @@ static void backgroundNodeEventsPoller(void* arg) {
     from the background thread for this purpose.
  */
 void redraw(uv_timer_t* handle) {
+  if (!running) {
+    return;
+  }
   uv_timer_stop(handle);
   Nan::HandleScope scope;
 
@@ -111,9 +114,12 @@ struct EventLoop {
 
     /* stop redraw handler */
     uv_timer_stop(redrawTimer);
+    uv_close((uv_handle_t*)redrawTimer, NULL);
+    printf("timer end.\n");
 
     /* await for the background thread to finish */
     uv_thread_join(thread);
+    // uv_close((uv_handle_t*)thread, NULL);
 
     printf("background thread end.\n");
 
