@@ -1,4 +1,3 @@
-
 #include <uv.h>
 #include "../../../ui.h"
 #include "nbind/nbind.h"
@@ -69,6 +68,7 @@ void redraw(uv_timer_t* handle) {
   /* schedule another call to redraw as soon as possible */
   uv_timer_start(handle, redraw, 1, 0);
 }
+
 static void init() {
   uiInitOptions o;
   memset(&o, 0, sizeof(uiInitOptions));
@@ -110,21 +110,16 @@ struct EventLoop {
       return;
     }
     running = false;
-    printf("stopping\n");
 
     /* stop redraw handler */
     uv_timer_stop(redrawTimer);
     uv_close((uv_handle_t*)redrawTimer, NULL);
-    printf("timer end.\n");
 
     /* await for the background thread to finish */
     uv_thread_join(thread);
 
-    printf("background thread end.\n");
-
     /* quit libui event loop */
     uiQuit();
-    printf("ui loop quit.\n");
   }
 };
 
