@@ -119,7 +119,6 @@ struct EventLoop {
 
     /* await for the background thread to finish */
     uv_thread_join(thread);
-    // uv_close((uv_handle_t*)thread, NULL);
 
     printf("background thread end.\n");
 

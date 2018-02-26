@@ -45,9 +45,7 @@ let colorBtn;
 let status;
 
 const onClosing = () => {
-	console.log("stopping loop");
-	libui.stopLoop();
-	console.log("stopped loop");
+	setTimeout(() => libui.stopLoop());
 };
 
 function onPositionChanged() {
