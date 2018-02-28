@@ -21,5 +21,5 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   }
 
   struct epoll_event ev;
-  return epoll_wait(fd, &ev, 1, timeout);
+  return epoll_wait(nodeBackendFd, &ev, 1, timeout);
 }

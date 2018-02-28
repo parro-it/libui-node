@@ -1,4 +1,5 @@
 #include <uv.h>
+#include <atomic>
 #include "../../../ui.h"
 #include "nbind/nbind.h"
 
