@@ -11,7 +11,15 @@ struct Ui {
 
   static void quit() { uiQuit(); }
 
-  static void init() {}
+  static void init() {
+    uiInitOptions o;
+    memset(&o, 0, sizeof(uiInitOptions));
+    const char* err = uiInit(&o);
+    if (err != NULL) {
+      NBIND_ERR(err);
+      uiFreeInitError(err);
+    }
+  }
 };
 
 NBIND_CLASS(Ui) {

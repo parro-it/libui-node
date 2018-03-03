@@ -1,7 +1,7 @@
 var os = require("os");
-console.log('ciao');
+
 const libui = require("../index.js");
-console.log('ciao');
+
 const {
 	size,
 	point,
@@ -31,7 +31,7 @@ const {
 	menu /* ,
 	multilineEntry*/
 } = require("./utils.js");
-console.log('ddd');
+
 
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -48,7 +48,7 @@ let colorBtn;
 let status;
 
 const onClosing = () => {
-	setTimeout(() => libui.stopLoop());
+	libui.stopLoop();
 };
 
 function onPositionChanged() {
@@ -91,8 +91,7 @@ const areaHandler = {
 		console.log("keyEventCb");
 	}
 };
-console.log('ee');
-/*
+
 const area = new libui.UiArea(
 	areaHandler.drawCb,
 	areaHandler.mouseEventCb,
@@ -103,13 +102,12 @@ const area = new libui.UiArea(
 	150
 );
 
-console.log('fff');
 
 area.props = {
 	tabTitle: "Area",
 	stretchy: true
 };
-*/
+
 menu([
 	{
 		label: "File",
@@ -216,7 +214,6 @@ menu([
 		]
 	}
 ]);
-console.log('ewrewrwer');
 
 const winProps = {
 	hasMenubar: true,
@@ -227,7 +224,6 @@ const winProps = {
 	// onPositionChanged,
 	// onContentSizeChanged: onPositionChanged
 };
-console.log('wwww');
 
 win = window(
 	winProps,
@@ -294,9 +290,5 @@ win = window(
 	(status = label({stretchy: true, text: "(0, 0)"}))
 );
 
-console.log("don11e");
-
 win.show();
-console.log("done222");
 libui.startLoop();
-console.log("done");

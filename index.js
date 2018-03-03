@@ -4,6 +4,9 @@ var binding = nbind.init(__dirname);
 
 module.exports = binding.lib;
 
+binding.lib.Ui.init();
+
+
 function stopLoop() {
 	binding.lib.EventLoop.stop();
 }

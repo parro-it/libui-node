@@ -76,16 +76,6 @@ void redraw(uv_timer_t* handle) {
   uv_timer_start(handle, redraw, 1, 0);
 }
 
-static void init() {
-  uiInitOptions o;
-  memset(&o, 0, sizeof(uiInitOptions));
-  const char* err = uiInit(&o);
-  if (err != NULL) {
-    NBIND_ERR(err);
-    uiFreeInitError(err);
-  }
-}
-
 /* This function start the event loop and exit immediately */
 void stopAsync(uv_timer_t* handle) {
   /* if the loop is already running, this is a noop */
@@ -119,27 +109,24 @@ struct EventLoop {
     if (running) {
       return;
     }
-    printf("init...\n");
-
-    init();
-    printf("init\n");
 
     running = true;
+
     /* init libui event loop */
     uiMainSteps();
-    printf("uiMainSteps...\n");
+    // printf("uiMainSteps...\n");
 
     /* start the background thread that check for node evnts pending */
     thread = new uv_thread_t();
     uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
-    printf("thread...\n");
+    // printf("thread...\n");
 
     /* start redraw timer */
     redrawTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), redrawTimer);
     redraw(redrawTimer);
 
-    printf("redrawTimer...\n");
+    // printf("redrawTimer...\n");
     
   }
 
