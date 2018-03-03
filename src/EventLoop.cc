@@ -111,21 +111,28 @@ struct EventLoop {
     if (running) {
       return;
     }
+    printf("init...\n");
 
     init();
+    printf("init\n");
 
     running = true;
     /* init libui event loop */
     uiMainSteps();
+    printf("uiMainSteps...\n");
 
     /* start the background thread that check for node evnts pending */
     thread = new uv_thread_t();
     uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
+    printf("thread...\n");
 
     /* start redraw timer */
     redrawTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), redrawTimer);
     redraw(redrawTimer);
+
+    printf("redrawTimer...\n");
+    
   }
 
   /* This function start the event loop and exit immediately */

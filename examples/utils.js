@@ -52,6 +52,7 @@ const EventHandler = Symbol("EventHandler");
 
 function mkControl(Class, defaults) {
 	const contructor = props => {
+		console.log(Class);
 		const ctrl = new Class();
 		ctrl.props = props;
 		for (const propName of Object.keys(defaults)) {
@@ -78,6 +79,8 @@ function mkControl(Class, defaults) {
 }
 
 const hBox = (props, ...children) => {
+console.log("hBox");
+
 	const ctrl = mkControl(libui.UiHorizontalBox, {
 		padded: false,
 		enabled: true,
@@ -90,6 +93,7 @@ const hBox = (props, ...children) => {
 };
 
 const vBox = (props, ...children) => {
+console.log("vBox");
 	const ctrl = mkControl(libui.UiVerticalBox, {
 		padded: false,
 		enabled: true,
@@ -139,6 +143,8 @@ function window(
 	},
 	...children
 ) {
+
+	console.log('windows')
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.fullscreen = fullscreen;
