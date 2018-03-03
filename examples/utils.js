@@ -78,6 +78,8 @@ function mkControl(Class, defaults) {
 }
 
 const hBox = (props, ...children) => {
+// console.log("hBox");
+
 	const ctrl = mkControl(libui.UiHorizontalBox, {
 		padded: false,
 		enabled: true,
@@ -90,6 +92,7 @@ const hBox = (props, ...children) => {
 };
 
 const vBox = (props, ...children) => {
+// console.log("vBox");
 	const ctrl = mkControl(libui.UiVerticalBox, {
 		padded: false,
 		enabled: true,
@@ -139,6 +142,8 @@ function window(
 	},
 	...children
 ) {
+
+	// console.log('windows')
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.fullscreen = fullscreen;

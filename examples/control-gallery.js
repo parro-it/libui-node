@@ -1,5 +1,7 @@
 var os = require("os");
+
 const libui = require("../index.js");
+
 const {
 	size,
 	point,
@@ -30,6 +32,7 @@ const {
 	multilineEntry*/
 } = require("./utils.js");
 
+
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -45,7 +48,7 @@ let colorBtn;
 let status;
 
 const onClosing = () => {
-	setTimeout(() => libui.stopLoop());
+	libui.stopLoop();
 };
 
 function onPositionChanged() {
@@ -98,6 +101,7 @@ const area = new libui.UiArea(
 	300,
 	150
 );
+
 
 area.props = {
 	tabTitle: "Area",
@@ -217,8 +221,8 @@ const winProps = {
 	width: 640,
 	height: 480,
 	onClosing,
-	onPositionChanged,
-	onContentSizeChanged: onPositionChanged
+	// onPositionChanged,
+	// onContentSizeChanged: onPositionChanged
 };
 
 win = window(
@@ -288,4 +292,3 @@ win = window(
 
 win.show();
 libui.startLoop();
-console.log("done");
