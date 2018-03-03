@@ -22,8 +22,16 @@ static uv_timer_t* redrawTimer;
 */
 static void backgroundNodeEventsPoller(void* arg) {
   while (running) {
+    
+
+
+    int timeout = uv_backend_timeout(uv_default_loop());
+
     /* wait for 1s by default */
-    int timeout = 100;
+    if (timeout == 0) {
+      timeout = 1000;
+    }
+
     int pendingEvents;
 
     /* wait for pending */
