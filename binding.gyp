@@ -68,7 +68,7 @@
 			            }
 			          },
 					'ldflags': [
-						'-Wl,-rpath,<(module_root_dir)',
+						"-Wl,-rpath,'$$ORIGIN'",
 					],"cflags": [
 						"-std=c++11",
 					 	"-stdlib=libc++"
@@ -80,7 +80,7 @@
 						"src/arch/unix/uiConnectionNumber.cc"
 					],
 					'ldflags': [
-						'-Wl,-rpath,<(module_root_dir)',
+						"-Wl,-rpath,'$$ORIGIN'",
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.so"
@@ -97,8 +97,7 @@
 						"OTHER_LDFLAGS": [
 							"-L<(module_root_dir)",
 							"-lui",
-							"-rpath",
-							"<(module_root_dir)"
+							"-rpath,'$$ORIGIN'"
 						]
 					}
 				}],
