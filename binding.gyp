@@ -97,7 +97,8 @@
 						"OTHER_LDFLAGS": [
 							"-L<(module_root_dir)",
 							"-lui",
-							"-rpath,'$$ORIGIN'"
+							"-rpath",
+							"'$$ORIGIN'"
 						]
 					}
 				}],
