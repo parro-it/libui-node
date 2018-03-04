@@ -32,7 +32,6 @@ const {
 	multilineEntry*/
 } = require("./utils.js");
 
-
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -48,6 +47,7 @@ let colorBtn;
 let status;
 
 const onClosing = () => {
+	win.close();
 	libui.stopLoop();
 };
 
@@ -101,7 +101,6 @@ const area = new libui.UiArea(
 	300,
 	150
 );
-
 
 area.props = {
 	tabTitle: "Area",
@@ -220,7 +219,7 @@ const winProps = {
 	title: "Control Gallery",
 	width: 640,
 	height: 480,
-	onClosing,
+	onClosing
 	// onPositionChanged,
 	// onContentSizeChanged: onPositionChanged
 };

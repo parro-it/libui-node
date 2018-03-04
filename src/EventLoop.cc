@@ -22,9 +22,6 @@ static uv_timer_t* redrawTimer;
 */
 static void backgroundNodeEventsPoller(void* arg) {
   while (running) {
-    
-
-
     int timeout = uv_backend_timeout(uv_default_loop());
 
     /* wait for 1s by default */
@@ -94,9 +91,11 @@ void stopAsync(uv_timer_t* handle) {
   /* await for the background thread to finish */
   uv_thread_join(thread);
 
-  delete handle;
-  delete redrawTimer;
-  delete thread;
+  /*
+    delete handle;
+    delete redrawTimer;
+    delete thread;
+  */
 
   /* quit libui event loop */
   uiQuit();
@@ -127,7 +126,6 @@ struct EventLoop {
     redraw(redrawTimer);
 
     // printf("redrawTimer...\n");
-    
   }
 
   /* This function start the event loop and exit immediately */
