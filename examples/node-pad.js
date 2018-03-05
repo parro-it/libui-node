@@ -16,7 +16,8 @@ const winProps = {
 	title: 'Node Pad',
 	width: 640,
 	height: 480,
-	onClosing
+	onClosing,
+	onShouldQuit: onClosing
 };
 
 libui.Ui.init();
