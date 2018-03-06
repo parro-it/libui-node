@@ -219,8 +219,7 @@ const winProps = {
 	title: "Control Gallery",
 	width: 640,
 	height: 480,
-	onClosing,
-	onShouldQuit: onClosing
+	onClosing
 	// onPositionChanged,
 	// onContentSizeChanged: onPositionChanged
 };

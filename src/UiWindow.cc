@@ -43,19 +43,6 @@ void UiWindow::onClosing(nbind::cbFunction & cb) {
 		UiWindow_onClosing,
 		onClosingCallback
 	);
-
-}
-
-static int UiWindow_onShouldQuit(void *data)
-{
-	nbind::cbFunction *cb = (nbind::cbFunction *) data;
-	(*cb)();
-	return 0;
-}
-
-void UiWindow::onShouldQuit(nbind::cbFunction & cb) {
-	onShouldQuitCallback = new nbind::cbFunction(cb);
-	uiOnShouldQuit(UiWindow_onShouldQuit, onShouldQuitCallback);
 }
 
 static void UiWindow_onContentSizeChanged(uiWindow *w, void *data) {
@@ -161,7 +148,6 @@ NBIND_CLASS(UiWindow) {
   method(close);
   method(setChild);
   method(onClosing);
-  method(onShouldQuit);
 //  method(onContentSizeChanged);
   getset(getMargined, setMargined);
   getset(getTitle, setTitle);

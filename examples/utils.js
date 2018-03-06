@@ -137,7 +137,6 @@ function window(
 		fullscreen = false,
 		borderless = false,
 		onClosing = null,
-		onShouldQuit = null,
 		onPositionChanged = null,
 		onContentSizeChanged = null
 	},
@@ -154,10 +153,6 @@ function window(
 
 	if (onClosing) {
 		win.onClosing(onClosing);
-	}
-
-	if (onShouldQuit) {
-		win.onShouldQuit(onShouldQuit);
 	}
 
 	if (onPositionChanged) {

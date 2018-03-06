@@ -401,7 +401,6 @@ class SizeDouble {
 
 class UiWindow {
   DEFINE_EVENT(onClosing)
-  DEFINE_EVENT(onShouldQuit)
   DEFINE_EVENT(onPositionChanged)
   // DEFINE_EVENT(onContentSizeChanged)
 
