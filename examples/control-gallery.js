@@ -65,6 +65,7 @@ const updateValue = value => {
 	progress.value = value;
 };
 
+
 const changeTitle = () => {
 	win.title = "Title changed";
 	colorBtn.color = colors.red;
@@ -219,9 +220,8 @@ const winProps = {
 	title: "Control Gallery",
 	width: 640,
 	height: 480,
-	onClosing
-	// onPositionChanged,
-	// onContentSizeChanged: onPositionChanged
+	onClosing,
+	onContentSizeChanged: onPositionChanged
 };
 
 win = window(

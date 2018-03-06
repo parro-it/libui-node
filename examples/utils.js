@@ -160,7 +160,7 @@ function window(
 	}
 
 	if (centered) {
-		win.center();
+//		win.center();
 	}
 
 	win.setChild(wrapChildren(children));
