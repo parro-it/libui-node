@@ -401,8 +401,7 @@ class SizeDouble {
 
 class UiWindow {
   DEFINE_EVENT(onClosing)
-  DEFINE_EVENT(onPositionChanged)
-  // DEFINE_EVENT(onContentSizeChanged)
+  DEFINE_EVENT(onContentSizeChanged)
 
  private:
   uiWindow* win;
@@ -417,9 +416,6 @@ class UiWindow {
   void setChild(UiControl* control);
   void setTitle(const char* title);
   const char* getTitle();
-  Point getPosition();
-  void setPosition(Point position);
-  void center();
   bool getFullscreen();
   void setFullscreen(bool value);
   bool getBorderless();
@@ -627,24 +623,12 @@ class UiDrawPath {
   UiDrawPath(int fillMode);
   void freePath();
   void newFigure(double x, double y);
-  void newFigureWithArc(double xCenter,
-                        double yCenter,
-                        double radius,
-                        double startAngle,
-                        double sweep,
-                        int negative);
+  void newFigureWithArc(double xCenter, double yCenter, double radius,
+                        double startAngle, double sweep, int negative);
   void lineTo(double x, double y);
-  void arcTo(double xCenter,
-             double yCenter,
-             double radius,
-             double startAngle,
-             double sweep,
-             int negative);
-  void bezierTo(double c1x,
-                double c1y,
-                double c2x,
-                double c2y,
-                double endX,
+  void arcTo(double xCenter, double yCenter, double radius, double startAngle,
+             double sweep, int negative);
+  void bezierTo(double c1x, double c1y, double c2x, double c2y, double endX,
                 double endY);
   void closeFigure();
   void addRectangle(double x, double y, double width, double height);
@@ -691,10 +675,7 @@ class DrawTextFont {
   DrawTextFontMetrics* getMetrics();
 
   static std::vector<char*> listFontFamilies();
-  void loadClosestFont(const char* family,
-                       double size,
-                       int weight,
-                       int italic,
+  void loadClosestFont(const char* family, double size, int weight, int italic,
                        int stretch);
 };
 
@@ -758,18 +739,12 @@ class UiArea : public UiControl {
   // Workaround for nbind bug solved in 0.3
   UiArea(int dummy);
 
-  UiArea(nbind::cbFunction& drawCb,
-         nbind::cbFunction& mouseEventCb,
-         nbind::cbFunction& mouseCrossedCb,
-         nbind::cbFunction& dragBrokenCb,
+  UiArea(nbind::cbFunction& drawCb, nbind::cbFunction& mouseEventCb,
+         nbind::cbFunction& mouseCrossedCb, nbind::cbFunction& dragBrokenCb,
          nbind::cbFunction& keyEventCb);
-  UiArea(nbind::cbFunction& drawCb,
-         nbind::cbFunction& mouseEventCb,
-         nbind::cbFunction& mouseCrossedCb,
-         nbind::cbFunction& dragBrokenCb,
-         nbind::cbFunction& keyEventCb,
-         int width,
-         int height);
+  UiArea(nbind::cbFunction& drawCb, nbind::cbFunction& mouseEventCb,
+         nbind::cbFunction& mouseCrossedCb, nbind::cbFunction& dragBrokenCb,
+         nbind::cbFunction& keyEventCb, int width, int height);
   void setSize(int width, int height);
   void queueRedrawAll();
   void scrollTo(double x, double y, double width, double height);
@@ -780,8 +755,7 @@ extern std::map<uiArea*, UiArea*> areasMap;
 
 typedef struct UiAreaHandler {
   void (*Draw)(UiAreaHandler* self, uiArea* area, uiAreaDrawParams* params);
-  void (*MouseEvent)(UiAreaHandler* self,
-                     uiArea* area,
+  void (*MouseEvent)(UiAreaHandler* self, uiArea* area,
                      uiAreaMouseEvent* event);
   void (*MouseCrossed)(UiAreaHandler* self, uiArea* area, int left);
   void (*DragBroken)(UiAreaHandler* self, uiArea* area);
@@ -808,24 +782,10 @@ class UiGrid : public UiControl {
   UiGrid();
   bool getPadded();
   void setPadded(bool value);
-  void append(UiControl* c,
-              int left,
-              int top,
-              int xspan,
-              int yspan,
-              int hexpand,
-              int halign,
-              int vexpand,
-              int valign);
-  void insertAt(UiControl* c,
-                UiControl* existing,
-                int at,
-                int xspan,
-                int yspan,
-                int hexpand,
-                int halign,
-                int vexpand,
-                int valign);
+  void append(UiControl* c, int left, int top, int xspan, int yspan,
+              int hexpand, int halign, int vexpand, int valign);
+  void insertAt(UiControl* c, UiControl* existing, int at, int xspan, int yspan,
+                int hexpand, int halign, int vexpand, int valign);
 
   DEFINE_CONTROL_METHODS()
 };

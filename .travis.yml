@@ -7,10 +7,11 @@ dist: trusty
 language: node_js
 
 node_js:
+  - '9'
+  - '8'
   - '6'
   - '5'
   - '4'
-  - '0.12'
 
 sudo: required
 

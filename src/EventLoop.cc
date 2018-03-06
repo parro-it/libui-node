@@ -75,6 +75,8 @@ void redraw(uv_timer_t* handle) {
 
 /* This function start the event loop and exit immediately */
 void stopAsync(uv_timer_t* handle) {
+  // printf("stopAsync\n");
+
   /* if the loop is already running, this is a noop */
   if (!running) {
     return;
@@ -84,13 +86,16 @@ void stopAsync(uv_timer_t* handle) {
   /* stop redraw handler */
   uv_timer_stop(redrawTimer);
   uv_close((uv_handle_t*)redrawTimer, NULL);
+  // printf("redrawTimer\n");
 
   uv_timer_stop(handle);
   uv_close((uv_handle_t*)handle, NULL);
+  // printf("handle\n");
 
   /* await for the background thread to finish */
+  // printf("11\n");
   uv_thread_join(thread);
-
+  // printf("22\n");
   /*
     delete handle;
     delete redrawTimer;
@@ -113,26 +118,28 @@ struct EventLoop {
 
     /* init libui event loop */
     uiMainSteps();
-    // printf("uiMainSteps...\n");
+    // // printf("uiMainSteps...\n");
 
     /* start the background thread that check for node evnts pending */
     thread = new uv_thread_t();
     uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
-    // printf("thread...\n");
+    // // printf("thread...\n");
 
     /* start redraw timer */
     redrawTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), redrawTimer);
     redraw(redrawTimer);
 
-    // printf("redrawTimer...\n");
+    // // printf("redrawTimer...\n");
   }
 
   /* This function start the event loop and exit immediately */
   static void stop() {
+    // printf("stopping\n");
+
     uv_timer_t* closeTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), closeTimer);
-    uv_timer_start(closeTimer, stopAsync, 100, 0);
+    uv_timer_start(closeTimer, stopAsync, 1, 0);
   }
 };
 
