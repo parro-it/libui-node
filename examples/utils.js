@@ -142,7 +142,6 @@ function window(
 	},
 	...children
 ) {
-
 	// console.log('windows')
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;

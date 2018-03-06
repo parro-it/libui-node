@@ -65,7 +65,6 @@ const updateValue = value => {
 	progress.value = value;
 };
 
-
 const changeTitle = () => {
 	win.title = "Title changed";
 	colorBtn.color = colors.red;
@@ -227,18 +226,18 @@ const winProps = {
 win = window(
 	winProps,
 	hBox(
-		{ padded: true },
+		{padded: true},
 		group(
-			{ margined: true, title: "Basic Controls" },
-			button({ text: "Button", onClicked: changeTitle }),
+			{margined: true, title: "Basic Controls"},
+			button({text: "Button", onClicked: changeTitle}),
 			(colorBtn = colorButton({})),
-			checkBox({ text: "Checkbox" }),
-			entry({ text: "Entry" }),
-			os.platform() === "darwin"
-				? entry({ text: "Search Entry" })
-				: searchEntry({ text: "Search Entry" }),
-			passwordEntry({ text: "Password Entry" }),
-			label({ text: "Label" }),
+			checkBox({text: "Checkbox"}),
+			entry({text: "Entry"}),
+			os.platform() === "darwin" ?
+				entry({text: "Search Entry"}) :
+				searchEntry({text: "Search Entry"}),
+			passwordEntry({text: "Password Entry"}),
+			label({text: "Label"}),
 			separator({}),
 			datePicker({}),
 			dateTimePicker({}),
@@ -246,16 +245,16 @@ win = window(
 		),
 
 		vBox(
-			{ padded: true },
+			{padded: true},
 			group(
-				{ margined: true, title: "Numbers" },
-				(spin = spinbox({ onChanged: () => updateValue(spin.value) })),
-				(slide = slider({ onChanged: () => updateValue(slide.value) })),
+				{margined: true, title: "Numbers"},
+				(spin = spinbox({onChanged: () => updateValue(spin.value)})),
+				(slide = slider({onChanged: () => updateValue(slide.value)})),
 				(progress = progressBar({}))
 			),
 
 			group(
-				{ margined: true, title: "Lists", stretchy: true },
+				{margined: true, title: "Lists", stretchy: true},
 				combobox({}, "Combobox Item 1", "Combobox Item 2", "Combobox Item 3"),
 				editableCombobox(
 					{},
@@ -265,7 +264,7 @@ win = window(
 				),
 				radioButtons({}, "Radio Button 1", "Radio Button 2", "Radio Button 3"),
 				tab(
-					{ stretchy: true },
+					{stretchy: true},
 					entry({
 						text: lorem.slice(5),
 						tabTitle: "Page 1",
@@ -286,7 +285,7 @@ win = window(
 			)
 		)
 	),
-	(status = label({ stretchy: true, text: "(0, 0)" }))
+	(status = label({stretchy: true, text: "(0, 0)"}))
 );
 
 win.show();

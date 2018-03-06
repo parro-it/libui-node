@@ -6,7 +6,6 @@ module.exports = binding.lib;
 
 binding.lib.Ui.init();
 
-
 function stopLoop() {
 	binding.lib.EventLoop.stop();
 }
