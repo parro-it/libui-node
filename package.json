@@ -29,7 +29,7 @@
 		"GUI"
 	],
 	"engines": {
-		"node": ">=0.12"
+		"node": ">=4"
 	},
 	"files": [
 		"index.js",

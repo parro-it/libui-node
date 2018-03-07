@@ -1,8 +1,6 @@
 import test from 'ava';
 import libui from './index';
 
-libui.Ui.init();
-
 test('new UiWindow - throw if too few arguments', t => {
 	const err = t.throws(() => new libui.UiWindow('Test window'));
 	t.true(err instanceof Error);
@@ -14,7 +12,7 @@ test.before(() => {
 });
 
 test.after(() => {
-	// libui.stopLoop();
+	libui.stopLoop();
 });
 
 function checkEvent(

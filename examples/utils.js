@@ -142,7 +142,6 @@ function window(
 	},
 	...children
 ) {
-
 	// console.log('windows')
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
@@ -160,7 +159,7 @@ function window(
 	}
 
 	if (centered) {
-		win.center();
+//		win.center();
 	}
 
 	win.setChild(wrapChildren(children));
