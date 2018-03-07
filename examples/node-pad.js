@@ -11,7 +11,7 @@ const {
 
 const onClosing = () => libui.stopLoop();
 
-libui.Ui.onShouldQuit(()=>{
+libui.Ui.onShouldQuit(() => {
 	onClosing();
 });
 
