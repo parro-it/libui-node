@@ -8,11 +8,11 @@ test('new UiWindow - throw if too few arguments', t => {
 });
 
 test.before(() => {
-	libui.startLoop();
+	// libui.startLoop();
 });
 
 test.after(() => {
-	libui.stopLoop();
+	// libui.stopLoop();
 });
 
 function checkEvent(
