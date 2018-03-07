@@ -11,6 +11,10 @@ const {
 
 const onClosing = () => libui.stopLoop();
 
+libui.Ui.onShouldQuit(() => {
+	onClosing();
+});
+
 const winProps = {
 	hasMenubar: true,
 	title: 'Node Pad',

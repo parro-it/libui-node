@@ -48,8 +48,21 @@ This mean that your GUI events callbacks are executed because they are called by
 
 To stop the loop and allow `main` method to return, you have to call `libui.Ui.quit` method.
 
+# Quit handler
 
+`libui.Ui.onShouldQuit` is emitted when "Quit" was clicked in the menu. You are responsible to close the application in response to this event:
 
+```js
+var libui = require('libui');
 
+libui.Ui.init();
 
+var window = libui.UiWindow(title, width, height, hasMenubar);
 
+libui.Ui.onShouldQuit(() => {
+    window.close();
+    libui.stopLoop();
+});
+
+//...
+```

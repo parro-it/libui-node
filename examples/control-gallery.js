@@ -51,6 +51,10 @@ const onClosing = () => {
 	libui.stopLoop();
 };
 
+libui.Ui.onShouldQuit(() => {
+	onClosing();
+});
+
 function onPositionChanged() {
 	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize
 		.w} x ${win.contentSize.h})`;
