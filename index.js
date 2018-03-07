@@ -6,7 +6,6 @@ module.exports = binding.lib;
 
 binding.lib.Ui.init();
 
-
 function stopLoop() {
 	binding.lib.EventLoop.stop();
 }
@@ -22,8 +21,15 @@ function Color(r, g, b, a) {
 	this.a = a;
 }
 
-Color.prototype.fromJS = function fromJS(output) {
-	output(this.r, this.g, this.b, this.a);
+Color.prototype.fromJS = function fromJS(
+	output
+) {
+	output(
+		this.r,
+		this.g,
+		this.b,
+		this.a
+	);
 };
 
 binding.bind("Color", Color);
@@ -33,7 +39,9 @@ function Point(x, y) {
 	this.y = y;
 }
 
-Point.prototype.fromJS = function fromJS(output) {
+Point.prototype.fromJS = function fromJS(
+	output
+) {
 	output(this.x, this.y);
 };
 
@@ -44,18 +52,25 @@ function PointDouble(x, y) {
 	this.y = y;
 }
 
-PointDouble.prototype.fromJS = function fromJS(output) {
+PointDouble.prototype.fromJS = function fromJS(
+	output
+) {
 	output(this.x, this.y);
 };
 
-binding.bind("PointDouble", PointDouble);
+binding.bind(
+	"PointDouble",
+	PointDouble
+);
 
 function Size(w, h) {
 	this.w = w;
 	this.h = h;
 }
 
-Size.prototype.fromJS = function fromJS(output) {
+Size.prototype.fromJS = function fromJS(
+	output
+) {
 	output(this.w, this.h);
 };
 
@@ -66,7 +81,9 @@ function SizeDouble(w, h) {
 	this.h = h;
 }
 
-SizeDouble.prototype.fromJS = function fromJS(output) {
+SizeDouble.prototype.fromJS = function fromJS(
+	output
+) {
 	output(this.w, this.h);
 };
 
@@ -112,3 +129,4 @@ module.exports.Point = Point;
 module.exports.Color = Color;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;
+
