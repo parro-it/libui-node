@@ -1,6 +1,6 @@
 #include <uv.h>
 #include <atomic>
-#include "../../../ui.h"
+#include "../ui.h"
 #include "nbind/nbind.h"
 
 extern int uiEventsPending();
