@@ -98,7 +98,7 @@
 							"-L<(module_root_dir)",
 							"-lui",
 							"-rpath",
-							"'$$ORIGIN'",
+							"'@loader_path'",
 							"-rpath",
 							"<(module_root_dir)"
 						]
