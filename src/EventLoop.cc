@@ -25,7 +25,7 @@ static void backgroundNodeEventsPoller(void* arg) {
     int timeout = uv_backend_timeout(uv_default_loop());
 
     /* wait for 1s by default */
-    if (timeout == 0) {
+    if (timeout <= 0) {
       timeout = 1000;
     }
 

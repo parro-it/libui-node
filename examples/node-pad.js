@@ -23,7 +23,6 @@ const winProps = {
 	onClosing
 };
 
-libui.Ui.init();
 
 let win;
 let editor;

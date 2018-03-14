@@ -67,6 +67,12 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
 
   int ret =
       GetQueuedCompletionStatus(loop->iocp, &bytes, &key, &overlapped, timeout);
-  // PostQueuedCompletionStatus(loop->iocp, bytes, key, overlapped);
+  /*
+  // Does we need to requeue the queued completions? 
+  if (ret != 0 && overlapped != NULL) {
+      printf("node event!\n");
+      PostQueuedCompletionStatus(loop->iocp, bytes, key, overlapped);
+  }
+  */ 
   return ret;
 }
