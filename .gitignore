@@ -96,3 +96,7 @@ _libui
 *.h
 
 *.dylib
+nbind.node
+*.dll
+*.exp
+*.lib
