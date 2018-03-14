@@ -23,7 +23,6 @@ const winProps = {
 	onClosing
 };
 
-
 let win;
 let editor;
 let status;
