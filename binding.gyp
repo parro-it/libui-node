@@ -1,6 +1,7 @@
 {
 	"targets": [
 		{
+			"target_name": "nbind",
 			"includes": [
 				"auto.gypi"
 			],
@@ -61,19 +62,13 @@
 						"<(module_root_dir)/libui.lib"
 					],
 					'msvs_settings': {
-			            'VCCLCompilerTool': {
-			              'AdditionalOptions': [
-			                '/MD',
-			                '/LD'
-			              ]
-			            }
-			          },
-					'ldflags': [
-						"-Wl,-rpath,'$$ORIGIN',-rpath,<(module_root_dir)",
-					],"cflags": [
-						"-std=c++11",
-					 	"-stdlib=libc++"
-					]
+						'VCCLCompilerTool': {
+							'AdditionalOptions': [
+								'/MD',
+								'/LD'
+							]
+						}
+					},
 				}],
 				["OS=='linux'", {
 					"sources": [
@@ -105,7 +100,18 @@
 					}
 				}],
 			]
-		}
+		},
+		{
+			"target_name": "copy_binary",
+			"type":"none",
+			"dependencies": [ "nbind" ],
+			"copies": [
+				{
+					'destination': '<(module_root_dir)',
+					'files': ['<(module_root_dir)/build/Release/nbind.node']
+				}
+			]
+	   }
 	],
 	"includes": [
 		"auto-top.gypi"

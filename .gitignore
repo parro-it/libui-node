@@ -98,5 +98,7 @@ _libui
 *.dylib
 *.dll
 *.so
+nbind.node
+*.dll
 *.exp
 *.lib
