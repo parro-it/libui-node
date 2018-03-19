@@ -2,8 +2,6 @@ var humanize = require('humanize');
 var procStats = require('proc-stats');
 var libui = require('../index.js');
 
-libui.Ui.init();
-
 function openBigWindow() {
 	var win = new libui.UiWindow('Forms window', 80, 60, false);
 	win.margined = 1;

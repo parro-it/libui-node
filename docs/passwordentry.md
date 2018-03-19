@@ -6,10 +6,8 @@
 
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiPasswordEntry example', 640, 480, true);
 
 var widget = new libui.UiPasswordEntry();

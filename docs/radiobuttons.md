@@ -6,10 +6,8 @@
 ![UiRadioButtons example](media/UiRadioButtons.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiRadioButtons example', 640, 480, true);
 
 var widget = new libui.UiRadioButtons();

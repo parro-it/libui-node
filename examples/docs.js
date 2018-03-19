@@ -28,10 +28,8 @@ function writeFile(name, description, ...contents) {
 	const image = existsSync(imagePath) ? `![${name} example](media/${name}.png)` : '';
 	readme += `
 * [${name}](${filename}) - ${description}`;
-	const code = `
-var libui = require('libui');
+	const code = `var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('${name} example', 640, 480, true);
 
 var widget = new libui.${name}();
@@ -529,7 +527,6 @@ writeFile('UiGroup', 'A container for a single widget that provide a caption and
 /*
 var libui = require('../index.js');
 
-libui.Ui.init();
 
 var win = new libui.UiWindow("Example window", 640, 480, true);
 win.borderless = true;

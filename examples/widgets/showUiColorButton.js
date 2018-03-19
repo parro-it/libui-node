@@ -1,7 +1,5 @@
-
 var libui = require('../../index');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiColorButton example', 320, 60, true);
 win.margined = true;
 

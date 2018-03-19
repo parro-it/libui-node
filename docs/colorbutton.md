@@ -6,10 +6,8 @@
 ![UiColorButton example](media/UiColorButton.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiColorButton example', 640, 480, true);
 
 var widget = new libui.UiColorButton();

@@ -33,6 +33,9 @@ function menu(template) {
 						if (subMnu.click) {
 							subMnuObj.onClicked(subMnu.click);
 						}
+						if (subMnu.disabled) {
+							subMnuObj.disable();
+						}
 					}
 			}
 		}

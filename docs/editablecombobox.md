@@ -6,10 +6,8 @@
 ![UiEditableCombobox example](media/UiEditableCombobox.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiEditableCombobox example', 640, 480, true);
 
 var widget = new libui.UiEditableCombobox();

@@ -164,7 +164,7 @@ menu([
 			},
 			{
 				label: "Disabled Item",
-				click: () => {}
+				disabled: true
 			},
 			{
 				role: "preferences"

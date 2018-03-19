@@ -212,8 +212,6 @@ function redraw() {
 }
 
 function main() {
-	libui.Ui.init();
-
 	var hbox;
 	var vbox;
 	var i;

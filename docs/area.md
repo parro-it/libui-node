@@ -10,7 +10,7 @@ UiArea provide a canvas you can draw on. It also receives keyboard and mouse eve
 var libui = require('libui');
 var colorDodgerBlue = 0x1E90FF;
 var uiDrawFillModeWinding = 0;
-libui.Ui.init();
+
 var win = new libui.UiWindow('UiEntry example', 640, 480, true);
 
 var handler = {

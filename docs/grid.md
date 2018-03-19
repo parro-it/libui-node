@@ -6,10 +6,8 @@
 ![UiGrid example](media/UiGrid.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiGrid example', 640, 480, true);
 
 var widget = new libui.UiGrid();

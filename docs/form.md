@@ -6,10 +6,8 @@
 ![UiForm example](media/UiForm.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiForm example', 640, 480, true);
 
 var widget = new libui.UiForm();

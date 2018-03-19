@@ -1,6 +1,5 @@
 var libui = require('../index.js');
 
-libui.Ui.init();
 var win = new libui.UiWindow('Forms window', 800, 600, false);
 win.margined = 1;
 win.onClosing(function () {
