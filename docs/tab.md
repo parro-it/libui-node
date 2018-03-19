@@ -6,10 +6,8 @@
 ![UiTab example](media/UiTab.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiTab example', 640, 480, true);
 
 var widget = new libui.UiTab();

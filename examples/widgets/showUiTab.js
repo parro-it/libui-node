@@ -1,7 +1,5 @@
-
 var libui = require('../../index');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiTab example', 320, 90, true);
 win.margined = true;
 

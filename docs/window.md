@@ -5,8 +5,6 @@
 ```js
 var libui = require('libui');
 
-libui.Ui.init();
-
 var win = new libui.UiWindow("Example window", 640, 480, true);
 
 win.onClosing(function () {

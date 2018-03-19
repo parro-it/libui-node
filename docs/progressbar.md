@@ -6,10 +6,8 @@
 ![UiProgressBar example](media/UiProgressBar.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiProgressBar example', 640, 480, true);
 
 var widget = new libui.UiProgressBar();

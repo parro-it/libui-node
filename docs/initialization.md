@@ -1,23 +1,8 @@
-# Libui-node initialization
-
-`libui-node` must be initialized to be able to create any GUI control.
-This can be done by calling the `init` method:
-
-```js
-var libui = require('libui');
-
-libui.Ui.init();
-```
-
-After initialization, you can freely create windows or control objects.
-
-
 # Event loop
 
 `libui-node` has an event loop independent  of the Node.js one that take care of processing GUI events. It process events one tick at a time, so it can run seamlessy with Node.js loop.
 
 Each bit of GUI event loop is executed by a call to `libui.Ui.mainStep` method. This method could be used directly by your code, or you can leverage the `startLoop` event that continuosly schedules calls to `mainStep` using Node.js `setImmediate` function.
-
 
 
 ## Start the event loop
@@ -26,6 +11,8 @@ To start the event loop, you simply call the `startLoop` method. The function re
 
 
 ```js
+var libui = require('libui');
+
 libui.startLoop(function () {
 	console.log('event loop terminated.');
 });
@@ -54,8 +41,6 @@ To stop the loop and allow `main` method to return, you have to call `libui.Ui.q
 
 ```js
 var libui = require('libui');
-
-libui.Ui.init();
 
 var window = libui.UiWindow(title, width, height, hasMenubar);
 

@@ -6,10 +6,8 @@
 ![UiLabel example](media/UiLabel.png)
 
 ```js
-
 var libui = require('libui');
 
-libui.Ui.init();
 var win = new libui.UiWindow('UiLabel example', 640, 480, true);
 
 var widget = new libui.UiLabel();
