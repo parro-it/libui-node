@@ -118,8 +118,6 @@ menu([
 			{
 				label: "Open",
 				click: () => {
-					libui.UiDialogs.msgBox(win, "File selected", "ciao");
-
 					const filename = libui.UiDialogs.openFile(win);
 					if (filename) {
 						libui.UiDialogs.msgBox(win, "File selected", filename);
