@@ -185,16 +185,6 @@ menu([
 		label: "Window",
 		submenu: [
 			{
-				label: "Center",
-				click: () => win.center()
-			},
-			{
-				label: "Top left",
-				click: () => {
-					win.position = point(0, 0);
-				}
-			},
-			{
 				label: "Full screen",
 				click: () => {
 					win.fullscreen = !win.fullscreen;
