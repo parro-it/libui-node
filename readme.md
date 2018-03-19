@@ -60,7 +60,7 @@ If you get error on windows, check [this node-gyp issue](https://github.com/node
 
 You can find ongoing documentation in [docs folder](docs).
 
-Plase look in [examples folder](https://github.com/parro-it/libui-node/tree/master/examples) for working examples.
+Please look in [examples folder](https://github.com/parro-it/libui-node/tree/master/examples) for working examples.
 
 Some example uses ES6 syntax. We will soon configure babel transpilation for them. Meanwhile, if you are testing the project on Node.js < 6, you can check `examples/core-api.js` that use ES5 syntax.
 
