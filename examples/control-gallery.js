@@ -118,8 +118,6 @@ menu([
 			{
 				label: "Open",
 				click: () => {
-					libui.UiDialogs.msgBox(win, "File selected", "ciao");
-
 					const filename = libui.UiDialogs.openFile(win);
 					if (filename) {
 						libui.UiDialogs.msgBox(win, "File selected", filename);
@@ -186,16 +184,6 @@ menu([
 	{
 		label: "Window",
 		submenu: [
-			{
-				label: "Center",
-				click: () => win.center()
-			},
-			{
-				label: "Top left",
-				click: () => {
-					win.position = point(0, 0);
-				}
-			},
 			{
 				label: "Full screen",
 				click: () => {
