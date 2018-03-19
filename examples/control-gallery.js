@@ -4,7 +4,6 @@ const libui = require("../index.js");
 
 const {
 	size,
-	point,
 	datePicker,
 	dateTimePicker,
 	timePicker,
