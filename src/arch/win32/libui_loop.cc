@@ -67,12 +67,21 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
 
   int ret =
       GetQueuedCompletionStatus(loop->iocp, &bytes, &key, &overlapped, timeout);
-  /*
-  // Does we need to requeue the queued completions? 
-  if (ret != 0 && overlapped != NULL) {
-      printf("node event!\n");
-      PostQueuedCompletionStatus(loop->iocp, bytes, key, overlapped);
+
+  // Does we need to requeue the queued completions?
+  // this happen to be same code used by Electron
+  // on Windows:
+  // https://github.com/electron/electron/blob/master/atom/common/node_bindings_win.cc#L24
+  // but the application become unstable when this
+  // part is uncommented.
+  // See laso this PRs on libuv repo:
+  // https://github.com/libuv/libuv/pull/1007
+  // https://github.com/libuv/libuv/pull/1544
+  // https://github.com/libuv/libuv/pull/1651
+  if (overlapped != NULL) {
+    printf("node event!\n");
+    PostQueuedCompletionStatus(loop->iocp, bytes, key, overlapped);
   }
-  */ 
+
   return ret;
 }
