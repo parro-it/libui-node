@@ -79,8 +79,11 @@ void redraw(uv_timer_t* handle) {
 
   printf("rescheduling\n");
 
-  /* schedule another call to redraw as soon as possible */
-  uv_timer_start(handle, redraw, 1, 0);
+  // schedule another call to redraw as soon as possible
+  // how to find a correct amount of time to scheduke next call?
+  //.because too long and UI is not responsive, too short and node
+  // become really slow
+  uv_timer_start(handle, redraw, 1000, 0);
 }
 
 /* This function start the event loop and exit immediately */
