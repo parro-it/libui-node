@@ -1,5 +1,7 @@
 #include <uv.h>
 #include <atomic>
+#include <unistd.h>
+
 #include "../ui.h"
 #include "nbind/nbind.h"
 
@@ -28,16 +30,20 @@ static void backgroundNodeEventsPoller(void* arg) {
     if (timeout <= 0) {
       timeout = 1000;
     }
-
     int pendingEvents;
 
     /* wait for pending */
     do {
+      // printf("entering waitForNodeEvents with timeout %d\n", timeout);
       pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
+      // printf("exit waitForNodeEvents\n");
     } while (pendingEvents == -1 && errno == EINTR);
 
+    // printf("guiBlocked && pendingEvents %s && %d\n", guiBlocked ? "blocked" : "non blocked", pendingEvents );
     if (guiBlocked && pendingEvents > 0) {
+      printf("wake up neo\n");
       uiLoopWakeup();
+      usleep(500 * 1000);
     }
   }
 }
@@ -60,14 +66,18 @@ void redraw(uv_timer_t* handle) {
   Nan::HandleScope scope;
 
   /* Blocking call that wait for a node or GUI event pending */
+  printf("blocking GUI\n");
   guiBlocked = true;
   uiMainStep(true);
   guiBlocked = false;
+  printf("unblocking GUI\n");
 
   /* dequeue and run every event pending */
   while (uiEventsPending()) {
     running = uiMainStep(false);
   }
+
+  printf("rescheduling\n");
 
   /* schedule another call to redraw as soon as possible */
   uv_timer_start(handle, redraw, 1, 0);
