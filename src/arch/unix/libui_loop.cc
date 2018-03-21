@@ -16,13 +16,24 @@ int uiEventsPending() {
   return gtk_events_pending();
 }
 
+struct heap_node {
+  struct heap_node* left;
+  struct heap_node* right;
+  struct heap_node* parent;
+};
+
+struct heap {
+  struct heap_node* min;
+  unsigned int nelts;
+};
+
 int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   // printf("uv_backend_fd\n");
   int nodeBackendFd = uv_backend_fd(loop);
   // printf("uv_backend_fd %d\n", nodeBackendFd);
 
   if (nodeBackendFd == -1) {
-     // printf(stderr, "Invalid node backend fd.\n");
+    fprintf(stderr, "Invalid node backend fd.\n");
     return 0;
   }
 
@@ -30,7 +41,11 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   // printf("epoll_wait\n");
 
   int ret = epoll_wait(nodeBackendFd, &ev, 1, timeout);
+  struct heap_node* node = ((struct heap*)&loop->timer_heap)->min;
+  if (node != NULL) {
+    return 1;
+  }
+
   // printf("epoll_wait %d\n", ret);
   return ret;
-
 }

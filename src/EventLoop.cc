@@ -30,22 +30,25 @@ static void backgroundNodeEventsPoller(void* arg) {
     if (timeout == 0) {
       timeout = 1000;
     }
+
     int pendingEvents = 1;
 
-    /* wait for pending */
     if (timeout != -1) {
       do {
         // printf("entering waitForNodeEvents with timeout %d\n", timeout);
+        /* wait for pending events*/
         pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
         // printf("exit waitForNodeEvents\n");
       } while (pendingEvents == -1 && errno == EINTR);
     }
 
-    // printf("guiBlocked && pendingEvents %s && %d\n", guiBlocked ? "blocked" :
-    // "non blocked", pendingEvents );
+    printf("guiBlocked && pendingEvents %s && %d\n",
+           guiBlocked ? "blocked" : "non blocked", pendingEvents);
     if (guiBlocked && pendingEvents > 0) {
-      printf("wake up neo\n");
+      printf("------ wake up neo\n");
       uiLoopWakeup();
+
+      // give main thread some time to react
       usleep(50 * 1000);
     }
   }
