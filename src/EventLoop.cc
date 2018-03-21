@@ -1,6 +1,6 @@
+#include <unistd.h>
 #include <uv.h>
 #include <atomic>
-#include <unistd.h>
 
 #include "../ui.h"
 #include "nbind/nbind.h"
@@ -27,23 +27,26 @@ static void backgroundNodeEventsPoller(void* arg) {
     int timeout = uv_backend_timeout(uv_default_loop());
 
     /* wait for 1s by default */
-    if (timeout <= 0) {
+    if (timeout == 0) {
       timeout = 1000;
     }
-    int pendingEvents;
+    int pendingEvents = 1;
 
     /* wait for pending */
-    do {
-      // printf("entering waitForNodeEvents with timeout %d\n", timeout);
-      pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
-      // printf("exit waitForNodeEvents\n");
-    } while (pendingEvents == -1 && errno == EINTR);
+    if (timeout != -1) {
+      do {
+        // printf("entering waitForNodeEvents with timeout %d\n", timeout);
+        pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
+        // printf("exit waitForNodeEvents\n");
+      } while (pendingEvents == -1 && errno == EINTR);
+    }
 
-    // printf("guiBlocked && pendingEvents %s && %d\n", guiBlocked ? "blocked" : "non blocked", pendingEvents );
+    // printf("guiBlocked && pendingEvents %s && %d\n", guiBlocked ? "blocked" :
+    // "non blocked", pendingEvents );
     if (guiBlocked && pendingEvents > 0) {
       printf("wake up neo\n");
       uiLoopWakeup();
-      usleep(500 * 1000);
+      usleep(50 * 1000);
     }
   }
 }
@@ -83,7 +86,7 @@ void redraw(uv_timer_t* handle) {
   // how to find a correct amount of time to scheduke next call?
   //.because too long and UI is not responsive, too short and node
   // become really slow
-  uv_timer_start(handle, redraw, 1000, 0);
+  uv_timer_start(handle, redraw, 10, 0);
 }
 
 /* This function start the event loop and exit immediately */
