@@ -1,19 +1,39 @@
-
 var os = require("os");
+var http = require("http");
 var libui = require("../index.js");
 
 var win = new libui.UiWindow("Test window", 800, 600, false);
 win.margined = 1;
-win.onClosing(function () {
-	libui.stopLoop();
-});
 
 var box = new libui.UiVerticalBox();
 var hBox = new libui.UiHorizontalBox();
 var e1 = new libui.UiEntry();
 e1.enabled = 0;
-hBox.append(new libui.UiLabel("ciao"), false);
+var lblCiao = new libui.UiLabel("ciao");
+hBox.append(lblCiao, false);
 hBox.append(e1, false);
+var idxLbl = 0;
+
+var interval = setInterval(function() {
+	lblCiao.text = String(idxLbl++);
+}, 1000);
+
+// Create an HTTP tunneling proxy
+const proxy = http.createServer((req, res) => {
+	lblCiao.text = String(idxLbl++);
+	res.writeHead(200, { "Content-Type": "text/plain" });
+	res.end(String(idxLbl));
+});
+proxy.listen(3000, "127.0.0.1", () => {
+	console.log("listening...");
+});
+
+win.onClosing(() => {
+	win.close();
+	clearInterval(interval);
+	proxy.close();
+	libui.stopLoop();
+});
 
 box.append(new libui.UiEntry(), false);
 box.append(hBox, false);
