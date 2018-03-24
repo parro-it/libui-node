@@ -1,5 +1,5 @@
-#ifndef ui_node_evetn_loop_linux
-#define ui_node_evetn_loop_linux 1
+#ifndef ui_node_event_loop_linux
+#define ui_node_event_loop_linux 1
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
