@@ -121,8 +121,10 @@ These works will become in future the base for a React-Native like project.
 
 # Contributors
 
-[![Andrea Parodi](https://avatars0.githubusercontent.com/u/11197111?s=130)](https://github.com/parro-it) | [![Juha Järvi](https://avatars3.githubusercontent.com/u/778781?s=130)](https://github.com/jjrv) | [![Niklas Mischkulnig](https://avatars2.githubusercontent.com/u/4586894?s=130)](https://github.com/mischnic) | [![Gustav Hansen
-](https://avatars0.githubusercontent.com/u/9812956?s=130)](https://github.com/kusti8)
+[![Andrea Parodi](https://avatars0.githubusercontent.com/u/11197111?s=130)](https://github.com/parro-it) | 
+[![Juha Järvi](https://avatars3.githubusercontent.com/u/778781?s=130)](https://github.com/jjrv) | 
+[![Niklas Mischkulnig](https://avatars2.githubusercontent.com/u/4586894?s=130)](https://github.com/mischnic) | 
+[![Gustav Hansen](https://avatars0.githubusercontent.com/u/9812956?s=130)](https://github.com/kusti8)
 ---|---|---|---
 [Andrea Parodi](https://github.com/parro-it) | [Juha Järvi](https://github.com/jjrv) | [Niklas Mischkulnig](https://github.com/mischnic) | [Gustav Hansen](https://github.com/kusti8)
 
