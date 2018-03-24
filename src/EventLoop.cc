@@ -86,12 +86,6 @@ void redraw(uv_timer_t* handle) {
 void stopAsync(uv_timer_t* handle) {
   DEBUG("stopAsync\n");
 
-  /* if the loop is already running, this is a noop */
-  if (!running) {
-    return;
-  }
-  running = false;
-
   /* stop redraw handler */
   uv_timer_stop(redrawTimer);
   uv_close((uv_handle_t*)redrawTimer, NULL);
