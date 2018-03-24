@@ -84,6 +84,12 @@ void redraw(uv_timer_t* handle) {
 
 /* This function start the event loop and exit immediately */
 void stopAsync(uv_timer_t* handle) {
+  if (!running) {
+    return;
+  }
+
+  running = false;
+
   DEBUG("stopAsync\n");
 
   /* stop redraw handler */
@@ -138,12 +144,6 @@ struct EventLoop {
 
   /* This function start the event loop and exit immediately */
   static void stop() {
-    if (!running) {
-      return;
-    }
-    
-    running = false;
-
     uv_timer_t* closeTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), closeTimer);
     uv_timer_start(closeTimer, stopAsync, 1, 0);
