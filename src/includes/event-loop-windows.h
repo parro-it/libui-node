@@ -7,7 +7,7 @@ void usleep(__int64 usec);
 #include <stdio.h>
 #include "../../../ui.h"
 
-typedef struct uv_loop_s {
+typedef struct _internal_uv_loop_s {
   /* User data - use this for whatever. */
   void* data;
   /* Loop reference counting. */
@@ -52,6 +52,6 @@ typedef struct uv_loop_s {
   uv_mutex_t wq_mutex;
   uv_async_t wq_async;
   */
-} uv_loop_t;
+};
 
 #endif

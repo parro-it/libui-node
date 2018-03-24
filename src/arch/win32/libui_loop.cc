@@ -20,8 +20,10 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   ULONG_PTR key;
   OVERLAPPED* overlapped;
 
-  int ret =
-      GetQueuedCompletionStatus(loop->iocp, &bytes, &key, &overlapped, timeout);
+  struct _internal_uv_loop_s* _loop = (_internal_uv_loop_s*)loop;
+
+  int ret = GetQueuedCompletionStatus(_loop->iocp, &bytes, &key, &overlapped,
+                                      timeout);
 
   // Does we need to requeue the queued completions?
   // this happen to be same code used by Electron
@@ -34,8 +36,8 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   // https://github.com/libuv/libuv/pull/1544
   // https://github.com/libuv/libuv/pull/1651
   if (overlapped != NULL) {
-    printf("node event!\n");
-    PostQueuedCompletionStatus(loop->iocp, bytes, key, overlapped);
+    DEBUG("node event!\n");
+    PostQueuedCompletionStatus(_loop->iocp, bytes, key, overlapped);
   }
 
   return ret;
