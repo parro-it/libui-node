@@ -9,6 +9,18 @@
 		{
 			"name": "Andrea Parodi",
 			"email": "andrea@parro.it"
+		},
+		{
+			"name": "Niklas Mischkulnig",
+			"url": "https://github.com/mischnic"
+		},
+		{
+			"name": "Gustav Hansen",
+			"url": "https://github.com/kusti8"
+		},
+		{
+			"name": "Juha Järvi",
+			"url": "https://github.com/jjrv"
 		}
 	],
 	"scripts": {
@@ -22,12 +34,7 @@
 		"build": "node-gyp configure build",
 		"clean": "rm -rf build; rm -rf node_modules;"
 	},
-	"keywords": [
-		"libui",
-		"desktop",
-		"multiplatform",
-		"GUI"
-	],
+	"keywords": ["libui", "desktop", "multiplatform", "GUI"],
 	"engines": {
 		"node": ">=4"
 	},
