@@ -1,19 +1,11 @@
-#include <unistd.h>
-#include <uv.h>
-#include <atomic>
-
-#include "../ui.h"
-#include "nbind/nbind.h"
-
-extern int uiEventsPending();
-extern int uiLoopWakeup();
-extern int waitForNodeEvents(uv_loop_t* loop, int timeout);
+#include "includes/event-loop.h"
 
 static std::atomic<bool> running;
 static std::atomic<bool> guiBlocked;
 
 static uv_thread_t* thread;
 static uv_timer_t* redrawTimer;
+
 /*
    This function is executed in the
    background thread and is responsible to continuosly polling
@@ -155,7 +147,9 @@ struct EventLoop {
 
   /* This function start the event loop and exit immediately */
   static void stop() {
-    // printf("stopping\n");
+    if (!running) {
+      return;
+    }
 
     uv_timer_t* closeTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), closeTimer);

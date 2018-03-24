@@ -1,8 +1,4 @@
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
-#include <poll.h>
-#include <sys/epoll.h>
-#include <uv.h>
+#include "../../includes/event-loop-linux.h"
 
 int uiLoopWakeup() {
   // printf("uiLoopWakeup\n");
@@ -15,17 +11,6 @@ int uiEventsPending() {
   // printf("uiEventsPending\n");
   return gtk_events_pending();
 }
-
-struct heap_node {
-  struct heap_node* left;
-  struct heap_node* right;
-  struct heap_node* parent;
-};
-
-struct heap {
-  struct heap_node* min;
-  unsigned int nelts;
-};
 
 int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   // printf("uv_backend_fd\n");
