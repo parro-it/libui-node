@@ -1,6 +1,9 @@
+'use strict';
+/* eslint-disable indent, operator-linebreak */
 const resolve = require('path').resolve;
 const writeFileSync = require('fs').writeFileSync;
 const existsSync = require('fs').existsSync;
+const libui = require('..');
 
 const bs = '```js';
 const be = '```';
@@ -19,15 +22,14 @@ If you are new to the framework, you should start reading basic documentation on
 
 
 `;
-// const readmePath = resolve(__dirname, '../docs/readme.md');
+const readmePath = resolve(__dirname, '../docs/readme.md');
 
 function writeFile(name, description, ...contents) {
 	const filename = name.slice(2).toLowerCase() + '.md';
 	const path = resolve(__dirname, '../docs', filename);
 	const imagePath = resolve(__dirname, '../docs/media/', name + '.png');
-	const image = existsSync(imagePath) ?
-		`![${name} example](media/${name}.png)` :
-		'';
+	const imageMd = `![${name} example](media/${name}.png)`;
+	const image = existsSync(imagePath) ? imageMd : '';
 	readme += `
 * [${name}](${filename}) - ${description}`;
 	const code = `var libui = require('libui');
@@ -91,26 +93,24 @@ ${contents
 		.map(c => c.methods)
 		.join('\n')}
 
-${
-		contents.filter(c => c.type === 'event').length === 0 ?
-			'' :
-			`---
+${contents.filter(c => c.type === 'event').length === 0
+		? ''
+		: `---
 
 # Events
 
 See [events implementation](events.md) for generic details on how events are implemented.
 
 ${contents
-					.filter(c => c.type === 'event')
-					.map(c => c.content)
-					.join('\n')}
-`
-	}
+				.filter(c => c.type === 'event')
+				.map(c => c.content)
+				.join('\n')}
+`}
 `;
 
 	writeFileSync(path, template);
-	// writeFileSync(resolve(__dirname, 'show' + name + '.js'), code.replace(`require('libui')`, `require('../index')`));
-	// require('./show' + name + '.js');
+	// ? writeFileSync(resolve(__dirname, 'show' + name + '.js'), code.replace(`require('libui')`, `require('../index')`));
+	// ? require('./show' + name + '.js');
 }
 
 function property(name, type, description) {
@@ -163,15 +163,13 @@ function method(name, description, args) {
 
 ${description}
 
-${
-			args ?
-				`
+${args
+			? `
 **Arguments**
 
 * ${args.join('\n* ')}
-` :
-				''
-		}
+`
+			: ''}
 `
 	};
 }
@@ -842,7 +840,7 @@ writeFile(
 
 writeFile(
 	'UiGroup',
-	"A container for a single widget that provide a caption and visually group it's children.",
+	`A container for a single widget that provide a caption and visually group it's children.`,
 	property(
 		'visible',
 		'Boolean',
@@ -874,26 +872,22 @@ writeFile(
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-// writeFileSync(readmePath, readme);
+writeFileSync(readmePath, readme);
 
-/*
-var libui = require('../index.js');
-
-var win = new libui.UiWindow("Example window", 640, 480, true);
+const win = new libui.UiWindow('Example window', 640, 480, true);
 win.borderless = true;
-var box = new libui.UiVerticalBox();
-var entry = new libui.UiMultilineEntry();
+const box = new libui.UiVerticalBox();
+const entry = new libui.UiMultilineEntry();
 entry.text = 'This is some text';
 
 box.append(entry, 1);
 
 win.setChild(box);
 
-win.onClosing(function () {
+win.onClosing(() => {
 	libui.stopLoop();
 });
 
 win.show();
 
 libui.startLoop();
-*/

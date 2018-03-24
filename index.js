@@ -1,6 +1,6 @@
-var nbind = require("nbind");
+const nbind = require('nbind');
 
-var binding = nbind.init(__dirname);
+const binding = nbind.init(__dirname);
 
 module.exports = binding.lib;
 
@@ -21,75 +21,63 @@ function Color(r, g, b, a) {
 	this.a = a;
 }
 
-Color.prototype.fromJS = function fromJS(
-	output
-) {
-	output(
-		this.r,
-		this.g,
-		this.b,
-		this.a
-	);
-};
+function fromJSColor(output) {
+	output(this.r, this.g, this.b, this.a);
+}
+Color.prototype.fromJS = fromJSColor;
 
-binding.bind("Color", Color);
+binding.bind('Color', Color);
 
 function Point(x, y) {
 	this.x = x;
 	this.y = y;
 }
 
-Point.prototype.fromJS = function fromJS(
-	output
-) {
+function fromJSPoint(output) {
 	output(this.x, this.y);
-};
+}
+Point.prototype.fromJS = fromJSPoint;
 
-binding.bind("Point", Point);
+binding.bind('Point', Point);
 
 function PointDouble(x, y) {
 	this.x = x;
 	this.y = y;
 }
 
-PointDouble.prototype.fromJS = function fromJS(
-	output
-) {
+function fromJSPointDouble(output) {
 	output(this.x, this.y);
-};
+}
 
-binding.bind(
-	"PointDouble",
-	PointDouble
-);
+PointDouble.prototype.fromJS = fromJSPointDouble;
+
+binding.bind('PointDouble', PointDouble);
 
 function Size(w, h) {
 	this.w = w;
 	this.h = h;
 }
 
-Size.prototype.fromJS = function fromJS(
-	output
-) {
+function fromJSSize(output) {
 	output(this.w, this.h);
-};
+}
+Size.prototype.fromJS = fromJSSize;
 
-binding.bind("Size", Size);
+binding.bind('Size', Size);
 
 function SizeDouble(w, h) {
 	this.w = w;
 	this.h = h;
 }
 
-SizeDouble.prototype.fromJS = function fromJS(
-	output
-) {
+function fromJSSizeDouble(output) {
 	output(this.w, this.h);
-};
+}
+SizeDouble.prototype.fromJS = fromJSSizeDouble;
 
-binding.bind("SizeDouble", SizeDouble);
+binding.bind('SizeDouble', SizeDouble);
 
-var textWeight = {
+const textWeight = {
 	thin: 0,
 	ultraLight: 1,
 	light: 2,
@@ -103,13 +91,13 @@ var textWeight = {
 	ultraHeavy: 10
 };
 
-var textItalic = {
+const textItalic = {
 	normal: 0,
 	oblique: 1,
 	italic: 2
 };
 
-var textStretch = {
+const textStretch = {
 	ultraCondensed: 0,
 	extraCondensed: 1,
 	condensed: 2,
@@ -129,4 +117,3 @@ module.exports.Point = Point;
 module.exports.Color = Color;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;
-

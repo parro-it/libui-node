@@ -1,21 +1,24 @@
-var libui = require('../index.js');
+'use strict';
+/* eslint-disable unicorn/number-literal-case */
 
-var mainwin;
-var histogram;
-var colorWhite = 0xFFFFFF;
-var colorBlack = 0x000000;
-var colorDodgerBlue = 0x1E90FF;
+const libui = require('..');
 
-var datapoints = [];
-var currentPoint = -1;
+let mainwin = null;
+let histogram = null;
+const colorWhite = 0xffffff;
+const colorBlack = 0x000000;
+const colorDodgerBlue = 0x1e90ff;
 
-// some metrics
-var xoffLeft = 20;
-var yoffTop = 20;
-var xoffRight = 20;
-var yoffBottom = 20;
-var pointRadius = 5;
-var uiDrawFillModeWinding = 0;
+const datapoints = [];
+let currentPoint = -1;
+
+// Some metrics
+const xoffLeft = 20;
+const yoffTop = 20;
+const xoffRight = 20;
+const yoffBottom = 20;
+const pointRadius = 5;
+const uiDrawFillModeWinding = 0;
 
 function graphSize(clientWidth, clientHeight) {
 	return {
@@ -25,18 +28,16 @@ function graphSize(clientWidth, clientHeight) {
 }
 
 function pointLocations(width, height, xs, ys) {
-	var xincr;
-	var yincr;
-	var i;
-	var n;
+	let i;
+	let n;
 
-	xincr = width / 9;		// 10 - 1 to make the last point be at the end
-	yincr = height / 100;
+	const xincr = width / 9; // 10 - 1 to make the last point be at the end
+	const yincr = height / 100;
 
 	for (i = 0; i < 10; i++) {
-		// get the value of the point
+		// Get the value of the point
 		n = datapoints[i].value;
-		// because y=0 is the top but n=0 is the bottom, we need to flip
+		// Because y=0 is the top but n=0 is the bottom, we need to flip
 		n = 100 - n;
 		xs[i] = xincr * i;
 		ys[i] = yincr * n;
@@ -44,17 +45,15 @@ function pointLocations(width, height, xs, ys) {
 }
 
 function constructGraph(width, height, extend) {
-	var path;
-	var xs = [];
-	var ys = [];
-	var i;
+	const xs = [];
+	const ys = [];
 
 	pointLocations(width, height, xs, ys);
 
-	path = new libui.UiDrawPath(uiDrawFillModeWinding);
+	const path = new libui.UiDrawPath(uiDrawFillModeWinding);
 
 	path.newFigure(xs[0], ys[0]);
-	for (i = 1; i < 10; i++) {
+	for (let i = 1; i < 10; i++) {
 		path.lineTo(xs[i], ys[i]);
 	}
 
@@ -68,13 +67,11 @@ function constructGraph(width, height, extend) {
 	return path;
 }
 
-var handler = {
-	Draw: function handlerDraw(area, p) {
-		var path;
-		var brush = buildSolidBrush(colorWhite, 1.0);
-		var sp;
-		var m;
-		var graphA = 0.9;
+const handler = {
+	Draw(area, p) {
+		let path;
+		let brush = buildSolidBrush(colorWhite, 1.0);
+		const graphA = 0.9;
 
 		path = new libui.UiDrawPath(uiDrawFillModeWinding);
 		path.addRectangle(0, 0, p.getAreaWidth(), p.getAreaHeight());
@@ -82,20 +79,20 @@ var handler = {
 		p.getContext().fill(path, brush);
 		path.freePath();
 
-		// figure out dimensions
-		var graph = graphSize(p.getAreaWidth(), p.getAreaHeight());
+		// Figure out dimensions
+		const graph = graphSize(p.getAreaWidth(), p.getAreaHeight());
 
-		// clear sp to avoid passing garbage to uiDrawStroke()
-		// for example, we don't use dashing
-		sp = new libui.DrawStrokeParams();
+		// Clear sp to avoid passing garbage to uiDrawStroke()
+		// For example, we don't use dashing
+		const sp = new libui.DrawStrokeParams();
 
-		// make a stroke for both the axes and the histogram line
+		// Make a stroke for both the axes and the histogram line
 		sp.cap = 0;
 		sp.join = 0;
 		sp.thickness = 2;
 		sp.miterLimit = 10.0;
 
-		// draw the axes
+		// Draw the axes
 		brush = buildSolidBrush(colorBlack, 1.0);
 
 		path = new libui.UiDrawPath(uiDrawFillModeWinding);
@@ -106,30 +103,30 @@ var handler = {
 		p.getContext().stroke(path, brush, sp);
 		path.freePath();
 
-		// now transform the coordinate space so (0, 0) is the top-left corner of the graph
-		m = new libui.UiDrawMatrix();
+		// Now transform the coordinate space so (0, 0) is the top-left corner of the graph
+		const m = new libui.UiDrawMatrix();
 		m.setIdentity();
 		m.translate(xoffLeft, yoffTop);
 		p.getContext().transform(m);
 
 		brush = buildSolidBrush(colorDodgerBlue, 1.0);
 
-		// now create the fill for the graph below the graph line
+		// Now create the fill for the graph below the graph line
 		path = constructGraph(graph.width, graph.height, 1);
 		brush.color.a = graphA / 2;
 		p.getContext().fill(path, brush);
 		path.freePath();
 
-		// now draw the histogram line
+		// Now draw the histogram line
 		path = constructGraph(graph.width, graph.height, 0);
 		brush.color.a = graphA;
 		p.getContext().stroke(path, brush, sp);
 		path.freePath();
 
-		// now draw the point being hovered over
+		// Now draw the point being hovered over
 		if (currentPoint !== -1) {
-			var xs = [];
-			var ys = [];
+			const xs = [];
+			const ys = [];
 
 			pointLocations(graph.width, graph.height, xs, ys);
 			path = new libui.UiDrawPath(uiDrawFillModeWinding);
@@ -142,18 +139,18 @@ var handler = {
 				0
 			);
 			path.end();
-			// use the same brush as for the histogram lines
+			// Use the same brush as for the histogram lines
 			p.getContext().fill(path, brush);
 			path.freePath();
 		}
 	},
 
-	MouseEvent: function handlerMouseEvent(area, e) {
-		var xs = [];
-		var ys = [];
-		var i;
+	MouseEvent(area, e) {
+		const xs = [];
+		const ys = [];
+		let i;
 
-		var graph = graphSize(e.getAreaWidth(), e.getAreaHeight());
+		const graph = graphSize(e.getAreaWidth(), e.getAreaHeight());
 		pointLocations(graph.width, graph.height, xs, ys);
 
 		for (i = 0; i < 10; i++) {
@@ -162,7 +159,8 @@ var handler = {
 			}
 		}
 
-		if (i === 10) {	// not in a point
+		if (i === 10) {
+			// Not in a point
 			i = -1;
 		}
 
@@ -171,27 +169,26 @@ var handler = {
 		redraw();
 	},
 
-	MouseCrossed: function () {},
-	DragBroken: function () {},
-	KeyEvent: function () {}
-
+	MouseCrossed() {},
+	DragBroken() {},
+	KeyEvent() {}
 };
 
-// helper to quickly set a brush color
+// Helper to quickly set a brush color
 function buildSolidBrush(color, alpha) {
-	var component;
+	let component;
 
-	component = (color >> 16) & 0xFF;
-	var R = component / 255;
-	component = (color >> 8) & 0xFF;
-	var G = component / 255;
-	component = color & 0xFF;
-	var B = component / 255;
-	var A = alpha;
+	component = (color >> 16) & 0xff;
+	const R = component / 255;
+	component = (color >> 8) & 0xff;
+	const G = component / 255;
+	component = color & 0xff;
+	const B = component / 255;
+	const A = alpha;
 
-	var uiDrawBrushTypeSolid = 0;
-	var brush = new libui.DrawBrush();
-	brush.color =	new libui.Color(R, G, B, A);
+	const uiDrawBrushTypeSolid = 0;
+	const brush = new libui.DrawBrush();
+	brush.color = new libui.Color(R, G, B, A);
 	brush.type = uiDrawBrushTypeSolid;
 
 	return brush;
@@ -201,10 +198,12 @@ function inPoint(x, y, xtest, ytest) {
 	// TO-DO switch to using a matrix
 	x -= xoffLeft;
 	y -= yoffTop;
-	return (x >= xtest - pointRadius) &&
-		(x <= xtest + pointRadius) &&
-		(y >= ytest - pointRadius) &&
-		(y <= ytest + pointRadius);
+	return (
+		x >= xtest - pointRadius &&
+		x <= xtest + pointRadius &&
+		y >= ytest - pointRadius &&
+		y <= ytest + pointRadius
+	);
 }
 
 function redraw() {
@@ -212,25 +211,21 @@ function redraw() {
 }
 
 function main() {
-	var hbox;
-	var vbox;
-	var i;
-
-	mainwin = new libui.UiWindow("libui Histogram Example", 640, 480, 1);
+	mainwin = new libui.UiWindow('libui Histogram Example', 640, 480, 1);
 	mainwin.margined = true;
-	mainwin.onClosing(function () {
+	mainwin.onClosing(() => {
 		libui.stopLoop();
 	});
 
-	hbox = new libui.UiHorizontalBox();
+	const hbox = new libui.UiHorizontalBox();
 	hbox.padded = true;
 	mainwin.setChild(hbox);
 
-	vbox = new libui.UiVerticalBox();
+	const vbox = new libui.UiVerticalBox();
 	vbox.padded = true;
 	hbox.append(vbox, 0);
 
-	for (i = 0; i < 10; i++) {
+	for (let i = 0; i < 10; i++) {
 		datapoints[i] = new libui.UiSpinbox(0, 100);
 		datapoints[i].value = Math.round(Math.random() * 100);
 		datapoints[i].onChanged(redraw);

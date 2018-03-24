@@ -1,13 +1,15 @@
-var libui = require('../../index');
+/* eslint-disable unicorn/filename-case */
 
-var win = new libui.UiWindow('UiCheckbox example', 320, 60, true);
+const libui = require('../..');
+
+const win = new libui.UiWindow('UiCheckbox example', 320, 60, true);
 win.margined = true;
 
-var widget = new libui.UiCheckbox();
+const widget = new libui.UiCheckbox();
 widget.text = 'sample text';
 win.setChild(widget);
 
-win.onClosing(function () {
+win.onClosing(() => {
 	win.close();
 	libui.Ui.quit();
 });
@@ -15,4 +17,3 @@ win.onClosing(function () {
 win.show();
 
 libui.Ui.main();
-

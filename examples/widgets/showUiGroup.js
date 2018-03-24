@@ -1,22 +1,24 @@
-var libui = require('../../index');
+/* eslint-disable unicorn/filename-case */
 
-var win = new libui.UiWindow('UiGroup example', 320, 60, true);
+const libui = require('../..');
+
+const win = new libui.UiWindow('UiGroup example', 320, 60, true);
 win.margined = true;
 
-var widget = new libui.UiVerticalBox();
+const widget = new libui.UiVerticalBox();
 widget.padded = true;
 widget.append(new libui.UiEntry(), false);
 widget.append(new libui.UiEntry(), false);
 widget.append(new libui.UiEntry(), false);
 
-var group = new libui.UiGroup();
+const group = new libui.UiGroup();
 group.margined = true;
 group.title = 'A group of entries';
 group.setChild(widget);
 
 win.setChild(group);
 
-win.onClosing(function () {
+win.onClosing(() => {
 	win.close();
 	libui.Ui.quit();
 });
@@ -24,4 +26,3 @@ win.onClosing(function () {
 win.show();
 
 libui.Ui.main();
-

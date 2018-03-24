@@ -1,45 +1,49 @@
-const libui = require("../index.js");
+'use strict';
+const libui = require('..');
+
 const globalMenus = [];
 
-function menu(template) {
-	for (const mnu of template) {
-		const mnuObj = new libui.UiMenu(mnu.label || "");
-		globalMenus.push(mnuObj);
+function buildMenu(mnu) {
+	const mnuObj = new libui.UiMenu(mnu.label || '');
+	globalMenus.push(mnuObj);
 
-		for (const subMnu of mnu.submenu || []) {
-			switch (subMnu.type) {
-				case "separator":
-					mnuObj.appendSeparator();
-					break;
-				case "checkbox":
-					mnuObj.appendCheckItem(subMnu.label || "");
-					break;
-				default:
-					if (subMnu.role) {
-						switch (subMnu.role) {
-							case "quit":
-								mnuObj.appendQuitItem();
-								break;
-							case "about":
-								mnuObj.appendAboutItem();
-								break;
-							case "preferences":
-								mnuObj.appendPreferencesItem();
-								break;
-							default:
-						}
-					} else {
-						const subMnuObj = mnuObj.appendItem(subMnu.label || "");
-						if (subMnu.click) {
-							subMnuObj.onClicked(subMnu.click);
-						}
-						if (subMnu.disabled) {
-							subMnuObj.disable();
-						}
+	for (const subMnu of mnu.submenu || []) {
+		switch (subMnu.type) {
+			case 'separator':
+				mnuObj.appendSeparator();
+				break;
+			case 'checkbox':
+				mnuObj.appendCheckItem(subMnu.label || '');
+				break;
+			default:
+				if (subMnu.role) {
+					switch (subMnu.role) {
+						case 'quit':
+							mnuObj.appendQuitItem();
+							break;
+						case 'about':
+							mnuObj.appendAboutItem();
+							break;
+						case 'preferences':
+							mnuObj.appendPreferencesItem();
+							break;
+						default:
 					}
-			}
+				} else {
+					const subMnuObj = mnuObj.appendItem(subMnu.label || '');
+					if (subMnu.click) {
+						subMnuObj.onClicked(subMnu.click);
+					}
+					if (subMnu.disabled) {
+						subMnuObj.disable();
+					}
+				}
 		}
 	}
+}
+
+function menu(template) {
+	template.forEach(buildMenu);
 }
 
 function appendAll(children, parent, stretchy = false) {
@@ -51,7 +55,7 @@ function appendAll(children, parent, stretchy = false) {
 	}
 }
 
-const EventHandler = Symbol("EventHandler");
+const EventHandler = Symbol('EventHandler');
 
 function mkControl(Class, defaults) {
 	const contructor = props => {
@@ -81,8 +85,6 @@ function mkControl(Class, defaults) {
 }
 
 const hBox = (props, ...children) => {
-// console.log("hBox");
-
 	const ctrl = mkControl(libui.UiHorizontalBox, {
 		padded: false,
 		enabled: true,
@@ -95,7 +97,6 @@ const hBox = (props, ...children) => {
 };
 
 const vBox = (props, ...children) => {
-// console.log("vBox");
 	const ctrl = mkControl(libui.UiVerticalBox, {
 		padded: false,
 		enabled: true,
@@ -129,40 +130,24 @@ function size(w, h) {
 
 function window(
 	{
-		title = "",
+		title = '',
 		width,
 		height,
 		margined = true,
 		hasMenubar = false,
-		position = point(0, 0),
-		contentSize = size(width, height),
-		centered = false,
 		fullscreen = false,
 		borderless = false,
-		onClosing = null,
-		onPositionChanged = null,
-		onContentSizeChanged = null
+		onClosing = null
 	},
 	...children
 ) {
-	// console.log('windows')
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.fullscreen = fullscreen;
 	win.borderless = borderless;
-	// win.contentSize = contentSize;
-	// win.position = position;
 
 	if (onClosing) {
 		win.onClosing(onClosing);
-	}
-
-	if (onPositionChanged) {
-		// win.onPositionChanged(onPositionChanged);
-	}
-
-	if (centered) {
-//		win.center();
 	}
 
 	win.setChild(wrapChildren(children));
@@ -172,7 +157,7 @@ function window(
 
 const group = (props, ...children) => {
 	const ctrl = mkControl(libui.UiGroup, {
-		title: "",
+		title: '',
 		margined: true,
 		enabled: true,
 		visible: true
@@ -186,7 +171,7 @@ const group = (props, ...children) => {
 const entry = mkControl(libui.UiEntry, {
 	readOnly: false,
 	enabled: true,
-	text: "",
+	text: '',
 	visible: true,
 	onChanged: EventHandler
 });
@@ -194,7 +179,7 @@ const entry = mkControl(libui.UiEntry, {
 const searchEntry = mkControl(libui.UiSearchEntry, {
 	readOnly: false,
 	enabled: true,
-	text: "",
+	text: '',
 	visible: true,
 	onChanged: EventHandler
 });
@@ -202,7 +187,7 @@ const searchEntry = mkControl(libui.UiSearchEntry, {
 const passwordEntry = mkControl(libui.UiPasswordEntry, {
 	readOnly: false,
 	enabled: true,
-	text: "",
+	text: '',
 	visible: true,
 	onChanged: EventHandler
 });
@@ -210,14 +195,14 @@ const passwordEntry = mkControl(libui.UiPasswordEntry, {
 const multilineEntry = mkControl(libui.UiMultilineEntry, {
 	readOnly: false,
 	enabled: true,
-	text: "",
+	text: '',
 	visible: true,
 	onChanged: EventHandler
 });
 
 const label = mkControl(libui.UiLabel, {
 	enabled: true,
-	text: "",
+	text: '',
 	visible: true
 });
 
@@ -244,7 +229,7 @@ const dateTimePicker = mkControl(libui.UiDateTimePicker, {
 const button = mkControl(libui.UiButton, {
 	enabled: true,
 	visible: true,
-	text: "",
+	text: '',
 	onClicked: EventHandler
 });
 
@@ -256,7 +241,7 @@ const colorButton = mkControl(libui.UiColorButton, {
 const checkBox = mkControl(libui.UiCheckbox, {
 	enabled: true,
 	visible: true,
-	text: "",
+	text: '',
 	checked: false,
 	onToggled: EventHandler
 });
@@ -315,7 +300,7 @@ const editableCombobox = (props, ...children) => {
 	const ctrl = mkControl(libui.UiEditableCombobox, {
 		enabled: true,
 		visible: true,
-		text: "",
+		text: '',
 		onChanged: EventHandler
 	})(props);
 
@@ -334,7 +319,7 @@ const tab = (props, ...children) => {
 	})(props);
 
 	for (const child of children) {
-		const title = child.props.tabTitle || "";
+		const title = child.props.tabTitle || '';
 		ctrl.append(title, child);
 	}
 
