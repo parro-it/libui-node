@@ -27,8 +27,8 @@ static void backgroundNodeEventsPoller(void* arg) {
     int timeout = uv_backend_timeout(uv_default_loop());
 
     /* wait for 1s by default */
-    if (timeout == 0) {
-      timeout = 1000;
+    if (timeout == 0 || timeout > 100) {
+      timeout = 100;
     }
 
     int pendingEvents = 1;
@@ -42,10 +42,11 @@ static void backgroundNodeEventsPoller(void* arg) {
       } while (pendingEvents == -1 && errno == EINTR);
     }
 
-    printf("guiBlocked && pendingEvents %s && %d\n",
-           guiBlocked ? "blocked" : "non blocked", pendingEvents);
+    // printf("guiBlocked && pendingEvents %s && %d\n",
+    // guiBlocked ? "blocked" : "non blocked", pendingEvents);
+
     if (guiBlocked && pendingEvents > 0) {
-      printf("------ wake up neo\n");
+      // printf("------ wake up neo\n");
       uiLoopWakeup();
 
       // give main thread some time to react
@@ -72,18 +73,18 @@ void redraw(uv_timer_t* handle) {
   Nan::HandleScope scope;
 
   /* Blocking call that wait for a node or GUI event pending */
-  printf("blocking GUI\n");
+  // printf("blocking GUI\n");
   guiBlocked = true;
   uiMainStep(true);
   guiBlocked = false;
-  printf("unblocking GUI\n");
+  // printf("unblocking GUI\n");
 
   /* dequeue and run every event pending */
   while (uiEventsPending()) {
     running = uiMainStep(false);
   }
 
-  printf("rescheduling\n");
+  // printf("rescheduling\n");
 
   // schedule another call to redraw as soon as possible
   // how to find a correct amount of time to scheduke next call?
