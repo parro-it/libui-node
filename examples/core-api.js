@@ -14,14 +14,14 @@ hBox.append(lblCiao, false);
 hBox.append(e1, false);
 var idxLbl = 0;
 
-var interval = setInterval(function() {
+var interval = setInterval(() => {
 	lblCiao.text = String(idxLbl++);
 }, 1000);
 
 // Create an HTTP tunneling proxy
 const proxy = http.createServer((req, res) => {
 	lblCiao.text = String(idxLbl++);
-	res.writeHead(200, { "Content-Type": "text/plain" });
+	res.writeHead(200, {"Content-Type": "text/plain"});
 	res.end(String(idxLbl));
 });
 proxy.listen(3000, "127.0.0.1", () => {
