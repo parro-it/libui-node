@@ -1,16 +1,18 @@
-var libui = require('../../index');
+/* eslint-disable unicorn/filename-case */
 
-var win = new libui.UiWindow('UiVerticalSeparator example', 320, 60, true);
+const libui = require('../..');
+
+const win = new libui.UiWindow('UiVerticalSeparator example', 320, 60, true);
 win.margined = true;
 
-var widget = new libui.UiHorizontalBox();
+const widget = new libui.UiHorizontalBox();
 widget.padded = true;
-widget.append(new libui.UiMultilineEntry(), false);
+widget.append(new libui.UiMultilineEntry(), true);
 widget.append(new libui.UiVerticalSeparator(), false);
-widget.append(new libui.UiMultilineEntry(), false);
+widget.append(new libui.UiMultilineEntry(), true);
 win.setChild(widget);
 
-win.onClosing(function () {
+win.onClosing(() => {
 	win.close();
 	libui.Ui.quit();
 });
@@ -18,4 +20,3 @@ win.onClosing(function () {
 win.show();
 
 libui.Ui.main();
-

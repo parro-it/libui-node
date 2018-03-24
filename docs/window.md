@@ -95,7 +95,7 @@ Close the window.
 
 ## setChild
 
-Allow to specify the control to show in window content area. UiWindow instances could contains only one control. If you need more, you have to use [Containers](containers.md).
+Allow to specify the control to show in window content area. UiWindow instances can contain only one control. If you need more, you have to use [Containers](containers.md).
 
 ### Arguments
 

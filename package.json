@@ -40,10 +40,10 @@
 		"autogypi.json"
 	],
 	"devDependencies": {
-		"ava": "^0.14.0",
+		"ava": "^0.25.0",
 		"humanize": "0.0.9",
 		"proc-stats": "0.0.4",
-		"xo": "^0.14.0"
+		"xo": "^0.20.3"
 	},
 	"dependencies": {
 		"autogypi": "^0.2.2",

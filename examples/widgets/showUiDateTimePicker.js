@@ -1,13 +1,15 @@
-var libui = require('../../index');
+/* eslint-disable unicorn/filename-case */
 
-var win = new libui.UiWindow('UiDateTimePicker example', 320, 60, true);
+const libui = require('../..');
+
+const win = new libui.UiWindow('UiDateTimePicker example', 320, 60, true);
 win.margined = true;
 
-var widget = new libui.UiDateTimePicker();
+const widget = new libui.UiDateTimePicker();
 widget.text = 'sample text';
 win.setChild(widget);
 
-win.onClosing(function () {
+win.onClosing(() => {
 	win.close();
 	libui.Ui.quit();
 });

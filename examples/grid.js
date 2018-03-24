@@ -1,15 +1,16 @@
-var libui = require('../index.js');
+'use strict';
+const libui = require('..');
 
-var win = new libui.UiWindow('Forms window', 800, 600, false);
+const win = new libui.UiWindow('Forms window', 800, 600, false);
 win.margined = 1;
-win.onClosing(function () {
+win.onClosing(() => {
 	libui.stopLoop();
 });
 
-var name = new libui.UiEntry();
-var surname = new libui.UiEntry();
-var age = new libui.UiSlider(0, 100);
-var JSONData = new libui.UiMultilineEntry();
+const name = new libui.UiEntry();
+const surname = new libui.UiEntry();
+const age = new libui.UiSlider(0, 100);
+const JSONData = new libui.UiMultilineEntry();
 
 name.onChanged(setJSON);
 surname.onChanged(setJSON);
@@ -19,7 +20,7 @@ name.text = 'Andrea';
 surname.text = 'Parodi';
 age.value = 40;
 
-var grid = new libui.UiGrid();
+const grid = new libui.UiGrid();
 grid.padded = true;
 grid.append(new libui.UiLabel('name'), 0, 0, 2, 1, 0, 0, 0, 1);
 grid.append(new libui.UiLabel('surname'), 0, 1, 2, 1, 0, 0, 0, 1);
@@ -36,11 +37,10 @@ win.show();
 libui.startLoop();
 
 function setJSON() {
-	var data = {
+	const data = {
 		name: name.text,
 		surname: surname.text,
 		age: age.value
 	};
 	JSONData.text = JSON.stringify(data, null, 4);
 }
-

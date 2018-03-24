@@ -1,9 +1,11 @@
-var libui = require('../../index');
+/* eslint-disable unicorn/filename-case */
 
-var win = new libui.UiWindow('UiEditableCombobox example', 320, 60, true);
+const libui = require('../..');
+
+const win = new libui.UiWindow('UiEditableCombobox example', 320, 60, true);
 win.margined = true;
 
-var widget = new libui.UiEditableCombobox();
+const widget = new libui.UiEditableCombobox();
 
 widget.append('Item1');
 widget.append('Item2');
@@ -11,7 +13,7 @@ widget.append('Item3');
 
 win.setChild(widget);
 
-win.onClosing(function () {
+win.onClosing(() => {
 	win.close();
 	libui.Ui.quit();
 });
@@ -19,4 +21,3 @@ win.onClosing(function () {
 win.show();
 
 libui.Ui.main();
-

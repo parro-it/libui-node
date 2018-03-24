@@ -1,6 +1,7 @@
-var os = require("os");
+'use strict';
+const os = require('os');
 
-const libui = require("../index.js");
+const libui = require('..');
 
 const {
 	size,
@@ -27,9 +28,8 @@ const {
 	editableCombobox,
 	radioButtons,
 	tab,
-	menu /* ,
-	multilineEntry*/
-} = require("./utils.js");
+	menu
+} = require('./utils.js');
 
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -38,7 +38,7 @@ nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
 reprehenderit
 `;
 
-let win;
+let win = null;
 let spin;
 let slide;
 let progress;
@@ -69,29 +69,29 @@ const updateValue = value => {
 };
 
 const changeTitle = () => {
-	win.title = "Title changed";
+	win.title = 'Title changed';
 	colorBtn.color = colors.red;
 };
 
 const areaHandler = {
 	drawCb() {
-		console.log("drawCb");
+		console.log('drawCb');
 	},
 
 	mouseEventCb() {
-		console.log("mouseEventCb");
+		console.log('mouseEventCb');
 	},
 
 	mouseCrossedCb() {
-		console.log("mouseCrossedCb");
+		console.log('mouseCrossedCb');
 	},
 
 	dragBrokenCb() {
-		console.log("dragBrokenCb");
+		console.log('dragBrokenCb');
 	},
 
 	keyEventCb() {
-		console.log("keyEventCb");
+		console.log('keyEventCb');
 	}
 };
 
@@ -106,97 +106,97 @@ const area = new libui.UiArea(
 );
 
 area.props = {
-	tabTitle: "Area",
+	tabTitle: 'Area',
 	stretchy: true
 };
 
 menu([
 	{
-		label: "File",
+		label: 'File',
 		submenu: [
 			{
-				label: "Open",
+				label: 'Open',
 				click: () => {
 					const filename = libui.UiDialogs.openFile(win);
 					if (filename) {
-						libui.UiDialogs.msgBox(win, "File selected", filename);
+						libui.UiDialogs.msgBox(win, 'File selected', filename);
 					} else {
 						libui.UiDialogs.msgBox(
 							win,
-							"No file selected",
-							"Don't be alarmed!"
+							'No file selected',
+							`Don't be alarmed!`
 						);
 					}
 				}
 			},
 			{
-				label: "Save",
+				label: 'Save',
 				click: () => {
 					const filename = libui.UiDialogs.saveFile(win);
 					if (filename) {
-						libui.UiDialogs.msgBox(win, "File selected", filename);
+						libui.UiDialogs.msgBox(win, 'File selected', filename);
 					} else {
 						libui.UiDialogs.msgBox(
 							win,
-							"No file selected",
-							"Don't be alarmed!"
+							'No file selected',
+							`Don't be alarmed!`
 						);
 					}
 				}
 			},
 			{
-				role: "quit"
+				role: 'quit'
 			}
 		]
 	},
 	{
-		label: "Edit",
+		label: 'Edit',
 		submenu: [
 			{
-				label: "Checkable Item",
-				type: "checkbox"
+				label: 'Checkable Item',
+				type: 'checkbox'
 			},
 			{
-				type: "separator"
+				type: 'separator'
 			},
 			{
-				label: "Disabled Item",
+				label: 'Disabled Item',
 				disabled: true
 			},
 			{
-				role: "preferences"
+				role: 'preferences'
 			}
 		]
 	},
 	{
-		label: "Help",
+		label: 'Help',
 		submenu: [
 			{
-				label: "Help",
+				label: 'Help',
 				click: () => {}
 			},
 			{
-				role: "about"
+				role: 'about'
 			}
 		]
 	},
 	{
-		label: "Window",
+		label: 'Window',
 		submenu: [
 			{
-				label: "Full screen",
+				label: 'Full screen',
 				click: () => {
 					win.fullscreen = !win.fullscreen;
 				}
 			},
 			{
-				label: "Borderless",
+				label: 'Borderless',
 				click: () => {
 					win.borderless = !win.borderless;
 				}
 			},
 			{
-				label: "Reset size",
+				label: 'Reset size',
 				click: () => {
 					win.contentSize = size(800, 600);
 				}
@@ -207,28 +207,29 @@ menu([
 
 const winProps = {
 	hasMenubar: true,
-	title: "Control Gallery",
+	title: 'Control Gallery',
 	width: 640,
 	height: 480,
 	onClosing,
 	onContentSizeChanged: onPositionChanged
 };
 
+const onDarwin = os.platform() === 'darwin';
+const searchText = {text: 'Search Entry'};
+
 win = window(
 	winProps,
 	hBox(
 		{padded: true},
 		group(
-			{margined: true, title: "Basic Controls"},
-			button({text: "Button", onClicked: changeTitle}),
+			{margined: true, title: 'Basic Controls'},
+			button({text: 'Button', onClicked: changeTitle}),
 			(colorBtn = colorButton({})),
-			checkBox({text: "Checkbox"}),
-			entry({text: "Entry"}),
-			os.platform() === "darwin" ?
-				entry({text: "Search Entry"}) :
-				searchEntry({text: "Search Entry"}),
-			passwordEntry({text: "Password Entry"}),
-			label({text: "Label"}),
+			checkBox({text: 'Checkbox'}),
+			entry({text: 'Entry'}),
+			onDarwin ? entry(searchText) : searchEntry(searchText),
+			passwordEntry({text: 'Password Entry'}),
+			label({text: 'Label'}),
 			separator({}),
 			datePicker({}),
 			dateTimePicker({}),
@@ -238,37 +239,47 @@ win = window(
 		vBox(
 			{padded: true},
 			group(
-				{margined: true, title: "Numbers"},
+				{margined: true, title: 'Numbers'},
 				(spin = spinbox({onChanged: () => updateValue(spin.value)})),
 				(slide = slider({onChanged: () => updateValue(slide.value)})),
 				(progress = progressBar({}))
 			),
 
 			group(
-				{margined: true, title: "Lists", stretchy: true},
-				combobox({}, "Combobox Item 1", "Combobox Item 2", "Combobox Item 3"),
+				{margined: true, title: 'Lists', stretchy: true},
+				combobox(
+					{},
+					'Combobox Item 1',
+					'Combobox Item 2',
+					'Combobox Item 3'
+				),
 				editableCombobox(
 					{},
-					"Editable Item 1",
-					"Editable Item 2",
-					"Editable Item 3"
+					'Editable Item 1',
+					'Editable Item 2',
+					'Editable Item 3'
 				),
-				radioButtons({}, "Radio Button 1", "Radio Button 2", "Radio Button 3"),
+				radioButtons(
+					{},
+					'Radio Button 1',
+					'Radio Button 2',
+					'Radio Button 3'
+				),
 				tab(
 					{stretchy: true},
 					entry({
 						text: lorem.slice(5),
-						tabTitle: "Page 1",
+						tabTitle: 'Page 1',
 						stretchy: true
 					}),
 					entry({
 						text: lorem.slice(10),
-						tabTitle: "Page 2",
+						tabTitle: 'Page 2',
 						stretchy: true
 					}),
 					entry({
 						text: lorem.slice(20),
-						tabTitle: "Page 3",
+						tabTitle: 'Page 3',
 						stretchy: true
 					}),
 					area
@@ -276,7 +287,7 @@ win = window(
 			)
 		)
 	),
-	(status = label({stretchy: true, text: "(0, 0)"}))
+	(status = label({stretchy: true, text: '(0, 0)'}))
 );
 
 win.show();

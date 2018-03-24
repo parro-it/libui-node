@@ -1,13 +1,8 @@
+'use strict';
 const {readFile, writeFile} = require('fs');
-const libui = require('../index.js');
+const libui = require('..');
 
-const {
-	label,
-	window,
-	tab,
-	menu,
-	multilineEntry
-} = require('./utils.js');
+const {label, window, tab, menu, multilineEntry} = require('./utils.js');
 
 const onClosing = () => libui.stopLoop();
 
@@ -23,7 +18,7 @@ const winProps = {
 	onClosing
 };
 
-let win;
+let win = null;
 let editor;
 let status;
 let currentFileName = '';
@@ -36,9 +31,13 @@ function newFile() {
 function openFile() {
 	const filename = libui.UiDialogs.openFile(win);
 	if (filename) {
-		readFile(filename, 'utf8', function (err, content) {
+		readFile(filename, 'utf8', (err, content) => {
 			if (err) {
-				return libui.UiDialogs.msgBoxError(win, 'Error while reading file', err.stack);
+				return libui.UiDialogs.msgBoxError(
+					win,
+					'Error while reading file',
+					err.stack
+				);
 			}
 			editor.text = content;
 			status.text = `Open ${filename}`;
@@ -50,9 +49,13 @@ function openFile() {
 function saveFileAs() {
 	const filename = libui.UiDialogs.saveFile(win);
 	if (filename) {
-		writeFile(currentFileName, editor.text, function (err) {
+		writeFile(currentFileName, editor.text, err => {
 			if (err) {
-				return libui.UiDialogs.msgBoxError(win, 'Error while writing file', err.stack);
+				return libui.UiDialogs.msgBoxError(
+					win,
+					'Error while writing file',
+					err.stack
+				);
 			}
 			currentFileName = filename;
 		});
@@ -64,67 +67,85 @@ function saveFile() {
 		return saveFileAs();
 	}
 
-	writeFile(currentFileName, editor.text, function (err) {
+	writeFile(currentFileName, editor.text, err => {
 		if (err) {
-			return libui.UiDialogs.msgBoxError(win, 'Error while writing file', err.stack);
+			return libui.UiDialogs.msgBoxError(
+				win,
+				'Error while writing file',
+				err.stack
+			);
 		}
 	});
 }
 
-menu([{
-	label: 'File',
-	submenu: [
-		{
-			label: 'New file',
-			click: newFile
-		}, {
-			label: 'Open',
-			click: openFile
-		}, {
-			label: 'Close current tab',
-			click: () => {}
-		}, {
-			label: 'Save',
-			click: saveFile
-		}, {
-			label: 'Save as',
-			click: saveFileAs
-		}, {
-			role: 'quit'
-		}
-	]
-}, {
-	label: 'Edit',
-	submenu: [
-		{
-			label: 'Copy'
-		}, {
-			label: 'Paste'
-		}, {
-			label: 'Cut'
-		}, {
-			label: 'Select all'
-		}
-	]
-}, {
-	label: 'Help',
-	submenu: [
-		{
-			label: 'Help',
-			click: () => {}
-		}, {
-			role: 'about'
-		}
-	]
-}]);
+menu([
+	{
+		label: 'File',
+		submenu: [
+			{
+				label: 'New file',
+				click: newFile
+			},
+			{
+				label: 'Open',
+				click: openFile
+			},
+			{
+				label: 'Close current tab',
+				click: () => {}
+			},
+			{
+				label: 'Save',
+				click: saveFile
+			},
+			{
+				label: 'Save as',
+				click: saveFileAs
+			},
+			{
+				role: 'quit'
+			}
+		]
+	},
+	{
+		label: 'Edit',
+		submenu: [
+			{
+				label: 'Copy'
+			},
+			{
+				label: 'Paste'
+			},
+			{
+				label: 'Cut'
+			},
+			{
+				label: 'Select all'
+			}
+		]
+	},
+	{
+		label: 'Help',
+		submenu: [
+			{
+				label: 'Help',
+				click: () => {}
+			},
+			{
+				role: 'about'
+			}
+		]
+	}
+]);
 
-win = window(winProps,
-	tab({stretchy: true},
-		editor = multilineEntry({stretchy: true, tabTitle: 'New file'})
+win = window(
+	winProps,
+	tab(
+		{stretchy: true},
+		(editor = multilineEntry({stretchy: true, tabTitle: 'New file'}))
 	),
-	status = label({stretchy: false, text: 'File not changed'})
+	(status = label({stretchy: false, text: 'File not changed'}))
 );
 
 win.show();
 libui.startLoop();
-
