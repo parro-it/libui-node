@@ -5,6 +5,8 @@ int uiLoopWakeup() {
   DEBUG("uiLoopWakeup\n");
   g_main_context_wakeup(NULL);
   DEBUG("uiLoopWakeup exit\n");
+  // give main thread some time to react
+  usleep(50 * 1000);
   return 0;
 }
 

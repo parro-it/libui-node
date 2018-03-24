@@ -1,3 +1,6 @@
+#include "../../includes/event-loop-windows.h"
+#include "../../includes/event-loop.h"
+
 #include <Windows.h>
 #include <stdio.h>
 #include "../../../ui.h"
@@ -52,6 +55,8 @@ void noop(void* data) {}
 
 int uiLoopWakeup() {
   uiQueueMain(noop, NULL);
+  // give main thread some time to react
+  usleep(50 * 1000);
   return 0;
 }
 
@@ -68,11 +73,11 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   int ret =
       GetQueuedCompletionStatus(loop->iocp, &bytes, &key, &overlapped, timeout);
   /*
-  // Does we need to requeue the queued completions? 
+  // Does we need to requeue the queued completions?
   if (ret != 0 && overlapped != NULL) {
       printf("node event!\n");
       PostQueuedCompletionStatus(loop->iocp, bytes, key, overlapped);
   }
-  */ 
+  */
   return ret;
 }

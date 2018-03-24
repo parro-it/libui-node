@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <poll.h>
 #include <sys/epoll.h>
+#include <unistd.h>
 #include <uv.h>
 
 /*

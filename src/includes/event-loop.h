@@ -1,7 +1,6 @@
 #ifndef ui_node_event_loop
 #define ui_node_event_loop 1
 
-#include <unistd.h>
 #include <uv.h>
 #include <atomic>
 #include "../../ui.h"

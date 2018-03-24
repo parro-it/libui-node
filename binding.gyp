@@ -57,6 +57,7 @@
 				["OS=='win'", {
 					"sources": [
 						"src/arch/win32/libui_loop.cc"
+						"src/arch/win32/usleep.cc"
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.lib"

@@ -40,9 +40,6 @@ static void backgroundNodeEventsPoller(void* arg) {
     if (guiBlocked && pendingEvents > 0) {
       DEBUG("------ wake up main thread\n");
       uiLoopWakeup();
-
-      // give main thread some time to react
-      usleep(50 * 1000);
     }
   }
 }
