@@ -141,6 +141,8 @@ struct EventLoop {
     if (!running) {
       return;
     }
+    
+    running = false;
 
     uv_timer_t* closeTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), closeTimer);
