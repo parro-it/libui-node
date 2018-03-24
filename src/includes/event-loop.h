@@ -1,11 +1,21 @@
-#ifndef ui_node_evetn_loop
-#define ui_node_evetn_loop 1
+#ifndef ui_node_event_loop
+#define ui_node_event_loop 1
 
 #include <unistd.h>
 #include <uv.h>
 #include <atomic>
 #include "../../ui.h"
 #include "nbind/nbind.h"
+
+#define UI_NODE_DEBUG 1
+
+#ifdef UI_NODE_DEBUG
+#define DEBUG(msg) fprintf(stderr, msg)
+#define DEBUG_F(msg, ...) fprintf(stderr, msg, __VA_ARGS__)
+#else
+#define DEBUG(msg) ;
+#define DEBUG_F(msg, ...) ;
+#endif
 
 int uiEventsPending();
 int uiLoopWakeup();

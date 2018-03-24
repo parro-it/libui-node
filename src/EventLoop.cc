@@ -27,18 +27,18 @@ static void backgroundNodeEventsPoller(void* arg) {
 
     if (timeout != -1) {
       do {
-        // printf("entering waitForNodeEvents with timeout %d\n", timeout);
+        DEBUG_F("entering waitForNodeEvents with timeout %d\n", timeout);
         /* wait for pending events*/
         pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
-        // printf("exit waitForNodeEvents\n");
+        DEBUG("exit waitForNodeEvents\n");
       } while (pendingEvents == -1 && errno == EINTR);
     }
 
-    // printf("guiBlocked && pendingEvents %s && %d\n",
-    // guiBlocked ? "blocked" : "non blocked", pendingEvents);
+    DEBUG_F("guiBlocked && pendingEvents %s && %d\n",
+            guiBlocked ? "blocked" : "non blocked", pendingEvents);
 
     if (guiBlocked && pendingEvents > 0) {
-      // printf("------ wake up neo\n");
+      DEBUG("------ wake up main thread\n");
       uiLoopWakeup();
 
       // give main thread some time to react
@@ -65,18 +65,18 @@ void redraw(uv_timer_t* handle) {
   Nan::HandleScope scope;
 
   /* Blocking call that wait for a node or GUI event pending */
-  // printf("blocking GUI\n");
+  DEBUG("blocking GUI\n");
   guiBlocked = true;
   uiMainStep(true);
   guiBlocked = false;
-  // printf("unblocking GUI\n");
+  DEBUG("unblocking GUI\n");
 
   /* dequeue and run every event pending */
   while (uiEventsPending()) {
     running = uiMainStep(false);
   }
 
-  // printf("rescheduling\n");
+  DEBUG("rescheduling next redraw\n");
 
   // schedule another call to redraw as soon as possible
   // how to find a correct amount of time to scheduke next call?
@@ -87,7 +87,7 @@ void redraw(uv_timer_t* handle) {
 
 /* This function start the event loop and exit immediately */
 void stopAsync(uv_timer_t* handle) {
-  // printf("stopAsync\n");
+  DEBUG("stopAsync\n");
 
   /* if the loop is already running, this is a noop */
   if (!running) {
@@ -98,16 +98,16 @@ void stopAsync(uv_timer_t* handle) {
   /* stop redraw handler */
   uv_timer_stop(redrawTimer);
   uv_close((uv_handle_t*)redrawTimer, NULL);
-  // printf("redrawTimer\n");
+  DEBUG("redrawTimer\n");
 
   uv_timer_stop(handle);
   uv_close((uv_handle_t*)handle, NULL);
-  // printf("handle\n");
+  DEBUG("handle\n");
 
   /* await for the background thread to finish */
-  // printf("11\n");
+  DEBUG("uv_thread_join\n");
   uv_thread_join(thread);
-  // printf("22\n");
+
   /*
     delete handle;
     delete redrawTimer;
@@ -130,19 +130,19 @@ struct EventLoop {
 
     /* init libui event loop */
     uiMainSteps();
-    // // printf("uiMainSteps...\n");
+    DEBUG("uiMainSteps...\n");
 
     /* start the background thread that check for node evnts pending */
     thread = new uv_thread_t();
     uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
-    // // printf("thread...\n");
+    DEBUG("thread...\n");
 
     /* start redraw timer */
     redrawTimer = new uv_timer_t();
     uv_timer_init(uv_default_loop(), redrawTimer);
     redraw(redrawTimer);
 
-    // // printf("redrawTimer...\n");
+    DEBUG("redrawTimer...\n");
   }
 
   /* This function start the event loop and exit immediately */

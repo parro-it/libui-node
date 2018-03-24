@@ -1,21 +1,22 @@
 #include "../../includes/event-loop-linux.h"
+#include "../../includes/event-loop.h"
 
 int uiLoopWakeup() {
-  // printf("uiLoopWakeup\n");
+  DEBUG("uiLoopWakeup\n");
   g_main_context_wakeup(NULL);
-  // printf("uiLoopWakeup exit\n");
+  DEBUG("uiLoopWakeup exit\n");
   return 0;
 }
 
 int uiEventsPending() {
-  // printf("uiEventsPending\n");
+  DEBUG("uiEventsPending\n");
   return gtk_events_pending();
 }
 
 int waitForNodeEvents(uv_loop_t* loop, int timeout) {
-  // printf("uv_backend_fd\n");
+  DEBUG("uv_backend_fd\n");
   int nodeBackendFd = uv_backend_fd(loop);
-  // printf("uv_backend_fd %d\n", nodeBackendFd);
+  DEBUG_F("uv_backend_fd %d\n", nodeBackendFd);
 
   if (nodeBackendFd == -1) {
     fprintf(stderr, "Invalid node backend fd.\n");
@@ -23,14 +24,15 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
   }
 
   struct epoll_event ev;
-  // printf("epoll_wait\n");
+  DEBUG("epoll_wait\n");
 
   int ret = epoll_wait(nodeBackendFd, &ev, 1, timeout);
-  struct heap_node* node = ((struct heap*)&loop->timer_heap)->min;
-  if (node != NULL) {
+  struct heap* timer_heap = (struct heap*)&loop->timer_heap;
+  struct heap_node* timer_node = timer_heap->min;
+  if (timer_node != NULL) {
     return 1;
   }
 
-  // printf("epoll_wait %d\n", ret);
+  DEBUG_F("epoll_wait %d\n", ret);
   return ret;
 }
