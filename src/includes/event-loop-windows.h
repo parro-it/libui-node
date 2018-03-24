@@ -3,11 +3,9 @@
 
 void usleep(__int64 usec);
 
-#include <Windows.h>
 #include <stdio.h>
-#include "../../../ui.h"
 
-typedef struct _internal_uv_loop_s {
+struct _internal_uv_loop_s {
   /* User data - use this for whatever. */
   void* data;
   /* Loop reference counting. */
@@ -17,7 +15,7 @@ typedef struct _internal_uv_loop_s {
   /* Internal flag to signal loop stop. */
   unsigned int stop_flag;
   /* The loop's I/O completion port */
-  HANDLE iocp;
+  void * iocp;
   /* The current time according to the event loop. in msecs.
   //  uint64_t tim
   // Tail of a single-linked circular queue of pending reqs. If the queue

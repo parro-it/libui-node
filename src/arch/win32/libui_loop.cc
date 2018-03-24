@@ -40,5 +40,10 @@ int waitForNodeEvents(uv_loop_t* loop, int timeout) {
     PostQueuedCompletionStatus(_loop->iocp, bytes, key, overlapped);
   }
 
+  if (loop->timers.rbh_root != NULL) {
+    return 1;
+  }
+  
+
   return ret;
 }
