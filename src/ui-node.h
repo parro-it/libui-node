@@ -635,73 +635,159 @@ class UiDrawPath {
   void end();
 };
 
-class DrawTextFontMetrics {
- private:
-  uiDrawTextFontMetrics* m;
 
- public:
-  DrawTextFontMetrics(uiDrawTextFontMetrics* metrics);
-  double getAscent();
-  double getDescent();
-  double getLeading();
-  double getUnderlinePos();
-  double getUnderlineThickness();
+//TODO how to expose to js?
+enum class UiAttributeType {
+  Family = uiAttributeTypeFamily,
+  Size = uiAttributeTypeSize,
+  Weight = uiAttributeTypeWeight,
+  Italic = uiAttributeTypeItalic,
+  Stretch = uiAttributeTypeStretch,
+  Color = uiAttributeTypeColor,
+  Background = uiAttributeTypeBackground,
+  Underline = uiAttributeTypeUnderline,
+  UnderlineColor = uiAttributeTypeUnderlineColor,
+  Features = uiAttributeTypeFeatures
 };
 
-class DrawTextFontDescriptor {
- private:
-  uiDrawTextFontDescriptor* d;
-
- public:
-  DrawTextFontDescriptor(uiDrawTextFontDescriptor* descr);
-  const char* getFamily();
-  double getSize();
-  int getWeight();
-  int getItalic();
-  int getStretch();
+enum class UiTextWeight {
+  Minimum,
+  Thin,
+  UltraLight,
+  Light,
+  Book,
+  Normal,
+  Medium,
+  SemiBold,
+  Bold,
+  UltraBold,
+  Heavy,
+  UltraHeavy,
+  Maximum
 };
 
-class DrawTextFont {
- private:
-  uiDrawTextFont* handle;
-
- public:
-  DrawTextFont();
-  DrawTextFont(uiDrawTextFont* h);
-
-  uiDrawTextFont* getHandle();
-  void free();
-  DrawTextFontDescriptor* describe();
-  DrawTextFontMetrics* getMetrics();
-
-  static std::vector<char*> listFontFamilies();
-  void loadClosestFont(const char* family, double size, int weight, int italic,
-                       int stretch);
+enum class UiTextItalic {
+  Normal,
+  Oblique,
+  Italic
 };
+
+enum class UiTextStretch {
+  UltraCondensed,
+  ExtraCondensed,
+  Condensed,
+  SemiCondensed,
+  Normal,
+  SemiExpanded,
+  Expanded,
+  ExtraExpanded,
+  UltraExpanded
+};
+
+enum class UiTextUnderline {
+  None,
+  Single,
+  Double,
+  Suggestion
+};
+
+enum class UiTextUnderlineColor {
+  Custom,
+  Spelling,
+  Grammar,
+  Auxiliary
+};
+
+class UiFontAttribute {
+  private:
+    uiAttribute* a;
+
+  public:
+    UiFontAttribute() = delete;
+
+    UiAttributeType getAttributeType(UiFontAttribute*);
+
+    //TODO need to actually be of that type
+    const char *uiAttributeFamily();
+    double uiAttributeSize();
+    uiTextWeight uiAttributeWeight();
+    uiTextItalic uiAttributeItalic();
+    uiTextStretch uiAttributeStretch();
+    void uiAttributeColor(double *r, double *g, double *b, double *alpha);
+    uiUnderline uiAttributeUnderline();
+    void uiAttributeUnderlineColor(UiTextUnderlineColor *u, double *r, double *g, double *b, double *alpha);
+
+    static UiFontAttribute *newFamilyAttribute(const char *family);
+    static UiFontAttribute *newSizeAttribute(double size);
+    static UiFontAttribute *uiNewWeightAttribute(UiTextWeight weight);
+    static UiFontAttribute *newItalicAttribute(UiTextItalic italic);
+    static UiFontAttribute *newStretchAttribute(UiTextStretch stretch);
+    static UiFontAttribute *newColorAttribute(double r, double g, double b, double a);
+    static UiFontAttribute *newBackgroundAttribute(double r, double g, double b, double a);
+    static UiFontAttribute *newUnderlineAttribute(UiTextUnderline u);
+    static UiFontAttribute *newUnderlineColorAttribute(UiTextUnderlineColor u, double r, double g, double b, double a);
+};
+
+
+class UiAttributedString {
+  private:
+    uiAttributedString* s;
+  public:
+    UiAttributedString(const char *str);
+    void free();
+    const char * toString();
+    size_t toStringLen();
+
+    void appendUnattributed(const char *str);
+    void insertUnattributed(const char *str, size_t at);
+    void deleteString(size_t start, size_t end);
+    void setAttribute(uiAttribute *a, size_t start, size_t end);
+    // void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data);
+
+    size_t numGraphemes();
+    size_t byteIndexToGrapheme(size_t pos);
+    size_t graphemeToByteIndex(size_t pos);
+
+};
+
+class UiFontDescriptor {
+  private:
+    uiFontDescriptor *d;
+  public:
+    UiFontDescriptor(char *family, double size, UiTextWeight weight, UiTextItalic italic, UiTextStretch stretch);
+
+};
+
+//TODO with or without "Draw"?
+enum class UiDrawTextAlign {
+  Left = uiDrawTextAlignLeft,
+  Center = uiDrawTextAlignCenter,
+  Right = uiDrawTextAlignRight
+};
+
+
 
 class UiFontButton : public UiControl {
   DEFINE_EVENT(onChanged)
 
  public:
   UiFontButton();
-  DrawTextFont* getFont();
+  UiFontDescriptor* getFont();
   DEFINE_CONTROL_METHODS()
 };
+
 
 class DrawTextLayout {
  private:
   uiDrawTextLayout* handle;
-  double w;
 
  public:
-  DrawTextLayout(const char* text, DrawTextFont* defaultFont, double width);
+  DrawTextLayout(uiAttributedString *s, uiFontDescriptor *defaultFont, double width, uiDrawTextAlign align);
   void free();
-  void setWidth(double value);
-  double getWidth();
   SizeDouble getExtents();
   uiDrawTextLayout* getHandle();
-  void setColor(int startChar, int endChar, Color color);
 };
+
 
 class UiDrawContext {
  private:
@@ -715,7 +801,7 @@ class UiDrawContext {
   void clip(UiDrawPath* path);
   void save();
   void restore();
-  void text(double x, double y, DrawTextLayout* layout);
+  void text(double x, double y, uiDrawTextLayout* layout);
 };
 
 class UiAreaDrawParams {
