@@ -33,7 +33,7 @@ void UiOpenTypeFeatures::remove(const char *c) {
 // uiOpenTypeFeaturesGet() determines whether the given feature
 // tag is present in otf. If it is, *value is set to the tag's value and
 // nonzero is returned. Otherwise, zero is returned.
-// 
+//
 // Note that if uiOpenTypeFeaturesGet() returns zero, value isn't
 // changed. This is important: if a feature is not present in a
 // uiOpenTypeFeatures, the feature is NOT treated as if its
@@ -48,15 +48,14 @@ int UiOpenTypeFeatures::get(const char *c, uint32_t *value) {
 
 static unsigned int UiOpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *data) {
 	const char str[4] = {a, b, c, d};
-
-	return ((cb_data*)data)->cb.call<unsigned int>(
+	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+	return cb->call<unsigned int>(
 		UiOpenTypeFeatures((uiOpenTypeFeatures*)otf),
-		str, value, ((cb_data*)data)->data);
+		str, value, NULL);
 }
 
-void UiOpenTypeFeatures::forEach(nbind::cbFunction& cb, void *data) {
-	cb_data d = {cb, data};
-	uiOpenTypeFeaturesForEach(f, UiOpenTypeFeatures__forEach, &d);
+void UiOpenTypeFeatures::forEach(nbind::cbFunction& cb) {
+	uiOpenTypeFeaturesForEach(f, UiOpenTypeFeatures__forEach, &cb);
 }
 
 NBIND_CLASS(UiOpenTypeFeatures) {

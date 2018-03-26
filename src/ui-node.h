@@ -108,11 +108,6 @@
   method(append);               \
   method(deleteAt);
 
-typedef struct cb_data {
-  nbind::cbFunction& cb;
-  void *data;
-} cb_data;
-
 class UiControl {
  private:
   uiControl* handle;
@@ -654,7 +649,7 @@ class UiOpenTypeFeatures {
     void remove(const char *c);
     int get(const char *c, uint32_t *value);
 
-    void forEach(nbind::cbFunction& cb, void *data);
+    void forEach(nbind::cbFunction& cb);
 
 };
 
@@ -714,7 +709,7 @@ class UiAttributedString {
     // TODO multiple attr? does nbind support variadic arguments? or use array?
     void appendAttributed2(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
 
-    void forEach(nbind::cbFunction& cb, void *data);
+    void forEach(nbind::cbFunction& cb);
 
 
     size_t numGraphemes();

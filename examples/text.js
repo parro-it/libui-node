@@ -60,8 +60,8 @@ otf.add("liga", 1);
 str.appendAttributed("affix", UiFontAttribute.newOTFeatures(otf));
 
 otf.forEach((feat, str, val)=>{
-	console.log(feat, str, val);
-}, null);
+	console.log({feat, str, val});
+});
 
 otf.free()
 str.appendUnattributed(").\n");
@@ -69,8 +69,8 @@ str.appendUnattributed(").\n");
 str.appendUnattributed("Use the controls opposite to the text to control properties of the text.");
 
 str.forEach((str, attr, start, end)=>{
-	console.log(feat, str, val);
-}, null);
+	console.log({str, attr, start, end});
+});
 
 
 

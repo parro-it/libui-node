@@ -42,16 +42,18 @@ void UiAttributedString::setAttribute(UiFontAttribute *attr, size_t start, size_
 	uiAttributedStringSetAttribute(s, attr->getHandle(), start, end);
 }
 
-static unsigned int UiAttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *d) {
-	return ((cb_data*)d)->cb.call<unsigned int>(
+static unsigned int UiAttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *data) {
+	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+
+	return cb->call<unsigned int>(
 		UiAttributedString((uiAttributedString*)s),
 		UiFontAttribute((uiAttribute*)a),
-		start, end, ((cb_data*)d)->data);
+		start, end, NULL);
 }
 
-void UiAttributedString::forEach(nbind::cbFunction& cb, void *data) {
-	cb_data d = {cb, data};
-	uiAttributedStringForEachAttribute(s, UiAttributedString__forEach, &d);
+void UiAttributedString::forEach(nbind::cbFunction& cb) {
+
+	uiAttributedStringForEachAttribute(s, UiAttributedString__forEach, &cb);
 }
 
 
@@ -69,7 +71,7 @@ void UiAttributedString::appendAttributed2(const char *str, UiFontAttribute *att
 	this->appendUnattributed(str);
 	this->setAttribute(attr, start, end);
 	if(attr2 != nullptr){
-		this->setAttribute(attr2, start, end);	
+		this->setAttribute(attr2, start, end);
 	}
 }
 
