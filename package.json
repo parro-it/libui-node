@@ -4,7 +4,7 @@
 	"description": "Node.js bindings for libui",
 	"repository": "parro-it/libui-node",
 	"license": "MIT",
-	"libui": "alpha3.5-004",
+	"libui": "alpha3.5-master-001",
 	"contributors": [
 		{
 			"name": "Andrea Parodi",
