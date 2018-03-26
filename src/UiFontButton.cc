@@ -21,6 +21,3 @@ NBIND_CLASS(UiFontButton) {
 	method(getFont);
 	method(onChanged);
 }
-
-
-DONT_COMPILE

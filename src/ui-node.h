@@ -674,6 +674,7 @@ class UiAttributedString {
   public:
     UiAttributedString(const char *str);
     void free();
+    uiAttributedString *getHandle();
     const char * toString();
     size_t toStringLen();
 
@@ -721,7 +722,7 @@ class DrawTextLayout {
   uiDrawTextLayout* handle;
 
  public:
-  DrawTextLayout(uiAttributedString *s, uiFontDescriptor *defaultFont, double width, uiDrawTextAlign align);
+  DrawTextLayout(UiAttributedString *s, UiFontDescriptor *defaultFont, double width, int align);
   void free();
   SizeDouble getExtents();
   uiDrawTextLayout* getHandle();
@@ -740,7 +741,7 @@ class UiDrawContext {
   void clip(UiDrawPath* path);
   void save();
   void restore();
-  void text(double x, double y, uiDrawTextLayout* layout);
+  void text(double x, double y, DrawTextLayout* layout);
 };
 
 class UiAreaDrawParams {

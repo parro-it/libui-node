@@ -12,11 +12,11 @@ UiFontDescriptor::UiFontDescriptor(char *family, double size, int weight, int it
     d->Family = family;
     d->Size = size;
     d->Weight = weight;
-    d->Italic = italic
+    d->Italic = italic;
     d->Stretch = stretch;
 }
 
-UiFontDescriptor::free() {
+void UiFontDescriptor::free() {
 	if(cleanup){
 		uiFreeFontButtonFont(d);
 	}
@@ -24,27 +24,27 @@ UiFontDescriptor::free() {
 }
 
 char *UiFontDescriptor::getFamily() {
-	return m->Family;
+	return d->Family;
 }
 
 double UiFontDescriptor::getSize() {
-	return m->Size;
+	return d->Size;
 }
 
 int UiFontDescriptor::getWeight() {
-	return m->Weight;
+	return d->Weight;
 }
 
 int UiFontDescriptor::getItalic() {
-	return m->Italic;
+	return d->Italic;
 }
 
 int UiFontDescriptor::getStretch() {
-	return m->Stretch;
+	return d->Stretch;
 }
 
 uiFontDescriptor *UiFontDescriptor::getHandle(){
-	return m;
+	return d;
 }
 
 
