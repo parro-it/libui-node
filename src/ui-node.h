@@ -696,8 +696,13 @@ class UiFontDescriptor {
   public:
     UiFontDescriptor(uiFontDescriptor *d);
     UiFontDescriptor(char *family, double size, int weight, int italic, int stretch);
-    uiFontDescriptor* getHandle();
-
+    void free();
+    char *getFamily();
+    double getSize();
+    int getWeight();
+    int getItalic();
+    int getStretch();
+    uiFontDescriptor *getHandle();
 };
 
 
