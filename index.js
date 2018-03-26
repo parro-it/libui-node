@@ -113,37 +113,37 @@ const textStretch = {
 
 
 const textAttributeType = {
-	Family: 0,
-	Size: 1,
-	Weight: 2,
-	Italic: 3,
-	Stretch: 4,
-	Color: 5,
-	Background: 6,
-	Underline: 7,
-	UnderlineColor: 8,
-	Features: 9
+	family: 0,
+	size: 1,
+	weight: 2,
+	italic: 3,
+	stretch: 4,
+	color: 5,
+	background: 6,
+	underline: 7,
+	underlineColor: 8,
+	features: 9
 };
 
 
 const textUnderline = {
-	None: 0,
-	Single: 1,
-	Double: 2,
-	Suggestion: 3
+	none: 0,
+	single: 1,
+	double: 2,
+	suggestion: 3
 };
 
 const textUnderlineColor = {
-	Custom: 0,
-	Spelling: 1,
-	Grammar: 2,
-	Auxiliary: 3
+	custom: 0,
+	spelling: 1,
+	grammar: 2,
+	auxiliary: 3
 };
 
 const textAlign = {
-	Left: 0,
-	Center: 1,
-	Right: 2
+	left: 0,
+	center: 1,
+	right: 2
 };
 
 

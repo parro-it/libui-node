@@ -635,6 +635,20 @@ class UiDrawPath {
   void end();
 };
 
+class UiOpenTypeFeatures {
+  private:
+    uiOpenTypeFeatures *f;
+  public:
+    UiOpenTypeFeatures();
+    UiOpenTypeFeatures(uiOpenTypeFeatures *feat);
+    void free();
+    uiOpenTypeFeatures *getHandle();
+
+    static UiOpenTypeFeatures *clone(UiOpenTypeFeatures *f2);
+    void add(const char *c, uint32_t value);
+    void remove(const char *c);
+    int get(const char *c, uint32_t *value);
+};
 
 class UiFontAttribute {
   private:
@@ -657,16 +671,18 @@ class UiFontAttribute {
     Color getColor();
     int getUnderline();
     int getUnderlineColor(Color *c);
+    UiOpenTypeFeatures *getOTFeatures();
 
     static UiFontAttribute *newFamily(const char *family);
     static UiFontAttribute *newSize(double size);
     static UiFontAttribute *newWeight(int weightAttribute);
     static UiFontAttribute *newItalic(int italicAttribute);
     static UiFontAttribute *newStretch(int stretchAttribute);
-    static UiFontAttribute *newColor(Color *c);
-    static UiFontAttribute *newBackground(Color *c);
+    static UiFontAttribute *newColor(Color c);
+    static UiFontAttribute *newBackground(Color c);
     static UiFontAttribute *newUnderline(int underlineAttr);
-    static UiFontAttribute *newUnderlineColor(int underlineColorAttr, Color *c);
+    static UiFontAttribute *newUnderlineColor(int underlineColorAttr, Color c);
+    static UiFontAttribute *newOTFeatures(UiOpenTypeFeatures *otf);
 };
 
 
@@ -686,6 +702,10 @@ class UiAttributedString {
     void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
     // void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data);
 
+    void appendAttributed(const char *str, UiFontAttribute *attr);
+    // TODO multiple attr? does nbind support variadic arguments? or use array?
+    void appendAttributed2(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
+
     size_t numGraphemes();
     size_t byteIndexToGrapheme(size_t pos);
     size_t graphemeToByteIndex(size_t pos);
@@ -698,7 +718,7 @@ class UiFontDescriptor {
     int buttonCleanup = 0;
   public:
     UiFontDescriptor(uiFontDescriptor *d);
-    UiFontDescriptor(char *family, double size, int weight, int italic, int stretch);
+    UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch);
     void free();
     char *getFamily();
     double getSize();
@@ -707,7 +727,6 @@ class UiFontDescriptor {
     int getStretch();
     uiFontDescriptor *getHandle();
 };
-
 
 class UiFontButton : public UiControl {
   DEFINE_EVENT(onChanged)

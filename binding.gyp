@@ -11,6 +11,7 @@
 				"src/Font/UiFontDescriptor.cc",
 				"src/Font/UiFontAttribute.cc",
 				"src/Font/UiAttributedString.cc",
+				"src/Font/UiOpenTypeFeatures.cc",
 				"src/UiArea/DrawTextLayout.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/DrawStrokeParams.cc",

@@ -42,6 +42,25 @@ void UiAttributedString::setAttribute(UiFontAttribute *attr, size_t start, size_
 //	
 // }
 
+
+void UiAttributedString::appendAttributed(const char *str, UiFontAttribute *attr) {
+	this->appendAttributed2(str, attr, nullptr);
+}
+
+
+void UiAttributedString::appendAttributed2(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2) {
+	size_t start = this->toStringLen();
+	// TODO how this (and strlen) work with unicode?
+	size_t end = start + strlen(str);
+
+	this->appendUnattributed(str);
+	this->setAttribute(attr, start, end);
+	if(attr2 != nullptr){
+		this->setAttribute(attr2, start, end);	
+	}
+}
+
+
 size_t UiAttributedString::numGraphemes() {
 	return uiAttributedStringNumGraphemes(s);
 }
@@ -54,15 +73,17 @@ size_t UiAttributedString::graphemeToByteIndex(size_t pos) {
 	return uiAttributedStringGraphemeToByteIndex(s, pos);
 }
 
-
 NBIND_CLASS(UiAttributedString) {
 	construct<const char *>();
 	method(free);
-	method(getHandle);
 	method(toString);
 	method(toStringLen);
 	method(appendUnattributed);
 	method(insertUnattributed);
+	method(appendAttributed);
+	method(appendAttributed2);
+	// multimethod(appendAttributed, args(const char *, UiFontAttribute *));
+	// multimethod(appendAttributed, args(const char *, UiFontAttribute *, UiFontAttribute *), "appendAttributed2");
 	method(deleteString);
 	method(setAttribute);
 	// method(forEachAttribute);
@@ -70,5 +91,3 @@ NBIND_CLASS(UiAttributedString) {
 	method(byteIndexToGrapheme);
 	method(graphemeToByteIndex);
 }
-
-

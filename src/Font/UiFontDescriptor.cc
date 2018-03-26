@@ -7,9 +7,9 @@ UiFontDescriptor::UiFontDescriptor(uiFontDescriptor * desc) {
 	buttonCleanup = 1;
 }
 
-UiFontDescriptor::UiFontDescriptor(char *family, double size, int weight, int italic, int stretch) {
+UiFontDescriptor::UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch) {
     d = new uiFontDescriptor();
-    d->Family = family;
+    d->Family = (char*) family;
     d->Size = size;
     d->Weight = weight;
     d->Italic = italic;
@@ -49,7 +49,7 @@ uiFontDescriptor *UiFontDescriptor::getHandle(){
 
 
 NBIND_CLASS(UiFontDescriptor) {
-	// construct<char *, double, int, int, int>();
+	construct<const char *, double, int, int, int>();
 	method(getFamily);
 	method(getSize);
 	method(getWeight);

@@ -1,54 +1,77 @@
 'use strict';
 /* eslint-disable unicorn/number-literal-case */
 const libui = require('..');
+const { UiFontAttribute } = libui;
 
-let mainwin;
 let textDrawArea;
-let fontSize;
-let textString;
-const colorWhite = 0xff00ff;
+let fontButton;
+let align;
 
-function buildSolidBrush(color, alpha) {
-	let component;
+const str = new libui.UiAttributedString(
+	"Drawing strings with libui is done with the uiAttributedString and uiDrawTextLayout objects.\n"+
+	"uiAttributedString lets you have a variety of attributes: ");
 
-	component = (color >> 16) & 0xff;
-	const R = component / 255;
-	component = (color >> 8) & 0xff;
-	const G = component / 255;
-	component = color & 0xff;
-	const B = component / 255;
-	const A = alpha;
+str.appendAttributed("font family", UiFontAttribute.newFamily("Courier New"));
+str.appendUnattributed(", ");
 
-	const uiDrawBrushTypeSolid = 0;
-	const brush = new libui.DrawBrush();
-	brush.color = new libui.Color(R, G, B, A);
-	brush.type = uiDrawBrushTypeSolid;
 
-	return brush;
-}
+str.appendAttributed("font size", UiFontAttribute.newSize(18));
+str.appendUnattributed(", ");
+
+str.appendAttributed("font weight", UiFontAttribute.newWeight(libui.textWeight.bold));
+str.appendUnattributed(", ");
+
+str.appendAttributed("font italicness", UiFontAttribute.newItalic(libui.textItalic.italic));
+str.appendUnattributed(", ");
+
+str.appendAttributed("font stretch", UiFontAttribute.newStretch(libui.textStretch.condensed));
+str.appendUnattributed(", ");
+
+str.appendAttributed("text color", UiFontAttribute.newColor(new libui.Color(0.75, 0.25, 0.5, 0.75)));
+str.appendUnattributed(", ");
+
+str.appendAttributed("text background color", UiFontAttribute.newBackground(new libui.Color(0.5, 0.5, 0.25, 0.5)));
+str.appendUnattributed(", ");
+
+
+str.appendAttributed("underline style", UiFontAttribute.newUnderline(libui.textUnderline.single));
+str.appendUnattributed(", ");
+
+str.appendUnattributed("and ");
+str.appendAttributed2("underline color",
+					 UiFontAttribute.newUnderline(libui.textUnderline.double),
+					 UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.custom, new libui.Color(1.0, 0.0, 0.5, 1.0)));
+str.appendUnattributed(". ");
+
+str.appendUnattributed("Furthermore, there are attributes allowing for ");
+str.appendAttributed2("special underlines for indicating spelling errors",
+					 UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
+					 UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling, new libui.Color(0, 0, 0, 0)));
+str.appendUnattributed(" (and other types of errors) ");
+
+str.appendUnattributed("and control over OpenType features such as ligatures (for instance, ");
+
+const otf = new libui.UiOpenTypeFeatures();
+otf.add("liga", 0);
+str.appendAttributed("afford", UiFontAttribute.newOTFeatures(otf));
+str.appendUnattributed(" vs. ");
+
+otf.add("liga", 1);
+str.appendAttributed("afford", UiFontAttribute.newOTFeatures(otf));
+otf.free()
+str.appendUnattributed(").\n");
+
+str.appendUnattributed("Use the controls opposite to the text to control properties of the text.");
+
+
+
+
+
 
 function handlerDraw(area, p) {
-	const brush = buildSolidBrush(colorWhite, 1.0);
+	const font = fontButton.getFont();
 
-	const path = new libui.UiDrawPath(0);
-	path.addRectangle(0, 0, p.getAreaWidth(), p.getAreaHeight());
-	path.end();
-	p.getContext().fill(path, brush);
-	path.freePath();
-
-	const font = new libui.DrawTextFont();
-
-	font.loadClosestFont(
-		'Monospace',
-		fontSize.value,
-		libui.textWeight.ultraLight,
-		libui.textItalic.oblique,
-		libui.textStretch.normal
-	);
-
-	const layout = new libui.DrawTextLayout(textString.text, font, 40);
-
-	layout.setColor(0, textString.text.length, new libui.Color(1, 0, 0, 1));
+	const layout = new libui.DrawTextLayout(str, font, p.getAreaWidth(), align.getSelected());
 
 	p.getContext().text(0, 0, layout);
 
@@ -63,7 +86,7 @@ function redraw() {
 }
 
 function main() {
-	mainwin = new libui.UiWindow('libui textDrawArea Example', 640, 480, 1);
+	const mainwin = new libui.UiWindow('libui textDrawArea Example', 640, 480, 1);
 	mainwin.margined = true;
 	mainwin.onClosing(() => {
 		libui.stopLoop();
@@ -75,18 +98,25 @@ function main() {
 
 	const vbox = new libui.UiVerticalBox();
 	vbox.padded = true;
-	hbox.append(vbox, true);
+	hbox.append(vbox, false);
 
-	fontSize = new libui.UiSpinbox();
-	fontSize.value = 24;
-	fontSize.onChanged(redraw);
+	fontButton = new libui.UiFontButton();
+	fontButton.onChanged(redraw);
+	vbox.append(fontButton, false);
 
-	textString = new libui.UiEntry();
-	textString.text = 'Sample';
-	textString.onChanged(redraw);
+	const form = new libui.UiForm();
+	form.padded = true;
+	vbox.append(form, false);
 
-	vbox.append(textString, false);
-	vbox.append(fontSize, false);
+	align = new libui.UiCombobox();
+	// note that the items match with the values of the uiDrawTextAlign values
+	align.append("Left");
+	align.append("Center");
+	align.append("Right");
+	align.setSelected(0);
+	align.onSelected(redraw);
+	form.append("Alignment", align, false);
+
 	textDrawArea = new libui.UiArea(handlerDraw, noop, noop, noop, noop);
 	hbox.append(textDrawArea, true);
 

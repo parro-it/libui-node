@@ -10,7 +10,7 @@ int UiFontAttribute::getAttributeType() {
 	return uiAttributeGetType(a);
 }
 
-uiAttribute *UiFontAttribute::getHandle(){
+uiAttribute *UiFontAttribute::getHandle() {
 	return a;
 }
 
@@ -20,7 +20,7 @@ void UiFontAttribute::free(){
 
 // TODO needs to actually be of that type
 // It is an error to call this on a uiAttribute that does not hold a ...
-const char *UiFontAttribute::getFamily(){
+const char *UiFontAttribute::getFamily() {
 	return uiAttributeFamily(a);
 }
 
@@ -28,19 +28,19 @@ double UiFontAttribute::getSize() {
 	return uiAttributeSize(a);
 }
 
-int UiFontAttribute::getWeight(){
+int UiFontAttribute::getWeight() {
 	return uiAttributeWeight(a);
 }
 
-int UiFontAttribute::getItalic(){
+int UiFontAttribute::getItalic() {
 	return uiAttributeItalic(a);
 }
 
-int UiFontAttribute::getStretch(){
+int UiFontAttribute::getStretch() {
 	return uiAttributeStretch(a);
 }
 
-Color UiFontAttribute::getColor(){
+Color UiFontAttribute::getColor() {
 	double r;
 	double g;
 	double b;
@@ -51,11 +51,11 @@ Color UiFontAttribute::getColor(){
 	return Color(r, g, b, alpha);
 }
 
-int UiFontAttribute::getUnderline(){
+int UiFontAttribute::getUnderline() {
 	return uiAttributeUnderline(a);
 }
 
-int UiFontAttribute::getUnderlineColor(Color *c){
+int UiFontAttribute::getUnderlineColor(Color *c) {
 	double r;
 	double g;
 	double b;
@@ -70,6 +70,12 @@ int UiFontAttribute::getUnderlineColor(Color *c){
 
 	return type;
 }
+
+UiOpenTypeFeatures *UiFontAttribute::getOTFeatures() {
+	return new UiOpenTypeFeatures((uiOpenTypeFeatures*) uiAttributeFeatures(a));
+}
+
+
 
 UiFontAttribute *UiFontAttribute::newFamily(const char *family) {
 	return new UiFontAttribute(uiNewFamilyAttribute(family));
@@ -91,22 +97,25 @@ UiFontAttribute *UiFontAttribute::newStretch(int stretchAttribute) {
 	return new UiFontAttribute(uiNewStretchAttribute(stretchAttribute));
 }
 
-UiFontAttribute *UiFontAttribute::newColor(Color *c) {
-	return new UiFontAttribute(uiNewColorAttribute(c->getR(), c->getG(), c->getB(), c->getA()));
+UiFontAttribute *UiFontAttribute::newColor(Color c) {
+	return new UiFontAttribute(uiNewColorAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
-UiFontAttribute *UiFontAttribute::newBackground(Color *c) {
-	return new UiFontAttribute(uiNewBackgroundAttribute(c->getR(), c->getG(), c->getB(), c->getA()));
+UiFontAttribute *UiFontAttribute::newBackground(Color c) {
+	return new UiFontAttribute(uiNewBackgroundAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
 UiFontAttribute *UiFontAttribute::newUnderline(int underlineAttr) {
 	return new UiFontAttribute(uiNewUnderlineAttribute(underlineAttr));
 }
 
-UiFontAttribute *UiFontAttribute::newUnderlineColor(int underlineColorAttr, Color *c) {
-	return new UiFontAttribute(uiNewUnderlineColorAttribute(underlineColorAttr, c->getR(), c->getG(), c->getB(), c->getA()));
+UiFontAttribute *UiFontAttribute::newUnderlineColor(int underlineColorAttr, Color c) {
+	return new UiFontAttribute(uiNewUnderlineColorAttribute(underlineColorAttr, c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
+UiFontAttribute *UiFontAttribute::newOTFeatures(UiOpenTypeFeatures *otf) {
+	return new UiFontAttribute(uiNewFeaturesAttribute(otf->getHandle()));
+}
 
 
 NBIND_CLASS(UiFontAttribute) {
@@ -131,4 +140,5 @@ NBIND_CLASS(UiFontAttribute) {
 	method(newBackground);
 	method(newUnderline);
 	method(newUnderlineColor);
+	method(newOTFeatures);
 }
