@@ -2,6 +2,10 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
+UiAttributedString::UiAttributedString(uiAttributedString *str) {
+	s = str;
+}
+
 UiAttributedString::UiAttributedString(const char *str) {
 	s = uiNewAttributedString(str);
 }
@@ -38,9 +42,18 @@ void UiAttributedString::setAttribute(UiFontAttribute *attr, size_t start, size_
 	uiAttributedStringSetAttribute(s, attr->getHandle(), start, end);
 }
 
-// void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data) {
-//	
-// }
+static unsigned int UiAttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *d) {
+	return ((cb_data*)d)->cb.call<unsigned int>(
+		UiAttributedString((uiAttributedString*)s),
+		UiFontAttribute((uiAttribute*)a),
+		start, end, ((cb_data*)d)->data);
+}
+
+void UiAttributedString::forEach(nbind::cbFunction& cb, void *data) {
+	cb_data d = {cb, data};
+	uiAttributedStringForEachAttribute(s, UiAttributedString__forEach, &d);
+}
+
 
 
 void UiAttributedString::appendAttributed(const char *str, UiFontAttribute *attr) {
@@ -80,6 +93,7 @@ NBIND_CLASS(UiAttributedString) {
 	method(toStringLen);
 	method(appendUnattributed);
 	method(insertUnattributed);
+	method(forEach);
 	method(appendAttributed);
 	method(appendAttributed2);
 	// multimethod(appendAttributed, args(const char *, UiFontAttribute *));

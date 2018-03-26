@@ -46,13 +46,18 @@ int UiOpenTypeFeatures::get(const char *c, uint32_t *value) {
 	return uiOpenTypeFeaturesGet(f, c[0], c[1], c[2], c[3], value);
 }
 
+static unsigned int UiOpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *data) {
+	const char str[4] = {a, b, c, d};
 
-// uiOpenTypeFeaturesForEach() executes f for every tag-value
-// pair in otf. The enumeration order is unspecified. You cannot
-// modify otf while uiOpenTypeFeaturesForEach() is running.
-// typedef uiForEach (*uiOpenTypeFeaturesForEachFunc)(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *data);
-// _UI_EXTERN void uiOpenTypeFeaturesForEach(const uiOpenTypeFeatures *otf, uiOpenTypeFeaturesForEachFunc f, void *data);
+	return ((cb_data*)data)->cb.call<unsigned int>(
+		UiOpenTypeFeatures((uiOpenTypeFeatures*)otf),
+		str, value, ((cb_data*)data)->data);
+}
 
+void UiOpenTypeFeatures::forEach(nbind::cbFunction& cb, void *data) {
+	cb_data d = {cb, data};
+	uiOpenTypeFeaturesForEach(f, UiOpenTypeFeatures__forEach, &d);
+}
 
 NBIND_CLASS(UiOpenTypeFeatures) {
 	construct<>();
@@ -61,4 +66,5 @@ NBIND_CLASS(UiOpenTypeFeatures) {
 	method(add);
 	method(remove);
 	method(get);
+	method(forEach);
 }

@@ -49,22 +49,28 @@ str.appendAttributed2("special underlines for indicating spelling errors",
 					 UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling, new libui.Color(0, 0, 0, 0)));
 str.appendUnattributed(" (and other types of errors) ");
 
-str.appendUnattributed("and control over OpenType features such as ligatures (for instance, ");
+str.appendUnattributed("and control over OpenType features such as ligatures (with a suitable font - for instance, ");
 
 const otf = new libui.UiOpenTypeFeatures();
 otf.add("liga", 0);
-str.appendAttributed("afford", UiFontAttribute.newOTFeatures(otf));
+str.appendAttributed("affix", UiFontAttribute.newOTFeatures(otf));
 str.appendUnattributed(" vs. ");
 
 otf.add("liga", 1);
-str.appendAttributed("afford", UiFontAttribute.newOTFeatures(otf));
+str.appendAttributed("affix", UiFontAttribute.newOTFeatures(otf));
+
+otf.forEach((feat, str, val)=>{
+	console.log(feat, str, val);
+}, null);
+
 otf.free()
 str.appendUnattributed(").\n");
 
 str.appendUnattributed("Use the controls opposite to the text to control properties of the text.");
 
-
-
+str.forEach((str, attr, start, end)=>{
+	console.log(feat, str, val);
+}, null);
 
 
 

@@ -146,6 +146,11 @@ const textAlign = {
 	right: 2
 };
 
+const forEach = {
+	continue: 0,
+	stop: 1
+}
+
 
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;
@@ -154,6 +159,7 @@ module.exports.textAttributeType = textAttributeType;
 module.exports.textUnderline = textUnderline;
 module.exports.textUnderlineColor = textUnderlineColor;
 module.exports.textAlign = textAlign;
+module.exports.forEach = forEach;
 module.exports.Size = Size;
 module.exports.Point = Point;
 module.exports.Color = Color;

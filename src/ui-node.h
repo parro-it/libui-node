@@ -108,6 +108,11 @@
   method(append);               \
   method(deleteAt);
 
+typedef struct cb_data {
+  nbind::cbFunction& cb;
+  void *data;
+} cb_data;
+
 class UiControl {
  private:
   uiControl* handle;
@@ -648,14 +653,17 @@ class UiOpenTypeFeatures {
     void add(const char *c, uint32_t value);
     void remove(const char *c);
     int get(const char *c, uint32_t *value);
+
+    void forEach(nbind::cbFunction& cb, void *data);
+
 };
 
 class UiFontAttribute {
   private:
-    UiFontAttribute(uiAttribute *a);
     uiAttribute* a;
 
   public:
+    UiFontAttribute(uiAttribute *a);
     // DON'T CALL IF USED IN AN AttributedString
     void free();
     int getAttributeType();
@@ -690,6 +698,7 @@ class UiAttributedString {
   private:
     uiAttributedString* s;
   public:
+    UiAttributedString(uiAttributedString *str);
     UiAttributedString(const char *str);
     void free();
     uiAttributedString *getHandle();
@@ -700,11 +709,13 @@ class UiAttributedString {
     void insertUnattributed(const char *str, size_t at);
     void deleteString(size_t start, size_t end);
     void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
-    // void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data);
 
     void appendAttributed(const char *str, UiFontAttribute *attr);
     // TODO multiple attr? does nbind support variadic arguments? or use array?
     void appendAttributed2(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
+
+    void forEach(nbind::cbFunction& cb, void *data);
+
 
     size_t numGraphemes();
     size_t byteIndexToGrapheme(size_t pos);
