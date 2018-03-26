@@ -51,7 +51,7 @@ static unsigned int UiOpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, c
 	nbind::cbFunction *cb = (nbind::cbFunction *) data;
 	return cb->call<unsigned int>(
 		UiOpenTypeFeatures((uiOpenTypeFeatures*)otf),
-		str, value, NULL);
+		&str[0], value, NULL);
 }
 
 void UiOpenTypeFeatures::forEach(nbind::cbFunction& cb) {
