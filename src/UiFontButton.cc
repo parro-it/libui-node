@@ -3,25 +3,24 @@
 #include "nbind/nbind.h"
 #include "ui-node.h"
 
-// UiFontButton::UiFontButton() : UiControl((uiControl*)uiNewFontButton()) {}
+UiFontButton::UiFontButton() : UiControl((uiControl*)uiNewFontButton()) {}
 
-// INHERITS_CONTROL_METHODS(uiFontButton)
+INHERITS_CONTROL_METHODS(UiFontButton)
 
-// IMPLEMENT_EVENT(UiFontButton, uiFontButton, onChanged, uiFontButtonOnChanged)
+IMPLEMENT_EVENT(UiFontButton, uiFontButton, onChanged, uiFontButtonOnChanged)
 
-// UiFontDescriptor* UiFontButton::getFont() {
-// 	uiFontDescriptor *desc = new UiFontDescriptor();
-// 	uiFontButtonFont((uiFontButton*)getHandle(), desc);
-// 	return desc;
-// 	//TODO: uiFreeFontButtonFont
-// }
+UiFontDescriptor* UiFontButton::getFont() {
+	uiFontDescriptor *desc = new uiFontDescriptor();
+	uiFontButtonFont((uiFontButton*)getHandle(), desc);
+	return new UiFontDescriptor(desc);
+}
 
-// NBIND_CLASS(UiFontButton) {
-// 	construct<>();
-// 	DECLARE_CHILD_CONTROL_METHODS()
-// 	method(getFont);
-// 	method(onChanged);
-// }
+NBIND_CLASS(UiFontButton) {
+	construct<>();
+	DECLARE_CHILD_CONTROL_METHODS()
+	method(getFont);
+	method(onChanged);
+}
 
 
-DONT' COMPILE
+DONT_COMPILE

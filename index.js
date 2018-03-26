@@ -78,17 +78,19 @@ SizeDouble.prototype.fromJS = fromJSSizeDouble;
 binding.bind('SizeDouble', SizeDouble);
 
 const textWeight = {
-	thin: 0,
-	ultraLight: 1,
-	light: 2,
-	book: 3,
-	normal: 4,
-	medium: 5,
-	semiBold: 6,
-	bold: 7,
-	utraBold: 8,
-	heavy: 9,
-	ultraHeavy: 10
+	minimum: 0,
+	thin: 100,
+	ultraLight: 200
+	light: 300,
+	book: 350,
+	normal: 400,
+	medium: 500,
+	semiBold: 600,
+	bold: 700,
+	ultraBold: 800,
+	heavy: 900,
+	ultraHeavy: 950
+	maximum: 1000
 };
 
 const textItalic = {
@@ -109,9 +111,49 @@ const textStretch = {
 	ultraExpanded: 8
 };
 
-module.exports.textStretch = textStretch;
-module.exports.textItalic = textItalic;
+
+const textAttributeType = {
+	Family: 0,
+	Size: 1,
+	Weight: 2,
+	Italic: 3,
+	Stretch: 4,
+	Color: 5,
+	Background: 6,
+	Underline: 7,
+	UnderlineColor: 8,
+	Features: 9
+};
+
+
+const textUnderline = {
+	None: 0,
+	Single: 1,
+	Double: 2,
+	Suggestion: 3
+};
+
+const textUnderlineColor = {
+	Custom: 0,
+	Spelling: 1,
+	Grammar: 2,
+	Auxiliary: 3
+};
+
+const textAlign = {
+	Left: 0,
+	Center: 1,
+	Right: 2
+};
+
+
 module.exports.textWeight = textWeight;
+module.exports.textItalic = textItalic;
+module.exports.textStretch = textStretch;
+module.exports.textAttributeType = textAttributeType;
+module.exports.textUnderline = textUnderline;
+module.exports.textUnderlineColor = textUnderlineColor;
+module.exports.textAlign = textAlign;
 module.exports.Size = Size;
 module.exports.Point = Point;
 module.exports.Color = Color;

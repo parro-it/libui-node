@@ -636,68 +636,6 @@ class UiDrawPath {
 };
 
 
-//TODO how to expose to js?
-enum class UiAttributeType {
-  Family = uiAttributeTypeFamily,
-  Size = uiAttributeTypeSize,
-  Weight = uiAttributeTypeWeight,
-  Italic = uiAttributeTypeItalic,
-  Stretch = uiAttributeTypeStretch,
-  Color = uiAttributeTypeColor,
-  Background = uiAttributeTypeBackground,
-  Underline = uiAttributeTypeUnderline,
-  UnderlineColor = uiAttributeTypeUnderlineColor,
-  Features = uiAttributeTypeFeatures
-};
-
-enum class UiTextWeight {
-  Minimum,
-  Thin,
-  UltraLight,
-  Light,
-  Book,
-  Normal,
-  Medium,
-  SemiBold,
-  Bold,
-  UltraBold,
-  Heavy,
-  UltraHeavy,
-  Maximum
-};
-
-enum class UiTextItalic {
-  Normal,
-  Oblique,
-  Italic
-};
-
-enum class UiTextStretch {
-  UltraCondensed,
-  ExtraCondensed,
-  Condensed,
-  SemiCondensed,
-  Normal,
-  SemiExpanded,
-  Expanded,
-  ExtraExpanded,
-  UltraExpanded
-};
-
-enum class UiTextUnderline {
-  None,
-  Single,
-  Double,
-  Suggestion
-};
-
-enum class UiTextUnderlineColor {
-  Custom,
-  Spelling,
-  Grammar,
-  Auxiliary
-};
-
 class UiFontAttribute {
   private:
     uiAttribute* a;
@@ -705,27 +643,28 @@ class UiFontAttribute {
   public:
     UiFontAttribute() = delete;
 
-    UiAttributeType getAttributeType(UiFontAttribute*);
+    int getAttributeType();
 
-    //TODO need to actually be of that type
+    // TODO needs to actually be of that type
+    // It is an error to call this on a uiAttribute that does not hold a ...
     const char *uiAttributeFamily();
     double uiAttributeSize();
-    uiTextWeight uiAttributeWeight();
-    uiTextItalic uiAttributeItalic();
-    uiTextStretch uiAttributeStretch();
-    void uiAttributeColor(double *r, double *g, double *b, double *alpha);
-    uiUnderline uiAttributeUnderline();
-    void uiAttributeUnderlineColor(UiTextUnderlineColor *u, double *r, double *g, double *b, double *alpha);
+    int uiAttributeWeight();
+    int uiAttributeItalic();
+    int uiAttributeStretch();
+    void uiAttributeColor(Color c);
+    int uiAttributeUnderline();
+    void uiAttributeUnderlineColor(int *u, Color *c);
 
     static UiFontAttribute *newFamilyAttribute(const char *family);
     static UiFontAttribute *newSizeAttribute(double size);
-    static UiFontAttribute *uiNewWeightAttribute(UiTextWeight weight);
-    static UiFontAttribute *newItalicAttribute(UiTextItalic italic);
-    static UiFontAttribute *newStretchAttribute(UiTextStretch stretch);
-    static UiFontAttribute *newColorAttribute(double r, double g, double b, double a);
-    static UiFontAttribute *newBackgroundAttribute(double r, double g, double b, double a);
-    static UiFontAttribute *newUnderlineAttribute(UiTextUnderline u);
-    static UiFontAttribute *newUnderlineColorAttribute(UiTextUnderlineColor u, double r, double g, double b, double a);
+    static UiFontAttribute *uiNewWeightAttribute(int weightAttribute);
+    static UiFontAttribute *newItalicAttribute(int italicAttribute);
+    static UiFontAttribute *newStretchAttribute(int stretchAttribute);
+    static UiFontAttribute *newColorAttribute(Color c);
+    static UiFontAttribute *newBackgroundAttribute(Color c);
+    static UiFontAttribute *newUnderlineAttribute(int underLineAttr);
+    static UiFontAttribute *newUnderlineColorAttribute(int underLineColorAttr, Color c);
 };
 
 
@@ -741,7 +680,7 @@ class UiAttributedString {
     void appendUnattributed(const char *str);
     void insertUnattributed(const char *str, size_t at);
     void deleteString(size_t start, size_t end);
-    void setAttribute(uiAttribute *a, size_t start, size_t end);
+    void setAttribute(int *attr, size_t start, size_t end);
     // void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data);
 
     size_t numGraphemes();
@@ -753,18 +692,13 @@ class UiAttributedString {
 class UiFontDescriptor {
   private:
     uiFontDescriptor *d;
+    int cleanup;
   public:
-    UiFontDescriptor(char *family, double size, UiTextWeight weight, UiTextItalic italic, UiTextStretch stretch);
+    UiFontDescriptor(uiFontDescriptor *d);
+    UiFontDescriptor(char *family, double size, int weight, int italic, int stretch);
+    uiFontDescriptor* getHandle();
 
 };
-
-//TODO with or without "Draw"?
-enum class UiDrawTextAlign {
-  Left = uiDrawTextAlignLeft,
-  Center = uiDrawTextAlignCenter,
-  Right = uiDrawTextAlignRight
-};
-
 
 
 class UiFontButton : public UiControl {

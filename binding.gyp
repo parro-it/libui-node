@@ -8,9 +8,7 @@
 			"sources": [
 				"src/EventLoop.cc",
 				"src/UiFontButton.cc",
-				"src/UiArea/DrawTextFont.cc",
 				"src/UiArea/DrawTextFontDescriptor.cc",
-				"src/UiArea/DrawTextFontMetrics.cc",
 				"src/UiArea/DrawTextLayout.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/DrawStrokeParams.cc",
