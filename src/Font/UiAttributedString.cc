@@ -59,11 +59,11 @@ void UiAttributedString::forEach(nbind::cbFunction& cb) {
 
 
 void UiAttributedString::appendAttributed(const char *str, UiFontAttribute *attr) {
-	this->appendAttributed2(str, attr, nullptr);
+	this->appendAttributed(str, attr, nullptr);
 }
 
 
-void UiAttributedString::appendAttributed2(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2) {
+void UiAttributedString::appendAttributed(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2) {
 	size_t start = this->toStringLen();
 	// TODO how this (and strlen) work with unicode?
 	size_t end = start + strlen(str);
@@ -96,13 +96,11 @@ NBIND_CLASS(UiAttributedString) {
 	method(appendUnattributed);
 	method(insertUnattributed);
 	method(forEach);
-	method(appendAttributed);
-	method(appendAttributed2);
-	// multimethod(appendAttributed, args(const char *, UiFontAttribute *));
-	// multimethod(appendAttributed, args(const char *, UiFontAttribute *, UiFontAttribute *), "appendAttributed2");
+	multimethod(appendAttributed, args(const char *, UiFontAttribute *));
+	multimethod(appendAttributed, args(const char *, UiFontAttribute *, UiFontAttribute *), "appendAttributed2");
 	method(deleteString);
 	method(setAttribute);
-	// method(forEachAttribute);
+
 	method(numGraphemes);
 	method(byteIndexToGrapheme);
 	method(graphemeToByteIndex);

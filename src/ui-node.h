@@ -706,8 +706,8 @@ class UiAttributedString {
     void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
 
     void appendAttributed(const char *str, UiFontAttribute *attr);
+    void appendAttributed(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
     // TODO multiple attr? does nbind support variadic arguments? or use array?
-    void appendAttributed2(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
 
     void forEach(nbind::cbFunction& cb);
 
