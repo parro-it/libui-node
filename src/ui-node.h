@@ -638,33 +638,35 @@ class UiDrawPath {
 
 class UiFontAttribute {
   private:
+    UiFontAttribute(uiAttribute *a);
     uiAttribute* a;
 
   public:
-    UiFontAttribute() = delete;
-
+    // DON'T CALL IF USED IN AN AttributedString
+    void free();
     int getAttributeType();
+    uiAttribute *getHandle();
 
     // TODO needs to actually be of that type
     // It is an error to call this on a uiAttribute that does not hold a ...
-    const char *uiAttributeFamily();
-    double uiAttributeSize();
-    int uiAttributeWeight();
-    int uiAttributeItalic();
-    int uiAttributeStretch();
-    void uiAttributeColor(Color c);
-    int uiAttributeUnderline();
-    void uiAttributeUnderlineColor(int *u, Color *c);
+    const char *getFamily();
+    double getSize();
+    int getWeight();
+    int getItalic();
+    int getStretch();
+    Color getColor();
+    int getUnderline();
+    int getUnderlineColor(Color *c);
 
-    static UiFontAttribute *newFamilyAttribute(const char *family);
-    static UiFontAttribute *newSizeAttribute(double size);
-    static UiFontAttribute *uiNewWeightAttribute(int weightAttribute);
-    static UiFontAttribute *newItalicAttribute(int italicAttribute);
-    static UiFontAttribute *newStretchAttribute(int stretchAttribute);
-    static UiFontAttribute *newColorAttribute(Color c);
-    static UiFontAttribute *newBackgroundAttribute(Color c);
-    static UiFontAttribute *newUnderlineAttribute(int underLineAttr);
-    static UiFontAttribute *newUnderlineColorAttribute(int underLineColorAttr, Color c);
+    static UiFontAttribute *newFamily(const char *family);
+    static UiFontAttribute *newSize(double size);
+    static UiFontAttribute *newWeight(int weightAttribute);
+    static UiFontAttribute *newItalic(int italicAttribute);
+    static UiFontAttribute *newStretch(int stretchAttribute);
+    static UiFontAttribute *newColor(Color *c);
+    static UiFontAttribute *newBackground(Color *c);
+    static UiFontAttribute *newUnderline(int underlineAttr);
+    static UiFontAttribute *newUnderlineColor(int underlineColorAttr, Color *c);
 };
 
 
@@ -681,7 +683,7 @@ class UiAttributedString {
     void appendUnattributed(const char *str);
     void insertUnattributed(const char *str, size_t at);
     void deleteString(size_t start, size_t end);
-    void setAttribute(int *attr, size_t start, size_t end);
+    void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
     // void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data);
 
     size_t numGraphemes();
@@ -693,7 +695,7 @@ class UiAttributedString {
 class UiFontDescriptor {
   private:
     uiFontDescriptor *d;
-    int cleanup;
+    int buttonCleanup = 0;
   public:
     UiFontDescriptor(uiFontDescriptor *d);
     UiFontDescriptor(char *family, double size, int weight, int italic, int stretch);

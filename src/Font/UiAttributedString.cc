@@ -1,0 +1,74 @@
+#include "../../ui.h"
+#include "../ui-node.h"
+#include "nbind/nbind.h"
+
+UiAttributedString::UiAttributedString(const char *str) {
+	s = uiNewAttributedString(str);
+}
+
+void UiAttributedString::free() {
+	uiFreeAttributedString(s);
+}
+
+uiAttributedString *UiAttributedString::getHandle() {
+	return s;
+}
+
+const char * UiAttributedString::toString() {
+	return uiAttributedStringString(s);
+}
+
+size_t UiAttributedString::toStringLen() {
+	return uiAttributedStringLen(s);
+}
+
+void UiAttributedString::appendUnattributed(const char *str) {
+	uiAttributedStringAppendUnattributed(s, str);
+}
+
+void UiAttributedString::insertUnattributed(const char *str, size_t at) {
+	uiAttributedStringInsertAtUnattributed(s, str, at);
+}
+
+void UiAttributedString::deleteString(size_t start, size_t end) {
+	uiAttributedStringDelete(s, start, end);
+}
+
+void UiAttributedString::setAttribute(UiFontAttribute *attr, size_t start, size_t end) {
+	uiAttributedStringSetAttribute(s, attr->getHandle(), start, end);
+}
+
+// void forEachAttribute(uiAttributedStringForEachAttributeFunc f, void *data) {
+//	
+// }
+
+size_t UiAttributedString::numGraphemes() {
+	return uiAttributedStringNumGraphemes(s);
+}
+
+size_t UiAttributedString::byteIndexToGrapheme(size_t pos) {
+	return uiAttributedStringByteIndexToGrapheme(s, pos);
+}
+
+size_t UiAttributedString::graphemeToByteIndex(size_t pos) {
+	return uiAttributedStringGraphemeToByteIndex(s, pos);
+}
+
+
+NBIND_CLASS(UiAttributedString) {
+	construct<const char *>();
+	method(free);
+	method(getHandle);
+	method(toString);
+	method(toStringLen);
+	method(appendUnattributed);
+	method(insertUnattributed);
+	method(deleteString);
+	method(setAttribute);
+	// method(forEachAttribute);
+	method(numGraphemes);
+	method(byteIndexToGrapheme);
+	method(graphemeToByteIndex);
+}
+
+

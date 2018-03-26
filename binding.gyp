@@ -9,6 +9,8 @@
 				"src/EventLoop.cc",
 				"src/UiFontButton.cc",
 				"src/Font/UiFontDescriptor.cc",
+				"src/Font/UiFontAttribute.cc",
+				"src/Font/UiAttributedString.cc",
 				"src/UiArea/DrawTextLayout.cc",
 				"src/UiArea/UiArea.cc",
 				"src/UiArea/DrawStrokeParams.cc",

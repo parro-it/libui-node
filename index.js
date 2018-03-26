@@ -80,7 +80,7 @@ binding.bind('SizeDouble', SizeDouble);
 const textWeight = {
 	minimum: 0,
 	thin: 100,
-	ultraLight: 200
+	ultraLight: 200,
 	light: 300,
 	book: 350,
 	normal: 400,
@@ -89,7 +89,7 @@ const textWeight = {
 	bold: 700,
 	ultraBold: 800,
 	heavy: 900,
-	ultraHeavy: 950
+	ultraHeavy: 950,
 	maximum: 1000
 };
 

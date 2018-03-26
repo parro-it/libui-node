@@ -4,7 +4,7 @@
 
 UiFontDescriptor::UiFontDescriptor(uiFontDescriptor * desc) {
 	d = desc;
-	cleanup = 1;
+	buttonCleanup = 1;
 }
 
 UiFontDescriptor::UiFontDescriptor(char *family, double size, int weight, int italic, int stretch) {
@@ -17,7 +17,7 @@ UiFontDescriptor::UiFontDescriptor(char *family, double size, int weight, int it
 }
 
 void UiFontDescriptor::free() {
-	if(cleanup){
+	if(buttonCleanup){
 		uiFreeFontButtonFont(d);
 	}
 	delete d;
@@ -49,6 +49,7 @@ uiFontDescriptor *UiFontDescriptor::getHandle(){
 
 
 NBIND_CLASS(UiFontDescriptor) {
+	// construct<char *, double, int, int, int>();
 	method(getFamily);
 	method(getSize);
 	method(getWeight);

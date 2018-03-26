@@ -7,7 +7,7 @@ DrawTextLayout::DrawTextLayout(UiAttributedString *str, UiFontDescriptor *defaul
 		.String = str->getHandle(),
 		.DefaultFont = defaultFont->getHandle(),
 		.Width = width,
-		.Align = static_cast<uiDrawTextAlign>(align)
+		.Align = (uiDrawTextAlign) align
 	};
 
 	handle = uiDrawNewTextLayout(&params);
@@ -29,8 +29,8 @@ SizeDouble DrawTextLayout::getExtents() {
 }
 
 NBIND_CLASS(DrawTextLayout) {
-		construct<UiAttributedString *, UiFontDescriptor *, double, int>();
-		method(free);
-		method(getExtents);
+	construct<UiAttributedString *, UiFontDescriptor *, double, int>();
+	method(free);
+	method(getExtents);
 }
 
