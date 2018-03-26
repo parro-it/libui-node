@@ -111,7 +111,6 @@ const textStretch = {
 	ultraExpanded: 8
 };
 
-
 const textAttributeType = {
 	family: 0,
 	size: 1,
@@ -124,7 +123,6 @@ const textAttributeType = {
 	underlineColor: 8,
 	features: 9
 };
-
 
 const textUnderline = {
 	none: 0,
@@ -149,8 +147,7 @@ const textAlign = {
 const forEach = {
 	continue: 0,
 	stop: 1
-}
-
+};
 
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;
