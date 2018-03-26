@@ -73,7 +73,6 @@ str.forEach((str, attr, start, end)=>{
 });
 
 
-
 function handlerDraw(area, p) {
 	const font = fontButton.getFont();
 

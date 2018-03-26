@@ -4,10 +4,10 @@
 
 DrawTextLayout::DrawTextLayout(UiAttributedString *str, UiFontDescriptor *defaultFont, double width, int align) {
 	uiDrawTextLayoutParams params = {
-		.String = str->getHandle(),
-		.DefaultFont = defaultFont->getHandle(),
-		.Width = width,
-		.Align = (uiDrawTextAlign) align
+		str->getHandle(),
+		defaultFont->getHandle(),
+		width,
+		(uiDrawTextAlign) align
 	};
 
 	handle = uiDrawNewTextLayout(&params);
