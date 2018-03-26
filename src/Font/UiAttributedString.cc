@@ -48,7 +48,7 @@ static unsigned int UiAttributedString__forEach(const uiAttributedString *s, con
 	return cb->call<unsigned int>(
 		UiAttributedString((uiAttributedString*)s),
 		UiFontAttribute((uiAttribute*)a),
-		start, end, NULL);
+		start, end);
 }
 
 void UiAttributedString::forEach(nbind::cbFunction& cb) {
