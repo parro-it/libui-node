@@ -39,9 +39,9 @@ libui.startLoop();
 
 function logAppend(line) {
 	const lines = log.text.split('\n');
-	/*if (lines.length > 20) {
+	if (lines.length > 20) {
 		log.text = lines.slice(1).join('\n');
-	}*/
+	}
 	log.append(line + '\n');
 }
 
