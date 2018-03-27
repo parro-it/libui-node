@@ -18,8 +18,6 @@ void UiFontAttribute::free(){
 	uiFreeAttribute(a);
 }
 
-// TODO needs to actually be of that type
-// It is an error to call this on a uiAttribute that does not hold a ...
 const char *UiFontAttribute::getFamily() {
 	return uiAttributeFamily(a);
 }

@@ -52,7 +52,6 @@ static unsigned int UiAttributedString__forEach(const uiAttributedString *s, con
 }
 
 void UiAttributedString::forEach(nbind::cbFunction& cb) {
-
 	uiAttributedStringForEachAttribute(s, UiAttributedString__forEach, &cb);
 }
 

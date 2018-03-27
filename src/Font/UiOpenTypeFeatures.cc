@@ -22,36 +22,24 @@ UiOpenTypeFeatures *UiOpenTypeFeatures::clone(UiOpenTypeFeatures *f2) {
 	return new UiOpenTypeFeatures(uiOpenTypeFeaturesClone(f2->f));
 }
 
-void UiOpenTypeFeatures::add(const char *c, uint32_t value) {
-	uiOpenTypeFeaturesAdd(f, c[0], c[1], c[2], c[3], value);
+void UiOpenTypeFeatures::add(const char *tag, uint32_t value) {
+	uiOpenTypeFeaturesAdd(f, tag[0], tag[1], tag[2], tag[3], value);
 }
 
-void UiOpenTypeFeatures::remove(const char *c) {
-	uiOpenTypeFeaturesRemove(f, c[0], c[1], c[2], c[3]);
+void UiOpenTypeFeatures::remove(const char *tag) {
+	uiOpenTypeFeaturesRemove(f, tag[0], tag[1], tag[2], tag[3]);
 }
 
-// uiOpenTypeFeaturesGet() determines whether the given feature
-// tag is present in otf. If it is, *value is set to the tag's value and
-// nonzero is returned. Otherwise, zero is returned.
-//
-// Note that if uiOpenTypeFeaturesGet() returns zero, value isn't
-// changed. This is important: if a feature is not present in a
-// uiOpenTypeFeatures, the feature is NOT treated as if its
-// value was zero anyway. Script-specific font shaping rules and
-// font-specific feature settings may use a different default value
-// for a feature. You should likewise not treat a missing feature as
-// having a value of zero either. Instead, a missing feature should
-// be treated as having some unspecified default value.
-int UiOpenTypeFeatures::get(const char *c, uint32_t *value) {
-	return uiOpenTypeFeaturesGet(f, c[0], c[1], c[2], c[3], value);
+int UiOpenTypeFeatures::get(const char *tag, uint32_t *value) {
+	return uiOpenTypeFeaturesGet(f, tag[0], tag[1], tag[2], tag[3], value);
 }
 
 static unsigned int UiOpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *data) {
-	const char str[5] = {a, b, c, d, '\0'};
+	const char tag[5] = {a, b, c, d, '\0'};
 	nbind::cbFunction *cb = (nbind::cbFunction *) data;
 	return cb->call<unsigned int>(
 		UiOpenTypeFeatures((uiOpenTypeFeatures*)otf),
-		&str[0], value);
+		&tag[0], value);
 }
 
 void UiOpenTypeFeatures::forEach(nbind::cbFunction& cb) {

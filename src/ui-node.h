@@ -645,9 +645,9 @@ class UiOpenTypeFeatures {
     uiOpenTypeFeatures *getHandle();
 
     static UiOpenTypeFeatures *clone(UiOpenTypeFeatures *f2);
-    void add(const char *c, uint32_t value);
-    void remove(const char *c);
-    int get(const char *c, uint32_t *value);
+    void add(const char *tag, uint32_t value);
+    void remove(const char *tag);
+    int get(const char *tag, uint32_t *value);
 
     void forEach(nbind::cbFunction& cb);
 
@@ -664,7 +664,7 @@ class UiFontAttribute {
     int getAttributeType();
     uiAttribute *getHandle();
 
-    // TODO needs to actually be of that type
+    // TODO needs to actually be of that type - maybe implement check and return -1 if wrong (or throw js error)
     // It is an error to call this on a uiAttribute that does not hold a ...
     const char *getFamily();
     double getSize();
@@ -710,7 +710,6 @@ class UiAttributedString {
     // TODO multiple attr? does nbind support variadic arguments? or use array?
 
     void forEach(nbind::cbFunction& cb);
-
 
     size_t numGraphemes();
     size_t byteIndexToGrapheme(size_t pos);

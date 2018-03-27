@@ -192,8 +192,7 @@ Draws a given text at the given (x,y) position.
 
 * x: Number - the horizontal position at which to draw the text.
 * y: Number - the vertical position at which to draw the text.
-* layout: DrawTextLayout - the text to draw, complete with font and color information.
-
+* layout: DrawTextLayout (see [AttributedString](Attributedstring.md)) - the text to draw, complete with font, width and alignment information.
 
 # UiDrawPath
 
