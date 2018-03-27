@@ -2,6 +2,7 @@
 const libui = require('..');
 
 let setIntervalHandle = null;
+let lastTimeout = 0;
 let setIntervalLast = Date.now();
 
 const win = new libui.UiWindow('Event loop tests', 800, 600, false);
@@ -38,14 +39,18 @@ libui.startLoop();
 
 function logAppend(line) {
 	const lines = log.text.split('\n');
-	if (lines.length > 20) {
+	/*if (lines.length > 20) {
 		log.text = lines.slice(1).join('\n');
-	}
+	}*/
 	log.append(line + '\n');
 }
 
 function setIntervalChanged() {
 	const ms = setIntervalMs.value;
+	if (Math.abs(ms - lastTimeout) < 100) {
+		return;
+	}
+	lastTimeout = ms;
 	if (setIntervalHandle !== null) {
 		clearInterval(setIntervalHandle);
 		setIntervalHandle = null;
@@ -109,7 +114,23 @@ function makeToolbar() {
 		});
 	});
 
-	toolbar.append(btnReadFile, false);
+	const btnHttp = new libui.UiButton('Http');
+	btnHttp.onClicked(() => {
+		const http = require('http');
+		let i = 0;
+
+		const server = http.createServer((req, res) => {
+			res.writeHead(200, {'Content-Type': 'text/plain'});
+			logAppend(`Http: request ${i}`);
+			res.end(String(i++));
+		});
+
+		server.listen(3000, '127.0.0.1', () => {
+			logAppend('listening...');
+		});
+	});
+
+	toolbar.append(btnHttp, false);
 
 	return toolbar;
 }
