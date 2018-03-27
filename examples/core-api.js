@@ -5,9 +5,6 @@ const libui = require('..');
 
 const win = new libui.UiWindow('Test window', 800, 600, false);
 win.margined = 1;
-win.onClosing(() => {
-	libui.stopLoop();
-});
 
 const box = new libui.UiVerticalBox();
 const hBox = new libui.UiHorizontalBox();
