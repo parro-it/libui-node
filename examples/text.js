@@ -7,6 +7,7 @@ const {UiFontAttribute} = libui;
 let textDrawArea;
 let fontButton;
 let align;
+let checkbox;
 
 const str = new libui.UiAttributedString(
 	'Drawing strings with libui is done with the uiAttributedString and uiDrawTextLayout objects.\n' +
@@ -62,21 +63,24 @@ str.appendUnattributed(' vs. ');
 otf.add('liga', 1);
 str.appendAttributed('affix', UiFontAttribute.newOTFeatures(otf));
 
-otf.forEach((feat, str, val) => {
-	console.log({feat, str, val});
-});
+// otf.forEach((feat, str, val) => {
+// 	console.log({feat, str, val});
+// });
 
 otf.free();
 str.appendUnattributed(').\n');
 
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.');
 
-str.forEach((str, attr, start, end) => {
-	console.log({str, attr, start, end});
-});
+// str.forEach((str, attr, start, end) => {
+// 	console.log({str, attr, start, end});
+// });
 
 function handlerDraw(area, p) {
-	const font = fontButton.getFont();
+	const font = checkbox.checked ?
+					new libui.UiFontDescriptor("Georgia", 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal) :
+					fontButton.getFont();
+
 
 	const layout = new libui.DrawTextLayout(str, font, p.getAreaWidth(), align.getSelected());
 
@@ -115,8 +119,16 @@ function main() {
 	form.padded = true;
 	vbox.append(form, false);
 
+	checkbox = new libui.UiCheckbox();
+	checkbox.text = "Use Georgia instead of button";
+	checkbox.onToggled(()=>{
+		fontButton.enabled = !checkbox.checked;
+		redraw();
+	})
+	vbox.append(checkbox, false);
+
 	align = new libui.UiCombobox();
-	// Note that the items match with the values of the uiDrawTextAlign values
+	// Note that the items match with the valueorder of libui.textAlign
 	align.append('Left');
 	align.append('Center');
 	align.append('Right');

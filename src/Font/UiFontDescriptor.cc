@@ -9,7 +9,9 @@ UiFontDescriptor::UiFontDescriptor(uiFontDescriptor * desc) {
 
 UiFontDescriptor::UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch) {
     d = new uiFontDescriptor();
-    d->Family = (char*) family;
+
+    d->Family = new char[strlen(family)];
+    strcpy(d->Family, family);
     d->Size = size;
     d->Weight = weight;
     d->Italic = italic;
@@ -19,6 +21,8 @@ UiFontDescriptor::UiFontDescriptor(const char *family, double size, int weight, 
 void UiFontDescriptor::free() {
 	if(buttonCleanup){
 		uiFreeFontButtonFont(d);
+	} else {
+		delete d->Family;
 	}
 	delete d;
 }
