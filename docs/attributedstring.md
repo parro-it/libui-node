@@ -29,7 +29,7 @@ class UiOpenTypeFeatures {
 
 class UiFontAttribute {
   public:
-    // DON'T CALL IF USED/APPENDED IN AN AttributedString
+    // doesn't need to be called when appended
     void free();
     int getAttributeType();
 

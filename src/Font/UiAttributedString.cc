@@ -40,6 +40,7 @@ void UiAttributedString::deleteString(size_t start, size_t end) {
 
 void UiAttributedString::setAttribute(UiFontAttribute *attr, size_t start, size_t end) {
 	uiAttributedStringSetAttribute(s, attr->getHandle(), start, end);
+	attr->setAppended();
 }
 
 static unsigned int UiAttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *data) {

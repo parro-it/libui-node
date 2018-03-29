@@ -15,7 +15,13 @@ uiAttribute *UiFontAttribute::getHandle() {
 }
 
 void UiFontAttribute::free(){
-	uiFreeAttribute(a);
+	if(!appended){
+		uiFreeAttribute(a);
+	}
+}
+
+void UiFontAttribute::setAppended(){
+	appended = 1;
 }
 
 const char *UiFontAttribute::getFamily() {

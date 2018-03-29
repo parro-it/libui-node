@@ -656,10 +656,12 @@ class UiOpenTypeFeatures {
 class UiFontAttribute {
   private:
     uiAttribute* a;
+    int appended = 0;
 
   public:
     UiFontAttribute(uiAttribute *a);
     void free();
+    void setAppended();
     int getAttributeType();
     uiAttribute *getHandle();
 
