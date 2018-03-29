@@ -149,6 +149,8 @@ const forEach = {
 	stop: 1
 };
 
+
+
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;
 module.exports.textStretch = textStretch;

@@ -22,7 +22,7 @@ void UiFontDescriptor::free() {
 	if(buttonCleanup){
 		uiFreeFontButtonFont(d);
 	} else {
-		delete d->Family;
+		delete[] d->Family;
 	}
 	delete d;
 }
