@@ -38,19 +38,19 @@ str.appendAttributed('underline style', UiFontAttribute.newUnderline(libui.textU
 str.appendUnattributed(', ');
 
 str.appendUnattributed('and ');
-str.appendAttributed2('underline color',
+str.appendAttributed('underline color',
 					UiFontAttribute.newUnderline(libui.textUnderline.double),
 					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.custom, new libui.Color(1.0, 0.0, 0.5, 1.0)));
 str.appendUnattributed('. ');
 
 str.appendUnattributed('Furthermore, there are attributes allowing for ');
-str.appendAttributed2('special underlines for indicating spelling errors',
+str.appendAttributed('special underlines for indicating spelling errors',
 					UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
 					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling, new libui.Color(0, 0, 0, 0)));
 str.appendUnattributed(' (and ');
-str.appendAttributed2('other types of errors',
 					UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
 					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.grammar, new libui.Color(0, 0, 0, 0)));
+str.appendAttributed('other types of errors',
 str.appendUnattributed(') ');
 
 str.appendUnattributed('and control over OpenType features such as ligatures (with a suitable font - for instance, ');
@@ -63,24 +63,23 @@ str.appendUnattributed(' vs. ');
 otf.add('liga', 1);
 str.appendAttributed('affix', UiFontAttribute.newOTFeatures(otf));
 
-// otf.forEach((feat, str, val) => {
-// 	console.log({feat, str, val});
-// });
+otf.forEach((feat, str, val) => {
+	console.log({feat, str, val});
+});
 
 otf.free();
 str.appendUnattributed(').\n');
 
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.');
 
-// str.forEach((str, attr, start, end) => {
-// 	console.log({str, attr, start, end});
-// });
+str.forEach((str, attr, start, end) => {
+	console.log({str, attr, start, end});
+});
 
 function handlerDraw(area, p) {
 	const font = checkbox.checked ?
-					new libui.UiFontDescriptor("Georgia", 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal) :
-					fontButton.getFont();
-
+		new libui.UiFontDescriptor('Georgia', 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal) :
+		fontButton.getFont();
 
 	const layout = new libui.DrawTextLayout(str, font, p.getAreaWidth(), align.getSelected());
 
@@ -120,11 +119,11 @@ function main() {
 	vbox.append(form, false);
 
 	checkbox = new libui.UiCheckbox();
-	checkbox.text = "Use Georgia instead of button";
-	checkbox.onToggled(()=>{
+	checkbox.text = 'Use Georgia instead of button';
+	checkbox.onToggled(() => {
 		fontButton.enabled = !checkbox.checked;
 		redraw();
-	})
+	});
 	vbox.append(checkbox, false);
 
 	align = new libui.UiCombobox();

@@ -68,7 +68,6 @@ class UiAttributedString {
     void deleteString(size_t start, size_t end);
     void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
 
-    //TODO overloaded in javascript?
     void appendAttributed(const char *str, UiFontAttribute *attr);
     void appendAttributed(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
 

@@ -149,7 +149,12 @@ const forEach = {
 	stop: 1
 };
 
-
+binding.lib.UiAttributedString.prototype.appendAttributed = function (str, attr, attr2) {
+	if (attr2) {
+		return this.appendAttributed2(str, attr, attr2);
+	}
+	return this.appendAttributed1(str, attr);
+};
 
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;

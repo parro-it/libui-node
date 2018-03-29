@@ -95,7 +95,7 @@ NBIND_CLASS(UiAttributedString) {
 	method(appendUnattributed);
 	method(insertUnattributed);
 	method(forEach);
-	multimethod(appendAttributed, args(const char *, UiFontAttribute *));
+	multimethod(appendAttributed, args(const char *, UiFontAttribute *), "appendAttributed1");
 	multimethod(appendAttributed, args(const char *, UiFontAttribute *, UiFontAttribute *), "appendAttributed2");
 	method(deleteString);
 	method(setAttribute);
