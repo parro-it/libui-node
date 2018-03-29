@@ -4,6 +4,7 @@ const libui = require('..');
 
 const {UiFontAttribute} = libui;
 
+let mainwin;
 let textDrawArea;
 let fontButton;
 let align;
@@ -48,9 +49,9 @@ str.appendAttributed('special underlines for indicating spelling errors',
 					UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
 					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling, new libui.Color(0, 0, 0, 0)));
 str.appendUnattributed(' (and ');
+str.appendAttributed('other types of errors',
 					UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
 					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.grammar, new libui.Color(0, 0, 0, 0)));
-str.appendAttributed('other types of errors',
 str.appendUnattributed(') ');
 
 str.appendUnattributed('and control over OpenType features such as ligatures (with a suitable font - for instance, ');
@@ -96,7 +97,7 @@ function redraw() {
 }
 
 function main() {
-	const mainwin = new libui.UiWindow('libui textDrawArea Example', 640, 480, 1);
+	mainwin = new libui.UiWindow('libui textDrawArea Example', 640, 480, 1);
 	mainwin.margined = true;
 	mainwin.onClosing(() => {
 		libui.stopLoop();

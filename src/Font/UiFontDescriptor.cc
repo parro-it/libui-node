@@ -54,6 +54,7 @@ uiFontDescriptor *UiFontDescriptor::getHandle(){
 
 NBIND_CLASS(UiFontDescriptor) {
 	construct<const char *, double, int, int, int>();
+	method(free);
 	method(getFamily);
 	method(getSize);
 	method(getWeight);

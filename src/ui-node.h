@@ -659,7 +659,6 @@ class UiFontAttribute {
 
   public:
     UiFontAttribute(uiAttribute *a);
-    // DON'T CALL IF USED IN AN AttributedString
     void free();
     int getAttributeType();
     uiAttribute *getHandle();
