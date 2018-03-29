@@ -8,7 +8,7 @@ AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 MaxEmptyLinesToKeep: 1
 ColumnLimit: 80
-PointerAlignment: Left
+PointerAlignment: Right
 IncludeCategories:
   - Regex: "^<"
     Priority: 0
