@@ -31,6 +31,7 @@
 						"<!@(ls -1 src/UiArea/*.cc)",
 						"src/arch/unix/libui_loop.cc"
 					],
+					"cflags": ["-fvisibility=hidden"],
 					'ldflags': [
 						"-Wl,-rpath,'$$ORIGIN',-rpath,<(module_root_dir)",
 					],
