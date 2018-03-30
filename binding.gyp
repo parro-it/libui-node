@@ -5,13 +5,10 @@
 			"includes": [
 				"auto.gypi"
 			],
-			"sources": [],
 			"conditions": [
 				["OS=='win'", {
 					"sources": [
-						"<!@(dir /B src/*.cc)",
-						"<!@(dir /B src/UiArea/*.cc)",
-						"src/arch/win32/libui_loop.cc"
+						'<!@(node list-sources.js)',
 					],
 					"libraries": [
 						"<(module_root_dir)/libui.lib"

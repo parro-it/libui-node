@@ -39,6 +39,7 @@
 		"node": ">=4"
 	},
 	"files": [
+		"list-sources.js",
 		"index.js",
 		"src",
 		"binding.gyp",

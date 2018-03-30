@@ -1,0 +1,13 @@
+const {readdirSync} = require('fs');
+
+function listDir(dir) {
+	readdirSync(dir)
+		.filter(f => f.endsWith('.cc'))
+		.forEach(f => console.log(dir + '/' + f));
+}
+
+listDir('src');
+listDir('src/UiArea');
+listDir('src/arch/win32');
+
+					
