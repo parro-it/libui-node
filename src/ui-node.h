@@ -148,18 +148,6 @@ class UiControl {
 	DEFINE_CONTROL_METHODS()
 };
 
-class UiRadioButtons : public UiControl {
-	DEFINE_EVENT(onSelected)
-
-  public:
-	UiRadioButtons();
-	void append(const char *text);
-	int getSelected();
-	void setSelected(int n);
-
-	DEFINE_CONTROL_METHODS()
-};
-
 class UiTab : public UiControl {
   public:
 	UiTab();
