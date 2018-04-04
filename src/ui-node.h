@@ -3,7 +3,9 @@
 #define ui_node
 
 #include <map>
+#include <vector> // TODO: this has to be removed once UiArea classes
 #include "nbind/api.h"
+// declarations are moved to their own cc files
 
 #define DEFINE_EVENT(NAME)                                                     \
   private:                                                                     \

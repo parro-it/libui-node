@@ -1,3 +1,4 @@
+#include <vector>
 #include "../../ui.h"
 #include "../ui-node.h"
 
