@@ -33,7 +33,7 @@
 		"install": "libui-download && autogypi && npm run build",
 		"build": "node-gyp configure build",
 		"clean": "rm -rf build; rm -rf node_modules;",
-		"precommit": "check-clang-format",
+		"precommit": "check-clang-format \"'npm run lint'\"",
 		"lint": "clang-format -i --glob='src/**/*.{h,cc}'"
 	},
 	"keywords": [
