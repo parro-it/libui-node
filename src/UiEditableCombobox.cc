@@ -2,6 +2,17 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiEditableCombobox : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiEditableCombobox();
+	DEFINE_CONTROL_METHODS()
+	void append(const char *text);
+	const char *getText();
+	void setText(const char *text);
+};
+
 UiEditableCombobox::UiEditableCombobox()
 	: UiControl((uiControl *)uiNewEditableCombobox()) {}
 

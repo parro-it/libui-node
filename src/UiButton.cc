@@ -2,6 +2,17 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiButton : public UiControl {
+	DEFINE_EVENT(onClicked)
+
+  public:
+	UiButton(const char *text);
+	UiButton();
+	DEFINE_CONTROL_METHODS()
+	void setText(const char *text);
+	const char *getText();
+};
+
 UiButton::UiButton(const char *text)
 	: UiControl((uiControl *)uiNewButton(text)) {}
 UiButton::UiButton() : UiControl((uiControl *)uiNewButton("")) {}

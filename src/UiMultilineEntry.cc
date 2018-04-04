@@ -2,6 +2,19 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiMultilineEntry : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiMultilineEntry();
+	DEFINE_CONTROL_METHODS()
+	void setText(const char *text);
+	const char *getText();
+	void setReadOnly(bool readOnly);
+	bool getReadOnly();
+	void append(const char *text);
+};
+
 UiMultilineEntry::UiMultilineEntry()
 	: UiControl((uiControl *)uiNewNonWrappingMultilineEntry()) {}
 

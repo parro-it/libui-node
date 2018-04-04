@@ -2,6 +2,19 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiCheckbox : public UiControl {
+	DEFINE_EVENT(onToggled)
+
+  public:
+	UiCheckbox(const char *text);
+	UiCheckbox();
+	DEFINE_CONTROL_METHODS()
+	void setText(const char *text);
+	const char *getText();
+	void setChecked(bool checked);
+	bool getChecked();
+};
+
 IMPLEMENT_EVENT(UiCheckbox, uiCheckbox, onToggled, uiCheckboxOnToggled)
 
 UiCheckbox::UiCheckbox(const char *text)

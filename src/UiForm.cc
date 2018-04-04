@@ -2,6 +2,16 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiForm : public UiControl {
+  public:
+	UiForm();
+	DEFINE_CONTROL_METHODS()
+	void append(const char *label, UiControl *c, bool stretchy);
+	void deleteAt(int index);
+	bool getPadded();
+	void setPadded(bool padded);
+};
+
 UiForm::UiForm() : UiControl((uiControl *)uiNewForm()) {}
 
 void UiForm::append(const char *label, UiControl *c, bool stretchy) {

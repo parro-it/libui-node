@@ -1,7 +1,17 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
+class UiHorizontalSeparator : public UiControl {
+  public:
+	UiHorizontalSeparator();
+	DEFINE_CONTROL_METHODS()
+};
 
+class UiVerticalSeparator : public UiControl {
+  public:
+	UiVerticalSeparator();
+	DEFINE_CONTROL_METHODS()
+};
 UiHorizontalSeparator::UiHorizontalSeparator()
 	: UiControl((uiControl *)uiNewHorizontalSeparator()) {}
 

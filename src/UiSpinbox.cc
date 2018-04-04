@@ -2,6 +2,17 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiSpinbox : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiSpinbox(int min, int max);
+	UiSpinbox();
+	DEFINE_CONTROL_METHODS()
+
+	int getValue();
+	void setValue(int value);
+};
 UiSpinbox::UiSpinbox(int min, int max)
 	: UiControl((uiControl *)uiNewSpinbox(min, max)) {}
 

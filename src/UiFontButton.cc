@@ -2,6 +2,15 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiFontButton : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiFontButton();
+	DrawTextFont *getFont();
+	DEFINE_CONTROL_METHODS()
+};
+
 UiFontButton::UiFontButton() : UiControl((uiControl *)uiNewFontButton()) {}
 
 INHERITS_CONTROL_METHODS(UiFontButton)

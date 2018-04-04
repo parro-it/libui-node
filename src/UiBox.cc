@@ -2,6 +2,26 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiBox : public UiControl {
+  public:
+	UiBox(uiControl *hnd);
+	DEFINE_BOX_METHODS()
+};
+
+class UiVerticalBox : public UiBox {
+  public:
+	UiVerticalBox();
+	DEFINE_BOX_METHODS()
+	DEFINE_CONTROL_METHODS()
+};
+
+class UiHorizontalBox : public UiBox {
+  public:
+	UiHorizontalBox();
+	DEFINE_BOX_METHODS()
+	DEFINE_CONTROL_METHODS()
+};
+
 UiBox::UiBox(uiControl *control) : UiControl(control) {}
 
 void UiBox::append(UiControl *control, bool stretchy) {

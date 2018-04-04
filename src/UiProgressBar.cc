@@ -2,6 +2,17 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiProgressBar : public UiControl {
+  private:
+	int value = 0;
+
+  public:
+	UiProgressBar();
+	DEFINE_CONTROL_METHODS()
+	int getValue();
+	void setValue(int value);
+};
+
 UiProgressBar::UiProgressBar() : UiControl((uiControl *)uiNewProgressBar()) {}
 
 INHERITS_CONTROL_METHODS(UiProgressBar)

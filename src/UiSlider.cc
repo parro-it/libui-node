@@ -2,6 +2,18 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiSlider : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiSlider(int min, int max);
+	UiSlider();
+	DEFINE_CONTROL_METHODS()
+
+	int getValue();
+	void setValue(int value);
+};
+
 UiSlider::UiSlider(int min, int max)
 	: UiControl((uiControl *)uiNewSlider(min, max)) {}
 

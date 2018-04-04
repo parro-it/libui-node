@@ -2,6 +2,20 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+// TODO - document
+class UiGrid : public UiControl {
+  public:
+	UiGrid();
+	bool getPadded();
+	void setPadded(bool value);
+	void append(UiControl *c, int left, int top, int xspan, int yspan,
+				int hexpand, int halign, int vexpand, int valign);
+	void insertAt(UiControl *c, UiControl *existing, int at, int xspan,
+				  int yspan, int hexpand, int halign, int vexpand, int valign);
+
+	DEFINE_CONTROL_METHODS()
+};
+
 UiGrid::UiGrid() : UiControl((uiControl *)uiNewGrid()) {}
 
 bool UiGrid::getPadded() {

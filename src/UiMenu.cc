@@ -2,6 +2,36 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+// TODO - document
+class UiMenuItem {
+	DEFINE_EVENT(onClicked)
+
+  private:
+	uiMenuItem *handle;
+
+  public:
+	UiMenuItem(uiMenuItem *hnd);
+	void enable();
+	void disable();
+	bool getChecked();
+	void setChecked(bool checked);
+};
+
+// TODO - document
+class UiMenu {
+  private:
+	uiMenu *handle;
+
+  public:
+	UiMenu(const char *name);
+	UiMenuItem *appendItem(const char *name);
+	UiMenuItem *appendCheckItem(const char *name);
+	UiMenuItem *appendQuitItem();
+	UiMenuItem *appendPreferencesItem();
+	UiMenuItem *appendAboutItem();
+	void appendSeparator();
+};
+
 static void UiMenuItem_onClicked(uiMenuItem *sender, uiWindow *window,
 								 void *data) {
 	nbind::cbFunction *cb = (nbind::cbFunction *)data;

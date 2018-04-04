@@ -2,6 +2,17 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiCombobox : public UiControl {
+	DEFINE_EVENT(onSelected)
+
+  public:
+	UiCombobox();
+	DEFINE_CONTROL_METHODS()
+	void append(const char *text);
+	int getSelected();
+	void setSelected(int n);
+};
+
 UiCombobox::UiCombobox() : UiControl((uiControl *)uiNewCombobox()) {}
 
 INHERITS_CONTROL_METHODS(UiCombobox)

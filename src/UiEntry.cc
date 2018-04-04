@@ -2,6 +2,39 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiEntryBase : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiEntryBase(uiControl *);
+	DEFINE_CONTROL_METHODS()
+	DEFINE_ENTRY_METHODS()
+};
+
+class UiEntry : public UiEntryBase {
+  public:
+	UiEntry();
+	DEFINE_CONTROL_METHODS()
+	DEFINE_ENTRY_METHODS()
+	void onChanged(nbind::cbFunction &cb);
+};
+
+class UiPasswordEntry : public UiEntryBase {
+  public:
+	UiPasswordEntry();
+	DEFINE_CONTROL_METHODS()
+	DEFINE_ENTRY_METHODS()
+	void onChanged(nbind::cbFunction &cb);
+};
+
+class UiSearchEntry : public UiEntryBase {
+  public:
+	UiSearchEntry();
+	DEFINE_CONTROL_METHODS()
+	DEFINE_ENTRY_METHODS()
+	void onChanged(nbind::cbFunction &cb);
+};
+
 UiEntryBase::UiEntryBase(uiControl *hnd) : UiControl(hnd) {}
 
 void UiEntryBase::setText(const char *text) {

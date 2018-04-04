@@ -148,217 +148,6 @@ class UiControl {
 	DEFINE_CONTROL_METHODS()
 };
 
-class UiTab : public UiControl {
-  public:
-	UiTab();
-	void append(const char *text, UiControl *child);
-	void insertAt(const char *name, int before, UiControl *child);
-	void deleteAt(int index);
-	int numPages();
-	bool getMargined(int page);
-	void setMargined(int page, bool margined);
-
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiMultilineEntry : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiMultilineEntry();
-	DEFINE_CONTROL_METHODS()
-	void setText(const char *text);
-	const char *getText();
-	void setReadOnly(bool readOnly);
-	bool getReadOnly();
-	void append(const char *text);
-};
-
-class UiCombobox : public UiControl {
-	DEFINE_EVENT(onSelected)
-
-  public:
-	UiCombobox();
-	DEFINE_CONTROL_METHODS()
-	void append(const char *text);
-	int getSelected();
-	void setSelected(int n);
-};
-
-class UiDateTimePicker : public UiControl {
-  public:
-	UiDateTimePicker();
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiDatePicker : public UiControl {
-  public:
-	UiDatePicker();
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiTimePicker : public UiControl {
-  public:
-	UiTimePicker();
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiEditableCombobox : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiEditableCombobox();
-	DEFINE_CONTROL_METHODS()
-	void append(const char *text);
-	const char *getText();
-	void setText(const char *text);
-};
-
-class UiEntryBase : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiEntryBase(uiControl *);
-	DEFINE_CONTROL_METHODS()
-	DEFINE_ENTRY_METHODS()
-};
-
-class UiEntry : public UiEntryBase {
-  public:
-	UiEntry();
-	DEFINE_CONTROL_METHODS()
-	DEFINE_ENTRY_METHODS()
-	void onChanged(nbind::cbFunction &cb);
-};
-
-class UiPasswordEntry : public UiEntryBase {
-  public:
-	UiPasswordEntry();
-	DEFINE_CONTROL_METHODS()
-	DEFINE_ENTRY_METHODS()
-	void onChanged(nbind::cbFunction &cb);
-};
-
-class UiSearchEntry : public UiEntryBase {
-  public:
-	UiSearchEntry();
-	DEFINE_CONTROL_METHODS()
-	DEFINE_ENTRY_METHODS()
-	void onChanged(nbind::cbFunction &cb);
-};
-
-class UiHorizontalSeparator : public UiControl {
-  public:
-	UiHorizontalSeparator();
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiVerticalSeparator : public UiControl {
-  public:
-	UiVerticalSeparator();
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiLabel : public UiControl {
-  public:
-	UiLabel();
-	UiLabel(const char *text);
-	DEFINE_CONTROL_METHODS()
-	void setText(const char *text);
-	const char *getText();
-};
-
-class UiGroup : public UiControl {
-  public:
-	UiGroup(const char *text);
-	UiGroup();
-	void setChild(UiControl *control);
-	bool getMargined();
-	void setMargined(bool margined);
-	const char *getTitle();
-	void setTitle(const char *title);
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiButton : public UiControl {
-	DEFINE_EVENT(onClicked)
-
-  public:
-	UiButton(const char *text);
-	UiButton();
-	DEFINE_CONTROL_METHODS()
-	void setText(const char *text);
-	const char *getText();
-};
-
-class UiCheckbox : public UiControl {
-	DEFINE_EVENT(onToggled)
-
-  public:
-	UiCheckbox(const char *text);
-	UiCheckbox();
-	DEFINE_CONTROL_METHODS()
-	void setText(const char *text);
-	const char *getText();
-	void setChecked(bool checked);
-	bool getChecked();
-};
-
-class UiProgressBar : public UiControl {
-  private:
-	int value = 0;
-
-  public:
-	UiProgressBar();
-	DEFINE_CONTROL_METHODS()
-	int getValue();
-	void setValue(int value);
-};
-
-class UiSlider : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiSlider(int min, int max);
-	UiSlider();
-	DEFINE_CONTROL_METHODS()
-
-	int getValue();
-	void setValue(int value);
-};
-
-class UiSpinbox : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiSpinbox(int min, int max);
-	UiSpinbox();
-	DEFINE_CONTROL_METHODS()
-
-	int getValue();
-	void setValue(int value);
-};
-
-class UiBox : public UiControl {
-  public:
-	UiBox(uiControl *hnd);
-	DEFINE_BOX_METHODS()
-};
-
-class UiVerticalBox : public UiBox {
-  public:
-	UiVerticalBox();
-	DEFINE_BOX_METHODS()
-	DEFINE_CONTROL_METHODS()
-};
-
-class UiHorizontalBox : public UiBox {
-  public:
-	UiHorizontalBox();
-	DEFINE_BOX_METHODS()
-	DEFINE_CONTROL_METHODS()
-};
-
 class Point {
   private:
 	int x;
@@ -415,71 +204,6 @@ class SizeDouble {
 	double getHeight();
 	void setHeight(double value);
 	void toJS(nbind::cbOutput output);
-};
-
-class UiWindow {
-	DEFINE_EVENT(onClosing)
-	DEFINE_EVENT(onContentSizeChanged)
-
-  private:
-	uiWindow *win;
-
-  public:
-	UiWindow(const char *title, int width, int height, bool hasMenubar);
-	uiWindow *getHandle();
-	void show();
-	void close();
-	void setMargined(bool margined);
-	bool getMargined();
-	void setChild(UiControl *control);
-	void setTitle(const char *title);
-	const char *getTitle();
-	bool getFullscreen();
-	void setFullscreen(bool value);
-	bool getBorderless();
-	void setBorderless(bool value);
-	Size getContentSize();
-	void setContentSize(Size value);
-};
-
-class UiForm : public UiControl {
-  public:
-	UiForm();
-	DEFINE_CONTROL_METHODS()
-	void append(const char *label, UiControl *c, bool stretchy);
-	void deleteAt(int index);
-	bool getPadded();
-	void setPadded(bool padded);
-};
-
-// TODO - document
-class UiMenuItem {
-	DEFINE_EVENT(onClicked)
-
-  private:
-	uiMenuItem *handle;
-
-  public:
-	UiMenuItem(uiMenuItem *hnd);
-	void enable();
-	void disable();
-	bool getChecked();
-	void setChecked(bool checked);
-};
-
-// TODO - document
-class UiMenu {
-  private:
-	uiMenu *handle;
-
-  public:
-	UiMenu(const char *name);
-	UiMenuItem *appendItem(const char *name);
-	UiMenuItem *appendCheckItem(const char *name);
-	UiMenuItem *appendQuitItem();
-	UiMenuItem *appendPreferencesItem();
-	UiMenuItem *appendAboutItem();
-	void appendSeparator();
 };
 
 class Color {
@@ -697,15 +421,6 @@ class DrawTextFont {
 						 int italic, int stretch);
 };
 
-class UiFontButton : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiFontButton();
-	DrawTextFont *getFont();
-	DEFINE_CONTROL_METHODS()
-};
-
 class DrawTextLayout {
   private:
 	uiDrawTextLayout *handle;
@@ -794,18 +509,29 @@ struct UiAreaHandlerFactory {
 								nbind::cbFunction &keyEvent);
 };
 
-// TODO - document
-class UiGrid : public UiControl {
-  public:
-	UiGrid();
-	bool getPadded();
-	void setPadded(bool value);
-	void append(UiControl *c, int left, int top, int xspan, int yspan,
-				int hexpand, int halign, int vexpand, int valign);
-	void insertAt(UiControl *c, UiControl *existing, int at, int xspan,
-				  int yspan, int hexpand, int halign, int vexpand, int valign);
+class UiWindow {
+	DEFINE_EVENT(onClosing)
+	DEFINE_EVENT(onContentSizeChanged)
 
-	DEFINE_CONTROL_METHODS()
+  private:
+	uiWindow *win;
+
+  public:
+	UiWindow(const char *title, int width, int height, bool hasMenubar);
+	uiWindow *getHandle();
+	void show();
+	void close();
+	void setMargined(bool margined);
+	bool getMargined();
+	void setChild(UiControl *control);
+	void setTitle(const char *title);
+	const char *getTitle();
+	bool getFullscreen();
+	void setFullscreen(bool value);
+	bool getBorderless();
+	void setBorderless(bool value);
+	Size getContentSize();
+	void setContentSize(Size value);
 };
 
 // This is included at end of file
