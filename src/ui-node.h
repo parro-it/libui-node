@@ -509,31 +509,6 @@ struct UiAreaHandlerFactory {
 								nbind::cbFunction &keyEvent);
 };
 
-class UiWindow {
-	DEFINE_EVENT(onClosing)
-	DEFINE_EVENT(onContentSizeChanged)
-
-  private:
-	uiWindow *win;
-
-  public:
-	UiWindow(const char *title, int width, int height, bool hasMenubar);
-	uiWindow *getHandle();
-	void show();
-	void close();
-	void setMargined(bool margined);
-	bool getMargined();
-	void setChild(UiControl *control);
-	void setTitle(const char *title);
-	const char *getTitle();
-	bool getFullscreen();
-	void setFullscreen(bool value);
-	bool getBorderless();
-	void setBorderless(bool value);
-	Size getContentSize();
-	void setContentSize(Size value);
-};
-
 // This is included at end of file
 // to minimize conflicts with existing
 // symbols from other headers.

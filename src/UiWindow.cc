@@ -2,6 +2,31 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiWindow {
+	DEFINE_EVENT(onClosing)
+	DEFINE_EVENT(onContentSizeChanged)
+
+  private:
+	uiWindow *win;
+
+  public:
+	UiWindow(const char *title, int width, int height, bool hasMenubar);
+	uiWindow *getHandle();
+	void show();
+	void close();
+	void setMargined(bool margined);
+	bool getMargined();
+	void setChild(UiControl *control);
+	void setTitle(const char *title);
+	const char *getTitle();
+	bool getFullscreen();
+	void setFullscreen(bool value);
+	bool getBorderless();
+	void setBorderless(bool value);
+	Size getContentSize();
+	void setContentSize(Size value);
+};
+
 static int UiWindow_onClosing(uiWindow *w, void *data) {
 	nbind::cbFunction *cb = (nbind::cbFunction *)data;
 	(*cb)();
@@ -109,4 +134,32 @@ NBIND_CLASS(UiWindow) {
 	getset(getBorderless, setBorderless);
 	method(getBorderless);
 	method(setBorderless);
+}
+
+struct UiDialogs {
+
+	static char *openFile(UiWindow *parent) {
+		return uiOpenFile(parent->getHandle());
+	}
+
+	static char *saveFile(UiWindow *parent) {
+		return uiSaveFile(parent->getHandle());
+	}
+
+	static void msgBox(UiWindow *parent, const char *title,
+					   const char *description) {
+		uiMsgBox(parent->getHandle(), title, description);
+	}
+
+	static void msgBoxError(UiWindow *parent, const char *title,
+							const char *description) {
+		uiMsgBoxError(parent->getHandle(), title, description);
+	}
+};
+
+NBIND_CLASS(UiDialogs) {
+	method(openFile);
+	method(saveFile);
+	method(msgBox);
+	method(msgBoxError);
 }

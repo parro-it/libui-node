@@ -31,7 +31,6 @@
 				"src/Point.cc",
 				"src/Color.cc",
 				"src/UiColorButton.cc",
-				"src/UiDialogs.cc",
 				"src/UiMenu.cc",
 				"src/UiCombobox.cc",
 				"src/UiSlider.cc",
