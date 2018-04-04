@@ -2,8 +2,6 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-
-
 DrawStrokeParams::DrawStrokeParams() {
 	sp = new uiDrawStrokeParams();
 }
@@ -22,7 +20,6 @@ double DrawStrokeParams::getThickness() {
 
 double DrawStrokeParams::getMiterLimit() {
 	return sp->MiterLimit;
-
 }
 
 std::vector<double> DrawStrokeParams::getDashes() {
@@ -31,12 +28,10 @@ std::vector<double> DrawStrokeParams::getDashes() {
 
 int DrawStrokeParams::getNumDashes() {
 	return sp->NumDashes;
-
 }
 
 double DrawStrokeParams::getDashPhase() {
 	return sp->DashPhase;
-
 }
 
 void DrawStrokeParams::setCap(int value) {
@@ -67,12 +62,9 @@ void DrawStrokeParams::setDashPhase(double value) {
 	sp->DashPhase = value;
 }
 
-
-uiDrawStrokeParams * DrawStrokeParams::toStruct() {
+uiDrawStrokeParams *DrawStrokeParams::toStruct() {
 	return sp;
 }
-
-
 
 NBIND_CLASS(DrawStrokeParams) {
 	construct<>();
@@ -90,11 +82,11 @@ NBIND_CLASS(DrawStrokeParams) {
 	method(setDashes);
 	method(setNumDashes);
 	method(setDashPhase);
-	getset(getCap,setCap);
-	getset(getJoin,setJoin);
-	getset(getThickness,setThickness);
-	getset(getMiterLimit,setMiterLimit);
-	getset(getDashes,setDashes);
-	getset(getNumDashes,setNumDashes);
-	getset(getDashPhase,setDashPhase);
+	getset(getCap, setCap);
+	getset(getJoin, setJoin);
+	getset(getThickness, setThickness);
+	getset(getMiterLimit, setMiterLimit);
+	getset(getDashes, setDashes);
+	getset(getNumDashes, setNumDashes);
+	getset(getDashPhase, setDashPhase);
 }

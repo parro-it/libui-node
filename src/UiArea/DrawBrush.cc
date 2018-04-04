@@ -2,12 +2,11 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-DrawBrush::DrawBrush()
- {
+DrawBrush::DrawBrush() {
 	b = new uiDrawBrush();
 }
 
-uiDrawBrush * DrawBrush::toStruct() {
+uiDrawBrush *DrawBrush::toStruct() {
 	return b;
 }
 
@@ -21,7 +20,6 @@ void DrawBrush::setColor(Color value) {
 	b->B = value.getB();
 	b->A = value.getA();
 }
-
 
 Point DrawBrush::getStart() {
 	return Point(b->X0, b->Y0);
@@ -49,7 +47,6 @@ void DrawBrush::setType(int value) {
 	b->Type = value;
 }
 
-
 std::vector<BrushGradientStop> DrawBrush::getStops() {
 	return std::vector<BrushGradientStop>();
 }
@@ -58,23 +55,22 @@ void DrawBrush::setStops(std::vector<BrushGradientStop> value) {
 	// st = value;
 }
 
-
 NBIND_CLASS(DrawBrush) {
-  construct<>();
-  method(getStart);
-  method(setStart);
-  method(getColor);
-  method(setColor);
-  method(getEnd);
-  method(setEnd);
-  method(getType);
-  method(setType);
-  method(setStops);
-  method(getStops);
+	construct<>();
+	method(getStart);
+	method(setStart);
+	method(getColor);
+	method(setColor);
+	method(getEnd);
+	method(setEnd);
+	method(getType);
+	method(setType);
+	method(setStops);
+	method(getStops);
 
-  getset(getColor, setColor);
-  getset(getStart, setStart);
-  getset(getEnd, setEnd);
-  getset(getType, setType);
-  getset(getStops, setStops);
+	getset(getColor, setColor);
+	getset(getStart, setStart);
+	getset(getEnd, setEnd);
+	getset(getType, setType);
+	getset(getStops, setStops);
 }

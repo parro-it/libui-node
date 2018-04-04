@@ -3,14 +3,11 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-
-
-
 UiAreaKeyEvent::UiAreaKeyEvent(uiAreaKeyEvent *event) {
 	e = event;
 }
 
-char * UiAreaKeyEvent::getKey() {
+char *UiAreaKeyEvent::getKey() {
 	char *k = new char[2];
 	k[0] = e->Key;
 	k[1] = '\0';

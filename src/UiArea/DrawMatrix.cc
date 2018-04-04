@@ -10,8 +10,7 @@ double UiDrawMatrix::getM11() {
 	return m->M11;
 }
 
-
-uiDrawMatrix* UiDrawMatrix::getStruct() {
+uiDrawMatrix *UiDrawMatrix::getStruct() {
 	return m;
 }
 
@@ -105,7 +104,6 @@ SizeDouble UiDrawMatrix::transformSize() {
 	return SizeDouble(x, y);
 }
 
-
 NBIND_CLASS(UiDrawMatrix) {
 	construct<>();
 
@@ -140,6 +138,3 @@ NBIND_CLASS(UiDrawMatrix) {
 	method(transformPoint);
 	method(transformSize);
 }
-
-
-
