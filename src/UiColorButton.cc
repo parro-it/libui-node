@@ -2,6 +2,16 @@
 #include "ui-node.h"
 #include "nbind/api.h"
 
+class UiColorButton : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiColorButton();
+	Color getColor();
+	void setColor(Color value);
+	DEFINE_CONTROL_METHODS()
+};
+
 UiColorButton::UiColorButton() : UiControl((uiControl *)uiNewColorButton()) {}
 
 INHERITS_CONTROL_METHODS(UiColorButton)

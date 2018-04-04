@@ -227,16 +227,6 @@ class Color {
 	void toJS(nbind::cbOutput output);
 };
 
-class UiColorButton : public UiControl {
-	DEFINE_EVENT(onChanged)
-
-  public:
-	UiColorButton();
-	Color getColor();
-	void setColor(Color value);
-	DEFINE_CONTROL_METHODS()
-};
-
 // UIArea
 
 class DrawStrokeParams {
