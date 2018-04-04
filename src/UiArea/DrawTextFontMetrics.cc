@@ -1,6 +1,5 @@
 #include "../../ui.h"
 #include "../ui-node.h"
-#include "nbind/nbind.h"
 
 DrawTextFontMetrics::DrawTextFontMetrics(uiDrawTextFontMetrics *metrics) {
 	m = metrics;

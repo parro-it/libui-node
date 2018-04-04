@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 UiSpinbox::UiSpinbox(int min, int max)
 	: UiControl((uiControl *)uiNewSpinbox(min, max)) {}

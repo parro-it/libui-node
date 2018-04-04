@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 UiTab::UiTab() : UiControl((uiControl *)uiNewTab()) {}
 

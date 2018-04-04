@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 UiButton::UiButton(const char *text)
 	: UiControl((uiControl *)uiNewButton(text)) {}

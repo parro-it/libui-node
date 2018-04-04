@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 UiGroup::UiGroup(const char *text) : UiControl((uiControl *)uiNewGroup(text)) {}
 UiGroup::UiGroup() : UiControl((uiControl *)uiNewGroup("")) {}

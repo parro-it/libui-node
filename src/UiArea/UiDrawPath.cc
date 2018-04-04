@@ -1,6 +1,5 @@
 #include "../../ui.h"
 #include "../ui-node.h"
-#include "nbind/nbind.h"
 
 UiDrawPath::UiDrawPath(int fillMode) {
 	handle = uiDrawNewPath(fillMode);

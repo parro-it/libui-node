@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 static int UiWindow_onClosing(uiWindow *w, void *data) {
 	nbind::cbFunction *cb = (nbind::cbFunction *)data;

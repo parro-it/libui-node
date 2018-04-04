@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 static void UiMenuItem_onClicked(uiMenuItem *sender, uiWindow *window,
 								 void *data) {

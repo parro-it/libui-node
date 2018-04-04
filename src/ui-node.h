@@ -818,4 +818,9 @@ class UiGrid : public UiControl {
 	DEFINE_CONTROL_METHODS()
 };
 
+// This is included at end of file
+// to minimize conflicts with existing
+// symbols from other headers.
+#include "nbind/nbind.h"
+
 #endif

@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 UiLabel::UiLabel(const char *text) : UiControl((uiControl *)uiNewLabel(text)) {}
 UiLabel::UiLabel() : UiControl((uiControl *)uiNewLabel("")) {}

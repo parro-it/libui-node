@@ -1,6 +1,5 @@
 #include "../../ui.h"
 #include "../ui-node.h"
-#include "nbind/nbind.h"
 
 BrushGradientStop::BrushGradientStop(double pos, Color color) : c(color) {
 	p = pos;

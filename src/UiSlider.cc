@@ -1,7 +1,6 @@
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
 
 UiSlider::UiSlider(int min, int max)
 	: UiControl((uiControl *)uiNewSlider(min, max)) {}

@@ -41,8 +41,6 @@ UiSearchEntry::UiSearchEntry() : UiEntryBase((uiControl *)uiNewSearchEntry()) {}
 INHERITS_CONTROL_METHODS(UiSearchEntry)
 INHERITS_ENTRY_METHODS(UiSearchEntry)
 
-#include "nbind/nbind.h"
-
 NBIND_CLASS(UiSearchEntry) {
 	construct<>();
 	DECLARE_CHILD_CONTROL_METHODS()

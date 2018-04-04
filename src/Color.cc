@@ -1,6 +1,5 @@
 #include "../ui.h"
 #include "ui-node.h"
-#include "nbind/nbind.h"
 
 Color::Color(const Color &other) {
 	r = other.r;
