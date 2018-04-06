@@ -1,6 +1,7 @@
 #include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
+#include <cstring>
 
 UiFontDescriptor::UiFontDescriptor(uiFontDescriptor * desc) {
 	d = desc;
@@ -10,8 +11,8 @@ UiFontDescriptor::UiFontDescriptor(uiFontDescriptor * desc) {
 UiFontDescriptor::UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch) {
     d = new uiFontDescriptor();
 
-    d->Family = new char[strlen(family)];
-    strcpy(d->Family, family);
+    d->Family = new char[std::strlen(family) + 1];
+    std::strcpy(d->Family, family);
     d->Size = size;
     d->Weight = weight;
     d->Italic = italic;
