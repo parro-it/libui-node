@@ -113,7 +113,7 @@ UiFontAttribute *UiFontAttribute::newUnderline(int underlineAttr) {
 	return new UiFontAttribute(uiNewUnderlineAttribute(underlineAttr));
 }
 
-UiFontAttribute *UiFontAttribute::newUnderlineColor(int underlineColorAttr, Color c) {
+UiFontAttribute *UiFontAttribute::newUnderlineColor2(int underlineColorAttr, Color c) {
 	return new UiFontAttribute(uiNewUnderlineColorAttribute(underlineColorAttr, c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
@@ -143,6 +143,6 @@ NBIND_CLASS(UiFontAttribute) {
 	method(newColor);
 	method(newBackground);
 	method(newUnderline);
-	method(newUnderlineColor);
+	method(newUnderlineColor2);
 	method(newOTFeatures);
 }

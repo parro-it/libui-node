@@ -47,11 +47,11 @@ str.appendUnattributed('. ');
 str.appendUnattributed('Furthermore, there are attributes allowing for ');
 str.appendAttributed('special underlines for indicating spelling errors',
 					UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
-					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling, new libui.Color(0, 0, 0, 0)));
+					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling));
 str.appendUnattributed(' (and ');
 str.appendAttributed('other types of errors',
 					UiFontAttribute.newUnderline(libui.textUnderline.suggestion),
-					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.grammar, new libui.Color(0, 0, 0, 0)));
+					UiFontAttribute.newUnderlineColor(libui.textUnderlineColor.grammar));
 str.appendUnattributed(') ');
 
 str.appendUnattributed('and control over OpenType features such as ligatures (with a suitable font - for instance, ');

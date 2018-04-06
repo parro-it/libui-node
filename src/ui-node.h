@@ -685,7 +685,7 @@ class UiFontAttribute {
     static UiFontAttribute *newColor(Color c);
     static UiFontAttribute *newBackground(Color c);
     static UiFontAttribute *newUnderline(int underlineAttr);
-    static UiFontAttribute *newUnderlineColor(int underlineColorAttr, Color c);
+    static UiFontAttribute *newUnderlineColor2(int underlineColorAttr, Color c);
     static UiFontAttribute *newOTFeatures(UiOpenTypeFeatures *otf);
 };
 

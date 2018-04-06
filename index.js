@@ -156,6 +156,14 @@ binding.lib.UiAttributedString.prototype.appendAttributed = function (str, attr,
 	return this.appendAttributed1(str, attr);
 };
 
+binding.lib.UiFontAttribute.newUnderlineColor = function (type, color){
+	if(type === textUnderlineColor.custom && !color){
+		console.error("With textUnderlineColor.custom a color needs to passed");
+	}
+	color = color || new Color(0, 0, 0, 0);
+	return binding.lib.UiFontAttribute.newUnderlineColor2(type, color);
+}
+
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;
 module.exports.textStretch = textStretch;
