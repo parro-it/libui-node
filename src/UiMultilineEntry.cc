@@ -1,3 +1,4 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
@@ -8,42 +9,45 @@ class UiMultilineEntry : public UiControl {
   public:
 	UiMultilineEntry();
 	DEFINE_CONTROL_METHODS()
-	void setText(const char *text);
-	const char *getText();
+	void setText(std::string text);
+	std::string getText();
 	void setReadOnly(bool readOnly);
 	bool getReadOnly();
-	void append(const char *text);
+	void append(std::string text);
 };
 
 UiMultilineEntry::UiMultilineEntry()
-	: UiControl((uiControl *)uiNewNonWrappingMultilineEntry()) {}
+	: UiControl(uiControl(uiNewNonWrappingMultilineEntry())) {}
 
 INHERITS_CONTROL_METHODS(UiMultilineEntry)
 
 IMPLEMENT_EVENT(UiMultilineEntry, uiMultilineEntry, onChanged,
 				uiMultilineEntryOnChanged)
 
-void UiMultilineEntry::setText(const char *text) {
-	uiMultilineEntrySetText((uiMultilineEntry *)getHandle(), text);
+void UiMultilineEntry::setText(std::string text) {
+	uiMultilineEntrySetText(uiMultilineEntry(getHandle()), text.c_str());
 	if (onChangedCallback != NULL) {
 		(*onChangedCallback)();
 	}
 }
 
-const char *UiMultilineEntry::getText() {
-	return uiMultilineEntryText((uiMultilineEntry *)getHandle());
+std::string UiMultilineEntry::getText() {
+	char *char_ptr = uiMultilineEntryText(uiMultilineEntry(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 void UiMultilineEntry::setReadOnly(bool readOnly) {
-	uiMultilineEntrySetReadOnly((uiMultilineEntry *)getHandle(), readOnly);
+	uiMultilineEntrySetReadOnly(uiMultilineEntry(getHandle()), readOnly);
 }
 
 bool UiMultilineEntry::getReadOnly() {
-	return uiMultilineEntryReadOnly((uiMultilineEntry *)getHandle());
+	return uiMultilineEntryReadOnly(uiMultilineEntry(getHandle()));
 }
 
-void UiMultilineEntry::append(const char *text) {
-	uiMultilineEntryAppend((uiMultilineEntry *)getHandle(), text);
+void UiMultilineEntry::append(std::string text) {
+	uiMultilineEntryAppend(uiMultilineEntry(getHandle()), text.c_str());
 }
 
 NBIND_CLASS(UiMultilineEntry) {
