@@ -1,8 +1,8 @@
 #include <string>
-#include "../ui.h"
+#include "ui.h"
 
 #include "nbind/api.h"
-#include "includes/control.h"
+#include "control.h"
 
 class UiForm : public UiControl {
   public:

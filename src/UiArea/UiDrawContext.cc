@@ -1,5 +1,5 @@
-#include "../../ui.h"
-#include "../includes/area.h"
+#include "area.h"
+#include "ui.h"
 
 UiDrawContext::UiDrawContext(uiDrawContext *ctx) {
 	c = ctx;

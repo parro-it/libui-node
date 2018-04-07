@@ -1,4 +1,4 @@
-#include "includes/values.h"
+#include "values.h"
 
 PointDouble::PointDouble(const PointDouble &other) {
 	x = other.x;

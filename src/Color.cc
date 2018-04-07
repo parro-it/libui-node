@@ -1,4 +1,4 @@
-#include "includes/values.h"
+#include "values.h"
 
 Color::Color(const Color &other) {
 	r = other.r;

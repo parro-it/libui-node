@@ -1,6 +1,6 @@
 
-#include "../../ui.h"
-#include "../includes/area.h"
+#include "area.h"
+#include "ui.h"
 
 UiAreaKeyEvent::UiAreaKeyEvent(uiAreaKeyEvent *event) {
 	e = event;

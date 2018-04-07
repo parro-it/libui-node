@@ -1,4 +1,4 @@
-#include "../ui.h"
+#include "ui.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
 

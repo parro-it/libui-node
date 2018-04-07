@@ -2,6 +2,7 @@
 	"targets": [
 		{
 			"target_name": "nbind",
+			'include_dirs': ["<(module_root_dir)/src/includes", "<(module_root_dir)"],
 			"includes": [
 				"auto.gypi"
 			],

@@ -1,6 +1,6 @@
-#include "../ui.h"
 #include "nbind/api.h"
-#include "includes/control.h"
+#include "control.h"
+#include "ui.h"
 
 // TODO - document
 class UiGrid : public UiControl {

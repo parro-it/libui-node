@@ -1,5 +1,5 @@
-#include "../../ui.h"
-#include "../includes/area.h"
+#include "area.h"
+#include "ui.h"
 
 void Draw(UiAreaHandler *self, uiArea *area, uiAreaDrawParams *params) {
 	UiAreaDrawParams *pp = new UiAreaDrawParams(params);

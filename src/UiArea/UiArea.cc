@@ -1,6 +1,6 @@
-#include "../../ui.h"
-#include "../includes/area.h"
-#include "../includes/control.h"
+#include "area.h"
+#include "control.h"
+#include "ui.h"
 
 std::map<uiArea *, UiArea *> areasMap;
 

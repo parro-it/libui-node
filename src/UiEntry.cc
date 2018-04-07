@@ -1,8 +1,8 @@
 #include <string>
-#include "../ui.h"
 #include "nbind/api.h"
-#include "includes/control.h"
-#include "includes/entry.h"
+#include "control.h"
+#include "entry.h"
+#include "ui.h"
 
 class UiEntryBase : public UiControl {
 	DEFINE_EVENT(onChanged)

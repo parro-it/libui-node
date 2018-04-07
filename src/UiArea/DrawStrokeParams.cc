@@ -1,6 +1,6 @@
 #include <vector>
-#include "../../ui.h"
-#include "../includes/area.h"
+#include "area.h"
+#include "ui.h"
 
 DrawStrokeParams::DrawStrokeParams() {
 	sp = new uiDrawStrokeParams();

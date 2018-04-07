@@ -1,7 +1,7 @@
-#include "../ui.h"
 #include "nbind/api.h"
-#include "includes/box.h"
-#include "includes/control.h"
+#include "box.h"
+#include "control.h"
+#include "ui.h"
 
 class UiBox : public UiControl {
   public:

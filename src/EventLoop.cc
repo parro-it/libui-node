@@ -1,7 +1,7 @@
 #include <atomic>
 #include <uv.h>
-#include "../ui.h"
 #include "nbind/nbind.h"
+#include "ui.h"
 
 extern int uiEventsPending();
 extern int uiLoopWakeup();

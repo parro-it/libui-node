@@ -1,4 +1,4 @@
-#include "includes/values.h"
+#include "values.h"
 
 Size::Size(int width, int height) {
 	w = width;

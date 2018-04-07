@@ -1,8 +1,8 @@
 #include <string>
-#include "../ui.h"
 #include "nbind/api.h"
-#include "includes/control.h"
-#include "includes/values.h"
+#include "control.h"
+#include "ui.h"
+#include "values.h"
 
 class UiWindow {
 	DEFINE_EVENT(onClosing)
