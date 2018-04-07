@@ -1,3 +1,4 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
@@ -6,31 +7,34 @@ class UiButton : public UiControl {
 	DEFINE_EVENT(onClicked)
 
   public:
-	UiButton(const char *text);
+	UiButton(std::string text);
 	UiButton();
 	DEFINE_CONTROL_METHODS()
-	void setText(const char *text);
-	const char *getText();
+	void setText(std::string text);
+	std::string getText();
 };
 
-UiButton::UiButton(const char *text)
-	: UiControl((uiControl *)uiNewButton(text)) {}
-UiButton::UiButton() : UiControl((uiControl *)uiNewButton("")) {}
+UiButton::UiButton(std::string text)
+	: UiControl(uiControl(uiNewButton(text.c_str()))) {}
+UiButton::UiButton() : UiControl(uiControl(uiNewButton(""))) {}
 
 INHERITS_CONTROL_METHODS(UiButton)
 
-void UiButton::setText(const char *text) {
-	uiButtonSetText((uiButton *)getHandle(), text);
+void UiButton::setText(std::string text) {
+	uiButtonSetText(uiButton(getHandle()), text.c_str());
 }
 
-const char *UiButton::getText() {
-	return uiButtonText((uiButton *)getHandle());
+std::string UiButton::getText() {
+	char *char_ptr = uiButtonText(uiButton(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 IMPLEMENT_EVENT(UiButton, uiButton, onClicked, uiButtonOnClicked)
 
 NBIND_CLASS(UiButton) {
-	construct<const char *>();
+	construct<std::string>();
 	construct<>();
 	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getText, setText);
