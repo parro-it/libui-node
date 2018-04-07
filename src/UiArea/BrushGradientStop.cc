@@ -1,5 +1,5 @@
 #include "../../ui.h"
-#include "../ui-node.h"
+#include "../includes/area.h"
 
 BrushGradientStop::BrushGradientStop(double pos, Color color) : c(color) {
 	p = pos;

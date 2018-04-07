@@ -1,6 +1,6 @@
 #include "../ui.h"
-#include "ui-node.h"
 #include "nbind/api.h"
+#include "includes/control.h"
 
 class UiSpinbox : public UiControl {
 	DEFINE_EVENT(onChanged)

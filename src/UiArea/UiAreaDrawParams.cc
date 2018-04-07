@@ -1,5 +1,5 @@
 #include "../../ui.h"
-#include "../ui-node.h"
+#include "../includes/area.h"
 
 UiAreaDrawParams::UiAreaDrawParams(uiAreaDrawParams *params) {
 	p = params;

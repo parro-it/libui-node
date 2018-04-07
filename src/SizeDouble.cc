@@ -1,5 +1,4 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include "includes/values.h"
 
 SizeDouble::SizeDouble(double width, double height) {
 	w = width;

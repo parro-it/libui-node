@@ -1,5 +1,5 @@
 #include "../../ui.h"
-#include "../ui-node.h"
+#include "../includes/area.h"
 
 UiAreaMouseEvent::UiAreaMouseEvent(uiAreaMouseEvent *event) {
 	e = event;

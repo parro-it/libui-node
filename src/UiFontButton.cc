@@ -1,6 +1,8 @@
 #include "../ui.h"
-#include "ui-node.h"
 #include "nbind/api.h"
+#include "includes/area.h"
+#include "includes/control.h"
+#include "includes/values.h"
 
 class UiFontButton : public UiControl {
 	DEFINE_EVENT(onChanged)

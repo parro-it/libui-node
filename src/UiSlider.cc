@@ -1,6 +1,6 @@
 #include "../ui.h"
-#include "ui-node.h"
 #include "nbind/api.h"
+#include "includes/control.h"
 
 class UiSlider : public UiControl {
 	DEFINE_EVENT(onChanged)

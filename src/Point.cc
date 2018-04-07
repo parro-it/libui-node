@@ -1,5 +1,4 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include "includes/values.h"
 
 Point::Point(const Point &other) {
 	x = other.x;

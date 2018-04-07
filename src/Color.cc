@@ -1,5 +1,4 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include "includes/values.h"
 
 Color::Color(const Color &other) {
 	r = other.r;
