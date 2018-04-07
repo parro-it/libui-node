@@ -77,6 +77,18 @@ SizeDouble.prototype.fromJS = fromJSSizeDouble;
 
 binding.bind('SizeDouble', SizeDouble);
 
+function BrushGradientStop(pos, color) {
+	this.pos = pos;
+	this.color = color;
+}
+
+function fromJSBrushGradientStop(output) {
+	output(this.pos, this.color);
+}
+BrushGradientStop.prototype.fromJS = fromJSBrushGradientStop;
+
+binding.bind('BrushGradientStop', BrushGradientStop);
+
 const textWeight = {
 	thin: 0,
 	ultraLight: 1,
@@ -109,11 +121,20 @@ const textStretch = {
 	ultraExpanded: 8
 };
 
+const brushType = {
+	solid: 0,
+	linearGradient: 1,
+	radialGradient: 2
+	// IMPL uiDrawBrushTypeImage: 3
+};
+
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
 module.exports.Size = Size;
 module.exports.Point = Point;
 module.exports.Color = Color;
+module.exports.BrushGradientStop = BrushGradientStop;
+module.exports.brushType = brushType;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;

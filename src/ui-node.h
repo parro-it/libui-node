@@ -605,6 +605,8 @@ class DrawBrush {
 	void setStart(Point value);
 	Point getEnd();
 	void setEnd(Point value);
+	double getOuterRadius();
+	void setOuterRadius(double r);
 	int getType();
 	void setType(int value);
 	std::vector<BrushGradientStop> getStops();
