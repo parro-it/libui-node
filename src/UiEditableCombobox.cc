@@ -1,3 +1,4 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
@@ -8,32 +9,35 @@ class UiEditableCombobox : public UiControl {
   public:
 	UiEditableCombobox();
 	DEFINE_CONTROL_METHODS()
-	void append(const char *text);
-	const char *getText();
-	void setText(const char *text);
+	void append(std::string text);
+	std::string getText();
+	void setText(std::string text);
 };
 
 UiEditableCombobox::UiEditableCombobox()
-	: UiControl((uiControl *)uiNewEditableCombobox()) {}
+	: UiControl(uiControl(uiNewEditableCombobox())) {}
 
 INHERITS_CONTROL_METHODS(UiEditableCombobox)
 
 IMPLEMENT_EVENT(UiEditableCombobox, uiEditableCombobox, onChanged,
 				uiEditableComboboxOnChanged)
 
-void UiEditableCombobox::append(const char *text) {
-	uiEditableComboboxAppend((uiEditableCombobox *)getHandle(), text);
+void UiEditableCombobox::append(std::string text) {
+	uiEditableComboboxAppend(uiEditableCombobox(getHandle()), text.c_str());
 }
 
-void UiEditableCombobox::setText(const char *text) {
-	uiEditableComboboxSetText((uiEditableCombobox *)getHandle(), text);
+void UiEditableCombobox::setText(std::string text) {
+	uiEditableComboboxSetText(uiEditableCombobox(getHandle()), text.c_str());
 	if (onChangedCallback != NULL) {
 		(*onChangedCallback)();
 	}
 }
 
-const char *UiEditableCombobox::getText() {
-	return uiEditableComboboxText((uiEditableCombobox *)getHandle());
+std::string UiEditableCombobox::getText() {
+	char *char_ptr = uiEditableComboboxText(uiEditableCombobox(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 NBIND_CLASS(UiEditableCombobox) {
