@@ -1,3 +1,4 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
@@ -8,7 +9,7 @@ class UiCombobox : public UiControl {
   public:
 	UiCombobox();
 	DEFINE_CONTROL_METHODS()
-	void append(const char *text);
+	void append(std::string text);
 	int getSelected();
 	void setSelected(int n);
 };
@@ -19,8 +20,8 @@ INHERITS_CONTROL_METHODS(UiCombobox)
 
 IMPLEMENT_EVENT(UiCombobox, uiCombobox, onSelected, uiComboboxOnSelected)
 
-void UiCombobox::append(const char *text) {
-	uiComboboxAppend((uiCombobox *)getHandle(), text);
+void UiCombobox::append(std::string text) {
+	uiComboboxAppend((uiCombobox *)getHandle(), text.c_str());
 }
 
 int UiCombobox::getSelected() {
