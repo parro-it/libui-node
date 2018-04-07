@@ -1,11 +1,13 @@
-// A2DD.h
 #ifndef ui_node
 #define ui_node
 
 #include <map>
-#include <vector> // TODO: this has to be removed once UiArea classes
+/*
+ TODO: this has to be removed once UiArea classes
+ declarations are moved to their own cc files
+ */
+#include <vector>
 #include "nbind/api.h"
-// declarations are moved to their own cc files
 
 #define DEFINE_EVENT(NAME)                                                     \
   private:                                                                     \
