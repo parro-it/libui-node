@@ -1,3 +1,4 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
@@ -10,15 +11,15 @@ class UiWindow {
 	uiWindow *win;
 
   public:
-	UiWindow(const char *title, int width, int height, bool hasMenubar);
+	UiWindow(std::string title, int width, int height, bool hasMenubar);
 	uiWindow *getHandle();
 	void show();
 	void close();
 	void setMargined(bool margined);
 	bool getMargined();
 	void setChild(UiControl *control);
-	void setTitle(const char *title);
-	const char *getTitle();
+	void setTitle(std::string title);
+	std::string getTitle();
 	bool getFullscreen();
 	void setFullscreen(bool value);
 	bool getBorderless();
@@ -35,7 +36,7 @@ static int UiWindow_onClosing(uiWindow *w, void *data) {
 
 void UiWindow::onClosing(nbind::cbFunction &cb) {
 	onClosingCallback = new nbind::cbFunction(cb);
-	uiWindowOnClosing((uiWindow *)getHandle(), UiWindow_onClosing,
+	uiWindowOnClosing(uiWindow(getHandle()), UiWindow_onClosing,
 					  onClosingCallback);
 }
 
@@ -46,13 +47,13 @@ static void UiWindow_onContentSizeChanged(uiWindow *w, void *data) {
 
 void UiWindow::onContentSizeChanged(nbind::cbFunction &cb) {
 	onContentSizeChangedCallback = new nbind::cbFunction(cb);
-	uiWindowOnContentSizeChanged((uiWindow *)getHandle(),
+	uiWindowOnContentSizeChanged(uiWindow(getHandle()),
 								 UiWindow_onContentSizeChanged,
 								 onContentSizeChangedCallback);
 }
 
-UiWindow::UiWindow(const char *title, int width, int height, bool hasMenubar) {
-	win = uiNewWindow(title, width, height, hasMenubar);
+UiWindow::UiWindow(std::string title, int width, int height, bool hasMenubar) {
+	win = uiNewWindow(title.c_str(), width, height, hasMenubar);
 }
 
 uiWindow *UiWindow::getHandle() {
@@ -79,12 +80,15 @@ void UiWindow::setChild(UiControl *control) {
 	uiWindowSetChild(win, control->getHandle());
 }
 
-void UiWindow::setTitle(const char *title) {
-	uiWindowSetTitle(win, title);
+void UiWindow::setTitle(std::string title) {
+	uiWindowSetTitle(win, title.c_str());
 }
 
-const char *UiWindow::getTitle() {
-	return uiWindowTitle(win);
+std::string UiWindow::getTitle() {
+	char *char_ptr = uiWindowTitle(win);
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 bool UiWindow::getFullscreen() {
@@ -114,7 +118,7 @@ Size UiWindow::getContentSize() {
 }
 
 NBIND_CLASS(UiWindow) {
-	construct<const char *, int, int, bool>();
+	construct<std::string, int, int, bool>();
 	method(show);
 	method(close);
 	method(setChild);
@@ -138,22 +142,28 @@ NBIND_CLASS(UiWindow) {
 
 struct UiDialogs {
 
-	static char *openFile(UiWindow *parent) {
-		return uiOpenFile(parent->getHandle());
+	static std::string openFile(UiWindow *parent) {
+		char *char_ptr = uiOpenFile(parent->getHandle());
+		std::string s(char_ptr);
+		uiFreeText(char_ptr);
+		return s;
 	}
 
-	static char *saveFile(UiWindow *parent) {
-		return uiSaveFile(parent->getHandle());
+	static std::string saveFile(UiWindow *parent) {
+		char *char_ptr = uiSaveFile(parent->getHandle());
+		std::string s(char_ptr);
+		uiFreeText(char_ptr);
+		return s;
 	}
 
-	static void msgBox(UiWindow *parent, const char *title,
-					   const char *description) {
-		uiMsgBox(parent->getHandle(), title, description);
+	static void msgBox(UiWindow *parent, std::string title,
+					   std::string description) {
+		uiMsgBox(parent->getHandle(), title.c_str(), description.c_str());
 	}
 
-	static void msgBoxError(UiWindow *parent, const char *title,
-							const char *description) {
-		uiMsgBoxError(parent->getHandle(), title, description);
+	static void msgBoxError(UiWindow *parent, std::string title,
+							std::string description) {
+		uiMsgBoxError(parent->getHandle(), title.c_str(), description.c_str());
 	}
 };
 
