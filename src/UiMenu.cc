@@ -1,3 +1,4 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
@@ -23,9 +24,9 @@ class UiMenu {
 	uiMenu *handle;
 
   public:
-	UiMenu(const char *name);
-	UiMenuItem *appendItem(const char *name);
-	UiMenuItem *appendCheckItem(const char *name);
+	UiMenu(std::string name);
+	UiMenuItem *appendItem(std::string name);
+	UiMenuItem *appendCheckItem(std::string name);
 	UiMenuItem *appendQuitItem();
 	UiMenuItem *appendPreferencesItem();
 	UiMenuItem *appendAboutItem();
@@ -63,16 +64,16 @@ void UiMenuItem::setChecked(bool checked) {
 	uiMenuItemSetChecked(handle, checked);
 }
 
-UiMenu::UiMenu(const char *name) {
-	handle = uiNewMenu(name);
+UiMenu::UiMenu(std::string name) {
+	handle = uiNewMenu(name.c_str());
 }
 
-UiMenuItem *UiMenu::appendItem(const char *name) {
-	return new UiMenuItem(uiMenuAppendItem(handle, name));
+UiMenuItem *UiMenu::appendItem(std::string name) {
+	return new UiMenuItem(uiMenuAppendItem(handle, name.c_str()));
 }
 
-UiMenuItem *UiMenu::appendCheckItem(const char *name) {
-	return new UiMenuItem(uiMenuAppendCheckItem(handle, name));
+UiMenuItem *UiMenu::appendCheckItem(std::string name) {
+	return new UiMenuItem(uiMenuAppendCheckItem(handle, name.c_str()));
 }
 
 UiMenuItem *UiMenu::appendQuitItem() {
@@ -92,7 +93,7 @@ void UiMenu::appendSeparator() {
 }
 
 NBIND_CLASS(UiMenu) {
-	construct<const char *>();
+	construct<std::string>();
 	method(appendItem);
 	method(appendCheckItem);
 	method(appendQuitItem);
