@@ -1,6 +1,8 @@
+#include <string>
 #include "../ui.h"
 #include "ui-node.h"
 #include "nbind/api.h"
+#include "includes/entry.h"
 
 class UiEntryBase : public UiControl {
 	DEFINE_EVENT(onChanged)
@@ -37,39 +39,42 @@ class UiSearchEntry : public UiEntryBase {
 
 UiEntryBase::UiEntryBase(uiControl *hnd) : UiControl(hnd) {}
 
-void UiEntryBase::setText(const char *text) {
-	uiEntrySetText((uiEntry *)getHandle(), text);
+void UiEntryBase::setText(std::string text) {
+	uiEntrySetText(uiEntry(getHandle()), text.c_str());
 	if (onChangedCallback != NULL) {
 		(*onChangedCallback)();
 	}
 }
 
-const char *UiEntryBase::getText() {
-	return uiEntryText((uiEntry *)getHandle());
+std::string UiEntryBase::getText() {
+	char *char_ptr = uiEntryText(uiEntry(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 void UiEntryBase::setReadOnly(bool readOnly) {
-	uiEntrySetReadOnly((uiEntry *)getHandle(), readOnly);
+	uiEntrySetReadOnly(uiEntry(getHandle()), readOnly);
 }
 
 bool UiEntryBase::getReadOnly() {
-	return uiEntryReadOnly((uiEntry *)getHandle());
+	return uiEntryReadOnly(uiEntry(getHandle()));
 }
 
 IMPLEMENT_EVENT(UiEntryBase, uiEntry, onChanged, uiEntryOnChanged)
 
-UiEntry::UiEntry() : UiEntryBase((uiControl *)uiNewEntry()) {}
+UiEntry::UiEntry() : UiEntryBase(uiControl(uiNewEntry())) {}
 
 INHERITS_CONTROL_METHODS(UiEntry)
 INHERITS_ENTRY_METHODS(UiEntry)
 
 UiPasswordEntry::UiPasswordEntry()
-	: UiEntryBase((uiControl *)uiNewPasswordEntry()) {}
+	: UiEntryBase(uiControl(uiNewPasswordEntry())) {}
 
 INHERITS_CONTROL_METHODS(UiPasswordEntry)
 INHERITS_ENTRY_METHODS(UiPasswordEntry)
 
-UiSearchEntry::UiSearchEntry() : UiEntryBase((uiControl *)uiNewSearchEntry()) {}
+UiSearchEntry::UiSearchEntry() : UiEntryBase(uiControl(uiNewSearchEntry())) {}
 
 INHERITS_CONTROL_METHODS(UiSearchEntry)
 INHERITS_ENTRY_METHODS(UiSearchEntry)

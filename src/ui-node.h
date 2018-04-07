@@ -81,38 +81,6 @@
 	getset(getVisible, setVisible);                                            \
 	getset(getEnabled, setEnabled);
 
-#define DEFINE_ENTRY_METHODS()                                                 \
-	void setText(const char *text);                                            \
-	const char *getText();                                                     \
-	void setReadOnly(bool readOnly);                                           \
-	bool getReadOnly();
-
-#define INHERITS_ENTRY_METHODS(CLASS)                                          \
-	void CLASS::setText(const char *text) {                                    \
-		UiEntryBase::setText(text);                                            \
-	}                                                                          \
-	const char *CLASS::getText() {                                             \
-		return UiEntryBase::getText();                                         \
-	}                                                                          \
-	void CLASS::setReadOnly(bool readOnly) {                                   \
-		UiEntryBase::setReadOnly(readOnly);                                    \
-	}                                                                          \
-	bool CLASS::getReadOnly() {                                                \
-		return UiEntryBase::getReadOnly();                                     \
-	}                                                                          \
-	void CLASS::onChanged(nbind::cbFunction &cb) {                             \
-		UiEntryBase::onChanged(cb);                                            \
-	}
-
-#define DECLARE_ENTRY_METHODS()                                                \
-	getset(getText, setText);                                                  \
-	getset(getReadOnly, setReadOnly);                                          \
-	method(onChanged);                                                         \
-	method(getText);                                                           \
-	method(setText);                                                           \
-	method(getReadOnly);                                                       \
-	method(setReadOnly);
-
 #define DEFINE_BOX_METHODS()                                                   \
 	void append(UiControl *control, bool stretchy);                            \
 	void deleteAt(int index);                                                  \
