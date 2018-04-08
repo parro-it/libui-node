@@ -599,6 +599,7 @@ class DrawBrush {
 
   public:
 	DrawBrush();
+	void free();
 	Color getColor();
 	void setColor(Color value);
 	Point getStart();

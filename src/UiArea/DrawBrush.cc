@@ -6,14 +6,12 @@ DrawBrush::DrawBrush() {
 	b = new uiDrawBrush();
 }
 
-/*
-free:
-	if(b->NumStops > 0){
+void DrawBrush::free() {
+	if (b->NumStops > 0) {
 		delete[] b->Stops;
 	}
 	delete b;
-
-*/
+}
 
 uiDrawBrush *DrawBrush::toStruct() {
 	return b;
@@ -68,18 +66,21 @@ std::vector<BrushGradientStop> DrawBrush::getStops() {
 	std::vector<BrushGradientStop> v;
 	v.reserve(b->NumStops);
 	for (size_t i = 0; i < b->NumStops; i++) {
-		v[i].setPos(b->Stops[i].Pos);
-		v[i].setColor(
-			Color(b->Stops[i].R, b->Stops[i].G, b->Stops[i].B, b->Stops[i].A));
+		v.insert(v.begin() + i,
+				 BrushGradientStop(b->Stops[i].Pos,
+								   Color(b->Stops[i].R, b->Stops[i].G,
+										 b->Stops[i].B, b->Stops[i].A)));
 	}
-	// printf("%f %f %f %f\n", v[0].getColor().getR(), v[0].getColor().getG(),
-	// v[0].getColor().getB(), v[0].getColor().getA());
 	return v;
 }
 
 void DrawBrush::setStops(std::vector<BrushGradientStop> value) {
-	if (value.size() > 0) {
-		b->NumStops = value.size();
+	if (b->NumStops > 0) {
+		delete[] b->Stops;
+	}
+
+	b->NumStops = value.size();
+	if (b->NumStops > 0) {
 		b->Stops = new uiDrawBrushGradientStop[b->NumStops];
 
 		for (size_t i = 0; i < b->NumStops; i++) {
@@ -92,6 +93,7 @@ void DrawBrush::setStops(std::vector<BrushGradientStop> value) {
 
 NBIND_CLASS(DrawBrush) {
 	construct<>();
+	method(free);
 	method(getStart);
 	method(setStart);
 	method(getColor);
