@@ -128,6 +128,23 @@ const brushType = {
 	// IMPL uiDrawBrushTypeImage: 3
 };
 
+const lineCap = {
+	flat: 0,
+	round: 1,
+	square: 2
+};
+
+const lineJoin = {
+	miter: 0,
+	round: 1,
+	bevel: 2
+};
+
+const fillMode = {
+	winding: 0,
+	alternate: 1
+};
+
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
@@ -136,5 +153,8 @@ module.exports.Point = Point;
 module.exports.Color = Color;
 module.exports.BrushGradientStop = BrushGradientStop;
 module.exports.brushType = brushType;
+module.exports.lineCap = lineCap;
+module.exports.lineJoin = lineJoin;
+module.exports.fillMode = fillMode;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;

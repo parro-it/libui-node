@@ -7,29 +7,45 @@
 UiArea provide a canvas you can draw on. It also receives keyboard and mouse events, supports scrolling, is DPI aware, and has several other useful features.
 
 ```js
-var libui = require('libui');
-var colorDodgerBlue = 0x1E90FF;
-var uiDrawFillModeWinding = 0;
+var libui = require('.');
+const colorDodgerBlue = 0x1E90FF;
 
-var win = new libui.UiWindow('UiEntry example', 640, 480, true);
+const win = new libui.UiWindow('UiArea example', 640, 480, true);
 
-var handler = {
-	draw: function draw(area, p) {
-		// draw a filled rectangle with dodger blue color
-		var brush = buildSolidBrush(colorDodgerBlue, 1.0);
-		var path = new libui.UiDrawPath(uiDrawFillModeWinding);
+// Helper to quickly set a brush color
+function buildSolidBrush(color, alpha) {
+	let component;
+
+	component = (color >> 16) & 0xff;
+	const R = component / 255;
+	component = (color >> 8) & 0xff;
+	const G = component / 255;
+	component = color & 0xff;
+	const B = component / 255;
+	const A = alpha;
+
+	const brush = new libui.DrawBrush();
+	brush.color = new libui.Color(R, G, B, A);
+	brush.type = libui.brushType.solid;
+
+	return brush;
+}
+
+const widget = new libui.UiArea(
+	function draw(area, p) {
+		// fill the area with a dodger blue color rectangle
+		const brush = buildSolidBrush(colorDodgerBlue, 1.0);
+		const path = new libui.UiDrawPath(libui.fillMode.winding);
 		path.addRectangle(0, 0, p.getAreaWidth(), p.getAreaHeight());
 		path.end();
 		p.getContext().fill(path, brush);
 		path.freePath();
 	},
-	mouseEvent: function () {},
-	mouseCrossed: function () {},
-	dragBroken: function () {},
-	keyEvent: function () {}
-};
-
-var widget = new libui.UiArea(handler);
+	function mouseEvent() {},
+	function mouseCrossed() {},
+	function dragBroken() {},
+	function keyEvent() {}
+);
 
 win.setChild(widget);
 
@@ -45,29 +61,53 @@ libui.startLoop();
 
 # Drawing concepts
 
-## The Area Handler
+## The Area Callbacks
 
-A UiArea is driven by an *area handler*. An area handler is an object with several methods that UiArea calls to do certain tasks. To create an area handler, simply have an object that implements following methods:
+A UiArea calls several methods to do certain tasks. To create an area, 5 function callbacks need to be passed:
 
 ```js
-var handler = {
-	draw: function draw(area, p) {
-
-	},
-	mouseEvent: function () {
-
-	},
-	mouseCrossed: function () {
-
-	},
-	dragBroken: function () {
-
-	},
-	keyEvent: function () {
-
-	}
-}
+new libui.UiArea(
+    function draw(area, p) {},
+    function mouseEvent(area, event) {},
+    function mouseCrossed(area, didLeave) {},
+    function dragBroken(area) {},
+    function keyEvent(area, event) {}
+);
 ```
+
+### draw
+
+```js
+function draw(area, drawParams){}
+```
+
+The actual drawing happens in this function. It gets called when the area was created or got resized with the area itself and [UiAreaDrawParams](#uiareadrawparams) as parameters.
+
+### mouseEvent
+
+```js
+function mouseEvent(area, event){ }
+```
+
+Called when the mouse was moved or clicked over the area. Event is an [UiAreaMouseEvent](#uiareamouseevent).
+
+
+### mouseCrossed
+
+```js
+function mouseCrossed(area, didLeave) { },
+```
+Called when the mouse entered (`didLeave == true`) or left the area.
+
+### dragBroken
+
+### keyEvent
+
+```js
+function keyEvent(area, keyEvent) {}
+```
+Called when a key was pressed. Return `true` to indicate that the key event was handled (a menu item with that accelerator won't active, no error sound on macOS). Event is an [UiAreaKeyEvent](#uiareakeyevent).
+
 
 ## Drawing
 
@@ -75,7 +115,33 @@ Unlike drawing canvas controls in other toolkits, UiArea does **not** have a fix
 
 The visible drawing area is called the *content area* by the drawing machinery.
 
-When a part of the UiArea needs to be redrawn, the area handler's `draw()` method is called. It receives the UiArea instance and an UiAreaDrawParams object with parameters necessary for drawing.
+When the UiArea needs to be redrawn, the area's `draw()` method is called.
+
+
+## The Coordinate System and Points
+
+In the traditional way we think of drawing, we think of rendering onto a plane of pixels. The pixels have a fixed size, and coordinates refer to the entire space that a pixel occupies.
+
+When we say "draw a line from (0, 0) to (5, 5) exclusive", we mean "fill the spaces that are occupied by the pixels at (0, 0), (1, 1), (2, 2), (3, 3), and (4, 4)".
+
+But now let's pretend we're working in a coordinate system where the point at (x, y) corresponds strictly to the top-left corner of the area that a pixel occupies.
+
+In this model, when we say "draw a line from (0, 0) to (5, 5)", we mean "draw a straight line filling every pixel that we cross if we traced a line from the top-left corner of what we used to call the pixel at (0, 0 to the top-left corner of what we used to call the pixel at (5, 5)".
+
+There are both technical and non-technical reasons for following this model. The technical reason is that implementing certain drawing operations, such as filling shapes, is much easier if we do things this way. The [cairo FAQ](http://www.cairographics.org/FAQ/#sharp_lines) explains in more detail. The non-technical reason has to do with DPI independence.
+
+## DPI Independence vs. DPI Awareness
+
+An upcoming trend in computing is the high-resolution display. These displays fit more dots in the same area that older screens could. The conventional term for the number of dots that fit in a given area is the "dots per inch", or DPI, measure.
+
+A naive approach to writing programs for these new displays is to think "well, if I just take the DPI and only use it in calculations where I need to deal with real-world measurements such as inches, rendering pure pixels as I always have, I should be fine". This kind of design is centered around *DPI awareness*. I know, I used to believe this too. But here's a little secret: this is wrong! A common myth about high-resolution monitors among non-technical people is that it makes the stuff on screen smaller.
+
+Instead, what we want out of a high-resolution display is *to show a more detailed view of the same image in the same space*. [The first image on Apple's discussion of the topic](https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Art/backing_store_2x.png) is the perfect example. On the left, you see a low-resolution monitor. Notice how big chunks of the shapes go into the boxes. When the code that maps points to pixels runs, it can't have two colors in one square, so it has to decide what color to use.
+
+# Classes
+---
+
+# UiAreaDrawParams
 
 ```js
 class UiAreaDrawParams {
@@ -105,34 +171,12 @@ class UiAreaDrawParams {
 
 `dpiX` and `dpiY` are the uiArea's current DPI in the X and Y directions, respectively. Do not save these values; they are not guaranteed to stay the same once `draw()` returns.
 
-## The Coordinate System and Points
-
-In the traditional way we think of drawing, we think of rendering onto a plane of pixels. The pixels have a fixed size, and coordinates refer to the entire space that a pixel occupies.
-
-When we say "draw a line from (0, 0) to (5, 5) exclusive", we mean "fill the spaces that are occupied by the pixels at (0, 0), (1, 1), (2, 2), (3, 3), and (4, 4)".
-
-But now let's pretend we're working in a coordinate system where the point at (x, y) corresponds strictly to the top-left corner of the area that a pixel occupies.
-
-In this model, when we say "draw a line from (0, 0) to (5, 5)", we mean "draw a straight line filling every pixel that we cross if we traced a line from the top-left corner of what we used to call the pixel at (0, 0 to the top-left corner of what we used to call the pixel at (5, 5)".
-
-There are both technical and non-technical reasons for following this model. The technical reason is that implementing certain drawing operations, such as filling shapes, is much easier if we do things this way. The [cairo FAQ](http://www.cairographics.org/FAQ/#sharp_lines) explains in more detail. The non-technical reason has to do with DPI independence.
-
-## DPI Independence vs. DPI Awareness
-
-An upcoming trend in computing is the high-resolution display. These displays fit more dots in the same area that older screens could. The conventional term for the number of dots that fit in a given area is the "dots per inch", or DPI, measure.
-
-A naive approach to writing programs for these new displays is to think "well, if I just take the DPI and only use it in calculations where I need to deal with real-world measurements such as inches, rendering pure pixels as I always have, I should be fine". This kind of design is centered around *DPI awareness*. I know, I used to believe this too. But here's a little secret: this is wrong! A common myth about high-resolution monitors among non-technical people is that it makes the stuff on screen smaller.
-
-Instead, what we want out of a high-resolution display is *to show a more detailed view of the same image in the same space*. [The first image on Apple's discussion of the topic](https://developer.apple.com/library/mac/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Art/backing_store_2x.png) is the perfect example. On the left, you see a low-resolution monitor. Notice how big chunks of the shapes go into the boxes. When the code that maps points to pixels runs, it can't have two colors in one square, so it has to decide what color to use.
-
-# Classes
----
 
 # UiDrawContext
 
 > The UiDrawContext class is used for drawing rectangles, text, images and other objects onto the UiArea widget. It provides the 2D rendering context for the drawing surface of a UiArea widget.
 
-To get an object of this interface, use the `getContext` method of the `UiAreaDrawParams` argument you receive in your handler `draw` method:
+To get an object of this interface, use the `getContext` method of the `UiAreaDrawParams` argument you receive in your `draw` method:
 
 ```js
 	function draw(area, p) {
@@ -207,9 +251,9 @@ Draws a given text at the given (x,y) position.
 
 An application fills the interior of a path using one of two fill modes: alternate or winding. The mode determines how to fill and clip the interior of a closed figure.
 
-The default mode is Alternate. To determine the interiors of closed figures in the alternate mode, draw a line from any arbitrary start point in the path to some point obviously outside the path. If the line crosses an odd number of path segments, the starting point is inside the closed region and is therefore part of the fill or clipping area. An even number of crossings means that the point is not in an area to be filled or clipped. An open figure is filled or clipped by using a line to connect the last point to the first point of the figure.
+The default mode is Alternate (`libui.fillMode.alternate`). To determine the interiors of closed figures in the alternate mode, draw a line from any arbitrary start point in the path to some point obviously outside the path. If the line crosses an odd number of path segments, the starting point is inside the closed region and is therefore part of the fill or clipping area. An even number of crossings means that the point is not in an area to be filled or clipped. An open figure is filled or clipped by using a line to connect the last point to the first point of the figure.
 
-The Winding mode considers the direction of the path segments at each intersection. It adds one for every clockwise intersection, and subtracts one for every counterclockwise intersection. If the result is nonzero, the point is considered inside the fill or clip area. A zero count means that the point lies outside the fill or clip area.
+The Winding mode (`libui.fillMode.winding`) considers the direction of the path segments at each intersection. It adds one for every clockwise intersection, and subtracts one for every counterclockwise intersection. If the result is nonzero, the point is considered inside the fill or clip area. A zero count means that the point lies outside the fill or clip area.
 A figure is considered clockwise or counterclockwise based on the order in which the segments of the figure are drawn.
 
 
@@ -298,3 +342,191 @@ End the path leaving the figure open.
 Causes the point of the pen to move back to the start of the current sub-path. It tries to draw a straight line from the current point to the start. If the shape has already been closed or has only one point, this function does nothing.
 
 It end the path.
+
+
+# DrawBrush
+
+> Defines the color(s) to draw a path with.
+
+## Methods
+
+### free
+
+Free the DrawBrush object.
+
+### setType/getType
+
+Sets and gets the brush type.
+
+**Arguments**
+
+* type
+	* `libui.brushType.solid` for a solid color
+	* `libui.brushType.linearGradient` for linear gradient
+	* `libui.brushType.radialGradient` for a radial gradient
+
+
+It's also possible to use the `type` property:
+
+```js
+myBrush.type = libui.brushType.radialGradient;
+```
+
+### setColor/getColor
+
+Sets and gets the brush's color (only used when type is `libui.brushType.solid`).
+
+**Arguments**
+
+* color: Color
+
+
+It's also possible to use the `color` property:
+
+```js
+myBrush.color = new libui.Color(1, 0, 0, 1);
+```
+
+### setStart/getStart
+
+Sets and gets the brush's gradient start position (only used when type is a gradient). For a radial gradient, this is the center.
+
+**Arguments**
+
+* p: Point
+
+It's also possible to use the `start` property:
+
+```js
+myBrush.start = new libui.Point(200,100);
+```
+
+### setEnd/getEnd
+
+Sets and gets the brush's gradient end position (only used when type is a gradient). For a radial gradient, this is the center of the outer circle.
+
+**Arguments**
+
+* p: Point
+
+It's also possible to use the `end` property:
+
+```js
+myBrush.end = new libui.Point(300,200);
+```
+
+## setOuterRadius/getOuterRadius
+
+Sets and gets the radius of a radial gradient's outer circle.
+
+**Arguments**
+
+* p: Point
+
+It's also possible to use the `outerRadius` property:
+
+```js
+myBrush.outerRadius = new libui.Point(300,200);
+```
+
+## setStops/getStops
+
+Sets and gets the radius of a radial gradient's outer circle.
+
+**Arguments**
+
+* s: Array<BrushGradientStop>
+
+It's also possible to use the `stops` property:
+
+```js
+myBrush.stops = [
+	new libui.BrushGradientStop(0, new libui.Color(1, 0, 0, 1)),
+	new libui.BrushGradientStop(1, new libui.Color(0, 1, 0, 1))
+];
+```
+
+# BrushGradientStop
+
+> Represents a color value in a gradient.
+
+This concept is best described with an example: A rectangle is drawn at (0,0) and has a width of 100 and a height of 50. It should be filled with a gradient which goes along the diagonal from the top left (red) to the bottom right corner (blue).
+This is achieved by creating a linear gradient brush and setting it's start and end points to the corresponding corners of the rectangle:
+
+```js
+const linearBrush = new libui.DrawBrush();
+linearBrush.type = libui.brushType.linearGradient;
+linearBrush.start = new libui.Point(0, 0);
+linearBrush.end = new libui.Point(100, 50);
+```
+
+A BrushGradientStop defines where on the line between the start and end point a color stops lies. `pos = 0` corresponds to the `start` point and `pos = 1` to the `end` point.
+
+```js
+linearBrush.stops = [
+	new libui.BrushGradientStop(0, new libui.Color(1, 0, 0, 1)),
+	new libui.BrushGradientStop(1, new libui.Color(0, 0, 1, 1))
+];
+```
+
+For radial gradients, `pos = 0` corresponds to the center at the `start` point and `pos = 1` to the circle with the radius `outerRadius` and the center `end`.
+
+
+
+## Constructor
+
+**Arguments**
+
+* pos: number
+* color: Color
+
+## Methods
+
+### setPos/getPos
+
+Sets or gets the position of this stop.
+
+**Arguments**
+
+- pos: number
+
+### setColor/getColor
+
+Sets or gets the position of this stop.
+
+**Arguments**
+
+- color: color
+
+
+# DrawStrokeParams
+
+# UiDrawMatrix
+
+# UiAreaMouseEvent
+
+```js
+class UiAreaMouseEvent {
+	getX(): number,
+	getY(): number,
+	getAreaWidth(): number,
+	getAreaHeight(): number,
+	getDown(): number,
+	getUp(): number,
+	getCount(): number,
+	getModifiers(): number,
+	getHeld1To64(): number,
+}
+```
+
+
+# UiAreaKeyEvent
+```js
+class UiAreaKeyEvent {
+	getKey(): string,
+	getExtKey(): number,
+	getModifier(): number,
+	getModifiers(): number,
+	getUp(): bool
+}
+```
