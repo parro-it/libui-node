@@ -531,19 +531,18 @@ class DrawStrokeParams {
 
   public:
 	DrawStrokeParams();
+	void free();
 	int getCap();
 	int getJoin();
 	double getThickness();
 	double getMiterLimit();
 	std::vector<double> getDashes();
-	int getNumDashes();
 	double getDashPhase();
 	void setCap(int value);
 	void setJoin(int value);
 	void setThickness(double value);
 	void setMiterLimit(double value);
 	void setDashes(std::vector<double> value);
-	void setNumDashes(int value);
 	void setDashPhase(double value);
 	uiDrawStrokeParams *toStruct();
 	// void toJS(nbind::cbOutput output);
