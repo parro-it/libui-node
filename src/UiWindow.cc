@@ -67,6 +67,19 @@ void UiWindow::show() {
 
 void UiWindow::close() {
 	uiControlDestroy(uiControl(win));
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	if (onClosingCallback != nullptr) {
+		delete onClosingCallback;
+		onClosingCallback = nullptr;
+	}
+
+	if (onContentSizeChangedCallback != nullptr) {
+		delete onContentSizeChangedCallback;
+		onContentSizeChangedCallback = nullptr;
+	}
 }
 
 void UiWindow::setMargined(bool margined) {
