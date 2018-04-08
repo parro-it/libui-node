@@ -75,11 +75,17 @@
 	getset(getVisible, setVisible);                                            \
 	getset(getEnabled, setEnabled);
 
+typedef void (*DestroyCb)(uiControl *);
+
 class UiControl {
   private:
 	uiControl *handle;
 
   public:
+	DestroyCb originalDestroy;
+	bool destroyed;
+	void onDestroy(uiControl *);
+
 	uiControl *getHandle();
 	UiControl(uiControl *hnd);
 	DEFINE_CONTROL_METHODS()
