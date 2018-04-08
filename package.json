@@ -24,7 +24,7 @@
 		}
 	],
 	"scripts": {
-		"test": "ava && xo",
+		"test": "ava",
 		"start": "node examples/control-gallery.js",
 		"start-np": "node examples/node-pad.js",
 		"start-core": "node examples/core-api.js",
