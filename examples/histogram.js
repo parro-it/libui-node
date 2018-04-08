@@ -136,8 +136,7 @@ const handler = {
 				pointRadius,
 				0,
 				6.23,
-				0
-			);
+				0);
 			path.end();
 			// Use the same brush as for the histogram lines
 			p.getContext().fill(path, brush);
@@ -202,8 +201,7 @@ function inPoint(x, y, xtest, ytest) {
 		x >= xtest - pointRadius &&
 		x <= xtest + pointRadius &&
 		y >= ytest - pointRadius &&
-		y <= ytest + pointRadius
-	);
+		y <= ytest + pointRadius);
 }
 
 function redraw() {
@@ -237,8 +235,7 @@ function main() {
 		handler.MouseEvent,
 		handler.MouseCrossed,
 		handler.DragBroken,
-		handler.KeyEvent
-	);
+		handler.KeyEvent);
 	hbox.append(histogram, 1);
 
 	mainwin.show();

@@ -69,8 +69,7 @@ function mkControl(Class, defaults) {
 				}
 			} else if (
 				props[propName] !== undefined &&
-				props[propName] !== defaultValue
-			) {
+				props[propName] !== defaultValue) {
 				ctrl[propName] = props[propName];
 			}
 		}
@@ -139,8 +138,7 @@ function window(
 		borderless = false,
 		onClosing = null
 	},
-	...children
-) {
+	...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
 	win.margined = margined;
 	win.fullscreen = fullscreen;
