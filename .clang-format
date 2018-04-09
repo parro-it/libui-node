@@ -2,12 +2,14 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 TabWidth: 4
 UseTab: Always
-AllowShortBlocksOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Empty
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
 MaxEmptyLinesToKeep: 1
 ColumnLimit: 80
+AllowShortBlocksOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+---
+Language: Cpp
+AllowShortFunctionsOnASingleLine: Empty
 PointerAlignment: Right
 IncludeCategories:
   - Regex: "^<"
@@ -18,3 +20,11 @@ IncludeCategories:
     Priority: 2
   - Regex: '"nbind/.*"'
     Priority: 3
+
+---
+Language: JavaScript
+ColumnLimit: 0
+AllowShortFunctionsOnASingleLine: Empty
+JavaScriptQuotes: Single
+IndentCaseLabels: true
+SpacesInContainerLiterals: false
