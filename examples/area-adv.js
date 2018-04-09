@@ -65,11 +65,14 @@ function main() {
 	const mainwin = new libui.UiWindow('libui textDrawArea Example', 400, 400, 1);
 	mainwin.margined = true;
 	mainwin.onClosing(() => {
+		mainwin.close();
 		libui.stopLoop();
 	});
 
 	const textDrawArea = new libui.UiArea(handlerDraw, noop, noop, noop, noop);
-	mainwin.setChild(textDrawArea);
+	const wrapper = new libui.UiVerticalBox();
+	wrapper.append(textDrawArea, true);
+	mainwin.setChild(wrapper);
 
 	mainwin.show();
 
