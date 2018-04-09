@@ -7,7 +7,7 @@ DrawStrokeParams::DrawStrokeParams() {
 	sp = new uiDrawStrokeParams();
 }
 
-void DrawStrokeParams::free() {
+DrawStrokeParams::~DrawStrokeParams() {
 	if (sp->NumDashes > 0) {
 		delete[] sp->Dashes;
 	}
@@ -77,7 +77,7 @@ uiDrawStrokeParams *DrawStrokeParams::toStruct() {
 
 NBIND_CLASS(DrawStrokeParams) {
 	construct<>();
-	method(free);
+
 	method(getCap);
 	method(getJoin);
 	method(getThickness);

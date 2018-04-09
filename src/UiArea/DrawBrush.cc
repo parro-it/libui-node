@@ -6,7 +6,7 @@ DrawBrush::DrawBrush() {
 	b = new uiDrawBrush();
 }
 
-void DrawBrush::free() {
+DrawBrush::~DrawBrush() {
 	if (b->NumStops > 0) {
 		delete[] b->Stops;
 	}
@@ -93,7 +93,6 @@ void DrawBrush::setStops(std::vector<BrushGradientStop> value) {
 
 NBIND_CLASS(DrawBrush) {
 	construct<>();
-	method(free);
 	method(getStart);
 	method(setStart);
 	method(getColor);

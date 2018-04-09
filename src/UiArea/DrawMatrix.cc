@@ -6,7 +6,7 @@ UiDrawMatrix::UiDrawMatrix() {
 	m = new uiDrawMatrix();
 }
 
-void UiDrawMatrix::free() {
+UiDrawMatrix::~UiDrawMatrix() {
 	delete m;
 }
 
@@ -110,7 +110,6 @@ SizeDouble UiDrawMatrix::transformSize(SizeDouble value) {
 
 NBIND_CLASS(UiDrawMatrix) {
 	construct<>();
-
 	method(getM11);
 	method(getM12);
 	method(getM21);

@@ -531,7 +531,7 @@ class DrawStrokeParams {
 
   public:
 	DrawStrokeParams();
-	void free();
+	~DrawStrokeParams();
 	int getCap();
 	int getJoin();
 	double getThickness();
@@ -553,7 +553,7 @@ class UiDrawMatrix {
 
   public:
 	UiDrawMatrix();
-	void free();
+	~UiDrawMatrix();
 	uiDrawMatrix *getStruct();
 	double getM11();
 	double getM12();
@@ -599,7 +599,7 @@ class DrawBrush {
 
   public:
 	DrawBrush();
-	void free();
+	~DrawBrush();
 	Color getColor();
 	void setColor(Color value);
 	Point getStart();
