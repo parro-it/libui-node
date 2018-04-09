@@ -2,7 +2,7 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-DrawTextLayout::DrawTextLayout(UiAttributedString *str, UiFontDescriptor *defaultFont, double width, int align) {
+DrawTextLayout::DrawTextLayout(AttributedString *str, FontDescriptor *defaultFont, double width, int align) {
 	uiDrawTextLayoutParams params = {
 		str->getHandle(),
 		defaultFont->getHandle(),
@@ -29,7 +29,7 @@ SizeDouble DrawTextLayout::getExtents() {
 }
 
 NBIND_CLASS(DrawTextLayout) {
-	construct<UiAttributedString *, UiFontDescriptor *, double, int>();
+	construct<AttributedString *, FontDescriptor *, double, int>();
 	method(free);
 	method(getExtents);
 }

@@ -3,12 +3,12 @@
 #include "nbind/nbind.h"
 #include <cstring>
 
-UiFontDescriptor::UiFontDescriptor(uiFontDescriptor * desc) {
+FontDescriptor::FontDescriptor(uiFontDescriptor * desc) {
 	d = desc;
 	buttonCleanup = 1;
 }
 
-UiFontDescriptor::UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch) {
+FontDescriptor::FontDescriptor(const char *family, double size, int weight, int italic, int stretch) {
     d = new uiFontDescriptor();
 
     d->Family = new char[std::strlen(family) + 1];
@@ -19,7 +19,7 @@ UiFontDescriptor::UiFontDescriptor(const char *family, double size, int weight, 
     d->Stretch = stretch;
 }
 
-void UiFontDescriptor::free() {
+void FontDescriptor::free() {
 	if(buttonCleanup){
 		uiFreeFontButtonFont(d);
 	} else {
@@ -28,32 +28,32 @@ void UiFontDescriptor::free() {
 	delete d;
 }
 
-char *UiFontDescriptor::getFamily() {
+char *FontDescriptor::getFamily() {
 	return d->Family;
 }
 
-double UiFontDescriptor::getSize() {
+double FontDescriptor::getSize() {
 	return d->Size;
 }
 
-int UiFontDescriptor::getWeight() {
+int FontDescriptor::getWeight() {
 	return d->Weight;
 }
 
-int UiFontDescriptor::getItalic() {
+int FontDescriptor::getItalic() {
 	return d->Italic;
 }
 
-int UiFontDescriptor::getStretch() {
+int FontDescriptor::getStretch() {
 	return d->Stretch;
 }
 
-uiFontDescriptor *UiFontDescriptor::getHandle(){
+uiFontDescriptor *FontDescriptor::getHandle(){
 	return d;
 }
 
 
-NBIND_CLASS(UiFontDescriptor) {
+NBIND_CLASS(FontDescriptor) {
 	construct<const char *, double, int, int, int>();
 	method(free);
 	method(getFamily);

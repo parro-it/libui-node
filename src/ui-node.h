@@ -635,16 +635,16 @@ class UiDrawPath {
   void end();
 };
 
-class UiOpenTypeFeatures {
+class OpenTypeFeatures {
   private:
     uiOpenTypeFeatures *f;
   public:
-    UiOpenTypeFeatures();
-    UiOpenTypeFeatures(uiOpenTypeFeatures *feat);
+    OpenTypeFeatures();
+    OpenTypeFeatures(uiOpenTypeFeatures *feat);
     void free();
     uiOpenTypeFeatures *getHandle();
 
-    static UiOpenTypeFeatures *clone(UiOpenTypeFeatures *f2);
+    static OpenTypeFeatures *clone(OpenTypeFeatures *f2);
     void add(const char *tag, uint32_t value);
     void remove(const char *tag);
     int get(const char *tag, uint32_t *value);
@@ -653,13 +653,13 @@ class UiOpenTypeFeatures {
 
 };
 
-class UiFontAttribute {
+class FontAttribute {
   private:
     uiAttribute* a;
     int appended = 0;
 
   public:
-    UiFontAttribute(uiAttribute *a);
+    FontAttribute(uiAttribute *a);
     void free();
     void setAppended();
     int getAttributeType();
@@ -675,27 +675,27 @@ class UiFontAttribute {
     Color getColor();
     int getUnderline();
     int getUnderlineColor(Color *c);
-    UiOpenTypeFeatures *getOTFeatures();
+    OpenTypeFeatures *getOTFeatures();
 
-    static UiFontAttribute *newFamily(const char *family);
-    static UiFontAttribute *newSize(double size);
-    static UiFontAttribute *newWeight(int weightAttribute);
-    static UiFontAttribute *newItalic(int italicAttribute);
-    static UiFontAttribute *newStretch(int stretchAttribute);
-    static UiFontAttribute *newColor(Color c);
-    static UiFontAttribute *newBackground(Color c);
-    static UiFontAttribute *newUnderline(int underlineAttr);
-    static UiFontAttribute *newUnderlineColor2(int underlineColorAttr, Color c);
-    static UiFontAttribute *newOTFeatures(UiOpenTypeFeatures *otf);
+    static FontAttribute *newFamily(const char *family);
+    static FontAttribute *newSize(double size);
+    static FontAttribute *newWeight(int weightAttribute);
+    static FontAttribute *newItalic(int italicAttribute);
+    static FontAttribute *newStretch(int stretchAttribute);
+    static FontAttribute *newColor(Color c);
+    static FontAttribute *newBackground(Color c);
+    static FontAttribute *newUnderline(int underlineAttr);
+    static FontAttribute *newUnderlineColor2(int underlineColorAttr, Color c);
+    static FontAttribute *newOTFeatures(OpenTypeFeatures *otf);
 };
 
 
-class UiAttributedString {
+class AttributedString {
   private:
     uiAttributedString* s;
   public:
-    UiAttributedString(uiAttributedString *str);
-    UiAttributedString(const char *str);
+    AttributedString(uiAttributedString *str);
+    AttributedString(const char *str);
     void free();
     uiAttributedString *getHandle();
     const char * toString();
@@ -704,10 +704,10 @@ class UiAttributedString {
     void appendUnattributed(const char *str);
     void insertUnattributed(const char *str, size_t at);
     void deleteString(size_t start, size_t end);
-    void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
+    void setAttribute(FontAttribute *attr, size_t start, size_t end);
 
-    void appendAttributed(const char *str, UiFontAttribute *attr);
-    void appendAttributed(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
+    void appendAttributed(const char *str, FontAttribute *attr);
+    void appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2);
     // TODO multiple attr? does nbind support variadic arguments? or use array?
 
     void forEach(nbind::cbFunction& cb);
@@ -718,13 +718,13 @@ class UiAttributedString {
 
 };
 
-class UiFontDescriptor {
+class FontDescriptor {
   private:
     uiFontDescriptor *d;
     int buttonCleanup = 0;
   public:
-    UiFontDescriptor(uiFontDescriptor *d);
-    UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch);
+    FontDescriptor(uiFontDescriptor *d);
+    FontDescriptor(const char *family, double size, int weight, int italic, int stretch);
     void free();
     char *getFamily();
     double getSize();
@@ -739,7 +739,7 @@ class UiFontButton : public UiControl {
 
  public:
   UiFontButton();
-  UiFontDescriptor* getFont();
+  FontDescriptor* getFont();
   DEFINE_CONTROL_METHODS()
 };
 
@@ -749,7 +749,7 @@ class DrawTextLayout {
   uiDrawTextLayout* handle;
 
  public:
-  DrawTextLayout(UiAttributedString *s, UiFontDescriptor *defaultFont, double width, int align);
+  DrawTextLayout(AttributedString *s, FontDescriptor *defaultFont, double width, int align);
   void free();
   SizeDouble getExtents();
   uiDrawTextLayout* getHandle();

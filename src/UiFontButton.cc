@@ -9,10 +9,10 @@ INHERITS_CONTROL_METHODS(UiFontButton)
 
 IMPLEMENT_EVENT(UiFontButton, uiFontButton, onChanged, uiFontButtonOnChanged)
 
-UiFontDescriptor* UiFontButton::getFont() {
+FontDescriptor* UiFontButton::getFont() {
 	uiFontDescriptor *desc = new uiFontDescriptor();
 	uiFontButtonFont((uiFontButton*)getHandle(), desc);
-	return new UiFontDescriptor(desc);
+	return new FontDescriptor(desc);
 }
 
 NBIND_CLASS(UiFontButton) {
