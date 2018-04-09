@@ -47,6 +47,7 @@
 					],
 					"xcode_settings": {
 						"OTHER_LDFLAGS": [
+							"-fvisibility=hidden",
 							"-L<(module_root_dir)",
 							"-lui",
 							"-rpath",
