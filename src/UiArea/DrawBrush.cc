@@ -6,6 +6,13 @@ DrawBrush::DrawBrush() {
 	b = new uiDrawBrush();
 }
 
+DrawBrush::~DrawBrush() {
+	if (b->NumStops > 0) {
+		delete[] b->Stops;
+	}
+	delete b;
+}
+
 uiDrawBrush *DrawBrush::toStruct() {
 	return b;
 }
@@ -39,6 +46,14 @@ void DrawBrush::setEnd(Point value) {
 	b->Y1 = value.getY();
 }
 
+double DrawBrush::getOuterRadius() {
+	return b->OuterRadius;
+}
+
+void DrawBrush::setOuterRadius(double r) {
+	b->OuterRadius = r;
+}
+
 int DrawBrush::getType() {
 	return b->Type;
 }
@@ -48,11 +63,32 @@ void DrawBrush::setType(int value) {
 }
 
 std::vector<BrushGradientStop> DrawBrush::getStops() {
-	return std::vector<BrushGradientStop>();
+	std::vector<BrushGradientStop> v;
+	v.reserve(b->NumStops);
+	for (size_t i = 0; i < b->NumStops; i++) {
+		v.insert(v.begin() + i,
+				 BrushGradientStop(b->Stops[i].Pos,
+								   Color(b->Stops[i].R, b->Stops[i].G,
+										 b->Stops[i].B, b->Stops[i].A)));
+	}
+	return v;
 }
 
 void DrawBrush::setStops(std::vector<BrushGradientStop> value) {
-	// st = value;
+	if (b->NumStops > 0) {
+		delete[] b->Stops;
+	}
+
+	b->NumStops = value.size();
+	if (b->NumStops > 0) {
+		b->Stops = new uiDrawBrushGradientStop[b->NumStops];
+
+		for (size_t i = 0; i < b->NumStops; i++) {
+			Color c = value[i].getColor();
+			b->Stops[i] = {value[i].getPos(), c.getR(), c.getG(), c.getB(),
+						   c.getA()};
+		}
+	}
 }
 
 NBIND_CLASS(DrawBrush) {
@@ -63,6 +99,8 @@ NBIND_CLASS(DrawBrush) {
 	method(setColor);
 	method(getEnd);
 	method(setEnd);
+	method(getOuterRadius);
+	method(setOuterRadius);
 	method(getType);
 	method(setType);
 	method(setStops);
@@ -71,6 +109,7 @@ NBIND_CLASS(DrawBrush) {
 	getset(getColor, setColor);
 	getset(getStart, setStart);
 	getset(getEnd, setEnd);
+	getset(getOuterRadius, setOuterRadius);
 	getset(getType, setType);
 	getset(getStops, setStops);
 }

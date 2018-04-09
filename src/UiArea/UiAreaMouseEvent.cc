@@ -49,6 +49,7 @@ NBIND_CLASS(UiAreaMouseEvent) {
 	method(getAreaWidth);
 	method(getAreaHeight);
 	method(getDown);
+	method(getUp);
 	method(getCount);
 	method(getModifiers);
 	method(getHeld1To64);

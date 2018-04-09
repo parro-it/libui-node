@@ -531,19 +531,18 @@ class DrawStrokeParams {
 
   public:
 	DrawStrokeParams();
+	~DrawStrokeParams();
 	int getCap();
 	int getJoin();
 	double getThickness();
 	double getMiterLimit();
 	std::vector<double> getDashes();
-	int getNumDashes();
 	double getDashPhase();
 	void setCap(int value);
 	void setJoin(int value);
 	void setThickness(double value);
 	void setMiterLimit(double value);
 	void setDashes(std::vector<double> value);
-	void setNumDashes(int value);
 	void setDashPhase(double value);
 	uiDrawStrokeParams *toStruct();
 	// void toJS(nbind::cbOutput output);
@@ -554,6 +553,7 @@ class UiDrawMatrix {
 
   public:
 	UiDrawMatrix();
+	~UiDrawMatrix();
 	uiDrawMatrix *getStruct();
 	double getM11();
 	double getM12();
@@ -575,8 +575,8 @@ class UiDrawMatrix {
 	void multiply(UiDrawMatrix *src);
 	int invertible();
 	int invert();
-	PointDouble transformPoint();
-	SizeDouble transformSize();
+	PointDouble transformPoint(PointDouble value);
+	SizeDouble transformSize(SizeDouble value);
 };
 
 class BrushGradientStop {
@@ -599,12 +599,15 @@ class DrawBrush {
 
   public:
 	DrawBrush();
+	~DrawBrush();
 	Color getColor();
 	void setColor(Color value);
 	Point getStart();
 	void setStart(Point value);
 	Point getEnd();
 	void setEnd(Point value);
+	double getOuterRadius();
+	void setOuterRadius(double r);
 	int getType();
 	void setType(int value);
 	std::vector<BrushGradientStop> getStops();
@@ -635,7 +638,7 @@ class UiAreaKeyEvent {
 
   public:
 	UiAreaKeyEvent(uiAreaKeyEvent *event);
-	char *getKey();
+	std::string getKey();
 	int getExtKey();
 	int getModifier();
 	int getModifiers();
