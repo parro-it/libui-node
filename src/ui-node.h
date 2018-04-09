@@ -644,7 +644,7 @@ class OpenTypeFeatures {
     void free();
     uiOpenTypeFeatures *getHandle();
 
-    static OpenTypeFeatures *clone(OpenTypeFeatures *f2);
+    static OpenTypeFeatures clone(OpenTypeFeatures *f2);
     void add(const char *tag, uint32_t value);
     void remove(const char *tag);
     int get(const char *tag, uint32_t *value);
@@ -675,18 +675,18 @@ class FontAttribute {
     Color getColor();
     int getUnderline();
     int getUnderlineColor(Color *c);
-    OpenTypeFeatures *getOTFeatures();
+    OpenTypeFeatures getOTFeatures();
 
-    static FontAttribute *newFamily(const char *family);
-    static FontAttribute *newSize(double size);
-    static FontAttribute *newWeight(int weightAttribute);
-    static FontAttribute *newItalic(int italicAttribute);
-    static FontAttribute *newStretch(int stretchAttribute);
-    static FontAttribute *newColor(Color c);
-    static FontAttribute *newBackground(Color c);
-    static FontAttribute *newUnderline(int underlineAttr);
-    static FontAttribute *newUnderlineColor2(int underlineColorAttr, Color c);
-    static FontAttribute *newOTFeatures(OpenTypeFeatures *otf);
+    static FontAttribute newFamily(const char *family);
+    static FontAttribute newSize(double size);
+    static FontAttribute newWeight(int weightAttribute);
+    static FontAttribute newItalic(int italicAttribute);
+    static FontAttribute newStretch(int stretchAttribute);
+    static FontAttribute newColor(Color c);
+    static FontAttribute newBackground(Color c);
+    static FontAttribute newUnderline(int underlineAttr);
+    static FontAttribute newUnderlineColor2(int underlineColorAttr, Color c);
+    static FontAttribute newOTFeatures(OpenTypeFeatures *otf);
 };
 
 
@@ -739,7 +739,7 @@ class UiFontButton : public UiControl {
 
  public:
   UiFontButton();
-  FontDescriptor* getFont();
+  FontDescriptor getFont();
   DEFINE_CONTROL_METHODS()
 };
 

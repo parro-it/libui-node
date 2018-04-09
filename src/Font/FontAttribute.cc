@@ -75,50 +75,50 @@ int FontAttribute::getUnderlineColor(Color *c) {
 	return type;
 }
 
-OpenTypeFeatures *FontAttribute::getOTFeatures() {
-	return new OpenTypeFeatures((uiOpenTypeFeatures*) uiAttributeFeatures(a));
+OpenTypeFeatures FontAttribute::getOTFeatures() {
+	return OpenTypeFeatures((uiOpenTypeFeatures*) uiAttributeFeatures(a));
 }
 
 
 
-FontAttribute *FontAttribute::newFamily(const char *family) {
-	return new FontAttribute(uiNewFamilyAttribute(family));
+FontAttribute FontAttribute::newFamily(const char *family) {
+	return FontAttribute(uiNewFamilyAttribute(family));
 }
 
-FontAttribute *FontAttribute::newSize(double size) {
-	return new FontAttribute(uiNewSizeAttribute(size));
+FontAttribute FontAttribute::newSize(double size) {
+	return FontAttribute(uiNewSizeAttribute(size));
 }
 
-FontAttribute *FontAttribute::newWeight(int weightAttribute) {
-	return new FontAttribute(uiNewWeightAttribute(weightAttribute));
+FontAttribute FontAttribute::newWeight(int weightAttribute) {
+	return FontAttribute(uiNewWeightAttribute(weightAttribute));
 }
 
-FontAttribute *FontAttribute::newItalic(int italicAttribute) {
-	return new FontAttribute(uiNewItalicAttribute(italicAttribute));
+FontAttribute FontAttribute::newItalic(int italicAttribute) {
+	return FontAttribute(uiNewItalicAttribute(italicAttribute));
 }
 
-FontAttribute *FontAttribute::newStretch(int stretchAttribute) {
-	return new FontAttribute(uiNewStretchAttribute(stretchAttribute));
+FontAttribute FontAttribute::newStretch(int stretchAttribute) {
+	return FontAttribute(uiNewStretchAttribute(stretchAttribute));
 }
 
-FontAttribute *FontAttribute::newColor(Color c) {
-	return new FontAttribute(uiNewColorAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
+FontAttribute FontAttribute::newColor(Color c) {
+	return FontAttribute(uiNewColorAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
-FontAttribute *FontAttribute::newBackground(Color c) {
-	return new FontAttribute(uiNewBackgroundAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
+FontAttribute FontAttribute::newBackground(Color c) {
+	return FontAttribute(uiNewBackgroundAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
-FontAttribute *FontAttribute::newUnderline(int underlineAttr) {
-	return new FontAttribute(uiNewUnderlineAttribute(underlineAttr));
+FontAttribute FontAttribute::newUnderline(int underlineAttr) {
+	return FontAttribute(uiNewUnderlineAttribute(underlineAttr));
 }
 
-FontAttribute *FontAttribute::newUnderlineColor2(int underlineColorAttr, Color c) {
-	return new FontAttribute(uiNewUnderlineColorAttribute(underlineColorAttr, c.getR(), c.getG(), c.getB(), c.getA()));
+FontAttribute FontAttribute::newUnderlineColor2(int underlineColorAttr, Color c) {
+	return FontAttribute(uiNewUnderlineColorAttribute(underlineColorAttr, c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
-FontAttribute *FontAttribute::newOTFeatures(OpenTypeFeatures *otf) {
-	return new FontAttribute(uiNewFeaturesAttribute(otf->getHandle()));
+FontAttribute FontAttribute::newOTFeatures(OpenTypeFeatures *otf) {
+	return FontAttribute(uiNewFeaturesAttribute(otf->getHandle()));
 }
 
 

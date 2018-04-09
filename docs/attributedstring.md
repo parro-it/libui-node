@@ -1,12 +1,12 @@
 # AttributedString
 
 ```cpp
-class UiOpenTypeFeatures {
+class OpenTypeFeatures {
   public:
-    UiOpenTypeFeatures();
+    OpenTypeFeatures();
     void free();
 
-    static UiOpenTypeFeatures *clone(UiOpenTypeFeatures *f2);
+    static OpenTypeFeatures clone(OpenTypeFeatures *f2);
     void add(const char *tag, uint32_t value);
     void remove(const char *tag);
     // uiOpenTypeFeaturesGet() determines whether the given feature
@@ -23,11 +23,11 @@ class UiOpenTypeFeatures {
     // be treated as having some unspecified default value.
     int get(const char *tag, uint32_t *value);
 
-    // cb(UiOpenTypeFeatures, tag, value)
+    // cb(OpenTypeFeatures, tag, value)
     void forEach(nbind::cbFunction& cb);
 };
 
-class UiFontAttribute {
+class FontAttribute {
   public:
     // doesn't need to be called when appended
     void free();
@@ -42,23 +42,23 @@ class UiFontAttribute {
     Color getColor();
     int getUnderline();
     int getUnderlineColor(Color *c);
-    UiOpenTypeFeatures *getOTFeatures();
+    OpenTypeFeatures *getOTFeatures();
 
-    static UiFontAttribute *newFamily(const char *family);
-    static UiFontAttribute *newSize(double size);
-    static UiFontAttribute *newWeight(int weightAttribute);
-    static UiFontAttribute *newItalic(int italicAttribute);
-    static UiFontAttribute *newStretch(int stretchAttribute);
-    static UiFontAttribute *newColor(Color c);
-    static UiFontAttribute *newBackground(Color c);
-    static UiFontAttribute *newUnderline(int underlineAttr);
-    static UiFontAttribute *newUnderlineColor(int underlineColorAttr, Color c);
-    static UiFontAttribute *newOTFeatures(UiOpenTypeFeatures *otf);
+    static FontAttribute newFamily(const char *family);
+    static FontAttribute newSize(double size);
+    static FontAttribute newWeight(int weightAttribute);
+    static FontAttribute newItalic(int italicAttribute);
+    static FontAttribute newStretch(int stretchAttribute);
+    static FontAttribute newColor(Color c);
+    static FontAttribute newBackground(Color c);
+    static FontAttribute newUnderline(int underlineAttr);
+    static FontAttribute newUnderlineColor(int underlineColorAttr, Color c);
+    static FontAttribute newOTFeatures(OpenTypeFeatures *otf);
 };
 
 
-class UiAttributedString {
-    UiAttributedString(const char *str);
+class AttributedString {
+    AttributedString(const char *str);
     void free();
     const char * toString();
     size_t toStringLen();
@@ -66,10 +66,10 @@ class UiAttributedString {
     void appendUnattributed(const char *str);
     void insertUnattributed(const char *str, size_t at);
     void deleteString(size_t start, size_t end);
-    void setAttribute(UiFontAttribute *attr, size_t start, size_t end);
+    void setAttribute(FontAttribute *attr, size_t start, size_t end);
 
-    void appendAttributed(const char *str, UiFontAttribute *attr);
-    void appendAttributed(const char *str, UiFontAttribute *attr, UiFontAttribute *attr2);
+    void appendAttributed(const char *str, FontAttribute *attr);
+    void appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2);
 
     void forEach(nbind::cbFunction& cb);
 
@@ -78,8 +78,8 @@ class UiAttributedString {
     size_t graphemeToByteIndex(size_t pos);
 };
 
-class UiFontDescriptor {
-    UiFontDescriptor(const char *family, double size, int weight, int italic, int stretch);
+class FontDescriptor {
+    FontDescriptor(const char *family, double size, int weight, int italic, int stretch);
     void free();
     char *getFamily();
     double getSize();
@@ -91,14 +91,14 @@ class UiFontDescriptor {
 
 class UiFontButton : public UiControl {
   UiFontButton();
-  UiFontDescriptor* getFont();
+  FontDescriptor getFont();
   // onChanged, default button
 };
 
 
 class DrawTextLayout {
  public:
-  DrawTextLayout(UiAttributedString *s, UiFontDescriptor *defaultFont, double width, int align);
+  DrawTextLayout(AttributedString *s, FontDescriptor *defaultFont, double width, int align);
   void free();
   SizeDouble getExtents();
   uiDrawTextLayout* getHandle();

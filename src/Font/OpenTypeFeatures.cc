@@ -18,8 +18,8 @@ uiOpenTypeFeatures *OpenTypeFeatures::getHandle() {
 	return f;
 }
 
-OpenTypeFeatures *OpenTypeFeatures::clone(OpenTypeFeatures *f2) {
-	return new OpenTypeFeatures(uiOpenTypeFeaturesClone(f2->f));
+OpenTypeFeatures OpenTypeFeatures::clone(OpenTypeFeatures *f2) {
+	return OpenTypeFeatures(uiOpenTypeFeaturesClone(f2->f));
 }
 
 void OpenTypeFeatures::add(const char *tag, uint32_t value) {
