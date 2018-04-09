@@ -81,7 +81,7 @@ new libui.UiArea(
 function draw(area, drawParams){}
 ```
 
-The actual drawing happens in this function. It gets called when the area was created or got resized with the area itself and [UiAreaDrawParams](#uiareadrawparams) as parameters.
+The actual drawing happens in this function. It gets called when the area was created or got resized with the area and [UiAreaDrawParams](#uiareadrawparams) as parameters.
 
 ### mouseEvent
 
@@ -89,7 +89,7 @@ The actual drawing happens in this function. It gets called when the area was cr
 function mouseEvent(area, event){ }
 ```
 
-Called when the mouse was moved or clicked over the area. Event is an [UiAreaMouseEvent](#uiareamouseevent).
+Called when the mouse was moved or clicked over the area. `event` is an [UiAreaMouseEvent](#uiareamouseevent).
 
 
 ### mouseCrossed
@@ -101,12 +101,14 @@ Called when the mouse entered (`didLeave == true`) or left the area.
 
 ### dragBroken
 
+Called to indicate that a drag should be ended. Only implemented on Windows.
+
 ### keyEvent
 
 ```js
 function keyEvent(area, keyEvent) {}
 ```
-Called when a key was pressed. Return `true` to indicate that the key event was handled (a menu item with that accelerator won't active, no error sound on macOS). Event is an [UiAreaKeyEvent](#uiareakeyevent).
+Called when a key was pressed. Return `true` to indicate that the key event was handled (a menu item with that accelerator won't activate, no error sound on macOS). Event is an [UiAreaKeyEvent](#uiareakeyevent).
 
 
 ## Drawing
@@ -179,9 +181,9 @@ class UiAreaDrawParams {
 To get an object of this interface, use the `getContext` method of the `UiAreaDrawParams` argument you receive in your `draw` method:
 
 ```js
-	function draw(area, p) {
-		var context = p.getContext();
-	}
+function draw(area, p) {
+	var context = p.getContext();
+}
 ```
 
 ## Methods
@@ -358,12 +360,12 @@ Free the DrawBrush object.
 
 Sets and gets the brush type.
 
-**Arguments**
+**Arguments (set)**
 
 * type
-	* `libui.brushType.solid` for a solid color
-	* `libui.brushType.linearGradient` for linear gradient
-	* `libui.brushType.radialGradient` for a radial gradient
+	- `libui.brushType.solid` for a solid color
+	- `libui.brushType.linearGradient` for a linear gradient
+	- `libui.brushType.radialGradient` for a radial gradient
 
 
 It's also possible to use the `type` property:
@@ -376,7 +378,7 @@ myBrush.type = libui.brushType.radialGradient;
 
 Sets and gets the brush's color (only used when type is `libui.brushType.solid`).
 
-**Arguments**
+**Arguments (set)**
 
 * color: Color
 
@@ -391,7 +393,7 @@ myBrush.color = new libui.Color(1, 0, 0, 1);
 
 Sets and gets the brush's gradient start position (only used when type is a gradient). For a radial gradient, this is the center.
 
-**Arguments**
+**Arguments (set)**
 
 * p: Point
 
@@ -405,7 +407,7 @@ myBrush.start = new libui.Point(200,100);
 
 Sets and gets the brush's gradient end position (only used when type is a gradient). For a radial gradient, this is the center of the outer circle.
 
-**Arguments**
+**Arguments (set)**
 
 * p: Point
 
@@ -419,7 +421,7 @@ myBrush.end = new libui.Point(300,200);
 
 Sets and gets the radius of a radial gradient's outer circle.
 
-**Arguments**
+**Arguments (set)**
 
 * p: Point
 
@@ -433,9 +435,9 @@ myBrush.outerRadius = new libui.Point(300,200);
 
 Sets and gets the radius of a radial gradient's outer circle.
 
-**Arguments**
+**Arguments (set)**
 
-* s: Array<BrushGradientStop>
+* s: Array\<BrushGradientStop\>
 
 It's also possible to use the `stops` property:
 
@@ -486,22 +488,122 @@ For radial gradients, `pos = 0` corresponds to the center at the `start` point a
 
 Sets or gets the position of this stop.
 
-**Arguments**
+**Arguments (set)**
 
 - pos: number
+
+It's also possible to use the `pos` property.
+
 
 ### setColor/getColor
 
 Sets or gets the position of this stop.
 
-**Arguments**
+**Arguments (set)**
 
 - color: color
 
+It's also possible to use the `color` property.
 
 # DrawStrokeParams
 
+> Describes the stroke to draw with.
+
+## Methods
+
+### free
+
+Frees the object.
+
+### setThickness/getThickness
+
+Sets and gets the thickness of the stroke.
+
+**Arguments (set)**
+
+* thickness: number
+
+It's also possible to use the `thickness` property:
+
+```js
+myStroke.thickness = 10;
+```
+
+### setCap/getCap
+
+Sets and gets the style of that cap at the line ends.
+
+**Arguments (set)**
+
+* style:
+	- `libui.lineCap.flat` (default)
+	- `libui.lineCap.round`
+	- `libui.lineCap.square`
+
+It's also possible to use the `cap` property:
+
+```js
+myStroke.cap = libui.lineCap.round;
+```
+
+### setJoin/getJoin
+
+Sets and gets how two lines meeting at an angle should be joined.
+
+**Arguments (set)**
+
+* style:
+	- `libui.lineJoin.miter` (default)
+	- `libui.lineJoin.round`
+	- `libui.lineJoin.bevel`
+
+It's also possible to use the `join` property:
+
+```js
+myStroke.join = libui.lineJoin.round;
+```
+
+### setMiterLimit/getMiterLimit
+
+Sets and gets how far to extend a line for the line join (more detailed description [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-miterlimit)).
+
+**Arguments (set)**
+
+* v: number
+
+It's also possible to use the `miterLimit` property.
+
+### setDashes/getDashes
+
+Sets and gets the dashing style. It is specified by an array of numbers describing how long the dash segments and spaces should be.
+The value `[10, 2, 5, 2]` produces a dashed path with: a line of length 10, a space of 2, a line of length 5, a space. This pattern will be repeated to fill the path.
+
+**Arguments (set)**
+
+* v: Array\<number\>
+
+It's also possible to use the `dashes` property:
+
+```js
+myStroke.dashes = [10, 5];
+```
+
+### setDashPhase/getDashPhase
+
+Sets and gets the offset to of the dashes on the path. Changing this value moves the dashes along the path.
+
+**Arguments (set)**
+
+* v: number
+
+It's also possible to use the `dashPhase` property:
+
+```js
+myStroke.dashPhase = 5;
+```
+
 # UiDrawMatrix
+
 
 # UiAreaMouseEvent
 
@@ -519,6 +621,31 @@ class UiAreaMouseEvent {
 }
 ```
 
+Most methods should be self-explanatory. For `getModifiers()` see [UiAreaKeyEvent](#UiAreaKeyEvent).
+
+This event is emitted in three cases:
+
+* When a mousebutton is **pressed**: `getDown()` returns the pressed button. `getCount()` would return `2` on a double click, `3` on a triple click, ... .
+* When a mousebutton is **released**: `getUp()` returns the released button.
+* When the mouse is **moved**: `getDown()` and  `getUp()` return `0`. To find out which buttons were held down:
+
+```
+                       ┌ = 1: Button No. 2 is pressed
+                       │
+getHeld1To64(): 0b0000000
+                      │ │
+                      │ └ = 1: Button No. 1 is pressed (Primary/Left)
+                      │
+                      └─ = 1: Button No. 3 is pressed (Second./Right)
+```
+Example:
+
+```js
+if(evt.getHeld1To64() & 4) { // 2^(3-1) is 4
+	// right mouse button
+}
+```
+
 
 # UiAreaKeyEvent
 ```js
@@ -530,3 +657,60 @@ class UiAreaKeyEvent {
 	getUp(): bool
 }
 ```
+
+## Methods
+
+### getUp
+
+True if the key was released, false if it was pressed down.
+
+### getKey
+
+Returns the letter (in a string) that was pressed (always using the US QWERTY layout). Returns an empty string if no letter button was pressed.
+
+### getExtKey()
+
+Returns the pressed extension key (0 if not). Values:
+
+* `libui.extKeys.escape`
+* `libui.extKeys.insert` (equivalent to "Help" on Apple keyboards)
+* `libui.extKeys.delete`
+* `libui.extKeys.home`
+* `libui.extKeys.end`
+* `libui.extKeys.pageUp`
+* `libui.extKeys.pageDown`
+* `libui.extKeys.up`
+* `libui.extKeys.down`
+* `libui.extKeys.left`
+* `libui.extKeys.right`
+* function keys:
+	- `libui.extKeys.f1`, ..., `libui.extKeys.f12`
+* numpad keys: (independent of Num Lock state)
+	- `libui.extKeys.n0`, ..., `libui.extKeys.n9`
+	- `libui.extKeys.nDot`
+	- `libui.extKeys.nEnter`
+	- `libui.extKeys.nAdd`
+	- `libui.extKeys.nSubtract`
+	- `libui.extKeys.nMultiply`
+	- `libui.extKeys.nDivide`
+
+### getModifier()
+
+Returns the pressed  modifier key (0 if not). Values:
+
+* `libui.modifierKeys.ctrl`
+* `libui.modifierKeys.alt`
+* `libui.modifierKeys.shift`
+* `libui.modifierKeys.super`
+
+### getModifiers()
+
+Returns a number where each bit represents which modifier keys were held down while pressing another button (`getKey()` or `getExtKey()`).
+Example: to test if the Ctrl Key was pressed:
+
+```js
+if(evt.getModifiers() & libui.modifierKeys.ctrl){
+	// ctrl was pressed	
+}
+```
+
