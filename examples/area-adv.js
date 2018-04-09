@@ -27,7 +27,7 @@ console.log(radialBrush.getStops());
 
 const matrix = new libui.UiDrawMatrix();
 matrix.setIdentity();
-matrix.rotate(70, 280, (Math.PI/180)*45)
+matrix.rotate(70, 280, (Math.PI / 180) * 45)
 
 function handlerDraw(area, p) {
 	let path = new libui.UiDrawPath(libui.fillMode.winding);

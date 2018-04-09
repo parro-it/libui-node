@@ -154,7 +154,7 @@ const modifierKeys = {
 
 const extKeys = {
 	escape: 1,
-	insert: 2,			// equivalent to "Help" on Apple keyboards
+	insert: 2, // equivalent to "Help" on Apple keyboards
 	delete: 3,
 	home: 4,
 	end: 5,
@@ -164,7 +164,7 @@ const extKeys = {
 	down: 9,
 	left: 10,
 	right: 11,
-	f1: 12,			// F1..F12 are guaranteed to be consecutive
+	f1: 12, // F1..F12 are guaranteed to be consecutive
 	f2: 13,
 	f3: 14,
 	f4: 15,
@@ -176,8 +176,8 @@ const extKeys = {
 	f10: 21,
 	f11: 22,
 	f12: 23,
-	n0: 24,			// numpad keys; independent of Num Lock state
-	n1: 25,			// N0..N9 are guaranteed to be consecutive
+	n0: 24, // numpad keys; independent of Num Lock state
+	n1: 25, // N0..N9 are guaranteed to be consecutive
 	n2: 26,
 	n3: 27,
 	n4: 28,
