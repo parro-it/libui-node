@@ -1,0 +1,30 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Always
+MaxEmptyLinesToKeep: 1
+ColumnLimit: 80
+AllowShortBlocksOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+---
+Language: Cpp
+AllowShortFunctionsOnASingleLine: Empty
+PointerAlignment: Right
+IncludeCategories:
+  - Regex: "^<"
+    Priority: 0
+  - Regex: '/ui.h"$'
+    Priority: 1
+  - Regex: 'ui-node.h"$'
+    Priority: 2
+  - Regex: '"nbind/.*"'
+    Priority: 3
+
+---
+Language: JavaScript
+ColumnLimit: 0
+AllowShortFunctionsOnASingleLine: Empty
+JavaScriptQuotes: Single
+IndentCaseLabels: true
+SpacesInContainerLiterals: false

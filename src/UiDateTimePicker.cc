@@ -1,10 +1,10 @@
 #include "../ui.h"
+#include "ui-node.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
-#include "ui-node.h"
 
 UiDateTimePicker::UiDateTimePicker()
-		: UiControl((uiControl*)uiNewDateTimePicker()) {}
+	: UiControl((uiControl *)uiNewDateTimePicker()) {}
 
 INHERITS_CONTROL_METHODS(UiDateTimePicker)
 
@@ -13,7 +13,7 @@ NBIND_CLASS(UiDateTimePicker) {
 	DECLARE_CHILD_CONTROL_METHODS()
 }
 
-UiTimePicker::UiTimePicker() : UiControl((uiControl*)uiNewTimePicker()) {}
+UiTimePicker::UiTimePicker() : UiControl((uiControl *)uiNewTimePicker()) {}
 
 INHERITS_CONTROL_METHODS(UiTimePicker)
 
@@ -22,7 +22,7 @@ NBIND_CLASS(UiTimePicker) {
 	DECLARE_CHILD_CONTROL_METHODS()
 }
 
-UiDatePicker::UiDatePicker() : UiControl((uiControl*)uiNewDatePicker()) {}
+UiDatePicker::UiDatePicker() : UiControl((uiControl *)uiNewDatePicker()) {}
 
 INHERITS_CONTROL_METHODS(UiDatePicker)
 

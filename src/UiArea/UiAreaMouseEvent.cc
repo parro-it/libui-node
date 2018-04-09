@@ -2,7 +2,7 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-UiAreaMouseEvent::UiAreaMouseEvent(uiAreaMouseEvent * event) {
+UiAreaMouseEvent::UiAreaMouseEvent(uiAreaMouseEvent *event) {
 	e = event;
 }
 
@@ -43,13 +43,14 @@ unsigned int UiAreaMouseEvent::getHeld1To64() {
 }
 
 NBIND_CLASS(UiAreaMouseEvent) {
-  construct<uiAreaMouseEvent *>();
-  method(getX);
-  method(getY);
-  method(getAreaWidth);
-  method(getAreaHeight);
-  method(getDown);
-  method(getCount);
-  method(getModifiers);
-  method(getHeld1To64);
+	construct<uiAreaMouseEvent *>();
+	method(getX);
+	method(getY);
+	method(getAreaWidth);
+	method(getAreaHeight);
+	method(getDown);
+	method(getUp);
+	method(getCount);
+	method(getModifiers);
+	method(getHeld1To64);
 }
