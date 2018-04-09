@@ -95,6 +95,7 @@ _libui
 
 ui_*.h
 ui.h
+uitable.h
 
 *.dylib
 *.dll
