@@ -4,31 +4,31 @@ const os = require('os');
 const libui = require('..');
 
 const {
-  size,
-  datePicker,
-  dateTimePicker,
-  timePicker,
-  separator,
-  label,
-  window,
-  entry,
-  searchEntry,
-  passwordEntry,
-  hBox,
-  group,
-  button,
-  colors,
-  colorButton,
-  checkBox,
-  spinbox,
-  slider,
-  progressBar,
-  vBox,
-  combobox,
-  editableCombobox,
-  radioButtons,
-  tab,
-  menu
+	size,
+	datePicker,
+	dateTimePicker,
+	timePicker,
+	separator,
+	label,
+	window,
+	entry,
+	searchEntry,
+	passwordEntry,
+	hBox,
+	group,
+	button,
+	colors,
+	colorButton,
+	checkBox,
+	spinbox,
+	slider,
+	progressBar,
+	vBox,
+	combobox,
+	editableCombobox,
+	radioButtons,
+	tab,
+	menu
 } = require('./utils.js');
 
 const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -46,40 +46,52 @@ let colorBtn;
 let status;
 
 const onClosing = () => {
-  win.close();
-  libui.stopLoop();
+	win.close();
+	libui.stopLoop();
 };
 
-libui.Ui.onShouldQuit(() => { onClosing(); });
+libui.Ui.onShouldQuit(() => {
+	onClosing();
+});
 
 function onPositionChanged() {
 	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize.w} x ${win.contentSize.h})`;
 }
 
 const updateValue = value => {
-  if (value === spin.value) {
-    return;
-  }
-  spin.value = value;
-  slide.value = value;
-  progress.value = value;
+	if (value === spin.value) {
+		return;
+	}
+	spin.value = value;
+	slide.value = value;
+	progress.value = value;
 };
 
 const changeTitle = () => {
-  win.title = 'Title changed';
-  colorBtn.color = colors.red;
+	win.title = 'Title changed';
+	colorBtn.color = colors.red;
 };
 
 const areaHandler = {
-  drawCb() { console.log('drawCb'); },
+	drawCb() {
+		console.log('drawCb');
+	},
 
-  mouseEventCb() { console.log('mouseEventCb'); },
+	mouseEventCb() {
+		console.log('mouseEventCb');
+	},
 
-  mouseCrossedCb() { console.log('mouseCrossedCb'); },
+	mouseCrossedCb() {
+		console.log('mouseCrossedCb');
+	},
 
-  dragBrokenCb() { console.log('dragBrokenCb'); },
+	dragBrokenCb() {
+		console.log('dragBrokenCb');
+	},
 
-  keyEventCb() { console.log('keyEventCb'); }
+	keyEventCb() {
+		console.log('keyEventCb');
+	}
 };
 
 const area = new libui.UiArea(
@@ -92,8 +104,8 @@ const area = new libui.UiArea(
 	150);
 
 area.props = {
-  tabTitle : 'Area',
-  stretchy : true
+	tabTitle: 'Area',
+	stretchy: true
 };
 
 menu([
@@ -190,12 +202,12 @@ menu([
 ]);
 
 const winProps = {
-  hasMenubar : true,
-  title : 'Control Gallery',
-  width : 640,
-  height : 480,
-  onClosing,
-  onContentSizeChanged : onPositionChanged
+	hasMenubar: true,
+	title: 'Control Gallery',
+	width: 640,
+	height: 480,
+	onClosing,
+	onContentSizeChanged: onPositionChanged
 };
 
 const onDarwin = os.platform() === 'darwin';

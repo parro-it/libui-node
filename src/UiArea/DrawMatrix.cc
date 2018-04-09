@@ -5,6 +5,10 @@ UiDrawMatrix::UiDrawMatrix() {
 	m = new uiDrawMatrix();
 }
 
+UiDrawMatrix::~UiDrawMatrix() {
+	delete m;
+}
+
 double UiDrawMatrix::getM11() {
 	return m->M11;
 }
@@ -89,23 +93,22 @@ int UiDrawMatrix::invert() {
 	return uiDrawMatrixInvert(m);
 }
 
-PointDouble UiDrawMatrix::transformPoint() {
-	double x;
-	double y;
+PointDouble UiDrawMatrix::transformPoint(PointDouble value) {
+	double x = value.getX();
+	double y = value.getY();
 	uiDrawMatrixTransformPoint(m, &x, &y);
 	return PointDouble(x, y);
 }
 
-SizeDouble UiDrawMatrix::transformSize() {
-	double x;
-	double y;
+SizeDouble UiDrawMatrix::transformSize(SizeDouble value) {
+	double x = value.getWidth();
+	double y = value.getHeight();
 	uiDrawMatrixTransformSize(m, &x, &y);
 	return SizeDouble(x, y);
 }
 
 NBIND_CLASS(UiDrawMatrix) {
 	construct<>();
-
 	method(getM11);
 	method(getM12);
 	method(getM21);

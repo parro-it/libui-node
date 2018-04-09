@@ -185,10 +185,9 @@ function buildSolidBrush(color, alpha) {
 	const B = component / 255;
 	const A = alpha;
 
-	const uiDrawBrushTypeSolid = 0;
 	const brush = new libui.DrawBrush();
 	brush.color = new libui.Color(R, G, B, A);
-	brush.type = uiDrawBrushTypeSolid;
+	brush.type = libui.brushType.solid;
 
 	return brush;
 }
