@@ -12,8 +12,8 @@
 	- [UiDrawMatrix](#uidrawmatrix)
 	- [UiAreaMouseEvent](#uiareamouseevent)
 	- [UiAreaKeyEvent](#uiareakeyevent)
-	- [Point/PointDouble](#point)
-	- [Size/SizeDouble](#size)
+	- [Point/PointDouble](#pointpointdouble)
+	- [Size/SizeDouble](#sizesizedouble)
 
 
 # Area
@@ -183,7 +183,7 @@ class UiAreaDrawParams {
 };
 ```
 
-`context` is the drawing context; see [UiDrawContext](#UiDrawContext) for details.
+`context` is the drawing context; see [UiDrawContext](#uidrawcontext) for details.
 
 `contentWidth` and `contentHeight` are the current width and height of the content area. `hscrollpos` and `vscrollpos` are the current horizontal and vertical positions of the scrollbars, in units defined by the scrollbar configurations; see below.
 
@@ -763,7 +763,7 @@ class UiAreaMouseEvent {
 }
 ```
 
-Most methods should be self-explanatory. For `getModifiers()` see [UiAreaKeyEvent](#UiAreaKeyEvent).
+Most methods should be self-explanatory. For `getModifiers()` see [UiAreaKeyEvent](#uiareakeyevent).
 
 This event is emitted in three cases:
 
