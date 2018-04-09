@@ -604,6 +604,130 @@ myStroke.dashPhase = 5;
 
 # UiDrawMatrix
 
+> Defines a transformation (e.g. rotation, translation)
+
+A matrix can be applied to a context using `context.transform(myMatrix)`. Only object drawn **after** this call will be affected by the transformation.
+
+Usage example:
+
+```js
+// ...
+
+const matrix = new libui.UiDrawMatrix();
+matrix.setIdentity();
+matrix.rotate(100, 100, 45/*deg*/ * (Math.PI/180));
+
+p.getContext().transform(matrix);
+p.getContext().fill(myPath, myBrush);
+
+// ...
+
+```
+
+## Methods
+
+### free
+
+Frees the object.
+
+### setM11/getM11/...
+
+These methods can be used to set or get a specific value in the matrix: 
+
+* `getM11()`/`setM11()`
+* `getM12()`/`setM12()`
+* `getM21()`/`setM21()`
+* `getM22()`/`setM22()`
+* `getM31()`/`setM31()`
+* `getM32()`/`setM32()`
+
+They can also be accessed using properties:
+
+```js
+myMatrix.m11 = 2;
+```
+
+### setIdentity
+
+Creating the matrix sets all of it's values to 0, which means nothing will get displayed when it is applied. After calling this method, applying the matrix has no visual sequence.
+This needs to be called before any of the following transformations are used.
+
+### translate
+
+Moves paths over by `x` to the right and `y` down.
+
+**Arguments**
+
+* x: number
+* y: number
+
+### scale
+
+Scales pathes by a factor of `x` and `y` with (`xCenter`, `yCenter`) as the scale center.
+
+**Arguments**
+
+* xCenter: number
+* yCenter: number
+* x: number
+* y: number
+
+
+### rotate
+
+Rotates paths by `r` *radians* around (`x`,`y`).
+
+**Arguments**
+
+* x: number
+* y: number
+* r: number
+
+### skew
+
+Skews path by `xAmount` *radians* horizontally and by `yAmount` *radians* vertically around (`x`, `y`)
+
+**Arguments**
+
+* x: number
+* y: number
+* xAmount: number
+* yAmount: number
+
+### multiply
+
+Sets the matrix to the product of itself with matrix `m2`.
+
+**Arguments**
+
+* m2: UiDrawMatrix
+
+### invertible
+
+Returns true if the matrix is invertible.
+
+### invert
+
+Inverts the matrix.
+
+### transformPoint
+
+Returns the transformed point.
+
+**Arguments**
+
+* p: PointDouble
+
+
+### transformSize
+
+Returns the transformed size.
+
+**Arguments**
+
+* s: SizeDouble
+
+
 
 # UiAreaMouseEvent
 
@@ -713,4 +837,59 @@ if(evt.getModifiers() & libui.modifierKeys.ctrl){
 	// ctrl was pressed	
 }
 ```
+
+# Point/PointDouble
+
+
+## Constructor
+
+**Arguments**
+
+* x: number
+* y: number
+
+## Methods
+
+### setX/getX
+
+**Arguments (set)**
+
+* x: number
+
+Also accessible using `p.x`.
+
+
+### setY/getY
+
+**Arguments (set)**
+
+* y: number
+
+Also accessible using `p.y`.
+
+
+# Size/SizeDouble
+
+## Constructor
+
+**Arguments**
+
+* width: number
+* height: number
+
+### setWidth/getWidth
+
+**Arguments (set)**
+
+* w: number
+
+Also accessible using `s.width`.
+
+### setHeight/getHeight
+
+**Arguments (set)**
+
+* h: number
+
+Also accessible using `s.height`.
 

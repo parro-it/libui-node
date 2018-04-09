@@ -553,6 +553,7 @@ class UiDrawMatrix {
 
   public:
 	UiDrawMatrix();
+	void free();
 	uiDrawMatrix *getStruct();
 	double getM11();
 	double getM12();
@@ -574,8 +575,8 @@ class UiDrawMatrix {
 	void multiply(UiDrawMatrix *src);
 	int invertible();
 	int invert();
-	PointDouble transformPoint();
-	SizeDouble transformSize();
+	PointDouble transformPoint(PointDouble value);
+	SizeDouble transformSize(SizeDouble value);
 };
 
 class BrushGradientStop {
@@ -637,7 +638,7 @@ class UiAreaKeyEvent {
 
   public:
 	UiAreaKeyEvent(uiAreaKeyEvent *event);
-	char *getKey();
+	std::string getKey();
 	int getExtKey();
 	int getModifier();
 	int getModifiers();
