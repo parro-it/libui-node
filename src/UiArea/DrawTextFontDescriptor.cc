@@ -2,7 +2,8 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-const char *DrawTextFontDescriptor::getFamily() {
+
+const char * DrawTextFontDescriptor::getFamily() {
 	return d->Family;
 }
 
@@ -22,8 +23,7 @@ int DrawTextFontDescriptor::getStretch() {
 	return d->Stretch;
 }
 
-DrawTextFontDescriptor::DrawTextFontDescriptor(
-	uiDrawTextFontDescriptor *descr) {
+DrawTextFontDescriptor::DrawTextFontDescriptor(uiDrawTextFontDescriptor * descr) {
 	d = descr;
 }
 

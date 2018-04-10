@@ -17,3 +17,4 @@ win.onClosing(() => {
 win.show();
 
 libui.Ui.main();
+

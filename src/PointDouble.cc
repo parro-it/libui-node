@@ -20,6 +20,7 @@ void PointDouble::setX(double value) {
 	x = value;
 }
 
+
 double PointDouble::getY() {
 	return y;
 }
@@ -33,12 +34,12 @@ void PointDouble::toJS(nbind::cbOutput output) {
 }
 
 NBIND_CLASS(PointDouble) {
-	construct<double, double>();
-	method(getX);
-	method(setX);
-	method(getY);
-	method(setY);
+  construct<double, double>();
+  method(getX);
+  method(setX);
+  method(getY);
+  method(setY);
 
-	getset(getX, setX);
-	getset(getY, setY);
+  getset(getX, setX);
+  getset(getY, setY);
 }

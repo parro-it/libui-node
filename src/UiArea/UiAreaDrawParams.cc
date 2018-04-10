@@ -2,11 +2,12 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
+
 UiAreaDrawParams::UiAreaDrawParams(uiAreaDrawParams *params) {
 	p = params;
 }
 
-UiDrawContext *UiAreaDrawParams::getContext() {
+UiDrawContext * UiAreaDrawParams::getContext() {
 	return new UiDrawContext(p->Context);
 }
 
@@ -36,6 +37,7 @@ double UiAreaDrawParams::getClipWidth() {
 double UiAreaDrawParams::getClipHeight() {
 	return p->ClipHeight;
 }
+
 
 NBIND_CLASS(UiAreaDrawParams) {
 	construct<uiAreaDrawParams *>();

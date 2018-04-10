@@ -26,13 +26,14 @@ void BrushGradientStop::toJS(nbind::cbOutput output) {
 	output(p, c);
 }
 
+
 NBIND_CLASS(BrushGradientStop) {
-	construct<double, Color>();
-	method(getColor);
-	method(setColor);
-	method(getPos);
-	method(setPos);
-	method(toJS);
-	getset(getColor, setColor);
-	getset(getPos, setPos);
+  construct<double, Color>();
+  method(getColor);
+  method(setColor);
+  method(getPos);
+  method(setPos);
+  method(toJS);
+  getset(getColor, setColor);
+  getset(getPos, setPos);
 }
