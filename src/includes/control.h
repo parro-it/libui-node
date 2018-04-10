@@ -84,10 +84,12 @@ class UiControl {
   public:
 	DestroyCb originalDestroy;
 	bool destroyed;
-	void onDestroy(uiControl *);
+	virtual void onDestroy(uiControl *);
 
 	uiControl *getHandle();
 	UiControl(uiControl *hnd);
+	~UiControl();
+
 	DEFINE_CONTROL_METHODS()
 };
 

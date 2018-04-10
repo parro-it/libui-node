@@ -10,6 +10,10 @@ class UiWindow {
 
   private:
 	uiWindow *win;
+	// this hold a reference to child control
+	// to avoid it being garbage collected
+	// until not destroyed.
+	std::shared_ptr<UiControl> child;
 
   public:
 	UiWindow(std::string title, int width, int height, bool hasMenubar);
@@ -18,7 +22,7 @@ class UiWindow {
 	void close();
 	void setMargined(bool margined);
 	bool getMargined();
-	void setChild(UiControl *control);
+	void setChild(std::shared_ptr<UiControl> control);
 	void setTitle(std::string title);
 	std::string getTitle();
 	bool getFullscreen();
@@ -80,6 +84,8 @@ void UiWindow::close() {
 		delete onContentSizeChangedCallback;
 		onContentSizeChangedCallback = nullptr;
 	}
+
+	child = nullptr;
 }
 
 void UiWindow::setMargined(bool margined) {
@@ -90,8 +96,9 @@ bool UiWindow::getMargined() {
 	return uiWindowMargined(win);
 }
 
-void UiWindow::setChild(UiControl *control) {
-	uiWindowSetChild(win, control->getHandle());
+void UiWindow::setChild(std::shared_ptr<UiControl> control) {
+	child = control;
+	uiWindowSetChild(win, control.get()->getHandle());
 }
 
 void UiWindow::setTitle(std::string title) {

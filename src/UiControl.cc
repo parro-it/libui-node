@@ -14,10 +14,18 @@ static void _uicontrol_onDestroy(uiControl *control) {
 	wrapper->onDestroy(control);
 	wrapper->originalDestroy(control);
 	wrapper->destroyed = true;
+	controlsMap.erase(control);
 }
 
 void UiControl::onDestroy(uiControl *control) {
-	printf("Control %p destroyed with wrapper %p.\n", control, this);
+	// this method should be overriden
+	// in control classes to perform
+	// specific cleanup when natove control
+	// is destroyed by libui
+}
+
+UiControl::~UiControl() {
+	// printf("Control %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 UiControl::UiControl(uiControl *hnd) {
