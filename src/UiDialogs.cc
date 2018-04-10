@@ -1,7 +1,7 @@
 #include "../ui.h"
+#include "ui-node.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
-#include "ui-node.h"
 
 struct UiDialogs {
 
@@ -13,14 +13,15 @@ struct UiDialogs {
 		return uiSaveFile(parent->getHandle());
 	}
 
-	static void msgBox(UiWindow *parent, const char *title, const char *description) {
+	static void msgBox(UiWindow *parent, const char *title,
+					   const char *description) {
 		uiMsgBox(parent->getHandle(), title, description);
 	}
 
-	static void msgBoxError(UiWindow *parent, const char *title, const char *description) {
+	static void msgBoxError(UiWindow *parent, const char *title,
+							const char *description) {
 		uiMsgBoxError(parent->getHandle(), title, description);
 	}
-
 };
 
 NBIND_CLASS(UiDialogs) {

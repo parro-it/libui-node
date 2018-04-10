@@ -74,37 +74,23 @@ Create a new ${name} object.
 
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
-${contents
-		.filter(c => c.type === 'property')
-		.map(c => c.content)
-		.join('\n')}
+${contents.filter(c => c.type === 'property').map(c => c.content).join('\n')}
 
 
 ---
 
 # Methods
 
-${contents
-		.filter(c => c.type === 'method')
-		.map(c => c.content)
-		.join('\n')}
-${contents
-		.filter(c => c.type === 'property')
-		.map(c => c.methods)
-		.join('\n')}
+${contents.filter(c => c.type === 'method').map(c => c.content).join('\n')}
+${contents.filter(c => c.type === 'property').map(c => c.methods).join('\n')}
 
-${contents.filter(c => c.type === 'event').length === 0
-		? ''
-		: `---
+${contents.filter(c => c.type === 'event').length === 0 ? '' : `---
 
 # Events
 
 See [events implementation](events.md) for generic details on how events are implemented.
 
-${contents
-				.filter(c => c.type === 'event')
-				.map(c => c.content)
-				.join('\n')}
+${contents.filter(c => c.type === 'event').map(c => c.content).join('\n')}
 `}
 `;
 
@@ -146,8 +132,7 @@ function event(name, property, description) {
 		type: 'event',
 		content: `
 ### ${name}
-${description ||
-			`
+${description || `
 Emitted whenever property ${t}${property}${t} change.
 `}
 
@@ -163,13 +148,12 @@ function method(name, description, args) {
 
 ${description}
 
-${args
-			? `
+${args ? `
 **Arguments**
 
 * ${args.join('\n* ')}
 `
-			: ''}
+	   : ''}
 `
 	};
 }
@@ -180,18 +164,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'padded',
 		'Boolean',
-		'If true, the container insert some space between children. \nDefaults to false.'
-	),
+		'If true, the container insert some space between children. \nDefaults to false.'),
 	method(
 		'append',
 		'Append a new child widget as last field with specified label.',
@@ -199,19 +180,16 @@ writeFile(
 			'label: String - the text to use as label of the field.',
 			'control: UiControl - the control to append.',
 			'stretchy: Boolean - whether the child should expand to use all available size.'
-		]
-	),
+		]),
 	method(
 		'deleteAt',
 		'Remove a child widget and albel at specified position.',
-		['index: Number - the index of the control to remove.']
-	),
+		['index: Number - the index of the control to remove.']),
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiGrid',
@@ -219,25 +197,21 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'padded',
 		'Boolean',
-		'If true, the container insert some space between children. \nDefaults to false.'
-	),
+		'If true, the container insert some space between children. \nDefaults to false.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiEntry',
@@ -245,18 +219,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'readOnly',
 		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'),
 	property('text', 'String', 'The current text of the entry.\nRead write.'),
 	event('onChanged', 'text'),
 
@@ -264,8 +235,7 @@ writeFile(
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiPasswordEntry',
@@ -273,18 +243,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'readOnly',
 		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'),
 	property('text', 'String', 'The current text of the entry.\nRead write.'),
 	event('onChanged', 'text'),
 
@@ -292,8 +259,7 @@ writeFile(
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiSearchEntry',
@@ -301,18 +267,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'readOnly',
 		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'),
 	property('text', 'String', 'The current text of the entry.\nRead write.'),
 	event('onChanged', 'text'),
 
@@ -320,8 +283,7 @@ writeFile(
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiMultilineEntry',
@@ -329,33 +291,27 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'readOnly',
 		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'),
 	property(
 		'text',
 		'String',
-		'The current text of the multiline entry.\nRead write.'
-	),
+		'The current text of the multiline entry.\nRead write.'),
 	event('onChanged', 'text'),
 	method('append', 'Append specified text to the entry content.', [
 		'text: String - the text to append.'
 	]),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiLabel',
@@ -363,21 +319,18 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property('text', 'String', 'The static text of the label.\nRead write.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiVerticalSeparator',
@@ -385,20 +338,17 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiHorizontalSeparator',
@@ -406,20 +356,17 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiDatePicker',
@@ -427,20 +374,17 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiTimePicker',
@@ -448,20 +392,17 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiDateTimePicker',
@@ -469,20 +410,17 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiButton',
@@ -490,13 +428,11 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property('text', 'String', 'The static text of the button.\nRead write.'),
 
 	method('destroy', 'Destroy and free the control.'),
@@ -505,8 +441,7 @@ writeFile(
 	]),
 	method('toplevel', 'Return whether the control is a top level one or not.'),
 
-	event('onClicked', null, 'Emitted when the button is clicked')
-);
+	event('onClicked', null, 'Emitted when the button is clicked'));
 
 writeFile(
 	'UiCheckbox',
@@ -514,18 +449,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'checked',
 		'Boolean',
-		'Whether the checkbox is checked or unchecked.\nRead write.\nDefaults to false'
-	),
+		'Whether the checkbox is checked or unchecked.\nRead write.\nDefaults to false'),
 	property('text', 'String', 'The static text of the button.\nRead write.'),
 	event('onToggled', 'checked'),
 
@@ -533,8 +465,7 @@ writeFile(
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiSpinbox',
@@ -542,26 +473,22 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'value',
 		'Number',
-		'The current numeric value of the spinbox.\nRead write.'
-	),
+		'The current numeric value of the spinbox.\nRead write.'),
 	event('onChanged', 'value'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiSlider',
@@ -569,26 +496,22 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'value',
 		'Number',
-		'The current numeric value of the slider.\nRead write.'
-	),
+		'The current numeric value of the slider.\nRead write.'),
 	event('onChanged', 'value'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiProgressBar',
@@ -596,25 +519,21 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'value',
 		'Number',
-		'The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.\nRead write.'
-	),
+		'The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.\nRead write.'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiCombobox',
@@ -622,28 +541,23 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'selected',
 		'Number',
-		'Return or set the current selected item by index.'
-	),
+		'Return or set the current selected item by index.'),
 	event('onSelected', 'selected'),
 	method('append', 'Append a new text item to the drop down list.', [
 		'text: String - the text item to append.'
 	]),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiRadioButtons',
@@ -651,30 +565,25 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'selected',
 		'Number',
-		'Return or set the current choosed option by index.'
-	),
+		'Return or set the current choosed option by index.'),
 	event('onSelected', 'selected'),
 	method(
 		'append',
 		'Append a new radio option as last one with specified text.',
-		['text: String - the text to show as radio widget label.']
-	),
+		['text: String - the text to show as radio widget label.']),
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiEditableCombobox',
@@ -682,28 +591,23 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'text',
 		'String',
-		'Return or set the current selected text or the text value of the selected item in the list.'
-	),
+		'Return or set the current selected text or the text value of the selected item in the list.'),
 	event('onChanged', 'text'),
 	method('append', 'Append a new text item to the drop down list.', [
 		'text: String - the text item to append.'
 	]),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiColorButton',
@@ -715,8 +619,7 @@ writeFile(
 	method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiVerticalBox',
@@ -724,18 +627,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'padded',
 		'Boolean',
-		'If true, the container insert some space between children. \nDefaults to false.'
-	),
+		'If true, the container insert some space between children. \nDefaults to false.'),
 	method('append', 'Append a new child widget as last one.', [
 		'control: UiControl - the control to append.',
 		'stretchy: Boolean - whether the child should expand to use all available size.'
@@ -744,12 +644,10 @@ writeFile(
 		'index: Number - the index of the control to remove.'
 	]),
 
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiTab',
@@ -757,13 +655,11 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	method('append', 'Append a new child widget as last tab.', [
 		'label: String - the text to show in the new tab caption.',
 		'control: UiControl - the control to append.'
@@ -778,32 +674,19 @@ writeFile(
 		'index: Number - the index of the tab to remove.'
 	]),
 
-	method(
-		'setMargined',
-		'Specifies that a tab should use a margin around its content.',
-		[
-			'page: Number - the index of the tab.',
-			'margined: Boolean - whether to display a margin or not.'
-		]
-	),
+	method('setMargined', 'Specifies that a tab should use a margin around its content.', [
+		'page: Number - the index of the tab.',
+		'margined: Boolean - whether to display a margin or not.'
+	]),
 
-	method(
-		'getMargined',
-		'Return a boolean that indicate if a tab is displaying a margin around its content.',
-		['page: Number - the index of the tab.']
-	),
+	method('getMargined', 'Return a boolean that indicate if a tab is displaying a margin around its content.', ['page: Number - the index of the tab.']),
 
-	method(
-		'numPages',
-		'Return the total number of tab pages contained in the widgets.'
-	),
+	method('numPages', 'Return the total number of tab pages contained in the widgets.'),
 
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiHorizontalBox',
@@ -811,18 +694,15 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'padded',
 		'Boolean',
-		'If true, the container insert some space between children. \nDefaults to false.'
-	),
+		'If true, the container insert some space between children. \nDefaults to false.'),
 	method('append', 'Append a new child widget as last one.', [
 		'control: UiControl - the control to append.',
 		'stretchy: Boolean - whether the child should expand to use all available size.'
@@ -831,12 +711,10 @@ writeFile(
 		'index: Number - the index of the control to remove.'
 	]),
 
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFile(
 	'UiGroup',
@@ -844,33 +722,27 @@ writeFile(
 	property(
 		'visible',
 		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'),
 	property(
 		'enabled',
 		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'),
 	property(
 		'margined',
 		'Boolean',
-		'This property specify if the group content area should have a margin or not.\nDefaults to false.'
-	),
+		'This property specify if the group content area should have a margin or not.\nDefaults to false.'),
 	property(
 		'title',
 		'String',
-		'This property specify the caption of the group.\nDefaults to empty string.'
-	),
+		'This property specify the caption of the group.\nDefaults to empty string.'),
 	method('setChild', 'Set the child widget of the group.', [
 		'control: UiControl - the control to append.'
 	]),
 
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
+	method('destroy', 'Destroy and free the control.'), method('setParent', 'Change the parent of the control', [
 		'parent: UiControl - the new parent of the widget or null to detach it.'
 	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
+	method('toplevel', 'Return whether the control is a top level one or not.'));
 
 writeFileSync(readmePath, readme);
 

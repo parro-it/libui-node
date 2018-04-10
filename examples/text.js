@@ -43,8 +43,7 @@ function handlerDraw(area, p) {
 		fontSize.value,
 		libui.textWeight.ultraLight,
 		libui.textItalic.oblique,
-		libui.textStretch.normal
-	);
+		libui.textStretch.normal);
 
 	const layout = new libui.DrawTextLayout(textString.text, font, 40);
 
