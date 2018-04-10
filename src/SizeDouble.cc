@@ -15,6 +15,7 @@ void SizeDouble::setWidth(double value) {
 	w = value;
 }
 
+
 double SizeDouble::getHeight() {
 	return h;
 }
@@ -28,13 +29,13 @@ void SizeDouble::toJS(nbind::cbOutput output) {
 }
 
 NBIND_CLASS(SizeDouble) {
-	construct<double, double>();
-	method(getWidth);
-	method(setWidth);
-	method(getHeight);
-	method(setHeight);
-	method(toJS);
+  construct<double, double>();
+  method(getWidth);
+  method(setWidth);
+  method(getHeight);
+  method(setHeight);
+  method(toJS);
 
-	getset(getWidth, setWidth);
-	getset(getHeight, setHeight);
+  getset(getWidth, setWidth);
+  getset(getHeight, setHeight);
 }

@@ -15,6 +15,7 @@ void Size::setWidth(int value) {
 	w = value;
 }
 
+
 int Size::getHeight() {
 	return h;
 }
@@ -28,12 +29,12 @@ void Size::toJS(nbind::cbOutput output) {
 }
 
 NBIND_CLASS(Size) {
-	construct<int, int>();
-	method(getWidth);
-	method(setWidth);
-	method(getHeight);
-	method(setHeight);
+  construct<int, int>();
+  method(getWidth);
+  method(setWidth);
+  method(getHeight);
+  method(setHeight);
 
-	getset(getWidth, setWidth);
-	getset(getHeight, setHeight);
+  getset(getWidth, setWidth);
+  getset(getHeight, setHeight);
 }

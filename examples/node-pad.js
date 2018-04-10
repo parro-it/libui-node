@@ -36,7 +36,8 @@ function openFile() {
 				return libui.UiDialogs.msgBoxError(
 					win,
 					'Error while reading file',
-					err.stack);
+					err.stack
+				);
 			}
 			editor.text = content;
 			status.text = `Open ${filename}`;
@@ -53,7 +54,8 @@ function saveFileAs() {
 				return libui.UiDialogs.msgBoxError(
 					win,
 					'Error while writing file',
-					err.stack);
+					err.stack
+				);
 			}
 			currentFileName = filename;
 		});
@@ -70,7 +72,8 @@ function saveFile() {
 			return libui.UiDialogs.msgBoxError(
 				win,
 				'Error while writing file',
-				err.stack);
+				err.stack
+			);
 		}
 	});
 }
@@ -139,8 +142,10 @@ win = window(
 	winProps,
 	tab(
 		{stretchy: true},
-		(editor = multilineEntry({stretchy: true, tabTitle: 'New file'}))),
-	(status = label({stretchy: false, text: 'File not changed'})));
+		(editor = multilineEntry({stretchy: true, tabTitle: 'New file'}))
+	),
+	(status = label({stretchy: false, text: 'File not changed'}))
+);
 
 win.show();
 libui.startLoop();

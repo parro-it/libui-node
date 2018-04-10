@@ -24,7 +24,7 @@
 		}
 	],
 	"scripts": {
-		"test": "ava",
+		"test": "ava && xo",
 		"start": "node examples/control-gallery.js",
 		"start-np": "node examples/node-pad.js",
 		"start-core": "node examples/core-api.js",
@@ -32,21 +32,13 @@
 		"node-gyp": "node-gyp",
 		"install": "libui-download && autogypi && npm run build",
 		"build": "node-gyp configure build",
-		"clean": "rm -rf build; rm -rf node_modules;",
-		"precommit": "check-clang-format \"'npm run lint'\"",
-		"lint": "clang-format -i --glob='{src/**/*.{h,cc},index.js,examples/**/*.js}'"
+		"clean": "rm -rf build; rm -rf node_modules;"
 	},
-	"keywords": [
-		"libui",
-		"desktop",
-		"multiplatform",
-		"GUI"
-	],
+	"keywords": ["libui", "desktop", "multiplatform", "GUI"],
 	"engines": {
 		"node": ">=4"
 	},
 	"files": [
-		"list-sources.js",
 		"index.js",
 		"src",
 		"binding.gyp",
@@ -56,10 +48,9 @@
 	],
 	"devDependencies": {
 		"ava": "^0.25.0",
-		"clang-format": "^1.2.2",
 		"humanize": "0.0.9",
-		"husky": "^0.14.3",
-		"proc-stats": "0.0.4"
+		"proc-stats": "0.0.4",
+		"xo": "^0.20.3"
 	},
 	"dependencies": {
 		"autogypi": "^0.2.2",

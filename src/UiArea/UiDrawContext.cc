@@ -6,8 +6,7 @@ UiDrawContext::UiDrawContext(uiDrawContext *ctx) {
 	c = ctx;
 }
 
-void UiDrawContext::stroke(UiDrawPath *path, DrawBrush *b,
-						   DrawStrokeParams *p) {
+void UiDrawContext::stroke(UiDrawPath *path, DrawBrush *b, DrawStrokeParams *p) {
 	uiDrawStroke(c, path->getHandle(), b->toStruct(), p->toStruct());
 }
 
@@ -34,6 +33,8 @@ void UiDrawContext::restore() {
 void UiDrawContext::text(double x, double y, DrawTextLayout *layout) {
 	uiDrawText(c, x, y, layout->getHandle());
 }
+
+
 
 NBIND_CLASS(UiDrawContext) {
 	construct<uiDrawContext *>();

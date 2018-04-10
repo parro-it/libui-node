@@ -55,7 +55,8 @@ libui.Ui.onShouldQuit(() => {
 });
 
 function onPositionChanged() {
-	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize.w} x ${win.contentSize.h})`;
+	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize
+		.w} x ${win.contentSize.h})`;
 }
 
 const updateValue = value => {
@@ -101,7 +102,8 @@ const area = new libui.UiArea(
 	areaHandler.dragBrokenCb,
 	areaHandler.keyEventCb,
 	300,
-	150);
+	150
+);
 
 area.props = {
 	tabTitle: 'Area',
@@ -122,7 +124,8 @@ menu([
 						libui.UiDialogs.msgBox(
 							win,
 							'No file selected',
-							`Don't be alarmed!`);
+							`Don't be alarmed!`
+						);
 					}
 				}
 			},
@@ -136,7 +139,8 @@ menu([
 						libui.UiDialogs.msgBox(
 							win,
 							'No file selected',
-							`Don't be alarmed!`);
+							`Don't be alarmed!`
+						);
 					}
 				}
 			},
@@ -211,9 +215,7 @@ const winProps = {
 };
 
 const onDarwin = os.platform() === 'darwin';
-const searchText = {
-	text: 'Search Entry'
-};
+const searchText = {text: 'Search Entry'};
 
 win = window(
 	winProps,
@@ -231,7 +233,8 @@ win = window(
 			separator({}),
 			datePicker({}),
 			dateTimePicker({}),
-			timePicker({})),
+			timePicker({})
+		),
 
 		vBox(
 			{padded: true},
@@ -239,7 +242,8 @@ win = window(
 				{margined: true, title: 'Numbers'},
 				(spin = spinbox({onChanged: () => updateValue(spin.value)})),
 				(slide = slider({onChanged: () => updateValue(slide.value)})),
-				(progress = progressBar({}))),
+				(progress = progressBar({}))
+			),
 
 			group(
 				{margined: true, title: 'Lists', stretchy: true},
@@ -247,17 +251,20 @@ win = window(
 					{},
 					'Combobox Item 1',
 					'Combobox Item 2',
-					'Combobox Item 3'),
+					'Combobox Item 3'
+				),
 				editableCombobox(
 					{},
 					'Editable Item 1',
 					'Editable Item 2',
-					'Editable Item 3'),
+					'Editable Item 3'
+				),
 				radioButtons(
 					{},
 					'Radio Button 1',
 					'Radio Button 2',
-					'Radio Button 3'),
+					'Radio Button 3'
+				),
 				tab(
 					{stretchy: true},
 					entry({
@@ -275,8 +282,13 @@ win = window(
 						tabTitle: 'Page 3',
 						stretchy: true
 					}),
-					area)))),
-	(status = label({stretchy: true, text: '(0, 0)'})));
+					area
+				)
+			)
+		)
+	),
+	(status = label({stretchy: true, text: '(0, 0)'}))
+);
 
 win.show();
 libui.startLoop();

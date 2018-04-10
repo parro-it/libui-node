@@ -2,7 +2,9 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
-DrawTextFontMetrics::DrawTextFontMetrics(uiDrawTextFontMetrics *metrics) {
+
+
+DrawTextFontMetrics::DrawTextFontMetrics(uiDrawTextFontMetrics * metrics) {
 	m = metrics;
 }
 
@@ -25,6 +27,7 @@ double DrawTextFontMetrics::getUnderlinePos() {
 double DrawTextFontMetrics::getUnderlineThickness() {
 	return m->UnderlineThickness;
 }
+
 
 NBIND_CLASS(DrawTextFontMetrics) {
 	method(getAscent);
