@@ -1,4 +1,4 @@
-const {readdirSync} = require('fs');
+const readdirSync = require('fs').readdirSync;
 
 function listDir(dir) {
 	readdirSync(dir)
@@ -9,5 +9,3 @@ function listDir(dir) {
 listDir('src');
 listDir('src/UiArea');
 listDir('src/arch/win32');
-
-					
