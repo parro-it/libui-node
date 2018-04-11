@@ -1,11 +1,13 @@
+#include <memory>
 #include "nbind/api.h"
 #include "control.h"
 #include "ui.h"
 
 class UiSpinbox : public UiControl {
-	DEFINE_EVENT(onChanged)
 
   public:
+	std::unique_ptr<nbind::cbFunction> onChangedCallback;
+	void onChanged(nbind::cbFunction cb);
 	UiSpinbox(int min, int max);
 	UiSpinbox();
 	~UiSpinbox();
@@ -27,11 +29,8 @@ void UiSpinbox::onDestroy(uiControl *control) {
 	*/
 
 	printf("onDestroy called\n");
-	if (onChangedCallback != nullptr) {
-		printf("free cb\n");
-		delete onChangedCallback;
-		onChangedCallback = nullptr;
-	}
+	nbind::cbFunction *cb = onChangedCallback.release();
+	delete cb;
 }
 
 UiSpinbox::UiSpinbox(int min, int max)
@@ -45,12 +44,29 @@ int UiSpinbox::getValue() {
 
 void UiSpinbox::setValue(int value) {
 	uiSpinboxSetValue((uiSpinbox *)getHandle(), value);
-	if (onChangedCallback != NULL) {
+	if (onChangedCallback != nullptr) {
 		(*onChangedCallback)();
 	}
 }
 
-IMPLEMENT_EVENT(UiSpinbox, uiSpinbox, onChanged, uiSpinboxOnChanged)
+namespace std {
+template <typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args &&... args) {
+	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
+} // namespace std
+
+static void UiSpinbox_onChanged(uiSpinbox *w, void *data) {
+	UiSpinbox *ctrl = (UiSpinbox *)data;
+	nbind::cbFunction cb = *(ctrl->onChangedCallback);
+	cb();
+}
+
+void UiSpinbox::onChanged(nbind::cbFunction cb) {
+	// nbind::cbFunction *cba = new nbind::cbFunction(cb);
+	onChangedCallback = std::make_unique<nbind::cbFunction>(cb);
+	uiSpinboxOnChanged((uiSpinbox *)getHandle(), UiSpinbox_onChanged, this);
+}
 
 INHERITS_CONTROL_METHODS(UiSpinbox)
 

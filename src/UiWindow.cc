@@ -1,3 +1,4 @@
+#include <memory>
 #include <string>
 #include "nbind/api.h"
 #include "control.h"

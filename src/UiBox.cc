@@ -6,6 +6,9 @@
 class UiBox : public UiControl {
   public:
 	UiBox(uiControl *hnd);
+	~UiBox();
+	void onDestroy(uiControl *control) override;
+
 	DEFINE_BOX_METHODS()
 };
 
@@ -23,6 +26,23 @@ class UiHorizontalBox : public UiBox {
 	DEFINE_CONTROL_METHODS()
 };
 
+UiBox::~UiBox() {
+	printf("UiBox %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+void UiBox::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	/*
+		printf("onDestroy called\n");
+		if (onChangedCallback != nullptr) {
+			printf("free cb\n");
+			delete onChangedCallback;
+			onChangedCallback = nullptr;
+		}*/
+}
 UiBox::UiBox(uiControl *control) : UiControl(control) {}
 
 void UiBox::append(UiControl *control, bool stretchy) {

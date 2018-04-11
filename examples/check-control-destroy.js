@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/filename-case */
 
-const libui = require('../..');
+const libui = require('..');
 function createWindow() {
 	const win = new libui.UiWindow('UiSpinbox example', 320, 60, true);
 
@@ -9,7 +9,7 @@ function createWindow() {
 	const widget = new libui.UiSpinbox();
 	widget.value = 42;
 	widget.onChanged(() => {
-		console.log(`value changed`);
+		console.log(`value changed to ${widget.value}`);
 	});
 	win.setChild(widget);
 
