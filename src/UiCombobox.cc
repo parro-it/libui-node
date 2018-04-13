@@ -12,7 +12,21 @@ class UiCombobox : public UiControl {
 	void append(std::string text);
 	int getSelected();
 	void setSelected(int n);
+	~UiCombobox();
+	void onDestroy(uiControl *control) override;
 };
+
+void UiCombobox::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onSelected);
+}
+
+UiCombobox::~UiCombobox() {
+	printf("UiCombobox %p destroyed with wrapper %p.\n", getHandle(), this);
+}
 
 UiCombobox::UiCombobox() : UiControl((uiControl *)uiNewCombobox()) {}
 
