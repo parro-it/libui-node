@@ -11,7 +11,21 @@ class UiColorButton : public UiControl {
 	Color getColor();
 	void setColor(Color value);
 	DEFINE_CONTROL_METHODS()
+	~UiColorButton();
+	void onDestroy(uiControl *control) override;
 };
+
+void UiColorButton::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
+
+UiColorButton::~UiColorButton() {
+	printf("UiColorButton %p destroyed with wrapper %p.\n", getHandle(), this);
+}
 
 UiColorButton::UiColorButton() : UiControl((uiControl *)uiNewColorButton()) {}
 

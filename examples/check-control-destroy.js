@@ -9,7 +9,7 @@ function createWindow() {
 	const widget1 = new libui.UiSpinbox();
 	widget1.value = 42;
 	widget1.onChanged(() => {
-		console.log(`value1 changed to ${widget1.value}`);
+		console.log(`widget1 changed to ${widget1.value}`);
 	});
 
 	const widget2 = new libui.UiButton('btn1');
@@ -22,10 +22,16 @@ function createWindow() {
 		console.log(`${widget3.text} toggled`);
 	});
 
+	const widget4 = new libui.UiColorButton();
+	widget4.onChanged(() => {
+		console.log(`widget4 changed to ${widget4.color}`);
+	});
+
 	const box = new libui.UiVerticalBox();
 	box.append(widget1, true);
 	box.append(widget2, true);
 	box.append(widget3, true);
+	box.append(widget4, true);
 
 	win.setChild(box);
 
