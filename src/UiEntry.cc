@@ -17,7 +17,7 @@ class UiEntryBase : public UiControl {
 };
 
 UiEntryBase::~UiEntryBase() {
-	// printf("%s %p destroyed with wrapper %p.\n", n, getHandle(), this);
+	printf("%s %p destroyed with wrapper %p.\n", n, getHandle(), this);
 }
 
 void UiEntryBase::onDestroy(uiControl *control) {

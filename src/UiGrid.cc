@@ -50,7 +50,6 @@ void UiGrid::append(std::shared_ptr<UiControl> c, int left, int top, int xspan,
 					int yspan, int hexpand, int halign, int vexpand,
 					int valign) {
 	children.push_back(c);
-
 	uiGridAppend((uiGrid *)getHandle(), c.get()->getHandle(), left, top, xspan,
 				 yspan, hexpand, halign, vexpand, valign);
 }
