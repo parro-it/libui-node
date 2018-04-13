@@ -22,8 +22,15 @@ function createWindow() {
 	return win;
 }
 
-const win = createWindow();
-win.show();
-global.gc();
+function op() {
+	global.gc();
+	const win = createWindow();
+	win.show();
+	setTimeout(() => {
+		win.close();
+		op();
+	}, 100);
+}
 
 libui.startLoop();
+op();

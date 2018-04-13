@@ -6,8 +6,8 @@
 class UiSpinbox : public UiControl {
 
   public:
-	std::unique_ptr<nbind::cbFunction> onChangedCallback;
-	void onChanged(nbind::cbFunction cb);
+	nbind::cbFunction *onChangedCallback = nullptr;
+	void onChanged(nbind::cbFunction &cb);
 	UiSpinbox(int min, int max);
 	UiSpinbox();
 	~UiSpinbox();
@@ -28,9 +28,9 @@ void UiSpinbox::onDestroy(uiControl *control) {
 		when there are no references to it left in JS code.
 	*/
 
+	delete onChangedCallback;
+	onChangedCallback = nullptr;
 	printf("onDestroy called\n");
-	nbind::cbFunction *cb = onChangedCallback.release();
-	delete cb;
 }
 
 UiSpinbox::UiSpinbox(int min, int max)
@@ -62,9 +62,10 @@ static void UiSpinbox_onChanged(uiSpinbox *w, void *data) {
 	cb();
 }
 
-void UiSpinbox::onChanged(nbind::cbFunction cb) {
+void UiSpinbox::onChanged(nbind::cbFunction &cb) {
+	onChangedCallback = new nbind::cbFunction(cb);
 	// nbind::cbFunction *cba = new nbind::cbFunction(cb);
-	onChangedCallback = std::make_unique<nbind::cbFunction>(cb);
+	// onChangedCallback = std::make_unique<nbind::cbFunction>(std::move(cb));
 	uiSpinboxOnChanged((uiSpinbox *)getHandle(), UiSpinbox_onChanged, this);
 }
 

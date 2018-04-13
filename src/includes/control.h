@@ -88,7 +88,7 @@ class UiControl {
 
 	uiControl *getHandle();
 	UiControl(uiControl *hnd);
-	~UiControl();
+	virtual ~UiControl();
 
 	DEFINE_CONTROL_METHODS()
 };
