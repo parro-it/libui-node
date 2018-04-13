@@ -14,6 +14,7 @@ function createWindow() {
 
 	const widget2 = new libui.UiButton('btn1');
 	widget2.onClicked(() => {
+		widget6.setEnabled(false);
 		console.log(`${widget2.text} clicked`);
 	});
 
@@ -62,6 +63,7 @@ function op() {
 	global.gc();
 	const win = createWindow();
 	win.show();
+	return;
 	setTimeout(() => {
 		win.close();
 		op();
