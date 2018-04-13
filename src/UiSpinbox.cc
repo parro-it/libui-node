@@ -9,11 +9,11 @@ class UiSpinbox : public UiControl {
 
 	UiSpinbox(int min, int max);
 	UiSpinbox();
-	~UiSpinbox();
 	DEFINE_CONTROL_METHODS()
 
 	int getValue();
 	void setValue(int value);
+	~UiSpinbox();
 	void onDestroy(uiControl *control) override;
 };
 

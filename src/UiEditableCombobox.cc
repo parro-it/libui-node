@@ -12,7 +12,22 @@ class UiEditableCombobox : public UiControl {
 	void append(std::string text);
 	std::string getText();
 	void setText(std::string text);
+	~UiEditableCombobox();
+	void onDestroy(uiControl *control) override;
 };
+
+UiEditableCombobox::~UiEditableCombobox() {
+	printf("UiEditableCombobox %p destroyed with wrapper %p.\n", getHandle(),
+		   this);
+}
+
+void UiEditableCombobox::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
 
 UiEditableCombobox::UiEditableCombobox()
 	: UiControl(uiControl(uiNewEditableCombobox())) {}

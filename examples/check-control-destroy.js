@@ -34,12 +34,18 @@ function createWindow() {
 		console.log(`widget5 changed to ${widget5.selected}`);
 	});
 
+	const widget6 = new libui.UiEditableCombobox();
+	widget6.onChanged(() => {
+		console.log(`widget6 changed to ${widget6.text}`);
+	});
+
 	const box = new libui.UiVerticalBox();
 	box.append(widget1, true);
 	box.append(widget2, true);
 	box.append(widget3, true);
 	box.append(widget4, true);
 	box.append(widget5, true);
+	box.append(widget6, true);
 
 	win.setChild(box);
 
