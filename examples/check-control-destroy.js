@@ -40,6 +40,21 @@ function createWindow() {
 		console.log(`widget6 changed to ${widget6.text}`);
 	});
 
+	const widget7 = new libui.UiSearchEntry();
+	widget7.onChanged(() => {
+		console.log(`${widget7.text} changed`);
+	});
+
+	const widget8 = new libui.UiPasswordEntry();
+	widget8.onChanged(() => {
+		console.log(`${widget8.text} changed`);
+	});
+
+	const widget9 = new libui.UiEntry();
+	widget9.onChanged(() => {
+		console.log(`${widget9.text} changed`);
+	});
+
 	const box = new libui.UiVerticalBox();
 	box.append(widget1, true);
 	box.append(widget2, true);
@@ -47,6 +62,10 @@ function createWindow() {
 	box.append(widget4, true);
 	box.append(widget5, true);
 	box.append(widget6, true);
+
+	box.append(widget7, true);
+	box.append(widget8, true);
+	box.append(widget9, true);
 
 	win.setChild(box);
 
@@ -63,7 +82,7 @@ function op() {
 	global.gc();
 	const win = createWindow();
 	win.show();
-	return;
+	// return;
 	setTimeout(() => {
 		win.close();
 		op();
