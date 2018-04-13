@@ -76,15 +76,8 @@ void UiWindow::close() {
 		freeing event callbacks to allow JS to garbage collect this class
 		when there are no references to it left in JS code.
 	*/
-	if (onClosingCallback != nullptr) {
-		delete onClosingCallback;
-		onClosingCallback = nullptr;
-	}
-
-	if (onContentSizeChangedCallback != nullptr) {
-		delete onContentSizeChangedCallback;
-		onContentSizeChangedCallback = nullptr;
-	}
+	DISPOSE_EVENT(onClosing);
+	DISPOSE_EVENT(onContentSizeChanged);
 
 	child = nullptr;
 }

@@ -4,7 +4,6 @@
 #include "ui.h"
 
 class UiSpinbox : public UiControl {
-
   public:
 	DEFINE_EVENT(onChanged)
 
@@ -27,8 +26,7 @@ void UiSpinbox::onDestroy(uiControl *control) {
 		freeing event callbacks to allow JS to garbage collect this class
 		when there are no references to it left in JS code.
 	*/
-	delete onChangedCallback;
-	onChangedCallback = nullptr;
+	DISPOSE_EVENT(onChanged);
 }
 
 UiSpinbox::UiSpinbox(int min, int max)

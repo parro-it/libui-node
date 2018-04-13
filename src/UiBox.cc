@@ -11,7 +11,7 @@ class UiBox : public UiControl {
 	~UiBox();
 	void onDestroy(uiControl *control) override;
 
-	// this hold a reference to children controls
+	// this hold references to children controls
 	// to avoid them being garbage collected
 	// until not destroyed.
 	std::vector<std::shared_ptr<UiControl>> children;
@@ -39,10 +39,9 @@ UiBox::~UiBox() {
 
 void UiBox::onDestroy(uiControl *control) {
 	/*
-		freeing event callbacks to allow JS to garbage collect this class
-		when there are no references to it left in JS code.
+		freeing children to allow JS to garbage collect their wrapper classes
+		when there are no references to them left in JS code.
 	*/
-
 	children.clear();
 }
 UiBox::UiBox(uiControl *control) : UiControl(control) {}
