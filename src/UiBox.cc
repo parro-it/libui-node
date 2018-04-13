@@ -34,7 +34,7 @@ class UiHorizontalBox : public UiBox {
 };
 
 UiBox::~UiBox() {
-	printf("UiBox %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiBox %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 void UiBox::onDestroy(uiControl *control) {

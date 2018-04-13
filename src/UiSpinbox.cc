@@ -19,7 +19,7 @@ class UiSpinbox : public UiControl {
 };
 
 UiSpinbox::~UiSpinbox() {
-	printf("UiSpinbox %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiSpinbox %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 void UiSpinbox::onDestroy(uiControl *control) {

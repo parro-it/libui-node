@@ -9,10 +9,10 @@ class UiButton : public UiControl {
   public:
 	UiButton(std::string text);
 	UiButton();
-	~UiButton();
 	DEFINE_CONTROL_METHODS()
 	void setText(std::string text);
 	std::string getText();
+	~UiButton();
 	void onDestroy(uiControl *control) override;
 };
 
@@ -28,7 +28,7 @@ void UiButton::onDestroy(uiControl *control) {
 }
 
 UiButton::~UiButton() {
-	printf("UiButton %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiButton %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 UiButton::UiButton(std::string text)

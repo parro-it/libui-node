@@ -20,6 +20,12 @@
 		LIBUI_FUN((WIDGET *)getHandle(), CLASS##_##NAME, NAME##Callback);      \
 	}
 
+#define DISPOSE_EVENT(NAME)                                                    \
+	if (NAME##Callback != nullptr) {                                           \
+		delete NAME##Callback;                                                 \
+		NAME##Callback = nullptr;                                              \
+	}
+
 #define DEFINE_CONTROL_METHODS()                                               \
 	void destroy();                                                            \
 	void setParent(UiControl *parent);                                         \
