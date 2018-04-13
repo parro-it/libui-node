@@ -16,7 +16,8 @@ class UiFontButton : public UiControl {
 };
 
 UiFontButton::~UiFontButton() {
-	printf("UiFontButton %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiFontButton %p destroyed with wrapper %p.\n", getHandle(),
+	// this);
 }
 
 void UiFontButton::onDestroy(uiControl *control) {

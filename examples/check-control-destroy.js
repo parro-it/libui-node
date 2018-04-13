@@ -60,6 +60,11 @@ function createWindow() {
 		console.log(`${widget10.text} changed`);
 	});
 
+	const widget11 = new libui.UiMultilineEntry();
+	widget11.onChanged(() => {
+		console.log(`${widget11.text} changed`);
+	});
+
 	const box = new libui.UiVerticalBox();
 	box.append(widget1, true);
 	box.append(widget2, true);
@@ -72,6 +77,7 @@ function createWindow() {
 	box.append(widget8, true);
 	box.append(widget9, true);
 	box.append(widget10, true);
+	box.append(widget11, true);
 
 	win.setChild(box);
 

@@ -17,8 +17,8 @@ class UiEditableCombobox : public UiControl {
 };
 
 UiEditableCombobox::~UiEditableCombobox() {
-	printf("UiEditableCombobox %p destroyed with wrapper %p.\n", getHandle(),
-		   this);
+	// printf("UiEditableCombobox %p destroyed with wrapper %p.\n", getHandle(),
+	//	   this);
 }
 
 void UiEditableCombobox::onDestroy(uiControl *control) {

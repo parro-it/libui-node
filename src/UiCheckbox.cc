@@ -27,7 +27,7 @@ void UiCheckbox::onDestroy(uiControl *control) {
 }
 
 UiCheckbox::~UiCheckbox() {
-	printf("UiCheckbox %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiCheckbox %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 IMPLEMENT_EVENT(UiCheckbox, uiCheckbox, onToggled, uiCheckboxOnToggled)

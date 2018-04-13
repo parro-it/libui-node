@@ -25,7 +25,7 @@ void UiCombobox::onDestroy(uiControl *control) {
 }
 
 UiCombobox::~UiCombobox() {
-	printf("UiCombobox %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiCombobox %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 UiCombobox::UiCombobox() : UiControl((uiControl *)uiNewCombobox()) {}

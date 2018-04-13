@@ -24,7 +24,8 @@ void UiColorButton::onDestroy(uiControl *control) {
 }
 
 UiColorButton::~UiColorButton() {
-	printf("UiColorButton %p destroyed with wrapper %p.\n", getHandle(), this);
+	// printf("UiColorButton %p destroyed with wrapper %p.\n", getHandle(),
+	// this);
 }
 
 UiColorButton::UiColorButton() : UiControl((uiControl *)uiNewColorButton()) {}

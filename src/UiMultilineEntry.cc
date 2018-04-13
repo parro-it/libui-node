@@ -14,8 +14,22 @@ class UiMultilineEntry : public UiControl {
 	void setReadOnly(bool readOnly);
 	bool getReadOnly();
 	void append(std::string text);
+	~UiMultilineEntry();
+	void onDestroy(uiControl *control) override;
 };
 
+UiMultilineEntry::~UiMultilineEntry() {
+	// printf("UiMultilineEntry %p destroyed with wrapper %p.\n", getHandle(),
+		   this);
+}
+
+void UiMultilineEntry::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
 UiMultilineEntry::UiMultilineEntry()
 	: UiControl(uiControl(uiNewNonWrappingMultilineEntry())) {}
 
