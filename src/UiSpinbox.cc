@@ -6,8 +6,8 @@
 class UiSpinbox : public UiControl {
 
   public:
-	nbind::cbFunction *onChangedCallback = nullptr;
-	void onChanged(nbind::cbFunction &cb);
+	DEFINE_EVENT(onChanged)
+
 	UiSpinbox(int min, int max);
 	UiSpinbox();
 	~UiSpinbox();
@@ -18,10 +18,6 @@ class UiSpinbox : public UiControl {
 	void onDestroy(uiControl *control) override;
 };
 
-UiSpinbox::~UiSpinbox() {
-	printf("UiSpinbox %p destroyed with wrapper %p.\n", getHandle(), this);
-}
-
 void UiSpinbox::onDestroy(uiControl *control) {
 	/*
 		freeing event callbacks to allow JS to garbage collect this class
@@ -30,7 +26,6 @@ void UiSpinbox::onDestroy(uiControl *control) {
 
 	delete onChangedCallback;
 	onChangedCallback = nullptr;
-	printf("onDestroy called\n");
 }
 
 UiSpinbox::UiSpinbox(int min, int max)
@@ -49,25 +44,7 @@ void UiSpinbox::setValue(int value) {
 	}
 }
 
-namespace std {
-template <typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args &&... args) {
-	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-} // namespace std
-
-static void UiSpinbox_onChanged(uiSpinbox *w, void *data) {
-	UiSpinbox *ctrl = (UiSpinbox *)data;
-	nbind::cbFunction cb = *(ctrl->onChangedCallback);
-	cb();
-}
-
-void UiSpinbox::onChanged(nbind::cbFunction &cb) {
-	onChangedCallback = new nbind::cbFunction(cb);
-	// nbind::cbFunction *cba = new nbind::cbFunction(cb);
-	// onChangedCallback = std::make_unique<nbind::cbFunction>(std::move(cb));
-	uiSpinboxOnChanged((uiSpinbox *)getHandle(), UiSpinbox_onChanged, this);
-}
+IMPLEMENT_EVENT(UiSpinbox, uiSpinbox, onChanged, uiSpinboxOnChanged)
 
 INHERITS_CONTROL_METHODS(UiSpinbox)
 
