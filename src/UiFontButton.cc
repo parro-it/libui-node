@@ -11,7 +11,21 @@ class UiFontButton : public UiControl {
 	UiFontButton();
 	DrawTextFont *getFont();
 	DEFINE_CONTROL_METHODS()
+	~UiFontButton();
+	void onDestroy(uiControl *control) override;
 };
+
+UiFontButton::~UiFontButton() {
+	printf("UiFontButton %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+void UiFontButton::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
 
 UiFontButton::UiFontButton() : UiControl((uiControl *)uiNewFontButton()) {}
 
