@@ -86,7 +86,6 @@ function createWindow() {
 	const box = new libui.UiVerticalBox();
 	box.append(widget1, true);
 	box.append(widget2, true);
-
 	box.append(widget3, true);
 	box.append(widget4, true);
 	box.append(widget5, true);
@@ -100,22 +99,22 @@ function createWindow() {
 	box2.append(widget11, true);
 	box2.append(widget12, true);
 	box2.append(widget13, true);
-	/*
+
 	const widget14 = new libui.UiGroup();
 	widget14.child = new libui.UiEntry();
 
 	const widget15 = new libui.UiTab();
-	widget15.append('xxx',new libui.UiEntry());
-	widget15.append('yyy',new libui.UiEntry());
+	widget15.append('xxx', new libui.UiEntry());
+	widget15.append('yyy', new libui.UiEntry());
 
 	const widget16 = new libui.UiForm();
-	widget16.append('xxx',new libui.UiEntry(), true);
-	widget16.append('yyy',new libui.UiEntry(), true);
+	widget16.append('xxx', new libui.UiEntry(), true);
+	widget16.append('yyy', new libui.UiEntry(), true);
 
 	box2.append(widget14, true);
 	box2.append(widget15, true);
 	box2.append(widget16, true);
-*/
+
 	const horz = new libui.UiHorizontalBox();
 	horz.append(box, true);
 	horz.append(box2, true);
@@ -135,7 +134,7 @@ function op() {
 	global.gc();
 	const win = createWindow();
 	win.show();
-	// return;
+	return;
 	setTimeout(() => {
 		win.close();
 		op();

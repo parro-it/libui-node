@@ -18,6 +18,7 @@ class UiWindow {
 
   public:
 	UiWindow(std::string title, int width, int height, bool hasMenubar);
+	~UiWindow();
 	uiWindow *getHandle();
 	void show();
 	void close();
@@ -70,6 +71,10 @@ void UiWindow::show() {
 	uiControlShow(uiControl(win));
 }
 
+UiWindow::~UiWindow() {
+	printf("UiWindow %p destroyed with wrapper %p.\n", getHandle(), win);
+}
+
 void UiWindow::close() {
 	uiControlDestroy(uiControl(win));
 	/*
@@ -80,6 +85,7 @@ void UiWindow::close() {
 	DISPOSE_EVENT(onContentSizeChanged);
 
 	child = nullptr;
+	printf("UiWindow closed.\n");
 }
 
 void UiWindow::setMargined(bool margined) {
