@@ -1,6 +1,12 @@
 /* eslint-disable unicorn/filename-case */
 
 const libui = require('..');
+const mnu = new libui.UiMenu('mnu');
+const mnuItem = mnu.appendItem('click me');
+mnuItem.onClicked(() => {
+	console.log(`menu clicked ${mnuItem}`);
+});
+
 function createWindow() {
 	const win = new libui.UiWindow('UiSpinbox example', 320, 60, true);
 
@@ -65,6 +71,18 @@ function createWindow() {
 		console.log(`${widget11.text} changed`);
 	});
 
+	const widget12 = new libui.UiRadioButtons();
+	widget12.append('a');
+	widget12.append('b');
+	widget12.onSelected(() => {
+		console.log(`widget12 changed to ${widget12.selected}`);
+	});
+
+	const widget13 = new libui.UiSlider();
+	widget13.onChanged(() => {
+		console.log(`widget13 changed to ${widget13.value}`);
+	});
+
 	const box = new libui.UiVerticalBox();
 	box.append(widget1, true);
 	box.append(widget2, true);
@@ -78,6 +96,8 @@ function createWindow() {
 	box.append(widget9, true);
 	box.append(widget10, true);
 	box.append(widget11, true);
+	box.append(widget12, true);
+	box.append(widget13, true);
 
 	win.setChild(box);
 

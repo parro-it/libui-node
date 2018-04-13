@@ -6,29 +6,54 @@
 class UiTab : public UiControl {
   public:
 	UiTab();
-	void append(std::string text, UiControl *child);
-	void insertAt(std::string name, int before, UiControl *child);
+	void append(std::string text, std::shared_ptr<UiControl> child);
+	void insertAt(std::string name, int before,
+				  std::shared_ptr<UiControl> child);
 	void deleteAt(int index);
 	int numPages();
 	bool getMargined(int page);
 	void setMargined(int page, bool margined);
 
 	DEFINE_CONTROL_METHODS()
+	~UiTab();
+	void onDestroy(uiControl *control) override;
+
+  private:
+	// this hold references to children controls
+	// to avoid them being garbage collected
+	// until not destroyed.
+	std::vector<std::shared_ptr<UiControl>> children;
 };
 
+UiTab::~UiTab() {
+	printf("UiTab %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+void UiTab::onDestroy(uiControl *control) {
+	/*
+		freeing children to allow JS to garbage collect their wrapper classes
+		when there are no references to them left in JS code.
+	*/
+	children.clear();
+}
 UiTab::UiTab() : UiControl((uiControl *)uiNewTab()) {}
 
 INHERITS_CONTROL_METHODS(UiTab)
 
-void UiTab::append(std::string text, UiControl *child) {
-	uiTabAppend(uiTab(getHandle()), text.c_str(), child->getHandle());
+void UiTab::append(std::string text, std::shared_ptr<UiControl> child) {
+	children.push_back(child);
+	uiTabAppend(uiTab(getHandle()), text.c_str(), child.get()->getHandle());
 }
 
-void UiTab::insertAt(std::string name, int before, UiControl *child) {
-	uiTabInsertAt(uiTab(getHandle()), name.c_str(), before, child->getHandle());
+void UiTab::insertAt(std::string name, int before,
+					 std::shared_ptr<UiControl> child) {
+	children.insert(children.begin() + before, child);
+	uiTabInsertAt(uiTab(getHandle()), name.c_str(), before,
+				  child.get()->getHandle());
 }
 
 void UiTab::deleteAt(int index) {
+	children.erase(children.begin() + index);
 	uiTabDelete(uiTab(getHandle()), index);
 }
 

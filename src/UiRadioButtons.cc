@@ -13,7 +13,22 @@ class UiRadioButtons : public UiControl {
 	void setSelected(int n);
 
 	DEFINE_CONTROL_METHODS()
+	~UiRadioButtons();
+	void onDestroy(uiControl *control) override;
 };
+
+UiRadioButtons::~UiRadioButtons() {
+	// printf("UiRadioButtons %p destroyed with wrapper %p.\n", getHandle(),
+	// this);
+}
+
+void UiRadioButtons::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onSelected);
+}
 
 UiRadioButtons::UiRadioButtons()
 	: UiControl((uiControl *)uiNewRadioButtons()) {}

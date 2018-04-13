@@ -20,7 +20,7 @@ class UiMultilineEntry : public UiControl {
 
 UiMultilineEntry::~UiMultilineEntry() {
 	// printf("UiMultilineEntry %p destroyed with wrapper %p.\n", getHandle(),
-		   this);
+	// 	   this);
 }
 
 void UiMultilineEntry::onDestroy(uiControl *control) {

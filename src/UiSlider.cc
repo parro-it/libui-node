@@ -12,7 +12,22 @@ class UiSlider : public UiControl {
 
 	int getValue();
 	void setValue(int value);
+	~UiSlider();
+	void onDestroy(uiControl *control) override;
 };
+
+UiSlider::~UiSlider() {
+	// printf("UiSlider %p destroyed with wrapper %p.\n", getHandle(),
+	// 	   this);
+}
+
+void UiSlider::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
 
 UiSlider::UiSlider(int min, int max)
 	: UiControl((uiControl *)uiNewSlider(min, max)) {}
