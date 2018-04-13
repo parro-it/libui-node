@@ -1,3 +1,5 @@
+#include <memory>
+#include <vector>
 #include "nbind/api.h"
 #include "box.h"
 #include "control.h"
@@ -8,6 +10,11 @@ class UiBox : public UiControl {
 	UiBox(uiControl *hnd);
 	~UiBox();
 	void onDestroy(uiControl *control) override;
+
+	// this hold a reference to children controls
+	// to avoid them being garbage collected
+	// until not destroyed.
+	std::vector<std::shared_ptr<UiControl>> children;
 
 	DEFINE_BOX_METHODS()
 };
@@ -35,21 +42,18 @@ void UiBox::onDestroy(uiControl *control) {
 		freeing event callbacks to allow JS to garbage collect this class
 		when there are no references to it left in JS code.
 	*/
-	/*
-		printf("onDestroy called\n");
-		if (onChangedCallback != nullptr) {
-			printf("free cb\n");
-			delete onChangedCallback;
-			onChangedCallback = nullptr;
-		}*/
+
+	children.clear();
 }
 UiBox::UiBox(uiControl *control) : UiControl(control) {}
 
-void UiBox::append(UiControl *control, bool stretchy) {
+void UiBox::append(std::shared_ptr<UiControl> control, bool stretchy) {
+	children.push_back(control);
 	uiBoxAppend((uiBox *)getHandle(), control->getHandle(), stretchy);
 }
 
 void UiBox::deleteAt(int index) {
+	children.erase(children.begin() + index);
 	uiBoxDelete((uiBox *)getHandle(), index);
 }
 

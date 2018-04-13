@@ -9,10 +9,25 @@ class UiButton : public UiControl {
   public:
 	UiButton(std::string text);
 	UiButton();
+	~UiButton();
 	DEFINE_CONTROL_METHODS()
 	void setText(std::string text);
 	std::string getText();
+	void onDestroy(uiControl *control) override;
 };
+
+void UiButton::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	delete onClickedCallback;
+	onClickedCallback = nullptr;
+}
+
+UiButton::~UiButton() {
+	printf("UiButton %p destroyed with wrapper %p.\n", getHandle(), this);
+}
 
 UiButton::UiButton(std::string text)
 	: UiControl(uiControl(uiNewButton(text.c_str()))) {}
