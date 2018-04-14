@@ -10,7 +10,6 @@ class UiEntryBase : public UiControl {
 
   public:
 	UiEntryBase(uiControl *, const char *name);
-	DEFINE_CONTROL_METHODS()
 	DEFINE_ENTRY_METHODS()
 	~UiEntryBase();
 	void onDestroy(uiControl *control) override;
@@ -31,7 +30,6 @@ void UiEntryBase::onDestroy(uiControl *control) {
 class UiEntry : public UiEntryBase {
   public:
 	UiEntry();
-	DEFINE_CONTROL_METHODS()
 	DEFINE_ENTRY_METHODS()
 	void onChanged(nbind::cbFunction &cb);
 };
@@ -39,7 +37,6 @@ class UiEntry : public UiEntryBase {
 class UiPasswordEntry : public UiEntryBase {
   public:
 	UiPasswordEntry();
-	DEFINE_CONTROL_METHODS()
 	DEFINE_ENTRY_METHODS()
 	void onChanged(nbind::cbFunction &cb);
 };
@@ -47,7 +44,6 @@ class UiPasswordEntry : public UiEntryBase {
 class UiSearchEntry : public UiEntryBase {
   public:
 	UiSearchEntry();
-	DEFINE_CONTROL_METHODS()
 	DEFINE_ENTRY_METHODS()
 	void onChanged(nbind::cbFunction &cb);
 };
@@ -82,35 +78,32 @@ IMPLEMENT_EVENT(UiEntryBase, uiEntry, onChanged, uiEntryOnChanged)
 
 UiEntry::UiEntry() : UiEntryBase(uiControl(uiNewEntry()), "UiEntry") {}
 
-INHERITS_CONTROL_METHODS(UiEntry)
 INHERITS_ENTRY_METHODS(UiEntry)
 
 UiPasswordEntry::UiPasswordEntry()
 	: UiEntryBase(uiControl(uiNewPasswordEntry()), "UiPasswordEntry") {}
 
-INHERITS_CONTROL_METHODS(UiPasswordEntry)
 INHERITS_ENTRY_METHODS(UiPasswordEntry)
 
 UiSearchEntry::UiSearchEntry()
 	: UiEntryBase(uiControl(uiNewSearchEntry()), "UiSearchEntry") {}
 
-INHERITS_CONTROL_METHODS(UiSearchEntry)
 INHERITS_ENTRY_METHODS(UiSearchEntry)
 
 NBIND_CLASS(UiSearchEntry) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	DECLARE_ENTRY_METHODS()
 }
 
 NBIND_CLASS(UiPasswordEntry) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	DECLARE_ENTRY_METHODS()
 }
 
 NBIND_CLASS(UiEntry) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	DECLARE_ENTRY_METHODS()
 }

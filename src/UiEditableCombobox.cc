@@ -53,9 +53,9 @@ std::string UiEditableCombobox::getText() {
 }
 
 NBIND_CLASS(UiEditableCombobox) {
-	construct<>();
 	inherit(UiControl);
 	method(append);
+	construct<>();
 	getset(getText, setText);
 	method(getText);
 	method(setText);
