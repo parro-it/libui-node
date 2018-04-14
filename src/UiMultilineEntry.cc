@@ -8,7 +8,6 @@ class UiMultilineEntry : public UiControl {
 
   public:
 	UiMultilineEntry();
-	DEFINE_CONTROL_METHODS()
 	void setText(std::string text);
 	std::string getText();
 	void setReadOnly(bool readOnly);
@@ -32,8 +31,6 @@ void UiMultilineEntry::onDestroy(uiControl *control) {
 }
 UiMultilineEntry::UiMultilineEntry()
 	: UiControl(uiControl(uiNewNonWrappingMultilineEntry())) {}
-
-INHERITS_CONTROL_METHODS(UiMultilineEntry)
 
 IMPLEMENT_EVENT(UiMultilineEntry, uiMultilineEntry, onChanged,
 				uiMultilineEntryOnChanged)
@@ -65,8 +62,8 @@ void UiMultilineEntry::append(std::string text) {
 }
 
 NBIND_CLASS(UiMultilineEntry) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getText, setText);
 	getset(getReadOnly, setReadOnly);
 	method(getText);

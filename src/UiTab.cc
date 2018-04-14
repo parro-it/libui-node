@@ -14,7 +14,6 @@ class UiTab : public UiControl {
 	bool getMargined(int page);
 	void setMargined(int page, bool margined);
 
-	DEFINE_CONTROL_METHODS()
 	~UiTab();
 	void onDestroy(uiControl *control) override;
 
@@ -37,8 +36,6 @@ void UiTab::onDestroy(uiControl *control) {
 	children.clear();
 }
 UiTab::UiTab() : UiControl((uiControl *)uiNewTab()) {}
-
-INHERITS_CONTROL_METHODS(UiTab)
 
 void UiTab::append(std::string text, std::shared_ptr<UiControl> child) {
 	children.push_back(child);
@@ -70,8 +67,8 @@ void UiTab::setMargined(int page, bool margined) {
 }
 
 NBIND_CLASS(UiTab) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	method(append);
 	method(numPages);
 	method(deleteAt);

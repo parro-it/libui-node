@@ -20,8 +20,6 @@ class UiGroup : public UiControl {
 	void setMargined(bool margined);
 	std::string getTitle();
 	void setTitle(std::string title);
-
-	DEFINE_CONTROL_METHODS()
 };
 
 UiGroup::~UiGroup() {
@@ -63,9 +61,8 @@ void UiGroup::setTitle(std::string title) {
 	uiGroupSetTitle(uiGroup(getHandle()), title.c_str());
 }
 
-INHERITS_CONTROL_METHODS(UiGroup)
-
 NBIND_CLASS(UiGroup) {
+	inherit(UiControl);
 	construct<std::string>();
 	construct<>();
 	method(setChild);
@@ -75,5 +72,4 @@ NBIND_CLASS(UiGroup) {
 	method(setMargined);
 	getset(getTitle, setTitle);
 	getset(getMargined, setMargined);
-	DECLARE_CHILD_CONTROL_METHODS()
 }

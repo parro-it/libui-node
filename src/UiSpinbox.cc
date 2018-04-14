@@ -9,8 +9,6 @@ class UiSpinbox : public UiControl {
 
 	UiSpinbox(int min, int max);
 	UiSpinbox();
-	DEFINE_CONTROL_METHODS()
-
 	int getValue();
 	void setValue(int value);
 	~UiSpinbox();
@@ -47,12 +45,10 @@ void UiSpinbox::setValue(int value) {
 
 IMPLEMENT_EVENT(UiSpinbox, uiSpinbox, onChanged, uiSpinboxOnChanged)
 
-INHERITS_CONTROL_METHODS(UiSpinbox)
-
 NBIND_CLASS(UiSpinbox) {
+	inherit(UiControl);
 	construct<int, int>();
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getValue, setValue);
 	method(getValue);
 	method(setValue);

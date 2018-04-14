@@ -8,7 +8,7 @@ class UiCombobox : public UiControl {
 
   public:
 	UiCombobox();
-	DEFINE_CONTROL_METHODS()
+
 	void append(std::string text);
 	int getSelected();
 	void setSelected(int n);
@@ -30,8 +30,6 @@ UiCombobox::~UiCombobox() {
 
 UiCombobox::UiCombobox() : UiControl((uiControl *)uiNewCombobox()) {}
 
-INHERITS_CONTROL_METHODS(UiCombobox)
-
 IMPLEMENT_EVENT(UiCombobox, uiCombobox, onSelected, uiComboboxOnSelected)
 
 void UiCombobox::append(std::string text) {
@@ -50,8 +48,8 @@ void UiCombobox::setSelected(int n) {
 }
 
 NBIND_CLASS(UiCombobox) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	method(append);
 	getset(getSelected, setSelected);
 	method(getSelected);

@@ -25,7 +25,6 @@ class UiArea : public UiControl {
 	void setSize(int width, int height);
 	void queueRedrawAll();
 	void scrollTo(double x, double y, double width, double height);
-	DEFINE_CONTROL_METHODS()
 };
 
 extern std::map<uiArea *, UiArea *> areasMap;

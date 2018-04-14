@@ -73,5 +73,13 @@ void UiControl::setEnabled(bool enabled) {
 }
 
 NBIND_CLASS(UiControl) {
-	DECLARE_CONTROL_METHODS()
+	method(destroy);
+	method(setParent);
+	method(toplevel);
+	method(getVisible);
+	method(setVisible);
+	method(getEnabled);
+	method(setEnabled);
+	getset(getVisible, setVisible);
+	getset(getEnabled, setEnabled);
 }

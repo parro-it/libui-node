@@ -10,7 +10,6 @@ class UiColorButton : public UiControl {
 	UiColorButton();
 	Color getColor();
 	void setColor(Color value);
-	DEFINE_CONTROL_METHODS()
 	~UiColorButton();
 	void onDestroy(uiControl *control) override;
 };
@@ -29,8 +28,6 @@ UiColorButton::~UiColorButton() {
 }
 
 UiColorButton::UiColorButton() : UiControl((uiControl *)uiNewColorButton()) {}
-
-INHERITS_CONTROL_METHODS(UiColorButton)
 
 IMPLEMENT_EVENT(UiColorButton, uiColorButton, onChanged, uiColorButtonOnChanged)
 
@@ -54,8 +51,8 @@ Color UiColorButton::getColor() {
 }
 
 NBIND_CLASS(UiColorButton) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	method(setColor);
 	method(getColor);
 	method(onChanged);
