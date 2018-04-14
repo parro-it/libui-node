@@ -14,7 +14,6 @@ class UiGrid : public UiControl {
 				  int xspan, int yspan, int hexpand, int halign, int vexpand,
 				  int valign);
 
-	DEFINE_CONTROL_METHODS()
 	~UiGrid();
 	void onDestroy(uiControl *control) override;
 
@@ -63,14 +62,12 @@ void UiGrid::insertAt(std::shared_ptr<UiControl> c, UiControl *existing, int at,
 				   vexpand, valign);
 }
 
-INHERITS_CONTROL_METHODS(UiGrid)
-
 NBIND_CLASS(UiGrid) {
+	inherit(UiControl);
 	construct<>();
 	method(append);
 	method(insertAt);
 	method(getPadded);
 	method(setPadded);
 	getset(getPadded, setPadded);
-	DECLARE_CHILD_CONTROL_METHODS()
 }

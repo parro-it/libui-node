@@ -8,14 +8,11 @@ class UiProgressBar : public UiControl {
 
   public:
 	UiProgressBar();
-	DEFINE_CONTROL_METHODS()
 	int getValue();
 	void setValue(int value);
 };
 
 UiProgressBar::UiProgressBar() : UiControl((uiControl *)uiNewProgressBar()) {}
-
-INHERITS_CONTROL_METHODS(UiProgressBar)
 
 void UiProgressBar::setValue(int val) {
 	value = val;
@@ -27,8 +24,8 @@ int UiProgressBar::getValue() {
 }
 
 NBIND_CLASS(UiProgressBar) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getValue, setValue);
 	method(getValue);
 	method(setValue);

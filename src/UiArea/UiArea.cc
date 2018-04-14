@@ -4,8 +4,6 @@
 
 std::map<uiArea *, UiArea *> areasMap;
 
-INHERITS_CONTROL_METHODS(UiArea)
-
 void UiArea::setSize(int width, int height) {
 	uiAreaSetSize((uiArea *)getHandle(), width, height);
 }
@@ -45,12 +43,12 @@ UiArea::UiArea(int dummy) : UiControl(NULL) {}
 #include "nbind/api.h"
 
 NBIND_CLASS(UiArea) {
+	inherit(UiControl);
 	construct<int>();
 	construct<nbind::cbFunction &, nbind::cbFunction &, nbind::cbFunction &,
 			  nbind::cbFunction &, nbind::cbFunction &>();
 	construct<nbind::cbFunction &, nbind::cbFunction &, nbind::cbFunction &,
 			  nbind::cbFunction &, nbind::cbFunction &, int, int>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	method(setSize);
 	method(queueRedrawAll);
 	method(scrollTo);

@@ -8,8 +8,6 @@ class UiSlider : public UiControl {
   public:
 	UiSlider(int min, int max);
 	UiSlider();
-	DEFINE_CONTROL_METHODS()
-
 	int getValue();
 	void setValue(int value);
 	~UiSlider();
@@ -47,12 +45,10 @@ void UiSlider::setValue(int value) {
 
 IMPLEMENT_EVENT(UiSlider, uiSlider, onChanged, uiSliderOnChanged)
 
-INHERITS_CONTROL_METHODS(UiSlider)
-
 NBIND_CLASS(UiSlider) {
+	inherit(UiControl);
 	construct<int, int>();
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getValue, setValue);
 	method(getValue);
 	method(setValue);

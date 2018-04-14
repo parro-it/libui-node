@@ -12,7 +12,6 @@ class UiRadioButtons : public UiControl {
 	int getSelected();
 	void setSelected(int n);
 
-	DEFINE_CONTROL_METHODS()
 	~UiRadioButtons();
 	void onDestroy(uiControl *control) override;
 };
@@ -33,8 +32,6 @@ void UiRadioButtons::onDestroy(uiControl *control) {
 UiRadioButtons::UiRadioButtons()
 	: UiControl((uiControl *)uiNewRadioButtons()) {}
 
-INHERITS_CONTROL_METHODS(UiRadioButtons)
-
 IMPLEMENT_EVENT(UiRadioButtons, uiRadioButtons, onSelected,
 				uiRadioButtonsOnSelected)
 
@@ -54,8 +51,8 @@ void UiRadioButtons::append(std::string text) {
 }
 
 NBIND_CLASS(UiRadioButtons) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	method(append);
 	getset(getSelected, setSelected);
 	method(getSelected);
