@@ -8,7 +8,6 @@ class UiEditableCombobox : public UiControl {
 
   public:
 	UiEditableCombobox();
-	// DEFINE_CONTROL_METHODS()
 	void append(std::string text);
 	std::string getText();
 	void setText(std::string text);
@@ -31,8 +30,6 @@ void UiEditableCombobox::onDestroy(uiControl *control) {
 
 UiEditableCombobox::UiEditableCombobox()
 	: UiControl(uiControl(uiNewEditableCombobox())) {}
-
-// INHERITS_CONTROL_METHODS(UiEditableCombobox)
 
 IMPLEMENT_EVENT(UiEditableCombobox, uiEditableCombobox, onChanged,
 				uiEditableComboboxOnChanged)

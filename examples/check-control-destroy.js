@@ -42,6 +42,9 @@ function createWindow() {
 	});
 
 	const widget6 = new libui.UiEditableCombobox();
+	widget6.append('sally');
+	widget6.append('tati');
+	widget6.append('parro');
 	widget6.onChanged(() => {
 		console.log(`widget6 changed to ${widget6.text}`);
 	});
