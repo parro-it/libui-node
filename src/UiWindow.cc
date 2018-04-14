@@ -72,7 +72,7 @@ void UiWindow::show() {
 }
 
 UiWindow::~UiWindow() {
-	printf("UiWindow %p destroyed with wrapper %p.\n", getHandle(), win);
+	//	printf("UiWindow %p destroyed with wrapper %p.\n", getHandle(), win);
 }
 
 void UiWindow::close() {
@@ -85,7 +85,7 @@ void UiWindow::close() {
 	DISPOSE_EVENT(onContentSizeChanged);
 
 	child = nullptr;
-	printf("UiWindow closed.\n");
+	//	printf("UiWindow closed.\n");
 }
 
 void UiWindow::setMargined(bool margined) {

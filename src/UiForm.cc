@@ -22,7 +22,7 @@ class UiForm : public UiControl {
 	std::vector<std::shared_ptr<UiControl>> children;
 };
 UiForm::~UiForm() {
-	printf("UiForm %p destroyed with wrapper %p.\n", getHandle(), this);
+	//	printf("UiForm %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 void UiForm::onDestroy(uiControl *control) {

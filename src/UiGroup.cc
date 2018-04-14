@@ -25,7 +25,7 @@ class UiGroup : public UiControl {
 };
 
 UiGroup::~UiGroup() {
-	printf("UiGroup %p destroyed with wrapper %p.\n", getHandle(), this);
+	//	printf("UiGroup %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 void UiGroup::onDestroy(uiControl *control) {

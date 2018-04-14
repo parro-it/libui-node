@@ -26,7 +26,7 @@ class UiGrid : public UiControl {
 };
 
 UiGrid::~UiGrid() {
-	printf("UiGrid %p destroyed with wrapper %p.\n", getHandle(), this);
+	//	printf("UiGrid %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 void UiGrid::onDestroy(uiControl *control) {

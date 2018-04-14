@@ -26,7 +26,7 @@ class UiTab : public UiControl {
 };
 
 UiTab::~UiTab() {
-	printf("UiTab %p destroyed with wrapper %p.\n", getHandle(), this);
+	//	printf("UiTab %p destroyed with wrapper %p.\n", getHandle(), this);
 }
 
 void UiTab::onDestroy(uiControl *control) {
