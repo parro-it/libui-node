@@ -165,13 +165,12 @@ binding.lib.FontAttribute.newUnderlineColor = function (type, color) {
 };
 
 binding.lib.OpenTypeFeatures.prototype.get = function (str) {
-	const value =  this.getInternal(str);
-	if (value[1]){
+	const value = this.getInternal(str);
+	if (value[1]) {
 		return value[0];
-	} else {
-		return null;
 	}
-}
+	return null;
+};
 
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;

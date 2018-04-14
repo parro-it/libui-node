@@ -14,7 +14,7 @@ const str = new libui.AttributedString(
 	'👨🏻 Drawing strings with libui is done with the uiAttributedString and uiDrawTextLayout objects.\n' +
 	'uiAttributedString lets you have a variety of attributes: ');
 
-str.setAttribute(FontAttribute.newBackground(new libui.Color(0,0,1,1)), 0, Buffer.from("👨🏻").length);
+str.setAttribute(FontAttribute.newBackground(new libui.Color(0, 0, 1, 1)), 0, Buffer.from('👨🏻').length);
 
 str.appendAttributed('font family', FontAttribute.newFamily('Courier New'));
 str.appendUnattributed(', ');
@@ -70,12 +70,13 @@ otf.forEach((feat, str, val) => {
 	console.log({feat, str, val});
 });
 
+console.log('liga:', otf.get('liga'));
+
 otf.free();
 str.appendUnattributed(').\n');
 
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.\n');
 str.appendAttributed('👨🏾', FontAttribute.newBackground(new libui.Color(0, 1, 0, 1)));
-
 
 str.forEach((str, attr, start, end) => {
 	console.log({str, attr, start, end});
