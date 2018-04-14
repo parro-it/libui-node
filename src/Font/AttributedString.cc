@@ -65,7 +65,6 @@ void AttributedString::appendAttributed(const char *str, FontAttribute *attr) {
 
 void AttributedString::appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2) {
 	size_t start = this->toStringLen();
-	// TODO how this (and strlen) work with unicode?
 	size_t end = start + strlen(str);
 
 	this->appendUnattributed(str);
