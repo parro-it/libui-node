@@ -8,14 +8,9 @@
 #include "ui.h"
 #include "values.h"
 
-// UIArea
-
 // TODO - document
 class UiArea : public UiControl {
   public:
-	// Workaround for nbind bug solved in 0.3
-	UiArea(int dummy);
-
 	UiArea(nbind::cbFunction &drawCb, nbind::cbFunction &mouseEventCb,
 		   nbind::cbFunction &mouseCrossedCb, nbind::cbFunction &dragBrokenCb,
 		   nbind::cbFunction &keyEventCb);
@@ -26,8 +21,6 @@ class UiArea : public UiControl {
 	void queueRedrawAll();
 	void scrollTo(double x, double y, double width, double height);
 };
-
-extern std::map<uiArea *, UiArea *> areasMap;
 
 class DrawStrokeParams {
   private:

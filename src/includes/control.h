@@ -1,6 +1,7 @@
 #ifndef UI_NODE_CONTROL
 #define UI_NODE_CONTROL 1
 
+#include <map>
 #include "ui.h"
 
 #define DEFINE_EVENT(NAME)                                                     \
@@ -48,6 +49,8 @@ class UiControl {
 	bool getEnabled();
 	void setEnabled(bool enabled);
 };
+
+extern std::map<uiControl *, UiControl *> controlsMap;
 
 // This is included at end of file
 // to minimize conflicts with existing

@@ -2,8 +2,6 @@
 #include "control.h"
 #include "ui.h"
 
-std::map<uiArea *, UiArea *> areasMap;
-
 void UiArea::setSize(int width, int height) {
 	uiAreaSetSize((uiArea *)getHandle(), width, height);
 }
@@ -22,9 +20,7 @@ UiArea::UiArea(nbind::cbFunction &drawCb, nbind::cbFunction &mouseEventCb,
 	: UiControl(
 		  (uiControl *)uiNewArea((uiAreaHandler *)UiAreaHandlerFactory::build(
 			  drawCb, mouseEventCb, mouseCrossedCb, dragBrokenCb,
-			  keyEventCb))) {
-	areasMap[(uiArea *)getHandle()] = this;
-}
+			  keyEventCb))) {}
 
 UiArea::UiArea(nbind::cbFunction &drawCb, nbind::cbFunction &mouseEventCb,
 			   nbind::cbFunction &mouseCrossedCb,
@@ -33,18 +29,12 @@ UiArea::UiArea(nbind::cbFunction &drawCb, nbind::cbFunction &mouseEventCb,
 	: UiControl((uiControl *)uiNewScrollingArea(
 		  (uiAreaHandler *)UiAreaHandlerFactory::build(
 			  drawCb, mouseEventCb, mouseCrossedCb, dragBrokenCb, keyEventCb),
-		  width, height)) {
-	areasMap[(uiArea *)getHandle()] = this;
-}
-
-// Workaround for nbind bug solved in 0.3
-UiArea::UiArea(int dummy) : UiControl(NULL) {}
+		  width, height)) {}
 
 #include "nbind/api.h"
 
 NBIND_CLASS(UiArea) {
 	inherit(UiControl);
-	construct<int>();
 	construct<nbind::cbFunction &, nbind::cbFunction &, nbind::cbFunction &,
 			  nbind::cbFunction &, nbind::cbFunction &>();
 	construct<nbind::cbFunction &, nbind::cbFunction &, nbind::cbFunction &,
