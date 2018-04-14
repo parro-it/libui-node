@@ -1,32 +1,75 @@
-#include "../ui.h"
+#include <memory>
+#include <vector>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "box.h"
+#include "control.h"
+#include "ui.h"
 
-UiBox::UiBox(uiControl* control) : UiControl(control) {}
+class UiBox : public UiControl {
+  public:
+	UiBox(uiControl *hnd);
+	~UiBox();
+	void onDestroy(uiControl *control) override;
 
-void UiBox::append(UiControl* control, bool stretchy) {
-	uiBoxAppend((uiBox*)getHandle(), control->getHandle(), stretchy);
+	// this hold references to children controls
+	// to avoid them being garbage collected
+	// until not destroyed.
+	std::vector<std::shared_ptr<UiControl>> children;
+
+	DEFINE_BOX_METHODS()
+};
+
+class UiVerticalBox : public UiBox {
+  public:
+	UiVerticalBox();
+	DEFINE_BOX_METHODS()
+	DEFINE_CONTROL_METHODS()
+};
+
+class UiHorizontalBox : public UiBox {
+  public:
+	UiHorizontalBox();
+	DEFINE_BOX_METHODS()
+	DEFINE_CONTROL_METHODS()
+};
+
+UiBox::~UiBox() {
+	// printf("UiBox %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+void UiBox::onDestroy(uiControl *control) {
+	/*
+		freeing children to allow JS to garbage collect their wrapper classes
+		when there are no references to them left in JS code.
+	*/
+	children.clear();
+}
+UiBox::UiBox(uiControl *control) : UiControl(control) {}
+
+void UiBox::append(std::shared_ptr<UiControl> control, bool stretchy) {
+	children.push_back(control);
+	uiBoxAppend((uiBox *)getHandle(), control->getHandle(), stretchy);
 }
 
 void UiBox::deleteAt(int index) {
-	uiBoxDelete((uiBox*)getHandle(), index);
+	children.erase(children.begin() + index);
+	uiBoxDelete((uiBox *)getHandle(), index);
 }
 
 void UiBox::setPadded(bool padded) {
-	uiBoxSetPadded((uiBox*)getHandle(), padded);
+	uiBoxSetPadded((uiBox *)getHandle(), padded);
 }
 
 bool UiBox::getPadded() {
-	return uiBoxPadded((uiBox*)getHandle());
+	return uiBoxPadded((uiBox *)getHandle());
 }
 
-UiVerticalBox::UiVerticalBox() : UiBox((uiControl*)uiNewVerticalBox()) {}
+UiVerticalBox::UiVerticalBox() : UiBox((uiControl *)uiNewVerticalBox()) {}
 
 INHERITS_CONTROL_METHODS(UiVerticalBox)
 INHERITS_BOX_METHODS(UiVerticalBox)
 
-UiHorizontalBox::UiHorizontalBox() : UiBox((uiControl*)uiNewHorizontalBox()) {}
+UiHorizontalBox::UiHorizontalBox() : UiBox((uiControl *)uiNewHorizontalBox()) {}
 
 INHERITS_CONTROL_METHODS(UiHorizontalBox)
 INHERITS_BOX_METHODS(UiHorizontalBox)

@@ -1,14 +1,13 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include <vector>
+#include "area.h"
+#include "ui.h"
 
-
-DrawTextFont::DrawTextFont () {}
-DrawTextFont::DrawTextFont (uiDrawTextFont * h) {
+DrawTextFont::DrawTextFont() {}
+DrawTextFont::DrawTextFont(uiDrawTextFont *h) {
 	handle = h;
 }
 
-uiDrawTextFont * DrawTextFont::getHandle () {
+uiDrawTextFont *DrawTextFont::getHandle() {
 	return handle;
 }
 
@@ -16,20 +15,20 @@ void DrawTextFont::free() {
 	uiDrawFreeTextFont(handle);
 }
 
-DrawTextFontDescriptor * DrawTextFont::describe() {
-	uiDrawTextFontDescriptor * desc = new uiDrawTextFontDescriptor();
+DrawTextFontDescriptor *DrawTextFont::describe() {
+	uiDrawTextFontDescriptor *desc = new uiDrawTextFontDescriptor();
 	uiDrawTextFontDescribe(handle, desc);
 	return new DrawTextFontDescriptor(desc);
 }
 
-DrawTextFontMetrics * DrawTextFont::getMetrics() {
-	uiDrawTextFontMetrics * metrics = new uiDrawTextFontMetrics();
+DrawTextFontMetrics *DrawTextFont::getMetrics() {
+	uiDrawTextFontMetrics *metrics = new uiDrawTextFontMetrics();
 	uiDrawTextFontGetMetrics(handle, metrics);
 	return new DrawTextFontMetrics(metrics);
 }
 
 std::vector<char *> DrawTextFont::listFontFamilies() {
-	uiDrawFontFamilies * families = uiDrawListFontFamilies();
+	uiDrawFontFamilies *families = uiDrawListFontFamilies();
 	int numFamilies = uiDrawFontFamiliesNumFamilies(families);
 	std::vector<char *> result(numFamilies);
 
@@ -42,7 +41,8 @@ std::vector<char *> DrawTextFont::listFontFamilies() {
 	return result;
 }
 
-void DrawTextFont::loadClosestFont(const char *family, double size, int weight, int italic, int stretch) {
+void DrawTextFont::loadClosestFont(const char *family, double size, int weight,
+								   int italic, int stretch) {
 	uiDrawTextFontDescriptor *descr = new uiDrawTextFontDescriptor();
 	descr->Family = family;
 	descr->Size = size;
@@ -51,7 +51,7 @@ void DrawTextFont::loadClosestFont(const char *family, double size, int weight, 
 	descr->Stretch = stretch;
 
 	handle = uiDrawLoadClosestFont(descr);
-//	printf("font handle %p\n", handle);
+	//	printf("font handle %p\n", handle);
 }
 
 NBIND_CLASS(DrawTextFont) {

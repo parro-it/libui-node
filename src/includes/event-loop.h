@@ -1,8 +1,8 @@
 #ifndef ui_node_event_loop
 #define ui_node_event_loop 1
 
-#include <uv.h>
 #include <atomic>
+#include <uv.h>
 #include "../../ui.h"
 #include "nbind/nbind.h"
 
@@ -18,24 +18,23 @@
 
 int uiEventsPending();
 int uiLoopWakeup();
-int waitForNodeEvents(uv_loop_t* loop, int timeout);
-
+int waitForNodeEvents(uv_loop_t *loop, int timeout);
 
 /*
-        Internal libuv structures
-        to deal with timers on macOS
-        and linux.
+		Internal libuv structures
+		to deal with timers on macOS
+		and linux.
  */
 
 struct heap_node {
-  struct heap_node* left;
-  struct heap_node* right;
-  struct heap_node* parent;
+	struct heap_node *left;
+	struct heap_node *right;
+	struct heap_node *parent;
 };
 
 struct heap {
-  struct heap_node* min;
-  unsigned int nelts;
+	struct heap_node *min;
+	unsigned int nelts;
 };
 
 #endif

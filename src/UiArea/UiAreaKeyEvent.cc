@@ -1,20 +1,13 @@
-
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
-
-
-
+#include <string>
+#include "area.h"
+#include "ui.h"
 
 UiAreaKeyEvent::UiAreaKeyEvent(uiAreaKeyEvent *event) {
 	e = event;
 }
 
-char * UiAreaKeyEvent::getKey() {
-	char *k = new char[2];
-	k[0] = e->Key;
-	k[1] = '\0';
-	return k;
+std::string UiAreaKeyEvent::getKey() {
+	return std::string(1, e->Key);
 }
 
 int UiAreaKeyEvent::getExtKey() {

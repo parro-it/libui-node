@@ -1,23 +1,36 @@
-#include "../ui.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
 
-UiLabel::UiLabel(const char* text) : UiControl((uiControl*)uiNewLabel(text)) {}
-UiLabel::UiLabel() : UiControl((uiControl*)uiNewLabel("")) {}
+class UiLabel : public UiControl {
+  public:
+	UiLabel();
+	UiLabel(std::string text);
+	DEFINE_CONTROL_METHODS()
+	void setText(std::string text);
+	std::string getText();
+};
+
+UiLabel::UiLabel(std::string text)
+	: UiControl(uiControl(uiNewLabel(text.c_str()))) {}
+UiLabel::UiLabel() : UiControl(uiControl(uiNewLabel(""))) {}
 
 INHERITS_CONTROL_METHODS(UiLabel)
 
-void UiLabel::setText(const char* text) {
-	uiLabelSetText((uiLabel*)getHandle(), text);
+void UiLabel::setText(std::string text) {
+	uiLabelSetText(uiLabel(getHandle()), text.c_str());
 }
 
-const char* UiLabel::getText() {
-	return uiLabelText((uiLabel*)getHandle());
+std::string UiLabel::getText() {
+	char *char_ptr = uiLabelText(uiLabel(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 NBIND_CLASS(UiLabel) {
-	construct<const char*>();
+	construct<std::string>();
 	construct<>();
 	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getText, setText);

@@ -1,7 +1,5 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
-
+#include "area.h"
+#include "ui.h"
 
 UiDrawPath::UiDrawPath(int fillMode) {
 	handle = uiDrawNewPath(fillMode);
@@ -15,21 +13,26 @@ void UiDrawPath::newFigure(double x, double y) {
 	uiDrawPathNewFigure(handle, x, y);
 }
 
-void UiDrawPath::newFigureWithArc(double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative) {
-	uiDrawPathNewFigureWithArc(handle, xCenter, yCenter, radius, startAngle, sweep, negative);
+void UiDrawPath::newFigureWithArc(double xCenter, double yCenter, double radius,
+								  double startAngle, double sweep,
+								  int negative) {
+	uiDrawPathNewFigureWithArc(handle, xCenter, yCenter, radius, startAngle,
+							   sweep, negative);
 }
 
 void UiDrawPath::lineTo(double x, double y) {
 	uiDrawPathLineTo(handle, x, y);
 }
 
-void UiDrawPath::arcTo(double xCenter, double yCenter, double radius, double startAngle, double sweep, int negative) {
-	uiDrawPathArcTo(handle, xCenter, yCenter, radius, startAngle, sweep, negative);
+void UiDrawPath::arcTo(double xCenter, double yCenter, double radius,
+					   double startAngle, double sweep, int negative) {
+	uiDrawPathArcTo(handle, xCenter, yCenter, radius, startAngle, sweep,
+					negative);
 }
 
-void UiDrawPath::bezierTo(double c1x, double c1y, double c2x, double c2y, double endX, double endY) {
+void UiDrawPath::bezierTo(double c1x, double c1y, double c2x, double c2y,
+						  double endX, double endY) {
 	uiDrawPathBezierTo(handle, c1x, c1y, c2x, c2y, endX, endY);
-
 }
 
 void UiDrawPath::closeFigure() {
@@ -38,7 +41,6 @@ void UiDrawPath::closeFigure() {
 
 void UiDrawPath::addRectangle(double x, double y, double width, double height) {
 	uiDrawPathAddRectangle(handle, x, y, width, height);
-
 }
 
 void UiDrawPath::end() {

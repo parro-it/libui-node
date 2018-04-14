@@ -1,27 +1,52 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
+#include "control.h"
+#include "ui.h"
 
-static void UiMenuItem_onClicked(uiMenuItem *sender, uiWindow *window, void *data) {
-	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+// TODO - document
+class UiMenuItem {
+	DEFINE_EVENT(onClicked)
+
+  private:
+	uiMenuItem *handle;
+
+  public:
+	UiMenuItem(uiMenuItem *hnd);
+	void enable();
+	void disable();
+	bool getChecked();
+	void setChecked(bool checked);
+};
+
+// TODO - document
+class UiMenu {
+  private:
+	uiMenu *handle;
+
+  public:
+	UiMenu(std::string name);
+	UiMenuItem *appendItem(std::string name);
+	UiMenuItem *appendCheckItem(std::string name);
+	UiMenuItem *appendQuitItem();
+	UiMenuItem *appendPreferencesItem();
+	UiMenuItem *appendAboutItem();
+	void appendSeparator();
+};
+
+static void UiMenuItem_onClicked(uiMenuItem *sender, uiWindow *window,
+								 void *data) {
+	nbind::cbFunction *cb = (nbind::cbFunction *)data;
 	(*cb)();
 }
 
-void UiMenuItem::onClicked(nbind::cbFunction & cb) {
+void UiMenuItem::onClicked(nbind::cbFunction &cb) {
 	onClickedCallback = new nbind::cbFunction(cb);
-	uiMenuItemOnClicked(
-		handle,
-		UiMenuItem_onClicked,
-		onClickedCallback
-	);
+	uiMenuItemOnClicked(handle, UiMenuItem_onClicked, onClickedCallback);
 }
-
 
 UiMenuItem::UiMenuItem(uiMenuItem *hnd) {
 	handle = hnd;
 }
-
 
 void UiMenuItem::enable() {
 	uiMenuItemEnable(handle);
@@ -39,57 +64,37 @@ void UiMenuItem::setChecked(bool checked) {
 	uiMenuItemSetChecked(handle, checked);
 }
 
-
-UiMenu::UiMenu(const char* name) {
-	handle = uiNewMenu(name);
+UiMenu::UiMenu(std::string name) {
+	handle = uiNewMenu(name.c_str());
 }
 
-UiMenuItem * UiMenu::appendItem(const char* name) {
-	return new UiMenuItem(uiMenuAppendItem(
-		handle,
-		name
-	));
+UiMenuItem *UiMenu::appendItem(std::string name) {
+	return new UiMenuItem(uiMenuAppendItem(handle, name.c_str()));
 }
 
-UiMenuItem * UiMenu::appendCheckItem(const char* name) {
-	return new UiMenuItem(uiMenuAppendCheckItem(
-		handle,
-		name
-	));
+UiMenuItem *UiMenu::appendCheckItem(std::string name) {
+	return new UiMenuItem(uiMenuAppendCheckItem(handle, name.c_str()));
 }
 
-UiMenuItem * UiMenu::appendQuitItem() {
-	return new UiMenuItem(uiMenuAppendQuitItem(
-		handle
-	));
+UiMenuItem *UiMenu::appendQuitItem() {
+	return new UiMenuItem(uiMenuAppendQuitItem(handle));
 }
 
-UiMenuItem * UiMenu::appendPreferencesItem() {
-	return new UiMenuItem(uiMenuAppendPreferencesItem(
-		handle
-	));
+UiMenuItem *UiMenu::appendPreferencesItem() {
+	return new UiMenuItem(uiMenuAppendPreferencesItem(handle));
 }
 
-UiMenuItem * UiMenu::appendAboutItem() {
-	return new UiMenuItem(uiMenuAppendAboutItem(
-		handle
-	));
+UiMenuItem *UiMenu::appendAboutItem() {
+	return new UiMenuItem(uiMenuAppendAboutItem(handle));
 }
 
 void UiMenu::appendSeparator() {
-	uiMenuAppendSeparator(
-		handle
-	);
+	uiMenuAppendSeparator(handle);
 }
 
-
-
-
-
-
 NBIND_CLASS(UiMenu) {
-	construct<const char *>();
-  method(appendItem);
+	construct<std::string>();
+	method(appendItem);
 	method(appendCheckItem);
 	method(appendQuitItem);
 	method(appendPreferencesItem);
@@ -104,4 +109,3 @@ NBIND_CLASS(UiMenuItem) {
 	method(onClicked);
 	getset(getChecked, setChecked);
 }
-

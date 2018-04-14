@@ -9,10 +9,22 @@
 		{
 			"name": "Andrea Parodi",
 			"email": "andrea@parro.it"
+		},
+		{
+			"name": "Niklas Mischkulnig",
+			"url": "https://github.com/mischnic"
+		},
+		{
+			"name": "Gustav Hansen",
+			"url": "https://github.com/kusti8"
+		},
+		{
+			"name": "Juha Järvi",
+			"url": "https://github.com/jjrv"
 		}
 	],
 	"scripts": {
-		"test": "ava && xo",
+		"test": "ava",
 		"start": "node examples/control-gallery.js",
 		"start-np": "node examples/node-pad.js",
 		"start-core": "node examples/core-api.js",
@@ -20,7 +32,9 @@
 		"node-gyp": "node-gyp",
 		"install": "libui-download && autogypi && npm run build",
 		"build": "node-gyp configure build",
-		"clean": "rm -rf build; rm -rf node_modules;"
+		"clean": "rm -rf build; rm -rf node_modules;",
+		"precommit": "check-clang-format \"'npm run lint'\"",
+		"lint": "clang-format -i --glob='{src/**/*.{h,cc},index.js,examples/**/*.js}'"
 	},
 	"keywords": [
 		"libui",
@@ -32,6 +46,7 @@
 		"node": ">=4"
 	},
 	"files": [
+		"list-sources.js",
 		"index.js",
 		"src",
 		"binding.gyp",
@@ -41,9 +56,10 @@
 	],
 	"devDependencies": {
 		"ava": "^0.25.0",
+		"clang-format": "^1.2.2",
 		"humanize": "0.0.9",
-		"proc-stats": "0.0.4",
-		"xo": "^0.20.3"
+		"husky": "^0.14.3",
+		"proc-stats": "0.0.4"
 	},
 	"dependencies": {
 		"autogypi": "^0.2.2",
