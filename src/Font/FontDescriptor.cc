@@ -6,6 +6,7 @@
 // needed because of UiFontButton::getFont
 FontDescriptor::FontDescriptor(FontDescriptor&& other){
 	d = other.d;
+	buttonCleanup = other.buttonCleanup;
 	other.d = nullptr;
 }
 

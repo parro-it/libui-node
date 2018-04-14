@@ -2,8 +2,10 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
+// because we're returning the objects in FontAttribute::new...
 FontAttribute::FontAttribute(FontAttribute&& other){
 	a = other.a;
+	appended = other.appended;
 	other.a = nullptr;
 }
 
