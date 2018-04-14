@@ -9,7 +9,6 @@ class UiButton : public UiControl {
   public:
 	UiButton(std::string text);
 	UiButton();
-	DEFINE_CONTROL_METHODS()
 	void setText(std::string text);
 	std::string getText();
 	~UiButton();
@@ -30,9 +29,8 @@ UiButton::~UiButton() {
 
 UiButton::UiButton(std::string text)
 	: UiControl(uiControl(uiNewButton(text.c_str()))) {}
-UiButton::UiButton() : UiControl(uiControl(uiNewButton(""))) {}
 
-INHERITS_CONTROL_METHODS(UiButton)
+UiButton::UiButton() : UiControl(uiControl(uiNewButton(""))) {}
 
 void UiButton::setText(std::string text) {
 	uiButtonSetText(uiButton(getHandle()), text.c_str());
@@ -48,9 +46,9 @@ std::string UiButton::getText() {
 IMPLEMENT_EVENT(UiButton, uiButton, onClicked, uiButtonOnClicked)
 
 NBIND_CLASS(UiButton) {
+	inherit(UiControl);
 	construct<std::string>();
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getText, setText);
 	method(getText);
 	method(setText);
