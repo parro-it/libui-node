@@ -18,6 +18,7 @@ FontDescriptor UiFontButton::getFont() {
 NBIND_CLASS(UiFontButton) {
 	construct<>();
 	DECLARE_CHILD_CONTROL_METHODS()
+	getter(getFont);
 	method(getFont);
 	method(onChanged);
 }

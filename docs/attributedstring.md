@@ -79,12 +79,6 @@ class FontDescriptor {
     uiFontDescriptor *getHandle();
 };
 
-class UiFontButton : public UiControl {
-  UiFontButton();
-  FontDescriptor getFont();
-  // onChanged, default button
-};
-
 
 class DrawTextLayout {
  public:

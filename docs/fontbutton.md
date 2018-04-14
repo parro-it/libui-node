@@ -1,16 +1,16 @@
 
-# ColorButton
+# FontButton
 
-> A button that opens a color palette popup.
+> A button that opens a font chooser.
 
-![UiColorButton example](media/UiColorButton.png)
+![UiFontButton example](media/UiFontButton.png)
 
 ```js
 var libui = require('libui');
 
-var win = new libui.UiWindow('UiColorButton example', 640, 480, true);
+var win = new libui.UiWindow('UiFontButton example', 640, 480, true);
 
-var widget = new libui.UiColorButton();
+var widget = new libui.UiFontButton();
 win.setChild(widget);
 
 win.onClosing(function () {
@@ -28,9 +28,9 @@ libui.startLoop();
 
 # Constructor
 
-> new libui.UiColorButton()
+> new libui.UiFontButton()
 
-Create a new UiColorButton object.
+Create a new UiFontButton object.
 
 ---
 
@@ -39,9 +39,9 @@ Create a new UiColorButton object.
 See [properties implementation](properties.md) for generic details on how properties are implemented.
 
 
-### color: Color
+### font: FontDescriptor
 
-Return or set the currently selected color
+Return or set the currently selected font
 
 
 
@@ -76,17 +76,10 @@ Return whether the control is a top level one or not.
 
 
 
-## setColor
 
-Set the value of property `color`
+## getFont
 
-**Arguments**
-
-* value: Color - The new value for `color` property.
-
-## getColor
-
-Return the value of property `color`
+Return the value of property `font`
 
 
 
@@ -99,7 +92,7 @@ See [events implementation](events.md) for generic details on how events are imp
 
 ### onChanged
 
-Emitted whenever property `color` change.
+Emitted whenever property `font` change.
 
 
 

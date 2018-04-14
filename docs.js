@@ -3,7 +3,6 @@
 const resolve = require('path').resolve;
 const writeFileSync = require('fs').writeFileSync;
 const existsSync = require('fs').existsSync;
-const libui = require('..');
 
 const bs = '```js';
 const be = '```';
@@ -11,23 +10,23 @@ const t = '`';
 let readme = `# libui-node
 
 These pages document the ${t}libui-node${t} classes.
+
 If you are new to the framework, you should start reading basic documentation on how it work:
 
-* [initialization & event loop](initialization.md) - explains how to initialize the framework and how the event loop works.
-* [properties](properties.md) - explains how widgets properties are implemented by ${t}libui-node${t}.
-* [events](events.md) - explains how widgets events are implemented by ${t}libui-node${t}.
-* [UiWindow](window.md) - explains how to create and manage OS windows.
+* [Initialization & Event Loop](initialization.md) - explains how to initialize the framework and how the event loop works.
+* [Properties](properties.md) - explains how widgets properties are implemented by ${t}libui-node${t}.
+* [Events](events.md) - explains how widgets events are implemented by ${t}libui-node${t}.
 * [Containers](containers.md) - explains how you can group widgets in tree hierarchies using different layout strategies.
-
+* [Attributed Strings](attributedstring.md) - explains how you can style text (font, color, underline, ...)
 
 
 `;
-const readmePath = resolve(__dirname, '../docs/readme.md');
+const readmePath = resolve(__dirname, 'docs/readme.md');
 
 function writeFile(name, description, ...contents) {
 	const filename = name.slice(2).toLowerCase() + '.md';
-	const path = resolve(__dirname, '../docs', filename);
-	const imagePath = resolve(__dirname, '../docs/media/', name + '.png');
+	const path = resolve(__dirname, 'docs', filename);
+	const imagePath = resolve(__dirname, 'docs/media/', name + '.png');
 	const imageMd = `![${name} example](media/${name}.png)`;
 	const image = existsSync(imagePath) ? imageMd : '';
 	readme += `
@@ -113,20 +112,20 @@ ${contents
 	// ? require('./show' + name + '.js');
 }
 
-function property(name, type, description) {
+function property(name, type, description, onlyGetter) {
 	const getterName = 'get' + name[0].toUpperCase() + name.slice(1);
 	const setterName = 'set' + name[0].toUpperCase() + name.slice(1);
 	return {
 		type: 'property',
 		methods: `
-## ${setterName}
+${!onlyGetter ? `## ${setterName}
 
 Set the value of property ${t}${name}${t}
 
 **Arguments**
 
 * value: ${type} - The new value for ${t}${name}${t} property.
-
+` : ""}
 ## ${getterName}
 
 Return the value of property ${t}${name}${t}
@@ -173,6 +172,11 @@ ${args
 `
 	};
 }
+
+readme += '## Containers widgets\n';
+
+readme += '* [UiWindow](window.md) - explains how to create and manage OS windows.';
+
 
 writeFile(
 	'UiForm',
@@ -231,485 +235,6 @@ writeFile(
 		'Boolean',
 		'If true, the container insert some space between children. \nDefaults to false.'
 	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiEntry',
-	'A simple, single line text entry widget.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'readOnly',
-		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
-	property('text', 'String', 'The current text of the entry.\nRead write.'),
-	event('onChanged', 'text'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiPasswordEntry',
-	'A single line text entry widget that mask the input, useful to edit passwords or other sensible data.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'readOnly',
-		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
-	property('text', 'String', 'The current text of the entry.\nRead write.'),
-	event('onChanged', 'text'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiSearchEntry',
-	'A single line text entry widget to search text.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'readOnly',
-		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
-	property('text', 'String', 'The current text of the entry.\nRead write.'),
-	event('onChanged', 'text'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiMultilineEntry',
-	'A multiline text entry widget.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'readOnly',
-		'Boolean',
-		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'text',
-		'String',
-		'The current text of the multiline entry.\nRead write.'
-	),
-	event('onChanged', 'text'),
-	method('append', 'Append specified text to the entry content.', [
-		'text: String - the text to append.'
-	]),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiLabel',
-	'A static text label.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property('text', 'String', 'The static text of the label.\nRead write.'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiVerticalSeparator',
-	'A vertical line to visually separate widgets.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiHorizontalSeparator',
-	'An horizontal line to visually separate widgets.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiDatePicker',
-	'A widgets to edit dates.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiTimePicker',
-	'A widgets to edit times.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiDateTimePicker',
-	'A widgets to edit date/times.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiButton',
-	'A simple button.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property('text', 'String', 'The static text of the button.\nRead write.'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.'),
-
-	event('onClicked', null, 'Emitted when the button is clicked')
-);
-
-writeFile(
-	'UiCheckbox',
-	'A checkbox widget.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'checked',
-		'Boolean',
-		'Whether the checkbox is checked or unchecked.\nRead write.\nDefaults to false'
-	),
-	property('text', 'String', 'The static text of the button.\nRead write.'),
-	event('onToggled', 'checked'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiSpinbox',
-	'An entry widget for numerical values.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'value',
-		'Number',
-		'The current numeric value of the spinbox.\nRead write.'
-	),
-	event('onChanged', 'value'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiSlider',
-	'Horizontal slide to set numerical values.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'value',
-		'Number',
-		'The current numeric value of the slider.\nRead write.'
-	),
-	event('onChanged', 'value'),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiProgressBar',
-	'Progress bar widget.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'value',
-		'Number',
-		'The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.\nRead write.'
-	),
-
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiCombobox',
-	'A drop down combo box that allow list selection only.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'selected',
-		'Number',
-		'Return or set the current selected item by index.'
-	),
-	event('onSelected', 'selected'),
-	method('append', 'Append a new text item to the drop down list.', [
-		'text: String - the text item to append.'
-	]),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiRadioButtons',
-	'A widget that represent a group of radio options.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'selected',
-		'Number',
-		'Return or set the current choosed option by index.'
-	),
-	event('onSelected', 'selected'),
-	method(
-		'append',
-		'Append a new radio option as last one with specified text.',
-		['text: String - the text to show as radio widget label.']
-	),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiEditableCombobox',
-	'A drop down combo box that allow selection from list or free text entry.',
-	property(
-		'visible',
-		'Boolean',
-		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'enabled',
-		'Boolean',
-		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
-	),
-	property(
-		'text',
-		'String',
-		'Return or set the current selected text or the text value of the selected item in the list.'
-	),
-	event('onChanged', 'text'),
-	method('append', 'Append a new text item to the drop down list.', [
-		'text: String - the text item to append.'
-	]),
-	method('destroy', 'Destroy and free the control.'),
-	method('setParent', 'Change the parent of the control', [
-		'parent: UiControl - the new parent of the widget or null to detach it.'
-	]),
-	method('toplevel', 'Return whether the control is a top level one or not.')
-);
-
-writeFile(
-	'UiColorButton',
-	'A button that open a color palette popup.',
-	property('color', 'Color', 'Return or set the currently selected color'),
-	event('onChanged', 'color'),
 
 	method('destroy', 'Destroy and free the control.'),
 	method('setParent', 'Change the parent of the control', [
@@ -872,22 +397,506 @@ writeFile(
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-writeFileSync(readmePath, readme);
 
-const win = new libui.UiWindow('Example window', 640, 480, true);
-win.borderless = true;
-const box = new libui.UiVerticalBox();
-const entry = new libui.UiMultilineEntry();
-entry.text = 'This is some text';
+readme += '\n## Data entry widgets\n';
 
-box.append(entry, 1);
 
-win.setChild(box);
+writeFile(
+	'UiEntry',
+	'A simple, single line text entry widget.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'readOnly',
+		'Boolean',
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
+	),
+	property('text', 'String', 'The current text of the entry.\nRead write.'),
+	event('onChanged', 'text'),
 
-win.onClosing(() => {
-	libui.stopLoop();
-});
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
 
-win.show();
+writeFile(
+	'UiPasswordEntry',
+	'A single line text entry widget that mask the input, useful to edit passwords or other sensible data.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'readOnly',
+		'Boolean',
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
+	),
+	property('text', 'String', 'The current text of the entry.\nRead write.'),
+	event('onChanged', 'text'),
 
-libui.startLoop();
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiSearchEntry',
+	'A single line text entry widget to search text.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'readOnly',
+		'Boolean',
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
+	),
+	property('text', 'String', 'The current text of the entry.\nRead write.'),
+	event('onChanged', 'text'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiMultilineEntry',
+	'A multiline text entry widget.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'readOnly',
+		'Boolean',
+		'Whether the user is allowed to change the entry text. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'text',
+		'String',
+		'The current text of the multiline entry.\nRead write.'
+	),
+	event('onChanged', 'text'),
+	method('append', 'Append specified text to the entry content.', [
+		'text: String - the text to append.'
+	]),
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiDatePicker',
+	'A widgets to edit dates.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiTimePicker',
+	'A widgets to edit times.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiDateTimePicker',
+	'A widgets to edit date/times.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiCheckbox',
+	'A checkbox widget.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'checked',
+		'Boolean',
+		'Whether the checkbox is checked or unchecked.\nRead write.\nDefaults to false'
+	),
+	property('text', 'String', 'The static text of the button.\nRead write.'),
+	event('onToggled', 'checked'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiSpinbox',
+	'An entry widget for numerical values.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'value',
+		'Number',
+		'The current numeric value of the spinbox.\nRead write.'
+	),
+	event('onChanged', 'value'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiSlider',
+	'Horizontal slide to set numerical values.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'value',
+		'Number',
+		'The current numeric value of the slider.\nRead write.'
+	),
+	event('onChanged', 'value'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiCombobox',
+	'A drop down combo box that allow list selection only.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'selected',
+		'Number',
+		'Return or set the current selected item by index.'
+	),
+	event('onSelected', 'selected'),
+	method('append', 'Append a new text item to the drop down list.', [
+		'text: String - the text item to append.'
+	]),
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiRadioButtons',
+	'A widget that represent a group of radio options.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'selected',
+		'Number',
+		'Return or set the current choosed option by index.'
+	),
+	event('onSelected', 'selected'),
+	method(
+		'append',
+		'Append a new radio option as last one with specified text.',
+		['text: String - the text to show as radio widget label.']
+	),
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiEditableCombobox',
+	'A drop down combo box that allow selection from list or free text entry.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'text',
+		'String',
+		'Return or set the current selected text or the text value of the selected item in the list.'
+	),
+	event('onChanged', 'text'),
+	method('append', 'Append a new text item to the drop down list.', [
+		'text: String - the text item to append.'
+	]),
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+readme += '\n\n## Static widgets\n';
+
+writeFile(
+	'UiLabel',
+	'A static text label.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property('text', 'String', 'The static text of the label.\nRead write.'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiVerticalSeparator',
+	'A vertical line to visually separate widgets.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiHorizontalSeparator',
+	'An horizontal line to visually separate widgets.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiProgressBar',
+	'Progress bar widget.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'value',
+		'Number',
+		'The current position of the progress bar. Could be setted to -1 to create an indeterminate progress bar.\nRead write.'
+	),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+
+readme += '\n\n## Buttons\n';
+
+
+writeFile(
+	'UiButton',
+	'A simple button.',
+	property(
+		'visible',
+		'Boolean',
+		'Whether the widget should be visible or hidden. \nRead write.\nDefaults to `true`.'
+	),
+	property(
+		'enabled',
+		'Boolean',
+		'Whether the widget should be enabled or disabled. \nRead write.\nDefaults to `true`.'
+	),
+	property('text', 'String', 'The static text of the button.\nRead write.'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.'),
+
+	event('onClicked', null, 'Emitted when the button is clicked')
+);
+
+writeFile(
+	'UiColorButton',
+	'A button that opens a color palette popup.',
+	property('color', 'Color', 'Return or set the currently selected color'),
+	event('onChanged', 'color'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFile(
+	'UiFontButton',
+	'A button that opens a font chooser.',
+	property('font', 'FontDescriptor', 'Return or set the currently selected font', true),
+	event('onChanged', 'font'),
+
+	method('destroy', 'Destroy and free the control.'),
+	method('setParent', 'Change the parent of the control', [
+		'parent: UiControl - the new parent of the widget or null to detach it.'
+	]),
+	method('toplevel', 'Return whether the control is a top level one or not.')
+);
+
+writeFileSync(readmePath, readme+'\n');
