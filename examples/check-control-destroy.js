@@ -137,8 +137,7 @@ function op() {
 	global.gc();
 	const win = createWindow();
 	win.show();
-	return;
-	setTimeout(() => {
+	libui.setTimeout(() => {
 		win.close();
 		op();
 	}, 100);
