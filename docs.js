@@ -112,20 +112,21 @@ ${contents
 	// ? require('./show' + name + '.js');
 }
 
-function property(name, type, description, onlyGetter) {
+function property(name, type, description, addSetter) {
+	addSetter = addSetter === undefined ? true : addSetter;
 	const getterName = 'get' + name[0].toUpperCase() + name.slice(1);
 	const setterName = 'set' + name[0].toUpperCase() + name.slice(1);
 	return {
 		type: 'property',
 		methods: `
-${!onlyGetter ? `## ${setterName}
+${addSetter ? `## ${setterName}
 
 Set the value of property ${t}${name}${t}
 
 **Arguments**
 
 * value: ${type} - The new value for ${t}${name}${t} property.
-` : ""}
+` : ''}
 ## ${getterName}
 
 Return the value of property ${t}${name}${t}
@@ -176,7 +177,6 @@ ${args
 readme += '## Containers widgets\n';
 
 readme += '* [UiWindow](window.md) - explains how to create and manage OS windows.';
-
 
 writeFile(
 	'UiForm',
@@ -397,9 +397,7 @@ writeFile(
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-
 readme += '\n## Data entry widgets\n';
-
 
 writeFile(
 	'UiEntry',
@@ -845,9 +843,7 @@ writeFile(
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-
 readme += '\n\n## Buttons\n';
-
 
 writeFile(
 	'UiButton',
@@ -889,7 +885,7 @@ writeFile(
 writeFile(
 	'UiFontButton',
 	'A button that opens a font chooser.',
-	property('font', 'FontDescriptor', 'Return or set the currently selected font', true),
+	property('font', 'FontDescriptor', 'Return or set the currently selected font', false),
 	event('onChanged', 'font'),
 
 	method('destroy', 'Destroy and free the control.'),
@@ -899,4 +895,4 @@ writeFile(
 	method('toplevel', 'Return whether the control is a top level one or not.')
 );
 
-writeFileSync(readmePath, readme+'\n');
+writeFileSync(readmePath, readme + '\n');

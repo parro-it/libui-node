@@ -752,7 +752,7 @@ class DrawTextLayout {
 
  public:
   DrawTextLayout(AttributedString *s, FontDescriptor *defaultFont, double width, int align);
-  void free();
+  ~DrawTextLayout();
   SizeDouble getExtents();
   uiDrawTextLayout* getHandle();
 };

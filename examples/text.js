@@ -25,6 +25,10 @@ str.appendUnattributed(', ');
 str.appendAttributed('font weight', FontAttribute.newWeight(libui.textWeight.bold));
 str.appendUnattributed(', ');
 
+str.forEach((str, attr, start, end) => {
+	console.log({str, attr, start, end});
+});
+
 str.appendAttributed('font italicness', FontAttribute.newItalic(libui.textItalic.italic));
 str.appendUnattributed(', ');
 
@@ -78,10 +82,6 @@ str.appendUnattributed(').\n');
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.\n');
 str.appendAttributed('👨🏾', FontAttribute.newBackground(new libui.Color(0, 1, 0, 1)));
 
-str.forEach((str, attr, start, end) => {
-	console.log({str, attr, start, end});
-});
-
 function handlerDraw(area, p) {
 	const font = checkbox.checked ?
 		new libui.FontDescriptor('Georgia', 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal) :
@@ -91,8 +91,8 @@ function handlerDraw(area, p) {
 
 	p.getContext().text(0, 0, layout);
 
-	layout.free();
 	font.free();
+	layout.free();
 }
 
 function noop() {}

@@ -13,7 +13,7 @@ DrawTextLayout::DrawTextLayout(AttributedString *str, FontDescriptor *defaultFon
 	handle = uiDrawNewTextLayout(&params);
 }
 
-void DrawTextLayout::free() {
+DrawTextLayout::~DrawTextLayout() {
 	uiDrawFreeTextLayout(handle);
 }
 
@@ -30,7 +30,6 @@ SizeDouble DrawTextLayout::getExtents() {
 
 NBIND_CLASS(DrawTextLayout) {
 	construct<AttributedString *, FontDescriptor *, double, int>();
-	method(free);
 	method(getExtents);
 }
 
