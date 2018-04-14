@@ -3,6 +3,12 @@
 #include "nbind/nbind.h"
 #include <cstring>
 
+// needed because of UiFontButton::getFont
+FontDescriptor::FontDescriptor(FontDescriptor&& other){
+	d = other.d;
+	other.d = nullptr;
+}
+
 FontDescriptor::FontDescriptor(uiFontDescriptor * desc) {
 	d = desc;
 	buttonCleanup = 1;
@@ -19,13 +25,15 @@ FontDescriptor::FontDescriptor(const char *family, double size, int weight, int 
     d->Stretch = stretch;
 }
 
-void FontDescriptor::free() {
-	if(buttonCleanup){
-		uiFreeFontButtonFont(d);
-	} else {
-		delete[] d->Family;
+FontDescriptor::~FontDescriptor() {
+	if(d != nullptr){
+		if(buttonCleanup){
+			uiFreeFontButtonFont(d);
+		} else {
+			delete[] d->Family;
+		}
+		delete d;
 	}
-	delete d;
 }
 
 char *FontDescriptor::getFamily() {
@@ -55,7 +63,6 @@ uiFontDescriptor *FontDescriptor::getHandle(){
 
 NBIND_CLASS(FontDescriptor) {
 	construct<const char *, double, int, int, int>();
-	method(free);
 	method(getFamily);
 	method(getSize);
 	method(getWeight);

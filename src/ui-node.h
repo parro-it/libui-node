@@ -723,9 +723,10 @@ class FontDescriptor {
     uiFontDescriptor *d;
     int buttonCleanup = 0;
   public:
+    FontDescriptor(FontDescriptor&& other);
     FontDescriptor(uiFontDescriptor *d);
     FontDescriptor(const char *family, double size, int weight, int italic, int stretch);
-    void free();
+    ~FontDescriptor();
     char *getFamily();
     double getSize();
     int getWeight();
