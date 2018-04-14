@@ -12,7 +12,6 @@ OpenTypeFeatures::OpenTypeFeatures() {
 
 OpenTypeFeatures::~OpenTypeFeatures() {
 	uiFreeOpenTypeFeatures(f);
-	printf("freed OpenTypeFeatures\n");
 }
 
 uiOpenTypeFeatures *OpenTypeFeatures::getHandle() {

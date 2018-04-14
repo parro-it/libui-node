@@ -659,8 +659,9 @@ class FontAttribute {
     int appended = 0;
 
   public:
+    FontAttribute(FontAttribute&& other);
     FontAttribute(uiAttribute *a);
-    void free();
+    ~FontAttribute();
     void setAppended();
     int getAttributeType();
     uiAttribute *getHandle();

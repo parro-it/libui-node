@@ -2,8 +2,21 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
+FontAttribute::FontAttribute(FontAttribute&& other){
+	a = other.a;
+	other.a = nullptr;
+}
+
 FontAttribute::FontAttribute(uiAttribute *attr){
 	a = attr;
+}
+
+FontAttribute::~FontAttribute(){
+	if(a != nullptr){
+		if(!appended){
+			uiFreeAttribute(a);
+		}
+	}
 }
 
 int FontAttribute::getAttributeType() {
@@ -14,11 +27,6 @@ uiAttribute *FontAttribute::getHandle() {
 	return a;
 }
 
-void FontAttribute::free(){
-	if(!appended){
-		uiFreeAttribute(a);
-	}
-}
 
 void FontAttribute::setAppended(){
 	appended = 1;
@@ -123,7 +131,6 @@ FontAttribute FontAttribute::newOTFeatures(OpenTypeFeatures *otf) {
 
 
 NBIND_CLASS(FontAttribute) {
-	method(free);
 	method(getAttributeType);
 
 	method(getFamily);

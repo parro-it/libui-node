@@ -132,7 +132,7 @@ function main() {
 	vbox.append(checkbox, false);
 
 	align = new libui.UiCombobox();
-	// Note that the items match with the valueorder of libui.textAlign
+	// Note that the items match with the value order of libui.textAlign
 	align.append('Left');
 	align.append('Center');
 	align.append('Right');
