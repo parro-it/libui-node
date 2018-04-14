@@ -93,7 +93,9 @@ build
 auto*.gypi
 _libui
 
-*.h
+ui_*.h
+ui.h
+uitable.h
 
 *.dylib
 *.dll

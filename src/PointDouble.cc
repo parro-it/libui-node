@@ -1,6 +1,4 @@
-#include "../ui.h"
-#include "ui-node.h"
-#include "nbind/nbind.h"
+#include "values.h"
 
 PointDouble::PointDouble(const PointDouble &other) {
 	x = other.x;

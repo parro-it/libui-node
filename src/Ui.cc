@@ -1,7 +1,8 @@
-#include "../ui.h"
+#include "ui.h"
 #include "nbind/api.h"
 #include "nbind/nbind.h"
-/* TODO: this has to be removed */
+
+/* TODO: this file has to be removed */
 
 static int onShouldQuit_cb(void *data) {
 	nbind::cbFunction *cb = (nbind::cbFunction *)data;

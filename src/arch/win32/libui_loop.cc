@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include <stdio.h>
-#include "../../../ui.h"
+#include "ui.h"
 
 typedef struct uv_loop_s {
 	/* User data - use this for whatever. */

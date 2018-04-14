@@ -1,7 +1,33 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include <memory>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
+#include "control.h"
+#include "ui.h"
+
+class UiSpinbox : public UiControl {
+  public:
+	DEFINE_EVENT(onChanged)
+
+	UiSpinbox(int min, int max);
+	UiSpinbox();
+	DEFINE_CONTROL_METHODS()
+
+	int getValue();
+	void setValue(int value);
+	~UiSpinbox();
+	void onDestroy(uiControl *control) override;
+};
+
+UiSpinbox::~UiSpinbox() {
+	// printf("UiSpinbox %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+void UiSpinbox::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
 
 UiSpinbox::UiSpinbox(int min, int max)
 	: UiControl((uiControl *)uiNewSpinbox(min, max)) {}
@@ -14,7 +40,7 @@ int UiSpinbox::getValue() {
 
 void UiSpinbox::setValue(int value) {
 	uiSpinboxSetValue((uiSpinbox *)getHandle(), value);
-	if (onChangedCallback != NULL) {
+	if (onChangedCallback != nullptr) {
 		(*onChangedCallback)();
 	}
 }

@@ -1,8 +1,6 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
-
 #include <string>
+#include "area.h"
+#include "ui.h"
 
 UiAreaKeyEvent::UiAreaKeyEvent(uiAreaKeyEvent *event) {
 	e = event;

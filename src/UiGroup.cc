@@ -1,35 +1,72 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
+#include "control.h"
+#include "ui.h"
 
-UiGroup::UiGroup(const char *text) : UiControl((uiControl *)uiNewGroup(text)) {}
-UiGroup::UiGroup() : UiControl((uiControl *)uiNewGroup("")) {}
+class UiGroup : public UiControl {
+  private:
+	// this hold a reference to child control
+	// to avoid it being garbage collected
+	// until not destroyed.
+	std::shared_ptr<UiControl> child;
 
-void UiGroup::setChild(UiControl *control) {
-	uiGroupSetChild((uiGroup *)getHandle(), control->getHandle());
+  public:
+	UiGroup(std::string text);
+	UiGroup();
+	~UiGroup();
+	void onDestroy(uiControl *control) override;
+	void setChild(std::shared_ptr<UiControl> control);
+	bool getMargined();
+	void setMargined(bool margined);
+	std::string getTitle();
+	void setTitle(std::string title);
+
+	DEFINE_CONTROL_METHODS()
+};
+
+UiGroup::~UiGroup() {
+	//	printf("UiGroup %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+void UiGroup::onDestroy(uiControl *control) {
+	/*
+		freeing children to allow JS to garbage collect their wrapper classes
+		when there are no references to them left in JS code.
+	*/
+	child = nullptr;
+}
+UiGroup::UiGroup(std::string text)
+	: UiControl(uiControl(uiNewGroup(text.c_str()))) {}
+UiGroup::UiGroup() : UiControl(uiControl(uiNewGroup(""))) {}
+
+void UiGroup::setChild(std::shared_ptr<UiControl> control) {
+	child = control;
+	uiGroupSetChild(uiGroup(getHandle()), control.get()->getHandle());
 }
 
 bool UiGroup::getMargined() {
-	return uiGroupMargined((uiGroup *)getHandle());
+	return uiGroupMargined(uiGroup(getHandle()));
 }
 
 void UiGroup::setMargined(bool margined) {
-	uiGroupSetMargined((uiGroup *)getHandle(), margined);
+	uiGroupSetMargined(uiGroup(getHandle()), margined);
 }
 
-const char *UiGroup::getTitle() {
-	return uiGroupTitle((uiGroup *)getHandle());
+std::string UiGroup::getTitle() {
+	char *char_ptr = uiGroupTitle(uiGroup(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
-void UiGroup::setTitle(const char *title) {
-	uiGroupSetTitle((uiGroup *)getHandle(), title);
+void UiGroup::setTitle(std::string title) {
+	uiGroupSetTitle(uiGroup(getHandle()), title.c_str());
 }
 
 INHERITS_CONTROL_METHODS(UiGroup)
 
 NBIND_CLASS(UiGroup) {
-	construct<const char *>();
+	construct<std::string>();
 	construct<>();
 	method(setChild);
 	method(getTitle);

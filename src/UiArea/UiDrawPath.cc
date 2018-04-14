@@ -1,6 +1,5 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
 UiDrawPath::UiDrawPath(int fillMode) {
 	handle = uiDrawNewPath(fillMode);

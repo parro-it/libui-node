@@ -1,7 +1,34 @@
-#include "../ui.h"
-#include "ui-node.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
+#include "control.h"
+#include "ui.h"
+
+class UiRadioButtons : public UiControl {
+	DEFINE_EVENT(onSelected)
+
+  public:
+	UiRadioButtons();
+	void append(std::string text);
+	int getSelected();
+	void setSelected(int n);
+
+	DEFINE_CONTROL_METHODS()
+	~UiRadioButtons();
+	void onDestroy(uiControl *control) override;
+};
+
+UiRadioButtons::~UiRadioButtons() {
+	// printf("UiRadioButtons %p destroyed with wrapper %p.\n", getHandle(),
+	// this);
+}
+
+void UiRadioButtons::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onSelected);
+}
 
 UiRadioButtons::UiRadioButtons()
 	: UiControl((uiControl *)uiNewRadioButtons()) {}
@@ -22,8 +49,8 @@ void UiRadioButtons::setSelected(int n) {
 	}
 }
 
-void UiRadioButtons::append(const char *text) {
-	uiRadioButtonsAppend((uiRadioButtons *)getHandle(), text);
+void UiRadioButtons::append(std::string text) {
+	uiRadioButtonsAppend(uiRadioButtons(getHandle()), text.c_str());
 }
 
 NBIND_CLASS(UiRadioButtons) {

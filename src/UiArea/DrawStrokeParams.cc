@@ -1,7 +1,7 @@
 #include <algorithm>
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include <vector>
+#include "area.h"
+#include "ui.h"
 
 DrawStrokeParams::DrawStrokeParams() {
 	sp = new uiDrawStrokeParams();

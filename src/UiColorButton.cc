@@ -1,7 +1,32 @@
-#include "../ui.h"
-#include "ui-node.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
+#include "control.h"
+#include "ui.h"
+#include "values.h"
+
+class UiColorButton : public UiControl {
+	DEFINE_EVENT(onChanged)
+
+  public:
+	UiColorButton();
+	Color getColor();
+	void setColor(Color value);
+	DEFINE_CONTROL_METHODS()
+	~UiColorButton();
+	void onDestroy(uiControl *control) override;
+};
+
+void UiColorButton::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
+
+UiColorButton::~UiColorButton() {
+	// printf("UiColorButton %p destroyed with wrapper %p.\n", getHandle(),
+	// this);
+}
 
 UiColorButton::UiColorButton() : UiControl((uiControl *)uiNewColorButton()) {}
 

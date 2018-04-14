@@ -1,6 +1,6 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "control.h"
+#include "ui.h"
 
 std::map<uiArea *, UiArea *> areasMap;
 
