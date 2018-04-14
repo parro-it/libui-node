@@ -164,6 +164,15 @@ binding.lib.FontAttribute.newUnderlineColor = function (type, color) {
 	return binding.lib.FontAttribute.newUnderlineColor2(type, color);
 };
 
+binding.lib.OpenTypeFeatures.prototype.get = function (str) {
+	const value =  this.getInternal(str);
+	if (value[1]){
+		return value[0];
+	} else {
+		return null;
+	}
+}
+
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;
 module.exports.textStretch = textStretch;

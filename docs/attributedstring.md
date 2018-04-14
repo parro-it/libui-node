@@ -9,19 +9,9 @@ class OpenTypeFeatures {
     static OpenTypeFeatures clone(OpenTypeFeatures *f2);
     void add(const char *tag, uint32_t value);
     void remove(const char *tag);
-    // uiOpenTypeFeaturesGet() determines whether the given feature
-    // tag is present in otf. If it is, *value is set to the tag's value and
-    // nonzero is returned. Otherwise, zero is returned.
-    //
-    // Note that if uiOpenTypeFeaturesGet() returns zero, value isn't
-    // changed. This is important: if a feature is not present in a
-    // uiOpenTypeFeatures, the feature is NOT treated as if its
-    // value was zero anyway. Script-specific font shaping rules and
-    // font-specific feature settings may use a different default value
-    // for a feature. You should likewise not treat a missing feature as
-    // having a value of zero either. Instead, a missing feature should
-    // be treated as having some unspecified default value.
-    int get(const char *tag, uint32_t *value);
+
+    // value or `null` if not set
+    get(const char *tag);
 
     // cb(OpenTypeFeatures, tag, value)
     void forEach(nbind::cbFunction& cb);

@@ -10,8 +10,9 @@ OpenTypeFeatures::OpenTypeFeatures() {
 	f = uiNewOpenTypeFeatures();
 }
 
-void OpenTypeFeatures::free() {
+OpenTypeFeatures::~OpenTypeFeatures() {
 	uiFreeOpenTypeFeatures(f);
+	printf("freed OpenTypeFeatures\n");
 }
 
 uiOpenTypeFeatures *OpenTypeFeatures::getHandle() {
@@ -30,28 +31,36 @@ void OpenTypeFeatures::remove(const char *tag) {
 	uiOpenTypeFeaturesRemove(f, tag[0], tag[1], tag[2], tag[3]);
 }
 
-int OpenTypeFeatures::get(const char *tag, uint32_t *value) {
-	return uiOpenTypeFeaturesGet(f, tag[0], tag[1], tag[2], tag[3], value);
+std::array<unsigned int, 2> OpenTypeFeatures::getInternal(const char *tag) {
+	unsigned int value = 0;
+	unsigned int exists = uiOpenTypeFeaturesGet(f, tag[0], tag[1], tag[2], tag[3], &value);
+	return std::array<unsigned int, 2> {{value, exists}};
 }
 
-static unsigned int OpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *data) {
+typedef struct {
+	OpenTypeFeatures *otf;
+	nbind::cbFunction *cb;
+} ForEachData;
+
+static unsigned int OpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *dat) {
+	ForEachData *data = (ForEachData*) dat;
 	const char tag[5] = {a, b, c, d, '\0'};
-	nbind::cbFunction *cb = (nbind::cbFunction *) data;
-	return cb->call<unsigned int>(
-		OpenTypeFeatures((uiOpenTypeFeatures*)otf),
+
+	return data->cb->call<unsigned int>(
+		data->otf,
 		&tag[0], value);
 }
 
 void OpenTypeFeatures::forEach(nbind::cbFunction& cb) {
-	uiOpenTypeFeaturesForEach(f, OpenTypeFeatures__forEach, &cb);
+	ForEachData d = {this, &cb};
+	uiOpenTypeFeaturesForEach(f, OpenTypeFeatures__forEach, &d);
 }
 
 NBIND_CLASS(OpenTypeFeatures) {
 	construct<>();
-	method(free);
 	method(clone);
 	method(add);
 	method(remove);
-	method(get);
+	method(getInternal);
 	method(forEach);
 }

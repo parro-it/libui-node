@@ -641,13 +641,13 @@ class OpenTypeFeatures {
   public:
     OpenTypeFeatures();
     OpenTypeFeatures(uiOpenTypeFeatures *feat);
-    void free();
+    ~OpenTypeFeatures();
     uiOpenTypeFeatures *getHandle();
 
     static OpenTypeFeatures clone(OpenTypeFeatures *f2);
     void add(const char *tag, uint32_t value);
     void remove(const char *tag);
-    int get(const char *tag, uint32_t *value);
+    std::array<unsigned int, 2> getInternal(const char *tag);
 
     void forEach(nbind::cbFunction& cb);
 
