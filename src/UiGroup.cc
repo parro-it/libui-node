@@ -62,6 +62,7 @@ void UiGroup::setTitle(std::string title) {
 }
 
 NBIND_CLASS(UiGroup) {
+	inherit(UiControl);
 	construct<std::string>();
 	construct<>();
 	method(setChild);
