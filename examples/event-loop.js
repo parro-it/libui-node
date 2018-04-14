@@ -93,6 +93,39 @@ function makeToolbar() {
 
 	toolbar.append(btnPromise, false);
 
+	const btnCustom = new libui.UiButton('Custom setTimeout');
+	btnCustom.onClicked(() => {
+		const now = Date.now();
+		const longTimeout = libui.setTimeout(() => {
+			logAppend(`THIS HOULD NOT HAPPEN!`);
+		}, 200);
+
+		libui.setTimeout(() => {
+			libui.clearTimeout(longTimeout);
+			const elapsed = Date.now() - now;
+			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms`);
+		}, 10);
+	});
+	toolbar.append(btnCustom, false);
+
+	const btnCustomSetInterval = new libui.UiButton('Custom setInterval');
+	let intervalHandler = null;
+	btnCustomSetInterval.onClicked(() => {
+		if (intervalHandler) {
+			libui.clearInterval(intervalHandler);
+			intervalHandler = null;
+			return;
+		}
+		let now = Date.now();
+		intervalHandler = libui.setInterval(() => {
+			const elapsed = Date.now() - now;
+			logAppend(`Custom setInterval: ${now} - elapsed ${elapsed} ms`);
+			now = Date.now();
+		}, 10);
+	});
+
+	toolbar.append(btnCustomSetInterval, false);
+
 	const btnNextTick = new libui.UiButton('NextTick');
 	btnNextTick.onClicked(() => {
 		const now = Date.now();

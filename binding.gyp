@@ -27,7 +27,7 @@
 					"sources": [
 						"<!@(ls -1 src/*.cc)",
 						"<!@(ls -1 src/UiArea/*.cc)",
-						"src/arch/unix/libui_loop.cc"
+						"<!@(ls -1 src/arch/unix/*.cc)"
 					],
 					"cflags": ["-fvisibility=hidden"],
 					'ldflags': [
