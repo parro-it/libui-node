@@ -696,7 +696,7 @@ class AttributedString {
   public:
     AttributedString(uiAttributedString *str);
     AttributedString(const char *str);
-    void free();
+    ~AttributedString();
     uiAttributedString *getHandle();
     const char * toString();
     size_t toStringLen();

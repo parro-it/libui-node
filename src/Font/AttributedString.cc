@@ -10,7 +10,7 @@ AttributedString::AttributedString(const char *str) {
 	s = uiNewAttributedString(str);
 }
 
-void AttributedString::free() {
+AttributedString::~AttributedString() {
 	uiFreeAttributedString(s);
 }
 
@@ -43,25 +43,32 @@ void AttributedString::setAttribute(FontAttribute *attr, size_t start, size_t en
 	attr->setAppended();
 }
 
-static unsigned int AttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *data) {
-	nbind::cbFunction *cb = (nbind::cbFunction *) data;
+typedef struct {
+	AttributedString *str;
+	nbind::cbFunction *cb;
+} ForEachData;
 
-	return cb->call<unsigned int>(
-		AttributedString((uiAttributedString*)s),
+static unsigned int AttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *d) {
+	ForEachData *data = (ForEachData*) d;
+
+	FontAttribute f = FontAttribute((uiAttribute*)a);
+	f.setAppended();
+
+	return data->cb->call<unsigned int>(
+		data->str,
 		FontAttribute((uiAttribute*)a),
 		start, end);
 }
 
 void AttributedString::forEach(nbind::cbFunction& cb) {
-	uiAttributedStringForEachAttribute(s, AttributedString__forEach, &cb);
+	ForEachData d = {this, &cb};
+	uiAttributedStringForEachAttribute(s, AttributedString__forEach, &d);
 }
-
 
 
 void AttributedString::appendAttributed(const char *str, FontAttribute *attr) {
 	this->appendAttributed(str, attr, nullptr);
 }
-
 
 void AttributedString::appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2) {
 	size_t start = this->toStringLen();
@@ -89,7 +96,6 @@ size_t AttributedString::graphemeToByteIndex(size_t pos) {
 
 NBIND_CLASS(AttributedString) {
 	construct<const char *>();
-	method(free);
 	method(toString);
 	method(toStringLen);
 	method(appendUnattributed);
