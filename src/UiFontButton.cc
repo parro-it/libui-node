@@ -10,7 +10,6 @@ class UiFontButton : public UiControl {
   public:
 	UiFontButton();
 	DrawTextFont *getFont();
-	DEFINE_CONTROL_METHODS()
 	~UiFontButton();
 	void onDestroy(uiControl *control) override;
 };
@@ -30,8 +29,6 @@ void UiFontButton::onDestroy(uiControl *control) {
 
 UiFontButton::UiFontButton() : UiControl((uiControl *)uiNewFontButton()) {}
 
-INHERITS_CONTROL_METHODS(UiFontButton)
-
 IMPLEMENT_EVENT(UiFontButton, uiFontButton, onChanged, uiFontButtonOnChanged)
 
 DrawTextFont *UiFontButton::getFont() {
@@ -39,8 +36,8 @@ DrawTextFont *UiFontButton::getFont() {
 }
 
 NBIND_CLASS(UiFontButton) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	method(getFont);
 	method(onChanged);
 }
