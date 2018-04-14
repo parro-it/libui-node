@@ -1,7 +1,6 @@
 #include <memory>
 #include <vector>
 #include "nbind/api.h"
-#include "box.h"
 #include "control.h"
 #include "ui.h"
 
@@ -16,19 +15,20 @@ class UiBox : public UiControl {
 	// until not destroyed.
 	std::vector<std::shared_ptr<UiControl>> children;
 
-	DEFINE_BOX_METHODS()
+	void append(std::shared_ptr<UiControl>, bool stretchy);
+	void deleteAt(int index);
+	bool getPadded();
+	void setPadded(bool padded);
 };
 
 class UiVerticalBox : public UiBox {
   public:
 	UiVerticalBox();
-	DEFINE_BOX_METHODS()
 };
 
 class UiHorizontalBox : public UiBox {
   public:
 	UiHorizontalBox();
-	DEFINE_BOX_METHODS()
 };
 
 UiBox::~UiBox() {
@@ -64,20 +64,23 @@ bool UiBox::getPadded() {
 
 UiVerticalBox::UiVerticalBox() : UiBox((uiControl *)uiNewVerticalBox()) {}
 
-INHERITS_BOX_METHODS(UiVerticalBox)
-
 UiHorizontalBox::UiHorizontalBox() : UiBox((uiControl *)uiNewHorizontalBox()) {}
 
-INHERITS_BOX_METHODS(UiHorizontalBox)
+NBIND_CLASS(UiBox) {
+	inherit(UiControl);
+	getset(getPadded, setPadded);
+	method(getPadded);
+	method(setPadded);
+	method(append);
+	method(deleteAt);
+}
 
 NBIND_CLASS(UiVerticalBox) {
-	inherit(UiControl);
+	inherit(UiBox);
 	construct<>();
-	DECLARE_BOX_METHODS()
 }
 
 NBIND_CLASS(UiHorizontalBox) {
-	inherit(UiControl);
+	inherit(UiBox);
 	construct<>();
-	DECLARE_BOX_METHODS()
 }
