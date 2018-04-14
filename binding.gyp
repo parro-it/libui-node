@@ -44,7 +44,7 @@
 					"sources": [
 						"<!@(ls -1 src/*.cc)",
 						"<!@(ls -1 src/UiArea/*.cc)",
-						"src/arch/darwin/libui_loop.mm"
+						"<!@(ls -1 src/arch/darwin/*.mm)"
 					],
 					"xcode_settings": {
 						"OTHER_LDFLAGS": [
