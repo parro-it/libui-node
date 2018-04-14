@@ -9,7 +9,6 @@ class UiCheckbox : public UiControl {
   public:
 	UiCheckbox(std::string text);
 	UiCheckbox();
-	DEFINE_CONTROL_METHODS()
 	void setText(std::string text);
 	std::string getText();
 	void setChecked(bool checked);
@@ -36,8 +35,6 @@ UiCheckbox::UiCheckbox(std::string text)
 	: UiControl(uiControl(uiNewCheckbox(text.c_str()))) {}
 UiCheckbox::UiCheckbox() : UiControl(uiControl(uiNewCheckbox(""))) {}
 
-INHERITS_CONTROL_METHODS(UiCheckbox)
-
 void UiCheckbox::setText(std::string text) {
 	uiCheckboxSetText(uiCheckbox(getHandle()), text.c_str());
 }
@@ -61,9 +58,9 @@ bool UiCheckbox::getChecked() {
 }
 
 NBIND_CLASS(UiCheckbox) {
+	inherit(UiControl);
 	construct<std::string>();
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getChecked, setChecked);
 	getset(getText, setText);
 	method(getChecked);
