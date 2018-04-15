@@ -640,6 +640,7 @@ class OpenTypeFeatures {
     uiOpenTypeFeatures *f;
   public:
     OpenTypeFeatures();
+    OpenTypeFeatures(OpenTypeFeatures&& other);
     OpenTypeFeatures(uiOpenTypeFeatures *feat);
     ~OpenTypeFeatures();
     uiOpenTypeFeatures *getHandle();

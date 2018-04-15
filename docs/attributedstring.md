@@ -1,20 +1,25 @@
 # AttributedString
 
 ```cpp
-class OpenTypeFeatures {
-  public:
-    OpenTypeFeatures();
+class AttributedString {
+    AttributedString(const char *str);
     void free();
+    const char * toString();
+    size_t toStringLen();
 
-    static OpenTypeFeatures clone(OpenTypeFeatures *f2);
-    void add(const char *tag, uint32_t value);
-    void remove(const char *tag);
+    void appendUnattributed(const char *str);
+    void insertUnattributed(const char *str, size_t at);
+    void deleteString(size_t start, size_t end);
+    void setAttribute(FontAttribute *attr, size_t start, size_t end);
 
-    // value or `null` if not set
-    get(const char *tag);
+    void appendAttributed(const char *str, FontAttribute *attr);
+    void appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2);
 
-    // cb(OpenTypeFeatures, tag, value)
     void forEach(nbind::cbFunction& cb);
+
+    size_t numGraphemes();
+    size_t byteIndexToGrapheme(size_t pos);
+    size_t graphemeToByteIndex(size_t pos);
 };
 
 class FontAttribute {
@@ -46,50 +51,134 @@ class FontAttribute {
     static FontAttribute newOTFeatures(OpenTypeFeatures *otf);
 };
 
-
-class AttributedString {
-    AttributedString(const char *str);
-    void free();
-    const char * toString();
-    size_t toStringLen();
-
-    void appendUnattributed(const char *str);
-    void insertUnattributed(const char *str, size_t at);
-    void deleteString(size_t start, size_t end);
-    void setAttribute(FontAttribute *attr, size_t start, size_t end);
-
-    void appendAttributed(const char *str, FontAttribute *attr);
-    void appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2);
-
+    // cb(OpenTypeFeatures, tag, value)
     void forEach(nbind::cbFunction& cb);
-
-    size_t numGraphemes();
-    size_t byteIndexToGrapheme(size_t pos);
-    size_t graphemeToByteIndex(size_t pos);
 };
 
-class FontDescriptor {
-    FontDescriptor(const char *family, double size, int weight, int italic, int stretch);
-    void free();
-    char *getFamily();
-    double getSize();
-    int getWeight();
-    int getItalic();
-    int getStretch();
-    uiFontDescriptor *getHandle();
-};
-
-
-class DrawTextLayout {
- public:
-  DrawTextLayout(AttributedString *s, FontDescriptor *defaultFont, double width, int align);
-  void free();
-  SizeDouble getExtents();
-  uiDrawTextLayout* getHandle();
-};
 ```
 
-for drawing: see Area: `UiDrawContext.text`
+# Classes
+
+---
+
+# OpenTypeFeatures
+
+Defines font glyph settings (if supported by the font).
+
+See [here](https://docs.microsoft.com/de-de/typography/opentype/spec/featuretags) for more information and a list of feature tags.
+
+Example: Setting `liga` to `1` enables ligatures (not supported by every font):
+
+```js
+const otf = new libui.OpenTypeFeatures();
+otf.add('liga', 1)
+
+str.appendAttributed('affix', FontAttribute.newOTFeatures(otf));
+```
+
+
+## Static Functions
+
+### clone
+
+Returns a new object containg all tags from f2.
+
+**Arguments**
+
+* f2: OpenTypeFeatures
+
+## Methods
+
+### add
+
+Adds/overwrites a `tag` with `value`.
+
+**Arguments**
+
+* tag: String
+* value: Number
+
+
+### remove
+
+Remove a tag (and use the default).
+
+**Arguments**
+
+* tag: String
+
+### get
+
+Returns the value of `tag` or `null` if not set.
+
+**Arguments**
+
+* tag: String
+
+### forEach
+
+Iterates over all tags. Return `libui.forEach.stop` in the callback to break.
+
+**Arguments**
+
+* cb: `function(OpenTypeFeatures, tag, value)`
+
+### free
+
+Frees the object immediately.
+
+# FontDescriptor
+
+Defines a font.
+
+## Constructor
+
+**Arguments**
+
+* family: String
+* size: Number
+* weight: 
+* italic:
+* stretch:
+
+## Methods
+
+### getFamily
+### getSize
+### getWeight
+### getItalic
+### getStretch
+
+### free
+
+Frees the object immediately.
+
+# DrawTextLayout
+
+Defines how an attributed string should get drawn onto an area. (See [Area UiDrawContext.text](area.md#text))
+
+## Constructor
+
+**Arguments**
+
+* str: [AttributedString](#attributedstring)
+* defaultFont: [FontDescriptor](#fontdescriptor)
+* width: Number (i.e. `params.getAreaWidth()`)
+* align:
+	- `libui.textAlign.left`
+	- `libui.textAlign.center`
+	- `libui.textAlign.right`
+
+
+## Methods
+
+### getExtends
+
+Returns a [SizeDouble](size.md) containing the actual width and height of the text.
+
+### free
+
+Frees the object immediately.
 
 
 ```js
@@ -152,16 +241,5 @@ libui.textUnderlineColor = {
     spelling: 1,
     grammar: 2,
     auxiliary: 3
-};
-
-libui.textAlign = {
-    left: 0,
-    center: 1,
-    right: 2
-};
-
-libui.forEach = {
-    continue: 0,
-    stop: 1
 };
 ```

@@ -2,6 +2,11 @@
 #include "../ui-node.h"
 #include "nbind/nbind.h"
 
+OpenTypeFeatures::OpenTypeFeatures(OpenTypeFeatures&& other) {
+	f = other.f;
+	other.f = nullptr;
+}
+
 OpenTypeFeatures::OpenTypeFeatures(uiOpenTypeFeatures *feat) {
 	f = feat;
 }
@@ -11,7 +16,9 @@ OpenTypeFeatures::OpenTypeFeatures() {
 }
 
 OpenTypeFeatures::~OpenTypeFeatures() {
-	uiFreeOpenTypeFeatures(f);
+	if(f != nullptr){
+		uiFreeOpenTypeFeatures(f);
+	}
 }
 
 uiOpenTypeFeatures *OpenTypeFeatures::getHandle() {
