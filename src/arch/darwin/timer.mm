@@ -1,5 +1,6 @@
 #include "timer.h"
 #include "nbind/api.h"
+#import <Cocoa/Cocoa.h>
 
 TimeoutHandle *setTimeout(nbind::cbFunction &cb, unsigned int timeout) {
 	nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
@@ -15,7 +16,8 @@ TimeoutHandle *setTimeout(nbind::cbFunction &cb, unsigned int timeout) {
 }
 
 void clearTimeout(TimeoutHandle *timeoutHandle) {
-	[timeoutHandle->handle invalidate];
+	NSTimer *handle = (NSTimer *)timeoutHandle->handle;
+	[handle invalidate];
 	timeoutHandle->destroy();
 }
 
@@ -32,6 +34,7 @@ TimeoutHandle *setInterval(nbind::cbFunction &cb, unsigned int timeout) {
 }
 
 void clearInterval(TimeoutHandle *timeoutHandle) {
-	[timeoutHandle->handle invalidate];
+	NSTimer *handle = (NSTimer *)timeoutHandle->handle;
+	[handle invalidate];
 	timeoutHandle->destroy();
 }

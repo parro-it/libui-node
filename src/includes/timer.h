@@ -6,12 +6,11 @@
 #ifdef WIN32
 #include <Windows.h>
 typedef UINT_PTR TIMER_HANDLE;
+extern HWND utilWindow;
 #endif
 
 #ifdef __APPLE__
-#import <Cocoa/Cocoa.h>
-#import <CoreFoundation/CoreFoundation.h>
-typedef NSTimer *TIMER_HANDLE;
+typedef void *TIMER_HANDLE;
 #endif
 
 #ifdef __linux__
