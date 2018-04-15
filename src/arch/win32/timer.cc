@@ -5,7 +5,7 @@
 static std::map<UINT_PTR, TimeoutHandle *> timersMap;
 
 void killTimer(TimeoutHandle *timeoutHandle) {
-	KillTimer(utilWindow, timeoutHandle->handle);
+	KillTimer(NULL, timeoutHandle->handle);
 	timersMap.erase(timeoutHandle->handle);
 	timeoutHandle->destroy();
 }
@@ -26,7 +26,9 @@ void CALLBACK win_interval_cb(HWND hwnd, UINT uMsg, UINT_PTR idEvent,
 TimeoutHandle *setTimeout(nbind::cbFunction &cb, unsigned int timeout) {
 	nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
 	TimeoutHandle *timeoutHandle = new TimeoutHandle(callbackJs);
-	timeoutHandle->handle = SetTimer(utilWindow, NULL, timeout, win_timeout_cb);
+	// SetTimer could work with a NULL window.
+	// https://stackoverflow.com/questions/7531650/can-i-use-a-settimer-api-in-a-console-c-application
+	timeoutHandle->handle = SetTimer(NULL, NULL, timeout, win_timeout_cb);
 	timersMap[timeoutHandle->handle] = timeoutHandle;
 	return timeoutHandle;
 }
@@ -41,7 +43,7 @@ TimeoutHandle *setInterval(nbind::cbFunction &cb, unsigned int timeout) {
 	nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
 	TimeoutHandle *timeoutHandle = new TimeoutHandle(callbackJs);
 	timeoutHandle->handle =
-		SetTimer(utilWindow, NULL, timeout, win_interval_cb);
+		SetTimer(NULL, NULL, timeout, win_interval_cb);
 	timersMap[timeoutHandle->handle] = timeoutHandle;
 	return timeoutHandle;
 }

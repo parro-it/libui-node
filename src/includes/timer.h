@@ -6,7 +6,6 @@
 #ifdef WIN32
 #include <Windows.h>
 typedef UINT_PTR TIMER_HANDLE;
-extern HWND utilWindow;
 #endif
 
 #ifdef __APPLE__
