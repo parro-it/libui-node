@@ -24,7 +24,6 @@ class AttributedString {
 
 class FontAttribute {
   public:
-    // It is an error to call this on a uiAttribute that does not hold the corresponding type
     const char *getFamily();
     double getSize();
     int getWeight();
@@ -32,7 +31,9 @@ class FontAttribute {
     int getStretch();
     Color getColor();
     int getUnderline();
-    int getUnderlineColor(Color *c);
+    getUnderlineColor();
+    // { type: 0, color: Color { r: 1, g: 0, b: 0, a: 1 } }
+    // { type: 1, color: null }
     OpenTypeFeatures *getOTFeatures();
 };
 

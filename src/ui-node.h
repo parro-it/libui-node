@@ -667,17 +667,15 @@ class FontAttribute {
     int getAttributeType();
     uiAttribute *getHandle();
 
-    // TODO needs to actually be of that type - maybe implement check and return -1 if wrong (or throw js error)
-    // It is an error to call this on a uiAttribute that does not hold a ...
-    const char *getFamily();
-    double getSize();
-    int getWeight();
-    int getItalic();
-    int getStretch();
-    Color getColor();
-    int getUnderline();
-    int getUnderlineColor(Color *c);
-    OpenTypeFeatures getOTFeatures();
+    const char *getFamilyInternal();
+    double getSizeInternal();
+    int getWeightInternal();
+    int getItalicInternal();
+    int getStretchInternal();
+    Color getColorInternal();
+    int getUnderlineInternal();
+    std::vector<Color> getUnderlineColorInternal();
+    OpenTypeFeatures getOTFeaturesInternal();
 
     static FontAttribute newFamily(const char *family);
     static FontAttribute newSize(double size);

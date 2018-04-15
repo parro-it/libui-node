@@ -158,7 +158,7 @@ binding.lib.AttributedString.prototype.appendAttributed = function (str, attr, a
 
 binding.lib.FontAttribute.newUnderlineColor = function (type, color) {
 	if (type === textUnderlineColor.custom && !color) {
-		console.error('With textUnderlineColor.custom a color needs to passed');
+		console.error('With textUnderlineColor.custom, a color needs to passed');
 	}
 	color = color || new Color(0, 0, 0, 0);
 	return binding.lib.FontAttribute.newUnderlineColor2(type, color);
@@ -170,6 +170,71 @@ binding.lib.OpenTypeFeatures.prototype.get = function (str) {
 		return value[0];
 	}
 	return null;
+};
+
+binding.lib.FontAttribute.prototype.getFamily = function () {
+	if(this.getAttributeType() !== textAttributeType.family) {
+		return null;
+	}
+	return this.getFamilyInternal();
+};
+
+binding.lib.FontAttribute.prototype.getSize = function () {
+	if(this.getAttributeType() !== textAttributeType.size) {
+		return null;
+	}
+	return this.getSizeInternal();
+};
+
+binding.lib.FontAttribute.prototype.getWeight = function () {
+	if(this.getAttributeType() !== textAttributeType.weight) {
+		return null;
+	}
+	return this.getWeightInternal();
+};
+
+binding.lib.FontAttribute.prototype.getItalic = function () {
+	if(this.getAttributeType() !== textAttributeType.italic) {
+		return null;
+	}
+	return this.getItalicInternal();
+};
+
+binding.lib.FontAttribute.prototype.getStretch = function () {
+	if(this.getAttributeType() !== textAttributeType.stretch) {
+		return null;
+	}
+	return this.getStretchInternal();
+};
+
+binding.lib.FontAttribute.prototype.getColor = function () {
+	if(this.getAttributeType() !== textAttributeType.color) {
+		return null;
+	}
+	return this.getColorInternal();
+};
+
+binding.lib.FontAttribute.prototype.getUnderline = function () {
+	if(this.getAttributeType() !== textAttributeType.underline) {
+		return null;
+	}
+	return this.getUnderlineInternal();
+};
+
+binding.lib.FontAttribute.prototype.getUnderlineColor = function () {
+	if(this.getAttributeType() !== textAttributeType.underlineColor) {
+		return null;
+	}
+	const v = this.getUnderlineColorInternal();
+	const type = Math.round(v[1].r);
+	return {type: type, color: type == textUnderlineColor.custom ? v[0] : null};
+};
+
+binding.lib.FontAttribute.prototype.getOTFeatures = function () {
+	if(this.getAttributeType() !== textAttributeType.features) {
+		return null;
+	}
+	return this.getOTFeaturesInternal();
 };
 
 module.exports.textWeight = textWeight;

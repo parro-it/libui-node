@@ -1,3 +1,4 @@
+#include <vector>
 #include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
@@ -34,27 +35,27 @@ void FontAttribute::setAppended(){
 	appended = 1;
 }
 
-const char *FontAttribute::getFamily() {
+const char *FontAttribute::getFamilyInternal() {
 	return uiAttributeFamily(a);
 }
 
-double FontAttribute::getSize() {
+double FontAttribute::getSizeInternal() {
 	return uiAttributeSize(a);
 }
 
-int FontAttribute::getWeight() {
+int FontAttribute::getWeightInternal() {
 	return uiAttributeWeight(a);
 }
 
-int FontAttribute::getItalic() {
+int FontAttribute::getItalicInternal() {
 	return uiAttributeItalic(a);
 }
 
-int FontAttribute::getStretch() {
+int FontAttribute::getStretchInternal() {
 	return uiAttributeStretch(a);
 }
 
-Color FontAttribute::getColor() {
+Color FontAttribute::getColorInternal() {
 	double r;
 	double g;
 	double b;
@@ -65,11 +66,11 @@ Color FontAttribute::getColor() {
 	return Color(r, g, b, alpha);
 }
 
-int FontAttribute::getUnderline() {
+int FontAttribute::getUnderlineInternal() {
 	return uiAttributeUnderline(a);
 }
 
-int FontAttribute::getUnderlineColor(Color *c) {
+std::vector<Color> FontAttribute::getUnderlineColorInternal() {
 	double r;
 	double g;
 	double b;
@@ -77,15 +78,11 @@ int FontAttribute::getUnderlineColor(Color *c) {
 
 	uiUnderlineColor type;
 	uiAttributeUnderlineColor(a, &type, &r, &g, &b, &alpha);
-	c->setR(r);
-	c->setG(g);
-	c->setB(b);
-	c->setA(alpha);
 
-	return type;
+	return std::vector<Color> {Color(r, g, b, alpha), Color(type, 0, 0, 0)};
 }
 
-OpenTypeFeatures FontAttribute::getOTFeatures() {
+OpenTypeFeatures FontAttribute::getOTFeaturesInternal() {
 	return OpenTypeFeatures((uiOpenTypeFeatures*) uiAttributeFeatures(a));
 }
 
@@ -135,14 +132,14 @@ FontAttribute FontAttribute::newOTFeatures(OpenTypeFeatures *otf) {
 NBIND_CLASS(FontAttribute) {
 	method(getAttributeType);
 
-	method(getFamily);
-	method(getSize);
-	method(getWeight);
-	method(getItalic);
-	method(getStretch);
-	method(getColor);
-	method(getUnderline);
-	method(getUnderlineColor);
+	method(getFamilyInternal);
+	method(getSizeInternal);
+	method(getWeightInternal);
+	method(getItalicInternal);
+	method(getStretchInternal);
+	method(getColorInternal);
+	method(getUnderlineInternal);
+	method(getUnderlineColorInternal);
 
 	method(newFamily);
 	method(newSize);

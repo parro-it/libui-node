@@ -16,10 +16,6 @@ const str = new libui.AttributedString(
 
 str.setAttribute(FontAttribute.newBackgroundColor(new libui.Color(0, 0, 1, 1)), 0, Buffer.from('👨🏻').length);
 
-const a = FontAttribute.newSize(18);
-console.log(a.getItalic());
-console.log(a.getFamily());
-
 str.appendAttributed('font family', FontAttribute.newFamily('Courier New'));
 str.appendUnattributed(', ');
 
