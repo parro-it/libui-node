@@ -115,7 +115,7 @@ FontAttribute FontAttribute::newColor(Color c) {
 	return FontAttribute(uiNewColorAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
-FontAttribute FontAttribute::newBackground(Color c) {
+FontAttribute FontAttribute::newBackgroundColor(Color c) {
 	return FontAttribute(uiNewBackgroundAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
@@ -150,7 +150,7 @@ NBIND_CLASS(FontAttribute) {
 	method(newItalic);
 	method(newStretch);
 	method(newColor);
-	method(newBackground);
+	method(newBackgroundColor);
 	method(newUnderline);
 	method(newUnderlineColor2);
 	method(newOTFeatures);

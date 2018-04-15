@@ -14,7 +14,11 @@ const str = new libui.AttributedString(
 	'👨🏻 Drawing strings with libui is done with the uiAttributedString and uiDrawTextLayout objects.\n' +
 	'uiAttributedString lets you have a variety of attributes: ');
 
-str.setAttribute(FontAttribute.newBackground(new libui.Color(0, 0, 1, 1)), 0, Buffer.from('👨🏻').length);
+str.setAttribute(FontAttribute.newBackgroundColor(new libui.Color(0, 0, 1, 1)), 0, Buffer.from('👨🏻').length);
+
+const a = FontAttribute.newSize(18);
+console.log(a.getItalic());
+console.log(a.getFamily());
 
 str.appendAttributed('font family', FontAttribute.newFamily('Courier New'));
 str.appendUnattributed(', ');
@@ -38,7 +42,7 @@ str.appendUnattributed(', ');
 str.appendAttributed('text color', FontAttribute.newColor(new libui.Color(0.75, 0.25, 0.5, 0.75)));
 str.appendUnattributed(', ');
 
-str.appendAttributed('text background color', FontAttribute.newBackground(new libui.Color(0.5, 0.5, 0.25, 0.5)));
+str.appendAttributed('text background color', FontAttribute.newBackgroundColor(new libui.Color(0.5, 0.5, 0.25, 0.5)));
 str.appendUnattributed(', ');
 
 str.appendAttributed('underline style', FontAttribute.newUnderline(libui.textUnderline.single));
@@ -80,7 +84,7 @@ otf.free();
 str.appendUnattributed(').\n');
 
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.\n');
-str.appendAttributed('👨🏾', FontAttribute.newBackground(new libui.Color(0, 1, 0, 1)));
+str.appendAttributed('👨🏾', FontAttribute.newBackgroundColor(new libui.Color(0, 1, 0, 1)));
 
 function handlerDraw(area, p) {
 	const font = checkbox.checked ?

@@ -685,7 +685,7 @@ class FontAttribute {
     static FontAttribute newItalic(int italicAttribute);
     static FontAttribute newStretch(int stretchAttribute);
     static FontAttribute newColor(Color c);
-    static FontAttribute newBackground(Color c);
+    static FontAttribute newBackgroundColor(Color c);
     static FontAttribute newUnderline(int underlineAttr);
     static FontAttribute newUnderlineColor2(int underlineColorAttr, Color c);
     static FontAttribute newOTFeatures(OpenTypeFeatures *otf);

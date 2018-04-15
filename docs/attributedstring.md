@@ -24,10 +24,6 @@ class AttributedString {
 
 class FontAttribute {
   public:
-    // doesn't need to be called when appended
-    void free();
-    int getAttributeType();
-
     // It is an error to call this on a uiAttribute that does not hold the corresponding type
     const char *getFamily();
     double getSize();
@@ -38,21 +34,6 @@ class FontAttribute {
     int getUnderline();
     int getUnderlineColor(Color *c);
     OpenTypeFeatures *getOTFeatures();
-
-    static FontAttribute newFamily(const char *family);
-    static FontAttribute newSize(double size);
-    static FontAttribute newWeight(int weightAttribute);
-    static FontAttribute newItalic(int italicAttribute);
-    static FontAttribute newStretch(int stretchAttribute);
-    static FontAttribute newColor(Color c);
-    static FontAttribute newBackground(Color c);
-    static FontAttribute newUnderline(int underlineAttr);
-    static FontAttribute newUnderlineColor(int underlineColorAttr, Color c);
-    static FontAttribute newOTFeatures(OpenTypeFeatures *otf);
-};
-
-    // cb(OpenTypeFeatures, tag, value)
-    void forEach(nbind::cbFunction& cb);
 };
 
 ```
@@ -61,9 +42,169 @@ class FontAttribute {
 
 ---
 
+# AttributedString
+
+## Constructor
+
+## Methods
+
+### forEach
+
+Iterates over all tags. Return `libui.forEach.stop` in the callback to break.
+
+**Arguments**
+
+* cb: `function(OpenTypeFeatures, tag, value)`
+
+
+# FontAttribute
+
+not every font supports every style
+
+
+## Static Functions
+
+### newFamily
+
+Returns a new FontAttribute for the font `family`.
+
+**Arguments**
+
+* family: String
+
+### newSize
+
+Returns a new FontAttribute for the font size `size`.
+
+**Arguments**
+
+* size: Number
+
+### newWeight(int weightAttribute)
+
+Returns a new FontAttribute for the font weight `weight`.
+
+**Arguments**
+
+* weight: Number. Possible values:
+    * `libui.textWeight.minimum`
+    * `libui.textWeight.thin`
+    * `libui.textWeight.ultraLight`
+    * `libui.textWeight.light`
+    * `libui.textWeight.book`
+    * `libui.textWeight.normal`
+    * `libui.textWeight.medium`
+    * `libui.textWeight.semiBold`
+    * `libui.textWeight.bold`
+    * `libui.textWeight.ultraBold`
+    * `libui.textWeight.heavy`
+    * `libui.textWeight.ultraHeavy`
+    * `libui.textWeight.maximum`
+	* any number between `minimum` and `maximum`
+
+### newItalic
+
+Returns a new FontAttribute for the italic style `style`.
+
+**Arguments**
+
+* style:
+	* `libui.textItalic.normal`
+	* `libui.textItalic.oblique` ("slanted version of normal")
+	* `libui.textItalic.italic` ("true italics")
+
+### newStretch
+
+Returns a new FontAttribute for the stretch (or width) style `style`.
+
+**Arguments**
+
+* style:
+	* `libui.textStretch.ultraCondensed`
+	* `libui.textStretch.extraCondensed`
+	* `libui.textStretch.condensed`
+	* `libui.textStretch.semiCondensed`
+	* `libui.textStretch.normal`
+	* `libui.textStretch.semiExpanded`
+	* `libui.textStretch.expanded`
+	* `libui.textStretch.extraExpanded`
+	* `libui.textStretch.ultraExpanded`
+
+### newColor
+
+Returns a new FontAttribute for the text color `color`.
+
+**Arguments**
+
+* color: Color
+
+### newBackgroundColor
+
+Returns a new FontAttribute for the background color `color`.
+
+**Arguments**
+
+* color: Color
+
+### newUnderline
+
+Returns a new FontAttribute for the underline style `style`.
+
+**Arguments**
+
+* style:
+	* `libui.textUnderline.none`
+	* `libui.textUnderline.single`
+	* `libui.textUnderline.double`
+	* `libui.textUnderline.suggestion`
+
+### newUnderlineColor
+
+Returns a new FontAttribute for the underline color.
+
+**Arguments**
+
+* colorAttr: 
+	* `libui.textUnderlineColor.custom`
+	* `libui.textUnderlineColor.spelling`
+	* `libui.textUnderlineColor.grammar`
+	* `libui.textUnderlineColor.auxiliary`
+* color: Color (required only with `textUnderlineColor.custom`)
+
+### newOTFeatures(OpenTypeFeatures *otf);
+
+Returns a new FontAttribute with the OpenTypeFeatures `otf`.
+
+**Arguments**
+
+* otf: [OpenTypeFeatures](#opentypefeatures)
+
+
+## Methods
+
+### getAttributeType
+
+Returns the type of the attribute. Possible values:
+
+* `libui.textAttributeType.family`
+* `libui.textAttributeType.size`
+* `libui.textAttributeType.weight`
+* `libui.textAttributeType.italic`
+* `libui.textAttributeType.stretch`
+* `libui.textAttributeType.color`
+* `libui.textAttributeType.background`
+* `libui.textAttributeType.underline`
+* `libui.textAttributeType.underlineColor`
+* `libui.textAttributeType.features`
+
+
+### free
+
+Frees the object immediately.
+
 # OpenTypeFeatures
 
-Defines font glyph settings (if supported by the font).
+Defines font glyph settings (ignored if not supported by the font).
 
 See [here](https://docs.microsoft.com/de-de/typography/opentype/spec/featuretags) for more information and a list of feature tags.
 
@@ -174,72 +315,8 @@ Defines how an attributed string should get drawn onto an area. (See [Area UiDra
 
 ### getExtends
 
-Returns a [SizeDouble](size.md) containing the actual width and height of the text.
+Returns a SizeDouble containing the actual width and height of the text.
 
 ### free
 
 Frees the object immediately.
-
-
-```js
-libui.textWeight = {
-    minimum: 0,
-    thin: 100,
-    ultraLight: 200,
-    light: 300,
-    book: 350,
-    normal: 400,
-    medium: 500,
-    semiBold: 600,
-    bold: 700,
-    ultraBold: 800,
-    heavy: 900,
-    ultraHeavy: 950,
-    maximum: 1000
-};
-
-libui.textItalic = {
-    normal: 0,
-    oblique: 1,
-    italic: 2
-};
-
-libui.textStretch = {
-    ultraCondensed: 0,
-    extraCondensed: 1,
-    condensed: 2,
-    semiCondensed: 3,
-    normal: 4,
-    semiExpanded: 5,
-    expanded: 6,
-    extraExpanded: 7,
-    ultraExpanded: 8
-};
-
-libui.textAttributeType = {
-    family: 0,
-    size: 1,
-    weight: 2,
-    italic: 3,
-    stretch: 4,
-    color: 5,
-    background: 6,
-    underline: 7,
-    underlineColor: 8,
-    features: 9
-};
-
-libui.textUnderline = {
-    none: 0,
-    single: 1,
-    double: 2,
-    suggestion: 3
-};
-
-libui.textUnderlineColor = {
-    custom: 0,
-    spelling: 1,
-    grammar: 2,
-    auxiliary: 3
-};
-```
