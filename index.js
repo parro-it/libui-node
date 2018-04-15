@@ -14,48 +14,49 @@ var clearIntervalNode;
 function stopLoop() {
 	binding.lib.EventLoop.stop();
 
-	if (setTimeoutNode)
-		global.setTimeout = setTimeoutNode;
-	if (clearTimeoutNode)
-		global.clearTimeout = clearTimeoutNode;
-	if (setIntervalNode)
-		global.setInterval = setIntervalNode;
-	if (clearIntervalNode)
-		global.clearInterval = clearIntervalNode;
+	if (!setTimeoutNode) {
+		return;
+	}
+
+	global.setTimeout = setTimeoutNode;
+	global.clearTimeout = clearTimeoutNode;
+	global.setInterval = setIntervalNode;
+	global.clearInterval = clearIntervalNode;
+
+	setTimeoutNode = null;
+	clearTimeoutNode = null;
+	setIntervalNode = null;
+	clearIntervalNode = null;
 }
 
 function startLoop() {
 	binding.lib.EventLoop.start();
 
-	if (!setTimeoutNode) {
-		setTimeoutNode = global.setTimeout;
-		global.setTimeout = function(cb, t) {
-			const args = Array.prototype.slice.call(arguments, 2);
-			return binding.lib.setTimeout(function() {
-				cb.apply(null, args);
-			}, t);
-		};
+	if (setTimeoutNode) {
+		return;
 	}
 
-	if (!clearTimeoutNode) {
-		clearTimeoutNode = global.clearTimeout;
-		global.clearTimeout = binding.lib.clearTimeout;
-	}
+	setTimeoutNode = global.setTimeout;
+	global.setTimeout = function(cb, t) {
+		const args = Array.prototype.slice.call(arguments, 2);
+		return binding.lib.setTimeout(function() {
+			cb.apply(null, args);
+		}, t);
+	};
 
-	if (!setIntervalNode) {
-		setIntervalNode = global.setInterval;
-		global.setInterval = function(cb, t) {
-			const args = Array.prototype.slice.call(arguments, 2);
-			return binding.lib.setInterval(function() {
-				cb.apply(null, args);
-			}, t);
-		};
-	}
+	clearTimeoutNode = global.clearTimeout;
+	global.clearTimeout = binding.lib.clearTimeout;
 
-	if (!clearIntervalNode) {
-		clearIntervalNode = global.clearInterval;
-		global.clearInterval = binding.lib.clearInterval;
-	}
+	setIntervalNode = global.setInterval;
+	global.setInterval = function(cb, t) {
+		const args = Array.prototype.slice.call(arguments, 2);
+		return binding.lib.setInterval(function() {
+			cb.apply(null, args);
+		}, t);
+	};
+
+	clearIntervalNode = global.clearInterval;
+	global.clearInterval = binding.lib.clearInterval;
 }
 
 function Color(r, g, b, a) {
