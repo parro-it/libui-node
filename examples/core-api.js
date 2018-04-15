@@ -1,6 +1,5 @@
 'use strict';
 const os = require('os');
-const http = require('http');
 const libui = require('..');
 
 const win = new libui.UiWindow('Test window', 800, 600, false);
@@ -14,26 +13,9 @@ const lblCiao = new libui.UiLabel('ciao');
 hBox.append(lblCiao, false);
 
 hBox.append(e1, false);
-let idxLbl = 0;
-
-const interval = setInterval(() => {
-	lblCiao.text = String(idxLbl++);
-}, 1000);
-
-// Create an HTTP tunneling proxy
-const proxy = http.createServer((req, res) => {
-	lblCiao.text = String(idxLbl++);
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end(String(idxLbl));
-});
-proxy.listen(3000, '127.0.0.1', () => {
-	console.log('listening...');
-});
 
 win.onClosing(() => {
 	win.close();
-	clearInterval(interval);
-	proxy.close();
 	libui.stopLoop();
 });
 
