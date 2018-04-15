@@ -27,31 +27,35 @@ function stopLoop() {
 function startLoop() {
 	binding.lib.EventLoop.start();
 
-	if (!setTimeoutNode)
+	if (!setTimeoutNode) {
 		setTimeoutNode = global.setTimeout;
-	global.setTimeout = function(cb, t) {
-		const args = Array.prototype.slice.call(arguments, 2);
-		return binding.lib.setTimeout(function() {
-			cb.apply(null, args);
-		}, t);
-	};
+		global.setTimeout = function(cb, t) {
+			const args = Array.prototype.slice.call(arguments, 2);
+			return binding.lib.setTimeout(function() {
+				cb.apply(null, args);
+			}, t);
+		};
+	}
 
-	if (!clearTimeoutNode)
+	if (!clearTimeoutNode) {
 		clearTimeoutNode = global.clearTimeout;
-	global.clearTimeout = binding.lib.clearTimeout;
+		global.clearTimeout = binding.lib.clearTimeout;
+	}
 
-	if (!setIntervalNode)
+	if (!setIntervalNode) {
 		setIntervalNode = global.setInterval;
-	global.setInterval = function(cb, t) {
-		const args = Array.prototype.slice.call(arguments, 2);
-		return binding.lib.setInterval(function() {
-			cb.apply(null, args);
-		}, t);
-	};
+		global.setInterval = function(cb, t) {
+			const args = Array.prototype.slice.call(arguments, 2);
+			return binding.lib.setInterval(function() {
+				cb.apply(null, args);
+			}, t);
+		};
+	}
 
-	if (!clearIntervalNode)
+	if (!clearIntervalNode) {
 		clearIntervalNode = global.clearInterval;
-	global.clearInterval = binding.lib.clearInterval;
+		global.clearInterval = binding.lib.clearInterval;
+	}
 }
 
 function Color(r, g, b, a) {
