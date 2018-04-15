@@ -1,5 +1,5 @@
-#include "../../includes/event-loop-linux.h"
-#include "../../includes/event-loop.h"
+#include "event-loop-linux.h"
+#include "event-loop.h"
 
 int uiLoopWakeup() {
 	DEBUG("uiLoopWakeup\n");

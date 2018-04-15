@@ -1,5 +1,5 @@
-#include "../../includes/event-loop-darwin.h"
-#include "../../includes/event-loop.h"
+#include "event-loop-darwin.h"
+#include "event-loop.h"
 
 int uiLoopWakeup() {
 	[NSApp postEvent:[NSEvent otherEventWithType:NSApplicationDefined

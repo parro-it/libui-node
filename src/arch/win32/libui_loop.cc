@@ -1,5 +1,5 @@
-#include "../../includes/event-loop-windows.h"
-#include "../../includes/event-loop.h"
+#include "event-loop-windows.h"
+#include "event-loop.h"
 
 void noop(void *data) {}
 

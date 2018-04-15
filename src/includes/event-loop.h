@@ -3,8 +3,8 @@
 
 #include <atomic>
 #include <uv.h>
-#include "../../ui.h"
 #include "nbind/nbind.h"
+#include "ui.h"
 
 // #define UI_NODE_DEBUG 1
 
