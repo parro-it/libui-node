@@ -1,29 +1,7 @@
 #include <gdk/gdk.h>
 #include <glib.h>
 #include "nbind/api.h"
-
-class TimeoutHandle {
-  public:
-	unsigned int handle;
-	nbind::cbFunction *callbackJs;
-	bool destroyed;
-
-	TimeoutHandle(nbind::cbFunction *callbackJs) {
-		this->callbackJs = callbackJs;
-		this->destroyed = false;
-	}
-
-	void destroy() {
-		if (this->destroyed) {
-			return;
-		}
-
-		delete this->callbackJs;
-		this->destroyed = true;
-	}
-};
-
-#define CALL_JSCB(timeoutHandle) (*(timeoutHandle->callbackJs))()
+#include "timer.h"
 
 gboolean glib_timeout_cb(TimeoutHandle *timeoutHandle) {
 	CALL_JSCB(timeoutHandle);
@@ -58,18 +36,6 @@ TimeoutHandle *setInterval(nbind::cbFunction &cb, unsigned int timeout) {
 }
 
 void clearInterval(TimeoutHandle *timeoutHandle) {
-	printf("clearInterval called\n");
 	g_source_remove(timeoutHandle->handle);
 	timeoutHandle->destroy();
 }
-
-#include "nbind/nbind.h"
-
-NBIND_GLOBAL() {
-	function(setTimeout);
-	function(clearTimeout);
-	function(setInterval);
-	function(clearInterval);
-}
-
-NBIND_CLASS(TimeoutHandle) {}
