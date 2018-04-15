@@ -149,11 +149,12 @@ const forEach = {
 	stop: 1
 };
 
-binding.lib.AttributedString.prototype.appendAttributed = function (str, attr, attr2) {
-	if (attr2) {
-		return this.appendAttributed2(str, attr, attr2);
-	}
-	return this.appendAttributed1(str, attr);
+binding.lib.AttributedString.prototype.appendAttributed = function (str) {
+	return this.appendAttributedInternal(str, Array.prototype.slice.call(arguments, 1));
+};
+
+binding.lib.AttributedString.prototype.insertAttributed = function (str, start) {
+	return this.insertAttributedInternal(str, start, Array.prototype.slice.call(arguments, 2));
 };
 
 binding.lib.FontAttribute.newUnderlineColor = function (type, color) {
@@ -173,65 +174,65 @@ binding.lib.OpenTypeFeatures.prototype.get = function (str) {
 };
 
 binding.lib.FontAttribute.prototype.getFamily = function () {
-	if(this.getAttributeType() !== textAttributeType.family) {
+	if (this.getAttributeType() !== textAttributeType.family) {
 		return null;
 	}
 	return this.getFamilyInternal();
 };
 
 binding.lib.FontAttribute.prototype.getSize = function () {
-	if(this.getAttributeType() !== textAttributeType.size) {
+	if (this.getAttributeType() !== textAttributeType.size) {
 		return null;
 	}
 	return this.getSizeInternal();
 };
 
 binding.lib.FontAttribute.prototype.getWeight = function () {
-	if(this.getAttributeType() !== textAttributeType.weight) {
+	if (this.getAttributeType() !== textAttributeType.weight) {
 		return null;
 	}
 	return this.getWeightInternal();
 };
 
 binding.lib.FontAttribute.prototype.getItalic = function () {
-	if(this.getAttributeType() !== textAttributeType.italic) {
+	if (this.getAttributeType() !== textAttributeType.italic) {
 		return null;
 	}
 	return this.getItalicInternal();
 };
 
 binding.lib.FontAttribute.prototype.getStretch = function () {
-	if(this.getAttributeType() !== textAttributeType.stretch) {
+	if (this.getAttributeType() !== textAttributeType.stretch) {
 		return null;
 	}
 	return this.getStretchInternal();
 };
 
 binding.lib.FontAttribute.prototype.getColor = function () {
-	if(this.getAttributeType() !== textAttributeType.color) {
+	if (this.getAttributeType() !== textAttributeType.color) {
 		return null;
 	}
 	return this.getColorInternal();
 };
 
 binding.lib.FontAttribute.prototype.getUnderline = function () {
-	if(this.getAttributeType() !== textAttributeType.underline) {
+	if (this.getAttributeType() !== textAttributeType.underline) {
 		return null;
 	}
 	return this.getUnderlineInternal();
 };
 
 binding.lib.FontAttribute.prototype.getUnderlineColor = function () {
-	if(this.getAttributeType() !== textAttributeType.underlineColor) {
+	if (this.getAttributeType() !== textAttributeType.underlineColor) {
 		return null;
 	}
 	const v = this.getUnderlineColorInternal();
 	const type = Math.round(v[1].r);
-	return {type: type, color: type == textUnderlineColor.custom ? v[0] : null};
+	return {type, color: type === textUnderlineColor.custom ? v[0] : null};
 };
 
 binding.lib.FontAttribute.prototype.getOTFeatures = function () {
-	if(this.getAttributeType() !== textAttributeType.features) {
+	if (this.getAttributeType() !== textAttributeType.features) {
 		return null;
 	}
 	return this.getOTFeaturesInternal();

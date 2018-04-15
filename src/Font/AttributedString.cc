@@ -1,3 +1,4 @@
+#include <vector>
 #include "../../ui.h"
 #include "../ui-node.h"
 #include "nbind/nbind.h"
@@ -65,22 +66,24 @@ void AttributedString::forEach(nbind::cbFunction& cb) {
 	uiAttributedStringForEachAttribute(s, AttributedString__forEach, &d);
 }
 
-
-void AttributedString::appendAttributed(const char *str, FontAttribute *attr) {
-	this->appendAttributed(str, attr, nullptr);
-}
-
-void AttributedString::appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2) {
+void AttributedString::appendAttributedInternal(const char *str, std::vector<FontAttribute*> attrs) {
 	size_t start = this->toStringLen();
 	size_t end = start + strlen(str);
 
 	this->appendUnattributed(str);
-	this->setAttribute(attr, start, end);
-	if(attr2 != nullptr){
-		this->setAttribute(attr2, start, end);
+	for(std::vector<FontAttribute*>::size_type i = 0; i < attrs.size(); i++) {
+		this->setAttribute(attrs[i], start, end);
 	}
 }
 
+void AttributedString::insertAttributedInternal(const char *str, size_t start, std::vector<FontAttribute*> attrs) {
+	size_t end = start + strlen(str);
+
+	this->insertUnattributed(str, start);
+	for(std::vector<FontAttribute*>::size_type i = 0; i < attrs.size(); i++) {
+		this->setAttribute(attrs[i], start, end);
+	}
+}
 
 size_t AttributedString::numGraphemes() {
 	return uiAttributedStringNumGraphemes(s);
@@ -101,8 +104,8 @@ NBIND_CLASS(AttributedString) {
 	method(appendUnattributed);
 	method(insertUnattributed);
 	method(forEach);
-	multimethod(appendAttributed, args(const char *, FontAttribute *), "appendAttributed1");
-	multimethod(appendAttributed, args(const char *, FontAttribute *, FontAttribute *), "appendAttributed2");
+	method(appendAttributedInternal);
+	method(insertAttributedInternal);
 	method(deleteString);
 	method(setAttribute);
 

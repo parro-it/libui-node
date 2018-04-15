@@ -706,9 +706,8 @@ class AttributedString {
     void deleteString(size_t start, size_t end);
     void setAttribute(FontAttribute *attr, size_t start, size_t end);
 
-    void appendAttributed(const char *str, FontAttribute *attr);
-    void appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2);
-    // TODO multiple attr? does nbind support variadic arguments? or use array?
+    void appendAttributedInternal(const char *str, std::vector<FontAttribute*> attrs);
+    void insertAttributedInternal(const char *str, size_t start, std::vector<FontAttribute*> attrs);
 
     void forEach(nbind::cbFunction& cb);
 

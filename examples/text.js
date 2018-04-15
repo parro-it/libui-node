@@ -11,7 +11,7 @@ let align;
 let checkbox;
 
 const str = new libui.AttributedString(
-	'👨🏻 Drawing strings with libui is done with the uiAttributedString and uiDrawTextLayout objects.\n' +
+	'\n👨🏻 Drawing strings with libui is done with the uiAttributedString and uiDrawTextLayout objects.\n' +
 	'uiAttributedString lets you have a variety of attributes: ');
 
 str.setAttribute(FontAttribute.newBackgroundColor(new libui.Color(0, 0, 1, 1)), 0, Buffer.from('👨🏻').length);
@@ -80,7 +80,14 @@ otf.free();
 str.appendUnattributed(').\n');
 
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.\n');
-str.appendAttributed('👨🏾', FontAttribute.newBackgroundColor(new libui.Color(0, 1, 0, 1)));
+str.appendAttributed('👨🏾\n', FontAttribute.newBackgroundColor(new libui.Color(0, 1, 0, 1)));
+
+str.appendAttributed('An mulitple attributes at once!',
+						FontAttribute.newColor(new libui.Color(1, 1, 1, 1)),
+						FontAttribute.newBackgroundColor(new libui.Color(0, 0, 0, 1)),
+						FontAttribute.newFamily('Monaco'));
+
+str.insertAttributed('Styled Strings\n', 0, FontAttribute.newWeight(libui.textWeight.bold), FontAttribute.newSize(24));
 
 function handlerDraw(area, p) {
 	const font = checkbox.checked ?

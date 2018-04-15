@@ -41,7 +41,7 @@ See [properties implementation](properties.md) for generic details on how proper
 
 ### font: FontDescriptor
 
-Return or set the currently selected font
+Return or set the currently selected font (see [FontDescriptor](attributedstring.md#fontdescriptor)
 
 
 

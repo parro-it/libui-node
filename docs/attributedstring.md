@@ -1,46 +1,160 @@
 # AttributedString
 
-```cpp
-class AttributedString {
-    AttributedString(const char *str);
-    void free();
-    const char * toString();
-    size_t toStringLen();
+An AttributedString is a string which also contains information about styles such as text color, font, font size. It gets drawn in an UiArea element.
 
-    void appendUnattributed(const char *str);
-    void insertUnattributed(const char *str, size_t at);
-    void deleteString(size_t start, size_t end);
-    void setAttribute(FontAttribute *attr, size_t start, size_t end);
+```js
+var libui = require('.');
 
-    void appendAttributed(const char *str, FontAttribute *attr);
-    void appendAttributed(const char *str, FontAttribute *attr, FontAttribute *attr2);
+var str = new libui.AttributedString('');
+str.appendAttributed('Test\n', libui.FontAttribute.newSize(24));
+str.appendAttributed('Background', libui.FontAttribute.newBackgroundColor(new libui.Color(0.5, 0.5, 0.5, 1)));
 
-    void forEach(nbind::cbFunction& cb);
+function draw(area, p) {
+	const font = new libui.FontDescriptor('Georgia', 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal);
 
-    size_t numGraphemes();
-    size_t byteIndexToGrapheme(size_t pos);
-    size_t graphemeToByteIndex(size_t pos);
-};
+	console.log(p.getAreaWidth())
+	const layout = new libui.DrawTextLayout(str, font, p.getAreaWidth(), libui.textAlign.left);
 
+	p.getContext().text(0, 0, layout);
+}
+function noop(){}
+
+var win = new libui.UiWindow('AttributedString example', 300, 300, true);
+win.margined = true;
+
+const box = new libui.UiHorizontalBox();
+win.setChild(box);
+
+var area = new libui.UiArea(draw, noop, noop, noop, noop);
+box.append(area, true);
+
+win.onClosing(function () {
+	win.close();
+	libui.stopLoop();
+});
+
+win.show();
+libui.startLoop();
 ```
+
 
 # Classes
 
 ---
 
+
+
 # AttributedString
+
+A styled string.
 
 ## Constructor
 
+**Arguments**
+
+* s: String
+
 ## Methods
 
-### forEach
+### deleteString
 
-Iterates over all tags. Return `libui.forEach.stop` in the callback to break.
+Removes characters in the range `start` - `end`(exclusive).
 
 **Arguments**
 
-* cb: `function(OpenTypeFeatures, tag, value)`
+* start: Number
+* end: Number
+
+### setAttribute
+
+Sets an attribute in the range `start` - `end`(exclusive).
+
+**Arguments**
+
+* attr: FontAttribute
+* start: Number
+* end: Number
+
+
+### appendUnattributed
+
+Appends a string without any attributes.
+
+**Arguments***
+
+* s: String
+
+### insertUnattributed
+
+Inserts a string without any attributes at `pos`.
+
+**Arguments***
+
+* s: String
+* pos: Number
+
+
+### appendAttributed
+
+Appends a string with the specified attributes.
+
+**Arguments***
+
+* s: String
+* a1: FontAttribute
+* a2: FontAttribute (optional)
+* (optionally more attributes)
+
+### insertAttributed
+
+Inserts a string with the specified attributes at `pos`.
+
+**Arguments***
+
+* s: String
+* pos: Number
+* a1: FontAttribute
+* a2: FontAttribute (optional)
+* (optionally more attributes)
+
+
+### toString
+
+Returns the text content.
+
+### forEach
+
+Iterates over all attributes. Return `libui.forEach.stop` in the callback to break.
+
+**Arguments**
+
+* cb: `function(AttributedString, FontAttribute, start: number,  end: Number)`
+
+### numGraphemes
+
+Returns the number of graphemes (characters from the point of view of the user).
+
+### byteIndexToGrapheme
+
+> The cursor of a text editor is always placed on a grapheme boundary, so you can use these features to move the cursor left or right by one "character".
+ 
+Converts a byte index in the string to a grapheme index.
+
+**Arguments**
+
+* pos: Number
+
+### graphemeToByteIndex
+
+Converts a graphmeme index in the string to a byte index.
+
+**Arguments**
+
+* pos: Number
+
+### free
+
+Frees the object immediately.
 
 
 # FontAttribute
@@ -297,7 +411,7 @@ Iterates over all tags. Return `libui.forEach.stop` in the callback to break.
 
 **Arguments**
 
-* cb: `function(OpenTypeFeatures, tag, value)`
+* cb: `function(OpenTypeFeatures, tag: String, value: Number)`
 
 ### free
 
@@ -313,17 +427,31 @@ Defines a font.
 
 * family: String
 * size: Number
-* weight: 
-* italic:
-* stretch:
+* weight: see [FontAttribute.newWeight](#newweight)
+* italic: see [FontAttribute.newItalic](#newitalic)
+* stretch: see [FontAttribute.newStretch](#newstretch)
 
 ## Methods
 
 ### getFamily
+
+Returns the font family.
+
 ### getSize
+
+Returns the font size.
+
 ### getWeight
+
+Returns the font weight.
+
 ### getItalic
+
+Returns the italic style.
+
 ### getStretch
+
+Returns the font stretch.
 
 ### free
 

@@ -885,7 +885,7 @@ writeFile(
 writeFile(
 	'UiFontButton',
 	'A button that opens a font chooser.',
-	property('font', 'FontDescriptor', 'Return or set the currently selected font', false),
+	property('font', 'FontDescriptor', 'Return or set the currently selected font (see [FontDescriptor](attributedstring.md#fontdescriptor)', false),
 	event('onChanged', 'font'),
 
 	method('destroy', 'Destroy and free the control.'),
