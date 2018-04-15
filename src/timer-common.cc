@@ -1,5 +1,5 @@
-#include "timer.h"
 #include "nbind/api.h"
+#include "timer.h"
 
 TimeoutHandle::TimeoutHandle(nbind::cbFunction *callbackJs) {
 	this->callbackJs = callbackJs;

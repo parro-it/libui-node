@@ -32,6 +32,7 @@ win.onClosing(() => {
 	}
 	win.close();
 	libui.stopLoop();
+	setTimeout(() => console.log('after stopLoop'), 100);
 });
 
 win.show();
@@ -96,15 +97,15 @@ function makeToolbar() {
 	const btnCustom = new libui.UiButton('Custom setTimeout');
 	btnCustom.onClicked(() => {
 		const now = Date.now();
-		const longTimeout = libui.setTimeout(() => {
+		const longTimeout = setTimeout((a, b, c) => {
 			logAppend(`THIS HOULD NOT HAPPEN!`);
 		}, 200);
 
-		libui.setTimeout(() => {
-			libui.clearTimeout(longTimeout);
+		setTimeout((a, b, c) => {
+			clearTimeout(longTimeout);
 			const elapsed = Date.now() - now;
-			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms`);
-		}, 10);
+			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms. Args: ${a} ${b} ${c}`);
+		}, 10, 'custom', 'args', 2);
 	});
 	toolbar.append(btnCustom, false);
 
@@ -112,16 +113,16 @@ function makeToolbar() {
 	let intervalHandler = null;
 	btnCustomSetInterval.onClicked(() => {
 		if (intervalHandler) {
-			libui.clearInterval(intervalHandler);
+			clearInterval(intervalHandler);
 			intervalHandler = null;
 			return;
 		}
 		let now = Date.now();
-		intervalHandler = libui.setInterval(() => {
+		intervalHandler = setInterval((a, b, c) => {
 			const elapsed = Date.now() - now;
-			logAppend(`Custom setInterval: ${now} - elapsed ${elapsed} ms`);
+			logAppend(`Custom setInterval: ${now} - elapsed ${elapsed} ms. Args: ${a} ${b} ${c}`);
 			now = Date.now();
-		}, 10);
+		}, 50, 'my', 'args', 2);
 	});
 
 	toolbar.append(btnCustomSetInterval, false);

@@ -6,12 +6,52 @@ module.exports = binding.lib;
 
 binding.lib.Ui.init();
 
+var setTimeoutNode;
+var clearTimeoutNode;
+var setIntervalNode;
+var clearIntervalNode;
+
 function stopLoop() {
 	binding.lib.EventLoop.stop();
+
+	if (setTimeoutNode)
+		global.setTimeout = setTimeoutNode;
+	if (clearTimeoutNode)
+		global.clearTimeout = clearTimeoutNode;
+	if (setIntervalNode)
+		global.setInterval = setIntervalNode;
+	if (clearIntervalNode)
+		global.clearInterval = clearIntervalNode;
 }
 
 function startLoop() {
 	binding.lib.EventLoop.start();
+
+	if (!setTimeoutNode)
+		setTimeoutNode = global.setTimeout;
+	global.setTimeout = function(cb, t) {
+		const args = Array.prototype.slice.call(arguments, 2);
+		return binding.lib.setTimeout(function() {
+			cb.apply(null, args);
+		}, t);
+	};
+
+	if (!clearTimeoutNode)
+		clearTimeoutNode = global.clearTimeout;
+	global.clearTimeout = binding.lib.clearTimeout;
+
+	if (!setIntervalNode)
+		setIntervalNode = global.setInterval;
+	global.setInterval = function(cb, t) {
+		const args = Array.prototype.slice.call(arguments, 2);
+		return binding.lib.setInterval(function() {
+			cb.apply(null, args);
+		}, t);
+	};
+
+	if (!clearIntervalNode)
+		clearIntervalNode = global.clearInterval;
+	global.clearInterval = binding.lib.clearInterval;
 }
 
 function Color(r, g, b, a) {

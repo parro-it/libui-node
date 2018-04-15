@@ -42,8 +42,7 @@ void clearTimeout(TimeoutHandle *timeoutHandle) {
 TimeoutHandle *setInterval(nbind::cbFunction &cb, unsigned int timeout) {
 	nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
 	TimeoutHandle *timeoutHandle = new TimeoutHandle(callbackJs);
-	timeoutHandle->handle =
-		SetTimer(NULL, NULL, timeout, win_interval_cb);
+	timeoutHandle->handle = SetTimer(NULL, NULL, timeout, win_interval_cb);
 	timersMap[timeoutHandle->handle] = timeoutHandle;
 	return timeoutHandle;
 }
