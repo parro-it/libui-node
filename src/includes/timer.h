@@ -4,14 +4,19 @@
 #include "nbind/api.h"
 
 #ifdef WIN32
+#include <Windows.h>
 typedef UINT_PTR TIMER_HANDLE;
 #endif
 
 #ifdef __APPLE__
+#import <Cocoa/Cocoa.h>
+#import <CoreFoundation/CoreFoundation.h>
 typedef NSTimer *TIMER_HANDLE;
 #endif
 
 #ifdef __linux__
+#include <gdk/gdk.h>
+#include <glib.h>
 typedef unsigned int TIMER_HANDLE;
 #endif
 

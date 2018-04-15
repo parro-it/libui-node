@@ -1,7 +1,5 @@
-#include <gdk/gdk.h>
-#include <glib.h>
-#include "nbind/api.h"
 #include "timer.h"
+#include "nbind/api.h"
 
 gboolean glib_timeout_cb(TimeoutHandle *timeoutHandle) {
 	CALL_JSCB(timeoutHandle);
