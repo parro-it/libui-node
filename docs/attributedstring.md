@@ -22,21 +22,6 @@ class AttributedString {
     size_t graphemeToByteIndex(size_t pos);
 };
 
-class FontAttribute {
-  public:
-    const char *getFamily();
-    double getSize();
-    int getWeight();
-    int getItalic();
-    int getStretch();
-    Color getColor();
-    int getUnderline();
-    getUnderlineColor();
-    // { type: 0, color: Color { r: 1, g: 0, b: 0, a: 1 } }
-    // { type: 1, color: null }
-    OpenTypeFeatures *getOTFeatures();
-};
-
 ```
 
 # Classes
@@ -81,7 +66,7 @@ Returns a new FontAttribute for the font size `size`.
 
 * size: Number
 
-### newWeight(int weightAttribute)
+### newWeight
 
 Returns a new FontAttribute for the font weight `weight`.
 
@@ -198,6 +183,55 @@ Returns the type of the attribute. Possible values:
 * `libui.textAttributeType.underlineColor`
 * `libui.textAttributeType.features`
 
+### getFamily
+
+Returns the font family string or `null` if called on a non-family attribute.
+
+### getSize
+
+Returns the font size or `null` if called on a non-size attribute.
+
+### getWeight
+
+Returns the font weight (see [newWeight](#newweight) for values) or `null` if called on a non-weight attribute.
+
+### getItalic
+
+Returns the font italic style (see [newItalic](#newitalic) for values) or `null` if called on a non-italic attribute.
+
+### getStretch
+
+Returns the font stretch (see [newStretch](#newstretch) for values) or `null` if called on a non-stretch attribute.
+
+### getColor
+
+Returns the color or `null` if called on a non-color attribute.
+
+### getUnderline
+
+Returns the underline style (see [newUnderline](#newunderline) for values) or `null` if called on a non-underline-style attribute.
+
+### getUnderlineColor
+
+Returns an object describing the underline color or `null` if called on a non-underline-style attribute.
+
+```js
+{
+  type: textUnderlineColor.custom,
+  color: Color
+}
+// or
+{
+  type: textUnderlineColor.grammar | spelling | auxiliary,
+  color: null
+}
+```
+See [newUnderlineColor](#newunderlinecolor) for `type` values) 
+
+
+### getOTFeatures
+
+Returns the [OpenTypeFeatures](#opentypefeatures) or `null` if called on a non-OpenType-features attribute.
 
 ### free
 
