@@ -1,9 +1,23 @@
 #ifndef UI_NODE_CONTROL
 #define UI_NODE_CONTROL 1
 
+#include "nbind/api.h"
+
+#ifdef WIN32
+typedef UINT_PTR TIMER_HANDLE;
+#endif
+
+#ifdef __APPLE__
+typedef NSTimer *TIMER_HANDLE;
+#endif
+
+#ifdef __linux__
+typedef unsigned int TIMER_HANDLE;
+#endif
+
 class TimeoutHandle {
   public:
-	unsigned int handle;
+	TIMER_HANDLE handle;
 	nbind::cbFunction *callbackJs;
 	bool destroyed;
 
