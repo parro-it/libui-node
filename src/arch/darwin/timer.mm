@@ -1,5 +1,7 @@
 #include "timer.h"
 #include "nbind/api.h"
+#import <Cocoa/Cocoa.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 TimeoutHandle *setTimeout(nbind::cbFunction &cb, unsigned int timeout) {
 	nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
