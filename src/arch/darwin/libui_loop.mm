@@ -37,13 +37,5 @@ int waitForNodeEvents(uv_loop_t *loop, int timeout) {
 	ts.tv_sec = timeout / 1000;
 	ts.tv_nsec = (timeout % 1000) * 1000000;
 
-	int ret = kevent(nodeBackendFd, NULL, 0, &event, 1, &ts);
-
-	struct heap *timer_heap = (struct heap *)&loop->timer_heap;
-	struct heap_node *timer_node = timer_heap->min;
-	if (timer_node != NULL) {
-		return 1;
-	}
-
-	return ret;
+	return kevent(nodeBackendFd, NULL, 0, &event, 1, &ts);
 }

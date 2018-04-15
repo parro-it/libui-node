@@ -28,13 +28,5 @@ int waitForNodeEvents(uv_loop_t *loop, int timeout) {
 	struct epoll_event ev;
 	DEBUG("epoll_wait\n");
 
-	int ret = epoll_wait(nodeBackendFd, &ev, 1, timeout);
-	struct heap *timer_heap = (struct heap *)&loop->timer_heap;
-	struct heap_node *timer_node = timer_heap->min;
-	if (timer_node != NULL) {
-		return 1;
-	}
-
-	DEBUG_F("epoll_wait %d\n", ret);
-	return ret;
+	return epoll_wait(nodeBackendFd, &ev, 1, timeout);
 }
