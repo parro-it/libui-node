@@ -1,28 +1,5 @@
-#include "../../includes/event-loop-darwin.h"
+#include "timer.h"
 #include "nbind/api.h"
-
-class TimeoutHandle {
-  public:
-	NSTimer *handle;
-	nbind::cbFunction *callbackJs;
-	bool destroyed;
-
-	TimeoutHandle(nbind::cbFunction *callbackJs) {
-		this->callbackJs = callbackJs;
-		this->destroyed = false;
-	}
-
-	void destroy() {
-		if (this->destroyed) {
-			return;
-		}
-
-		delete this->callbackJs;
-		this->destroyed = true;
-	}
-};
-
-#define CALL_JSCB(timeoutHandle) (*(timeoutHandle->callbackJs))()
 
 TimeoutHandle *setTimeout(nbind::cbFunction &cb, unsigned int timeout) {
 	nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
@@ -58,14 +35,3 @@ void clearInterval(TimeoutHandle *timeoutHandle) {
 	[timeoutHandle->handle invalidate];
 	timeoutHandle->destroy();
 }
-
-#include "nbind/nbind.h"
-
-NBIND_GLOBAL() {
-	function(setTimeout);
-	function(clearTimeout);
-	function(setInterval);
-	function(clearInterval);
-}
-
-NBIND_CLASS(TimeoutHandle) {}
