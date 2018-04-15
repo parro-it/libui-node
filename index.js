@@ -256,3 +256,4 @@ module.exports.modifierKeys = modifierKeys;
 module.exports.extKeys = extKeys;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;
+module.exports.onShouldQuit = binding.lib.Ui.onShouldQuit;

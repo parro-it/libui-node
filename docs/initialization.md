@@ -1,53 +1,39 @@
 # Event loop
 
-`libui-node` has an event loop independent  of the Node.js one that take care of processing GUI events. It process events one tick at a time, so it can run seamlessy with Node.js loop.
+`libui-node` run an event loop independent of that of Node.js that takes care of processing GUI events. This event loop can run seamlessy together with the Node.js one, so you can still use any asynchronous Node.js method.
 
-Each bit of GUI event loop is executed by a call to `libui.Ui.mainStep` method. This method could be used directly by your code, or you can leverage the `startLoop` event that continuosly schedules calls to `mainStep` using Node.js `setImmediate` function.
+You are responsible to start and stop the loop, by calling the `startLoop` and `stopLoop` methods.
 
-
-## Start the event loop
-
-To start the event loop, you simply call the `startLoop` method. The function return immediately, and optionally accept a callback arguments that is called when `libui-node` event loop terminates.
-
-
-```js
-var libui = require('libui');
-
-libui.startLoop(function () {
-	console.log('event loop terminated.');
-});
-```
-
-## Stop the event loop
-
-To stop the event loop, you simply call the `stopLoop` method. The function return immediately.
-
-```js
-libui.stopLoop();
-```
-
-## Main method
-
-The `main` method is an alternative way to start GUI event loop. It defers event loop execution to the underlyng native GUI framework.
-
-This is a blocking call, so Node.js event loop is stopped until `libui-node` event loop terminate.
-This mean that your GUI events callbacks are executed because they are called by the native GUI event loop, but Node.js callbacks doesn't.
-
-To stop the loop and allow `main` method to return, you have to call `libui.Ui.quit` method.
+The `startLoop` return immediately after it start the event loop, but it keeps
+a Node.js handle active, so it prevents your process to terminate, until
+you call `stopLoop` later.
 
 # Quit handler
 
-`libui.Ui.onShouldQuit` is emitted when "Quit" was clicked in the menu. You are responsible to close the application in response to this event:
+`libui.Ui.onShouldQuit` method allow you to register a callback that is called when a "Quit" menu item is clicked. You are responsible to terminate the application in response to this event, usually by just calling `stopLoop` method.
+
+# Example
 
 ```js
-var libui = require('libui');
+const {
+	UiWindow,
+	UiMenu,
+	startLoop,
+	stopLoop,
+	onShouldQuit
+} = require('libui');
 
-var window = libui.UiWindow(title, width, height, hasMenubar);
 
-libui.Ui.onShouldQuit(() => {
-    window.close();
-    libui.stopLoop();
+const menu = new UiMenu('File');
+menu.appendQuitItem();
+
+const window = UiWindow('Initialization Example', 400, 300, true);
+
+onShouldQuit(() => {
+	window.close();
+	stopLoop();
 });
 
-//...
+window.show();
+startLoop();
 ```
