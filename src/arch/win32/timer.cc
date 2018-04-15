@@ -4,16 +4,22 @@
 
 static std::map<UINT_PTR, TimeoutHandle *> timersMap;
 
-void CALLBACK win_timeout_cb(HWND hwnd, UINT uMsg, UINT_PTR idEvent,
-							 DWORD dwTime) {
-	CALL_JSCB(timeoutHandle);
+void killTimer(TimeoutHandle *timeoutHandle) {
 	KillTimer(utilWindow, timeoutHandle->handle);
 	timersMap.erase(timeoutHandle->handle);
 	timeoutHandle->destroy();
 }
 
+void CALLBACK win_timeout_cb(HWND hwnd, UINT uMsg, UINT_PTR idEvent,
+							 DWORD dwTime) {
+	TimeoutHandle *timeoutHandle = timersMap[idEvent];
+	CALL_JSCB(timeoutHandle);
+	killTimer(timeoutHandle);
+}
+
 void CALLBACK win_interval_cb(HWND hwnd, UINT uMsg, UINT_PTR idEvent,
 							  DWORD dwTime) {
+	TimeoutHandle *timeoutHandle = timersMap[idEvent];
 	CALL_JSCB(timeoutHandle);
 }
 
@@ -27,9 +33,7 @@ TimeoutHandle *setTimeout(nbind::cbFunction &cb, unsigned int timeout) {
 
 void clearTimeout(TimeoutHandle *timeoutHandle) {
 	if (!timeoutHandle->destroyed) {
-		KillTimer(utilWindow, timeoutHandle->handle);
-		timersMap.erase(timeoutHandle->handle);
-		timeoutHandle->destroy();
+		killTimer(timeoutHandle);
 	}
 }
 
@@ -43,7 +47,5 @@ TimeoutHandle *setInterval(nbind::cbFunction &cb, unsigned int timeout) {
 }
 
 void clearInterval(TimeoutHandle *timeoutHandle) {
-	KillTimer(utilWindow, timeoutHandle->handle);
-	timersMap.erase(timeoutHandle->handle);
-	timeoutHandle->destroy();
+	killTimer(timeoutHandle);
 }
