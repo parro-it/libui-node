@@ -1,7 +1,10 @@
 #include "event-loop.h"
 
 static std::atomic<bool> running;
-static std::atomic<bool> guiBlocked;
+
+static uv_mutex_t mainThreadWaitingGuiEvents;
+static uv_mutex_t mainThreadAwakenFromBackground;
+static uv_prepare_t mainThreadAwakenPhase;
 
 static uv_thread_t *thread;
 static uv_timer_t *redrawTimer;
@@ -15,33 +18,55 @@ static uv_timer_t *redrawTimer;
 */
 static void backgroundNodeEventsPoller(void *arg) {
 	while (running) {
-		int timeout = uv_backend_timeout(uv_default_loop());
+		DEBUG("--- wait mainThreadWaitingGuiEvents.\n");
 
-		/* wait for 1s by default */
-		if (timeout == 0) {
-			timeout = 1000;
-		}
+		// wait for the main thread
+		// to be blocked waiting for GUI events
+		uv_mutex_lock(&mainThreadWaitingGuiEvents);
+		// immediately release the lock
+		uv_mutex_unlock(&mainThreadWaitingGuiEvents);
 
-		int pendingEvents = 1;
+		int pendingEvents;
 
-		if (timeout != -1) {
-			do {
-				DEBUG_F("entering waitForNodeEvents with timeout %d\n",
-						timeout);
-				/* wait for pending events*/
-				pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
-				DEBUG("exit waitForNodeEvents\n");
-			} while (pendingEvents == -1 && errno == EINTR);
-		}
+		do {
+			DEBUG("--- entering waitForNodeEvents\n");
+			/* wait for pending events*/
+			pendingEvents = waitForNodeEvents(uv_default_loop(), 0);
+		} while (pendingEvents == -1 && errno == EINTR);
 
-		DEBUG_F("guiBlocked && pendingEvents %s && %d\n",
-				guiBlocked ? "blocked" : "non blocked", pendingEvents);
+		DEBUG_F("--- pendingEvents == %d\n", pendingEvents);
 
-		if (guiBlocked && pendingEvents > 0) {
-			DEBUG("------ wake up main thread\n");
+		if (pendingEvents > 0) {
+			DEBUG("--- wake up main thread\n");
+			// this allow the background thread
+			// to wait for the main thread to complete
+			// running node callbacks
 			uiLoopWakeup();
+
+			// wait for the main thread to complete
+			// its awaken phase.
+			DEBUG("--- mainThreadAwakenFromBackground locking.\n");
+			uv_mutex_lock(&mainThreadAwakenFromBackground);
+			DEBUG("--- mainThreadAwakenFromBackground locked.\n");
+
+			// immediately release the lock
+			uv_mutex_unlock(&mainThreadAwakenFromBackground);
 		}
 	}
+}
+
+void redraw(uv_timer_t *handle);
+
+void uv_awaken_cb(uv_prepare_t *handle) {
+	DEBUG("+++ mainThreadAwakenFromBackground unlocking.\n");
+	uv_prepare_stop(&mainThreadAwakenPhase);
+	uv_mutex_unlock(&mainThreadAwakenFromBackground);
+	// schedule another call to redraw as soon as possible
+	// how to find a correct amount of time to scheduke next call?
+	//.because too long and UI is not responsive, too short and node
+	// become really slow
+	uv_timer_start(redrawTimer, redraw, 1, 0);
+	DEBUG("+++ mainThreadAwakenFromBackground unlocked.\n");
 }
 
 /*
@@ -61,25 +86,29 @@ void redraw(uv_timer_t *handle) {
 	uv_timer_stop(handle);
 	Nan::HandleScope scope;
 
+	// signal the background poller thread
+	// that the main one is about to enter
+	// the blocking call to wait for GUI events.
+	uv_mutex_unlock(&mainThreadWaitingGuiEvents);
+
+	DEBUG("+++ locking mainThreadAwakenFromBackground\n");
+	uv_mutex_lock(&mainThreadAwakenFromBackground);
+	DEBUG("+++ locked mainThreadAwakenFromBackground\n");
+
+	DEBUG("+++ blocking GUI\n");
 	/* Blocking call that wait for a node or GUI event pending */
-	DEBUG("blocking GUI\n");
-	guiBlocked = true;
 	uiMainStep(true);
-	guiBlocked = false;
-	DEBUG("unblocking GUI\n");
+	DEBUG("+++ GUI events received\n");
+
+	uv_mutex_lock(&mainThreadWaitingGuiEvents);
+	DEBUG("+++ mainThreadWaitingGuiEvents locked.\n");
 
 	/* dequeue and run every event pending */
 	while (uiEventsPending()) {
 		running = uiMainStep(false);
 	}
 
-	DEBUG("rescheduling next redraw\n");
-
-	// schedule another call to redraw as soon as possible
-	// how to find a correct amount of time to scheduke next call?
-	//.because too long and UI is not responsive, too short and node
-	// become really slow
-	uv_timer_start(handle, redraw, 10, 0);
+	uv_prepare_start(&mainThreadAwakenPhase, uv_awaken_cb);
 }
 
 /* This function start the event loop and exit immediately */
@@ -128,6 +157,23 @@ struct EventLoop {
 		/* init libui event loop */
 		uiMainSteps();
 		DEBUG("uiMainSteps...\n");
+
+		// this is used to signal the background thread
+		// that the main one is entering a blocking call
+		// waiting for GUI events.
+		uv_mutex_init(&mainThreadWaitingGuiEvents);
+
+		// lock the mutex to signal that main
+		// thread is not yet blocked waiting
+		// for GUI events
+		uv_mutex_lock(&mainThreadWaitingGuiEvents);
+
+		// this is used to signal the background thread
+		// when all pending callback of current tick are
+		// called.
+		uv_mutex_init(&mainThreadAwakenFromBackground);
+
+		uv_prepare_init(uv_default_loop(), &mainThreadAwakenPhase);
 
 		/* start the background thread that check for node evnts pending */
 		thread = new uv_thread_t();

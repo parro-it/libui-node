@@ -13,7 +13,7 @@ int uiLoopWakeup() {
 										   data2:0]
 			 atStart:NO];
 	// give main thread some time to react
-	usleep(50 * 1000);
+	// usleep(50 * 1000);
 	return 0;
 }
 
@@ -33,9 +33,6 @@ int waitForNodeEvents(uv_loop_t *loop, int timeout) {
 	}
 
 	struct kevent event;
-	struct timespec ts;
-	ts.tv_sec = timeout / 1000;
-	ts.tv_nsec = (timeout % 1000) * 1000000;
 
-	return kevent(nodeBackendFd, NULL, 0, &event, 1, &ts);
+	return kevent(nodeBackendFd, NULL, 0, &event, 1, NULL);
 }
