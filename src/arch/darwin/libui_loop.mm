@@ -33,6 +33,14 @@ int waitForNodeEvents(uv_loop_t *loop, int timeout) {
 	}
 
 	struct kevent event;
+	struct timespec ts;
+	struct timespec *tsp = nullptr;
 
-	return kevent(nodeBackendFd, NULL, 0, &event, 1, NULL);
+	if (timeout != -1) {
+		tsp = &ts;
+		ts.tv_sec = timeout / 1000;
+		ts.tv_nsec = (timeout % 1000) * 1000000;
+	}
+
+	return kevent(nodeBackendFd, NULL, 0, &event, 1, tsp);
 }

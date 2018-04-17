@@ -1,6 +1,9 @@
+#include <unistd.h>
 #include "event-loop.h"
 
 static std::atomic<bool> running;
+
+static std::atomic<bool> mainThreadStillWaitingGuiEvents;
 
 static uv_mutex_t mainThreadWaitingGuiEvents;
 static uv_mutex_t mainThreadAwakenFromBackground;
@@ -8,6 +11,7 @@ static uv_prepare_t mainThreadAwakenPhase;
 
 static uv_thread_t *thread;
 static uv_timer_t *redrawTimer;
+
 /*
    This function is executed in the
    background thread and is responsible to continuosly polling
@@ -26,23 +30,31 @@ static void backgroundNodeEventsPoller(void *arg) {
 		// immediately release the lock
 		uv_mutex_unlock(&mainThreadWaitingGuiEvents);
 
-		int pendingEvents;
+		int pendingEvents = 1;
+		int timeout = uv_backend_timeout(uv_default_loop());
+		DEBUG_F("--- uv_backend_timeout == %d\n", timeout);
 
-		do {
-			DEBUG("--- entering waitForNodeEvents\n");
-			/* wait for pending events*/
-			pendingEvents = waitForNodeEvents(uv_default_loop(), 0);
-		} while (pendingEvents == -1 && errno == EINTR);
+		if (timeout != 0) {
+			do {
+
+				DEBUG_F("--- entering waitForNodeEvents with timeout %d\n",
+						timeout);
+				/* wait for pending events*/
+				pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
+			} while (pendingEvents == -1 && errno == EINTR);
+		}
 
 		DEBUG_F("--- pendingEvents == %d\n", pendingEvents);
 
-		if (pendingEvents > 0) {
+		if (mainThreadStillWaitingGuiEvents) {
 			DEBUG("--- wake up main thread\n");
 			// this allow the background thread
 			// to wait for the main thread to complete
 			// running node callbacks
 			uiLoopWakeup();
+		}
 
+		if (pendingEvents > 0) {
 			// wait for the main thread to complete
 			// its awaken phase.
 			DEBUG("--- mainThreadAwakenFromBackground locking.\n");
@@ -58,15 +70,16 @@ static void backgroundNodeEventsPoller(void *arg) {
 void redraw(uv_timer_t *handle);
 
 void uv_awaken_cb(uv_prepare_t *handle) {
-	DEBUG("+++ mainThreadAwakenFromBackground unlocking.\n");
 	uv_prepare_stop(&mainThreadAwakenPhase);
+	DEBUG("+++ mainThreadAwakenFromBackground unlocking.\n");
 	uv_mutex_unlock(&mainThreadAwakenFromBackground);
+	DEBUG("+++ mainThreadAwakenFromBackground unlocked.\n");
+
 	// schedule another call to redraw as soon as possible
 	// how to find a correct amount of time to scheduke next call?
 	//.because too long and UI is not responsive, too short and node
 	// become really slow
-	uv_timer_start(redrawTimer, redraw, 1, 0);
-	DEBUG("+++ mainThreadAwakenFromBackground unlocked.\n");
+	uv_timer_start(redrawTimer, redraw, 100, 0);
 }
 
 /*
@@ -91,13 +104,18 @@ void redraw(uv_timer_t *handle) {
 	// the blocking call to wait for GUI events.
 	uv_mutex_unlock(&mainThreadWaitingGuiEvents);
 
+	mainThreadStillWaitingGuiEvents = true;
+
 	DEBUG("+++ locking mainThreadAwakenFromBackground\n");
 	uv_mutex_lock(&mainThreadAwakenFromBackground);
 	DEBUG("+++ locked mainThreadAwakenFromBackground\n");
 
 	DEBUG("+++ blocking GUI\n");
+
 	/* Blocking call that wait for a node or GUI event pending */
 	uiMainStep(true);
+	mainThreadStillWaitingGuiEvents = false;
+
 	DEBUG("+++ GUI events received\n");
 
 	uv_mutex_lock(&mainThreadWaitingGuiEvents);
@@ -107,6 +125,9 @@ void redraw(uv_timer_t *handle) {
 	while (uiEventsPending()) {
 		running = uiMainStep(false);
 	}
+	// uv_mutex_unlock(&mainThreadAwakenFromBackground);
+
+	// uv_timer_start(redrawTimer, redraw, 100, 0);
 
 	uv_prepare_start(&mainThreadAwakenPhase, uv_awaken_cb);
 }
@@ -127,12 +148,22 @@ void stopAsync(uv_timer_t *handle) {
 	DEBUG("redrawTimer\n");
 
 	uv_timer_stop(handle);
-	uv_close((uv_handle_t *)handle, NULL);
 	DEBUG("handle\n");
+	uv_close((uv_handle_t *)handle, NULL);
+
+	uv_mutex_unlock(&mainThreadWaitingGuiEvents);
+	uv_mutex_lock(&mainThreadAwakenFromBackground);
 
 	/* await for the background thread to finish */
 	DEBUG("uv_thread_join\n");
 	uv_thread_join(thread);
+
+	uv_mutex_destroy(&mainThreadWaitingGuiEvents);
+
+	uv_mutex_destroy(&mainThreadAwakenFromBackground);
+
+	uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
+	uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
 
 	/*
 	  delete handle;
@@ -153,7 +184,7 @@ struct EventLoop {
 		}
 
 		running = true;
-
+		mainThreadStillWaitingGuiEvents = false;
 		/* init libui event loop */
 		uiMainSteps();
 		DEBUG("uiMainSteps...\n");
