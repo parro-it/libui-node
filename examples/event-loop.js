@@ -149,11 +149,15 @@ function makeToolbar() {
 	});
 
 	const btnHttp = new libui.UiButton('Http');
-	btnHttp.onClicked(() => {
-		const http = require('http');
-		let i = 0;
+	const http = require('http');
 
-		const server = http.createServer((req, res) => {
+	let server = null;
+	btnHttp.onClicked(() => {
+		let i = 0;
+		if (server) {
+			server.close();
+		}
+		server = http.createServer((req, res) => {
 			res.writeHead(200, {'Content-Type': 'text/plain'});
 			logAppend(`Http: request ${i}`);
 			res.end(String(i++));
