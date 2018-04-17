@@ -1,14 +1,11 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
-DrawTextLayout::DrawTextLayout(AttributedString *str, FontDescriptor *defaultFont, double width, int align) {
-	uiDrawTextLayoutParams params = {
-		str->getHandle(),
-		defaultFont->getHandle(),
-		width,
-		(uiDrawTextAlign) align
-	};
+DrawTextLayout::DrawTextLayout(AttributedString *str,
+							   FontDescriptor *defaultFont, double width,
+							   int align) {
+	uiDrawTextLayoutParams params = {str->getHandle(), defaultFont->getHandle(),
+									 width, (uiDrawTextAlign)align};
 
 	handle = uiDrawNewTextLayout(&params);
 }
@@ -17,7 +14,7 @@ DrawTextLayout::~DrawTextLayout() {
 	uiDrawFreeTextLayout(handle);
 }
 
-uiDrawTextLayout * DrawTextLayout::getHandle() {
+uiDrawTextLayout *DrawTextLayout::getHandle() {
 	return handle;
 }
 
@@ -32,4 +29,3 @@ NBIND_CLASS(DrawTextLayout) {
 	construct<AttributedString *, FontDescriptor *, double, int>();
 	method(getExtents);
 }
-

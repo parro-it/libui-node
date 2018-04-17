@@ -46,18 +46,18 @@ str.appendUnattributed(', ');
 
 str.appendUnattributed('and ');
 str.appendAttributed('underline color',
-					FontAttribute.newUnderline(libui.textUnderline.double),
-					FontAttribute.newUnderlineColor(libui.textUnderlineColor.custom, new libui.Color(1.0, 0.0, 0.5, 1.0)));
+					 FontAttribute.newUnderline(libui.textUnderline.double),
+					 FontAttribute.newUnderlineColor(libui.textUnderlineColor.custom, new libui.Color(1.0, 0.0, 0.5, 1.0)));
 str.appendUnattributed('. ');
 
 str.appendUnattributed('Furthermore, there are attributes allowing for ');
 str.appendAttributed('special underlines for indicating spelling errors',
-					FontAttribute.newUnderline(libui.textUnderline.suggestion),
-					FontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling));
+					 FontAttribute.newUnderline(libui.textUnderline.suggestion),
+					 FontAttribute.newUnderlineColor(libui.textUnderlineColor.spelling));
 str.appendUnattributed(' (and ');
 str.appendAttributed('other types of errors',
-					FontAttribute.newUnderline(libui.textUnderline.suggestion),
-					FontAttribute.newUnderlineColor(libui.textUnderlineColor.grammar));
+					 FontAttribute.newUnderline(libui.textUnderline.suggestion),
+					 FontAttribute.newUnderlineColor(libui.textUnderlineColor.grammar));
 str.appendUnattributed(') ');
 
 str.appendUnattributed('and control over OpenType features such as ligatures (with a suitable font - for instance, ');
@@ -83,16 +83,14 @@ str.appendUnattributed('Use the controls opposite to the text to control propert
 str.appendAttributed('👨🏾\n', FontAttribute.newBackgroundColor(new libui.Color(0, 1, 0, 1)));
 
 str.appendAttributed('An mulitple attributes at once!',
-						FontAttribute.newColor(new libui.Color(1, 1, 1, 1)),
-						FontAttribute.newBackgroundColor(new libui.Color(0, 0, 0, 1)),
-						FontAttribute.newFamily('Monaco'));
+					 FontAttribute.newColor(new libui.Color(1, 1, 1, 1)),
+					 FontAttribute.newBackgroundColor(new libui.Color(0, 0, 0, 1)),
+					 FontAttribute.newFamily('Monaco'));
 
 str.insertAttributed('Styled Strings\n', 0, FontAttribute.newWeight(libui.textWeight.bold), FontAttribute.newSize(24));
 
 function handlerDraw(area, p) {
-	const font = checkbox.checked ?
-		new libui.FontDescriptor('Georgia', 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal) :
-		fontButton.getFont();
+	const font = checkbox.checked ? new libui.FontDescriptor('Georgia', 14, libui.textWeight.normal, libui.textItalic.normal, libui.textStretch.normal) : fontButton.getFont();
 
 	const layout = new libui.DrawTextLayout(str, font, p.getAreaWidth(), align.getSelected());
 

@@ -1,6 +1,4 @@
-#include "../ui.h"
-#include "ui-node.h"
-#include "nbind/nbind.h"
+#include "values.h"
 
 SizeDouble::SizeDouble(double width, double height) {
 	w = width;
@@ -15,7 +13,6 @@ void SizeDouble::setWidth(double value) {
 	w = value;
 }
 
-
 double SizeDouble::getHeight() {
 	return h;
 }
@@ -29,13 +26,13 @@ void SizeDouble::toJS(nbind::cbOutput output) {
 }
 
 NBIND_CLASS(SizeDouble) {
-  construct<double, double>();
-  method(getWidth);
-  method(setWidth);
-  method(getHeight);
-  method(setHeight);
-  method(toJS);
+	construct<double, double>();
+	method(getWidth);
+	method(setWidth);
+	method(getHeight);
+	method(setHeight);
+	method(toJS);
 
-  getset(getWidth, setWidth);
-  getset(getHeight, setHeight);
+	getset(getWidth, setWidth);
+	getset(getHeight, setHeight);
 }

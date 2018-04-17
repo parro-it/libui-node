@@ -1,7 +1,6 @@
 #include <vector>
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
 AttributedString::AttributedString(uiAttributedString *str) {
 	s = str;
@@ -19,7 +18,7 @@ uiAttributedString *AttributedString::getHandle() {
 	return s;
 }
 
-const char * AttributedString::toString() {
+const char *AttributedString::toString() {
 	return uiAttributedStringString(s);
 }
 
@@ -39,7 +38,8 @@ void AttributedString::deleteString(size_t start, size_t end) {
 	uiAttributedStringDelete(s, start, end);
 }
 
-void AttributedString::setAttribute(FontAttribute *attr, size_t start, size_t end) {
+void AttributedString::setAttribute(FontAttribute *attr, size_t start,
+									size_t end) {
 	uiAttributedStringSetAttribute(s, attr->getHandle(), start, end);
 	attr->setAppended();
 }
@@ -49,38 +49,41 @@ typedef struct {
 	nbind::cbFunction *cb;
 } ForEachData;
 
-static unsigned int AttributedString__forEach(const uiAttributedString *s, const uiAttribute *a, size_t start, size_t end, void *d) {
-	ForEachData *data = (ForEachData*) d;
+static unsigned int AttributedString__forEach(const uiAttributedString *s,
+											  const uiAttribute *a,
+											  size_t start, size_t end,
+											  void *d) {
+	ForEachData *data = (ForEachData *)d;
 
-	FontAttribute f = FontAttribute((uiAttribute*)a);
+	FontAttribute f = FontAttribute((uiAttribute *)a);
 	f.setAppended();
 
 	return data->cb->call<unsigned int>(
-		data->str,
-		FontAttribute((uiAttribute*)a),
-		start, end);
+		data->str, FontAttribute((uiAttribute *)a), start, end);
 }
 
-void AttributedString::forEach(nbind::cbFunction& cb) {
+void AttributedString::forEach(nbind::cbFunction &cb) {
 	ForEachData d = {this, &cb};
 	uiAttributedStringForEachAttribute(s, AttributedString__forEach, &d);
 }
 
-void AttributedString::appendAttributedInternal(const char *str, std::vector<FontAttribute*> attrs) {
+void AttributedString::appendAttributedInternal(
+	const char *str, std::vector<FontAttribute *> attrs) {
 	size_t start = this->toStringLen();
 	size_t end = start + strlen(str);
 
 	this->appendUnattributed(str);
-	for(std::vector<FontAttribute*>::size_type i = 0; i < attrs.size(); i++) {
+	for (std::vector<FontAttribute *>::size_type i = 0; i < attrs.size(); i++) {
 		this->setAttribute(attrs[i], start, end);
 	}
 }
 
-void AttributedString::insertAttributedInternal(const char *str, size_t start, std::vector<FontAttribute*> attrs) {
+void AttributedString::insertAttributedInternal(
+	const char *str, size_t start, std::vector<FontAttribute *> attrs) {
 	size_t end = start + strlen(str);
 
 	this->insertUnattributed(str, start);
-	for(std::vector<FontAttribute*>::size_type i = 0; i < attrs.size(); i++) {
+	for (std::vector<FontAttribute *>::size_type i = 0; i < attrs.size(); i++) {
 		this->setAttribute(attrs[i], start, end);
 	}
 }

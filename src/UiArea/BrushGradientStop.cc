@@ -1,6 +1,5 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
 BrushGradientStop::BrushGradientStop(double pos, Color color) : c(color) {
 	p = pos;
@@ -26,14 +25,13 @@ void BrushGradientStop::toJS(nbind::cbOutput output) {
 	output(p, c);
 }
 
-
 NBIND_CLASS(BrushGradientStop) {
-  construct<double, Color>();
-  method(getColor);
-  method(setColor);
-  method(getPos);
-  method(setPos);
-  method(toJS);
-  getset(getColor, setColor);
-  getset(getPos, setPos);
+	construct<double, Color>();
+	method(getColor);
+	method(setColor);
+	method(getPos);
+	method(setPos);
+	method(toJS);
+	getset(getColor, setColor);
+	getset(getPos, setPos);
 }

@@ -6,14 +6,14 @@ const win = new libui.UiWindow('UiSpinbox example', 320, 60, true);
 win.margined = true;
 
 const widget = new libui.UiSpinbox();
-widget.text = 'sample text';
+widget.value = 'sample text';
 win.setChild(widget);
 
 win.onClosing(() => {
 	win.close();
-	libui.Ui.quit();
+	libui.stopLoop();
 });
 
 win.show();
 
-libui.Ui.main();
+libui.startLoop();

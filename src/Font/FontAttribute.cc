@@ -1,22 +1,21 @@
 #include <vector>
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
 // because we're returning the objects in FontAttribute::new...
-FontAttribute::FontAttribute(FontAttribute&& other){
+FontAttribute::FontAttribute(FontAttribute &&other) {
 	a = other.a;
 	appended = other.appended;
 	other.a = nullptr;
 }
 
-FontAttribute::FontAttribute(uiAttribute *attr){
+FontAttribute::FontAttribute(uiAttribute *attr) {
 	a = attr;
 }
 
-FontAttribute::~FontAttribute(){
-	if(a != nullptr){
-		if(!appended){
+FontAttribute::~FontAttribute() {
+	if (a != nullptr) {
+		if (!appended) {
 			uiFreeAttribute(a);
 		}
 	}
@@ -30,8 +29,7 @@ uiAttribute *FontAttribute::getHandle() {
 	return a;
 }
 
-
-void FontAttribute::setAppended(){
+void FontAttribute::setAppended() {
 	appended = 1;
 }
 
@@ -79,14 +77,12 @@ std::vector<Color> FontAttribute::getUnderlineColorInternal() {
 	uiUnderlineColor type;
 	uiAttributeUnderlineColor(a, &type, &r, &g, &b, &alpha);
 
-	return std::vector<Color> {Color(r, g, b, alpha), Color(type, 0, 0, 0)};
+	return std::vector<Color>{Color(r, g, b, alpha), Color(type, 0, 0, 0)};
 }
 
 OpenTypeFeatures FontAttribute::getOTFeaturesInternal() {
-	return OpenTypeFeatures((uiOpenTypeFeatures*) uiAttributeFeatures(a));
+	return OpenTypeFeatures((uiOpenTypeFeatures *)uiAttributeFeatures(a));
 }
-
-
 
 FontAttribute FontAttribute::newFamily(const char *family) {
 	return FontAttribute(uiNewFamilyAttribute(family));
@@ -109,25 +105,28 @@ FontAttribute FontAttribute::newStretch(int stretchAttribute) {
 }
 
 FontAttribute FontAttribute::newColor(Color c) {
-	return FontAttribute(uiNewColorAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
+	return FontAttribute(
+		uiNewColorAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
 FontAttribute FontAttribute::newBackgroundColor(Color c) {
-	return FontAttribute(uiNewBackgroundAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
+	return FontAttribute(
+		uiNewBackgroundAttribute(c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
 FontAttribute FontAttribute::newUnderline(int underlineAttr) {
 	return FontAttribute(uiNewUnderlineAttribute(underlineAttr));
 }
 
-FontAttribute FontAttribute::newUnderlineColor2(int underlineColorAttr, Color c) {
-	return FontAttribute(uiNewUnderlineColorAttribute(underlineColorAttr, c.getR(), c.getG(), c.getB(), c.getA()));
+FontAttribute FontAttribute::newUnderlineColor2(int underlineColorAttr,
+												Color c) {
+	return FontAttribute(uiNewUnderlineColorAttribute(
+		underlineColorAttr, c.getR(), c.getG(), c.getB(), c.getA()));
 }
 
 FontAttribute FontAttribute::newOTFeatures(OpenTypeFeatures *otf) {
 	return FontAttribute(uiNewFeaturesAttribute(otf->getHandle()));
 }
-
 
 NBIND_CLASS(FontAttribute) {
 	method(getAttributeType);

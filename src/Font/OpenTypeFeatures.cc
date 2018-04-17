@@ -1,9 +1,8 @@
 #include <array>
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
-OpenTypeFeatures::OpenTypeFeatures(OpenTypeFeatures&& other) {
+OpenTypeFeatures::OpenTypeFeatures(OpenTypeFeatures &&other) {
 	f = other.f;
 	other.f = nullptr;
 }
@@ -17,7 +16,7 @@ OpenTypeFeatures::OpenTypeFeatures() {
 }
 
 OpenTypeFeatures::~OpenTypeFeatures() {
-	if(f != nullptr){
+	if (f != nullptr) {
 		uiFreeOpenTypeFeatures(f);
 	}
 }
@@ -40,8 +39,9 @@ void OpenTypeFeatures::remove(const char *tag) {
 
 std::array<unsigned int, 2> OpenTypeFeatures::getInternal(const char *tag) {
 	unsigned int value = 0;
-	unsigned int exists = uiOpenTypeFeaturesGet(f, tag[0], tag[1], tag[2], tag[3], &value);
-	return std::array<unsigned int, 2> {{value, exists}};
+	unsigned int exists =
+		uiOpenTypeFeaturesGet(f, tag[0], tag[1], tag[2], tag[3], &value);
+	return std::array<unsigned int, 2>{{value, exists}};
 }
 
 typedef struct {
@@ -49,16 +49,16 @@ typedef struct {
 	nbind::cbFunction *cb;
 } ForEachData;
 
-static unsigned int OpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf, char a, char b, char c, char d, uint32_t value, void *dat) {
-	ForEachData *data = (ForEachData*) dat;
+static unsigned int OpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf,
+											  char a, char b, char c, char d,
+											  uint32_t value, void *dat) {
+	ForEachData *data = (ForEachData *)dat;
 	const char tag[5] = {a, b, c, d, '\0'};
 
-	return data->cb->call<unsigned int>(
-		data->otf,
-		&tag[0], value);
+	return data->cb->call<unsigned int>(data->otf, &tag[0], value);
 }
 
-void OpenTypeFeatures::forEach(nbind::cbFunction& cb) {
+void OpenTypeFeatures::forEach(nbind::cbFunction &cb) {
 	ForEachData d = {this, &cb};
 	uiOpenTypeFeaturesForEach(f, OpenTypeFeatures__forEach, &d);
 }
