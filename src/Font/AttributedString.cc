@@ -49,17 +49,17 @@ typedef struct {
 	nbind::cbFunction *cb;
 } ForEachData;
 
-static unsigned int AttributedString__forEach(const uiAttributedString *s,
-											  const uiAttribute *a,
-											  size_t start, size_t end,
-											  void *d) {
+static uiForEach AttributedString__forEach(const uiAttributedString *s,
+										   const uiAttribute *a, size_t start,
+										   size_t end, void *d) {
 	ForEachData *data = (ForEachData *)d;
 
 	FontAttribute f = FontAttribute((uiAttribute *)a);
 	f.setAppended();
 
-	return data->cb->call<unsigned int>(
-		data->str, FontAttribute((uiAttribute *)a), start, end);
+	unsigned int v = data->cb->call<unsigned int>(data->str, f, start, end);
+
+	return v ? uiForEachStop : uiForEachContinue;
 }
 
 void AttributedString::forEach(nbind::cbFunction &cb) {

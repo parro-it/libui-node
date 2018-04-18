@@ -49,13 +49,15 @@ typedef struct {
 	nbind::cbFunction *cb;
 } ForEachData;
 
-static unsigned int OpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf,
-											  char a, char b, char c, char d,
-											  uint32_t value, void *dat) {
+static uiForEach OpenTypeFeatures__forEach(const uiOpenTypeFeatures *otf,
+										   char a, char b, char c, char d,
+										   uint32_t value, void *dat) {
 	ForEachData *data = (ForEachData *)dat;
 	const char tag[5] = {a, b, c, d, '\0'};
 
-	return data->cb->call<unsigned int>(data->otf, &tag[0], value);
+	unsigned int v = data->cb->call<unsigned int>(data->otf, &tag[0], value);
+
+	return v ? uiForEachStop : uiForEachContinue;
 }
 
 void OpenTypeFeatures::forEach(nbind::cbFunction &cb) {

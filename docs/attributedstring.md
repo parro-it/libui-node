@@ -124,7 +124,7 @@ Returns the text content.
 
 ### forEach
 
-Iterates over all attributes. Return `libui.forEach.stop` in the callback to break.
+Iterates over all attributes. Return `true` in the callback to break.
 
 **Arguments**
 
@@ -137,7 +137,7 @@ Returns the number of graphemes (characters from the point of view of the user).
 ### byteIndexToGrapheme
 
 > The cursor of a text editor is always placed on a grapheme boundary, so you can use these features to move the cursor left or right by one "character".
- 
+
 Converts a byte index in the string to a grapheme index.
 
 **Arguments**
@@ -264,7 +264,7 @@ Returns a new FontAttribute for the underline color.
 
 **Arguments**
 
-* colorAttr: 
+* colorAttr:
 	* `libui.textUnderlineColor.custom`
 	* `libui.textUnderlineColor.spelling`
 	* `libui.textUnderlineColor.grammar`
@@ -340,7 +340,7 @@ Returns an object describing the underline color or `null` if called on a non-un
   color: null
 }
 ```
-See [newUnderlineColor](#newunderlinecolor) for `type` values) 
+See [newUnderlineColor](#newunderlinecolor) for `type` values)
 
 
 ### getOTFeatures
@@ -407,7 +407,7 @@ Returns the value of `tag` or `null` if not set.
 
 ### forEach
 
-Iterates over all tags. Return `libui.forEach.stop` in the callback to break.
+Iterates over all tags. Return `true` in the callback to break.
 
 **Arguments**
 

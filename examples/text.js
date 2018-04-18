@@ -82,7 +82,7 @@ str.appendUnattributed(').\n');
 str.appendUnattributed('Use the controls opposite to the text to control properties of the text.\n');
 str.appendAttributed('👨🏾\n', FontAttribute.newBackgroundColor(new libui.Color(0, 1, 0, 1)));
 
-str.appendAttributed('An mulitple attributes at once!',
+str.appendAttributed('And multiple attributes at once!',
 					 FontAttribute.newColor(new libui.Color(1, 1, 1, 1)),
 					 FontAttribute.newBackgroundColor(new libui.Color(0, 0, 0, 1)),
 					 FontAttribute.newFamily('Monaco'));
