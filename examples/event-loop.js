@@ -163,7 +163,7 @@ function makeToolbar() {
 			res.end(String(i++));
 		});
 
-		server.listen(3000, '127.0.0.1', () => {
+		server.listen(8300, '127.0.0.1', () => {
 			logAppend('listening...');
 		});
 	});

@@ -8,6 +8,7 @@ static std::atomic<bool> mainThreadStillWaitingGuiEvents;
 static uv_mutex_t mainThreadWaitingGuiEvents;
 static uv_mutex_t mainThreadAwakenFromBackground;
 static uv_prepare_t mainThreadAwakenPhase;
+static uv_timer_t keepAliveTimer;
 
 static uv_thread_t *thread;
 static uv_timer_t *redrawTimer;
@@ -33,6 +34,13 @@ static void backgroundNodeEventsPoller(void *arg) {
 		int pendingEvents = 1;
 		int timeout = uv_backend_timeout(uv_default_loop());
 		DEBUG_F("--- uv_backend_timeout == %d\n", timeout);
+
+		// hack: we should limit the max timout
+		// in order to let new handler to be listened on.
+		// this will be solved using a patched version of node
+		if (timeout > 1000) {
+			timeout = 1000;
+		}
 
 		if (timeout != 0) {
 			do {
@@ -65,6 +73,10 @@ static void backgroundNodeEventsPoller(void *arg) {
 			uv_mutex_unlock(&mainThreadAwakenFromBackground);
 		}
 	}
+}
+
+void noop(uv_timer_t *handle) {
+	;
 }
 
 void redraw(uv_timer_t *handle);
@@ -124,12 +136,18 @@ void redraw(uv_timer_t *handle) {
 	/* dequeue and run every event pending */
 	while (uiEventsPending()) {
 		running = uiMainStep(false);
+		DEBUG("+++ other GUI event dequeued.\n");
 	}
+
+	DEBUG("+++ all GUI events dequeued.\n");
+
 	// uv_mutex_unlock(&mainThreadAwakenFromBackground);
 
 	// uv_timer_start(redrawTimer, redraw, 100, 0);
 
 	uv_prepare_start(&mainThreadAwakenPhase, uv_awaken_cb);
+
+	DEBUG("+++ prepare handler started.\n");
 }
 
 /* This function start the event loop and exit immediately */
@@ -162,7 +180,6 @@ void stopAsync(uv_timer_t *handle) {
 
 	uv_mutex_destroy(&mainThreadAwakenFromBackground);
 
-	uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
 	uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
 
 	/*
@@ -211,10 +228,15 @@ struct EventLoop {
 		uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
 		DEBUG("thread...\n");
 
+		/* bogus timer handler only used to keep process active */
+		/* fires once per hour */
+		uv_timer_init(uv_default_loop(), &keepAliveTimer);
+		uv_timer_start(&keepAliveTimer, noop, 1000 * 60 * 60, 1000 * 60 * 60);
+
 		/* start redraw timer */
 		redrawTimer = new uv_timer_t();
 		uv_timer_init(uv_default_loop(), redrawTimer);
-		redraw(redrawTimer);
+		uv_timer_start(redrawTimer, redraw, 1, 0);
 
 		DEBUG("redrawTimer...\n");
 	}
