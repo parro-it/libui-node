@@ -54,7 +54,7 @@ static void backgroundNodeEventsPoller(void *arg) {
 
 		DEBUG_F("--- pendingEvents == %d\n", pendingEvents);
 
-		if (mainThreadStillWaitingGuiEvents) {
+		if (mainThreadStillWaitingGuiEvents && pendingEvents > 0) {
 			DEBUG("--- wake up main thread\n");
 			// this allow the background thread
 			// to wait for the main thread to complete
@@ -91,7 +91,7 @@ void uv_awaken_cb(uv_prepare_t *handle) {
 	// how to find a correct amount of time to scheduke next call?
 	//.because too long and UI is not responsive, too short and node
 	// become really slow
-	uv_timer_start(redrawTimer, redraw, 100, 0);
+	uv_timer_start(redrawTimer, redraw, 500, 0);
 }
 
 /*

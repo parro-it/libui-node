@@ -158,12 +158,14 @@ function makeToolbar() {
 			server.close();
 		}
 		server = http.createServer((req, res) => {
+			console.log('******** Connessione...')
 			res.writeHead(200, {'Content-Type': 'text/plain'});
 			logAppend(`Http: request ${i}`);
 			res.end(String(i++));
 		});
 
 		server.listen(8300, '127.0.0.1', () => {
+			console.log('******** listeining...')
 			logAppend('listening...');
 		});
 	});
