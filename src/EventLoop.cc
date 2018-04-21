@@ -8,7 +8,7 @@ static std::atomic<bool> mainThreadStillWaitingGuiEvents;
 static uv_mutex_t mainThreadWaitingGuiEvents;
 static uv_mutex_t mainThreadAwakenFromBackground;
 static uv_prepare_t mainThreadAwakenPhase;
-static uv_timer_t keepAliveTimer;
+static uv_async_t keepAliveTimer;
 
 static uv_thread_t *thread;
 static uv_timer_t *redrawTimer;
@@ -38,9 +38,12 @@ static void backgroundNodeEventsPoller(void *arg) {
 		// hack: we should limit the max timout
 		// in order to let new handler to be listened on.
 		// this will be solved using a patched version of node
+
+		/*
 		if (timeout > 1000) {
 			timeout = 1000;
 		}
+		*/
 
 		if (timeout != 0) {
 			do {
@@ -52,7 +55,8 @@ static void backgroundNodeEventsPoller(void *arg) {
 			} while (pendingEvents == -1 && errno == EINTR);
 		}
 
-		DEBUG_F("--- pendingEvents == %d\n", pendingEvents);
+		DEBUG_F("--- pendingEvents == %d, running = %u\n", pendingEvents,
+				unsigned(running));
 
 		if (running && mainThreadStillWaitingGuiEvents && pendingEvents > 0) {
 			DEBUG("--- wake up main thread\n");
@@ -73,6 +77,7 @@ static void backgroundNodeEventsPoller(void *arg) {
 			uv_mutex_unlock(&mainThreadAwakenFromBackground);
 		}
 	}
+	DEBUG("--- Background terminating.\n");
 }
 
 void noop(uv_timer_t *handle) {
@@ -88,10 +93,10 @@ void uv_awaken_cb(uv_prepare_t *handle) {
 	DEBUG("+++ mainThreadAwakenFromBackground unlocked.\n");
 
 	// schedule another call to redraw as soon as possible
-	// how to find a correct amount of time to scheduke next call?
+	// how to find a correct amount of time to schedule next call?
 	//.because too long and UI is not responsive, too short and node
 	// become really slow
-	uv_timer_start(redrawTimer, redraw, 500, 0);
+	uv_timer_start(redrawTimer, redraw, 0, 0);
 }
 
 /*
@@ -175,11 +180,17 @@ void stopAsync(uv_timer_t *handle) {
 	uv_mutex_lock(&mainThreadAwakenFromBackground);
 
 	/* await for the background thread to finish */
-	DEBUG("uv_thread_join\n");
+	DEBUG("uv_thread_join wait\n");
 	uv_thread_join(thread);
+	DEBUG("uv_thread_join done\n");
+
+	uv_mutex_unlock(&mainThreadAwakenFromBackground);
 
 	uv_mutex_destroy(&mainThreadWaitingGuiEvents);
 	uv_mutex_destroy(&mainThreadAwakenFromBackground);
+
+	/* stop keep alive timer */
+	uv_close((uv_handle_t *)&keepAliveTimer, NULL);
 
 	// uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
 
@@ -229,10 +240,9 @@ struct EventLoop {
 		uv_thread_create(thread, backgroundNodeEventsPoller, NULL);
 		DEBUG("thread...\n");
 
-		/* bogus timer handler only used to keep process active */
-		/* fires once per hour */
-		uv_timer_init(uv_default_loop(), &keepAliveTimer);
-		uv_timer_start(&keepAliveTimer, noop, 1000 * 60 * 60, 1000 * 60 * 60);
+		// Add dummy handle for libuv, otherwise libuv would quit when there is
+		// nothing to do.
+		uv_async_init(uv_default_loop(), &keepAliveTimer, nullptr);
 
 		/* start redraw timer */
 		redrawTimer = new uv_timer_t();
@@ -240,6 +250,10 @@ struct EventLoop {
 		uv_timer_start(redrawTimer, redraw, 1, 0);
 
 		DEBUG("redrawTimer...\n");
+	}
+
+	static void wakeupBackgroundThread() {
+		uv_async_send(&keepAliveTimer);
 	}
 
 	/* This function start the event loop and exit immediately */
@@ -251,6 +265,7 @@ struct EventLoop {
 };
 
 NBIND_CLASS(EventLoop) {
+	method(wakeupBackgroundThread);
 	method(start);
 	method(stop);
 }
