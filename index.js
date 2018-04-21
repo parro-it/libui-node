@@ -135,17 +135,19 @@ BrushGradientStop.prototype.fromJS = fromJSBrushGradientStop;
 binding.bind('BrushGradientStop', BrushGradientStop);
 
 const textWeight = {
-	thin: 0,
-	ultraLight: 1,
-	light: 2,
-	book: 3,
-	normal: 4,
-	medium: 5,
-	semiBold: 6,
-	bold: 7,
-	utraBold: 8,
-	heavy: 9,
-	ultraHeavy: 10
+	minimum: 0,
+	thin: 100,
+	ultraLight: 200,
+	light: 300,
+	book: 350,
+	normal: 400,
+	medium: 500,
+	semiBold: 600,
+	bold: 700,
+	ultraBold: 800,
+	heavy: 900,
+	ultraHeavy: 950,
+	maximum: 1000
 };
 
 const textItalic = {
@@ -164,6 +166,133 @@ const textStretch = {
 	expanded: 6,
 	extraExpanded: 7,
 	ultraExpanded: 8
+};
+
+const textAttributeType = {
+	family: 0,
+	size: 1,
+	weight: 2,
+	italic: 3,
+	stretch: 4,
+	color: 5,
+	background: 6,
+	underline: 7,
+	underlineColor: 8,
+	features: 9
+};
+
+const textUnderline = {
+	none: 0,
+	single: 1,
+	double: 2,
+	suggestion: 3
+};
+
+const textUnderlineColor = {
+	custom: 0,
+	spelling: 1,
+	grammar: 2,
+	auxiliary: 3
+};
+
+const textAlign = {
+	left: 0,
+	center: 1,
+	right: 2
+};
+
+const forEach = {
+	continue: 0,
+	stop: 1
+};
+
+binding.lib.AttributedString.prototype.appendAttributed = function(str) {
+	return this.appendAttributedInternal(str, Array.prototype.slice.call(arguments, 1));
+};
+
+binding.lib.AttributedString.prototype.insertAttributed = function(str, start) {
+	return this.insertAttributedInternal(str, start, Array.prototype.slice.call(arguments, 2));
+};
+
+binding.lib.FontAttribute.newUnderlineColor = function(type, color) {
+	if (type === textUnderlineColor.custom && !color) {
+		console.error('With textUnderlineColor.custom, a color needs to passed');
+	}
+	color = color || new Color(0, 0, 0, 0);
+	return binding.lib.FontAttribute.newUnderlineColor2(type, color);
+};
+
+binding.lib.OpenTypeFeatures.prototype.get = function(str) {
+	const value = this.getInternal(str);
+	if (value[1]) {
+		return value[0];
+	}
+	return null;
+};
+
+binding.lib.FontAttribute.prototype.getFamily = function() {
+	if (this.getAttributeType() !== textAttributeType.family) {
+		return null;
+	}
+	return this.getFamilyInternal();
+};
+
+binding.lib.FontAttribute.prototype.getSize = function() {
+	if (this.getAttributeType() !== textAttributeType.size) {
+		return null;
+	}
+	return this.getSizeInternal();
+};
+
+binding.lib.FontAttribute.prototype.getWeight = function() {
+	if (this.getAttributeType() !== textAttributeType.weight) {
+		return null;
+	}
+	return this.getWeightInternal();
+};
+
+binding.lib.FontAttribute.prototype.getItalic = function() {
+	if (this.getAttributeType() !== textAttributeType.italic) {
+		return null;
+	}
+	return this.getItalicInternal();
+};
+
+binding.lib.FontAttribute.prototype.getStretch = function() {
+	if (this.getAttributeType() !== textAttributeType.stretch) {
+		return null;
+	}
+	return this.getStretchInternal();
+};
+
+binding.lib.FontAttribute.prototype.getColor = function() {
+	if (this.getAttributeType() !== textAttributeType.color) {
+		return null;
+	}
+	return this.getColorInternal();
+};
+
+binding.lib.FontAttribute.prototype.getUnderline = function() {
+	if (this.getAttributeType() !== textAttributeType.underline) {
+		return null;
+	}
+	return this.getUnderlineInternal();
+};
+
+binding.lib.FontAttribute.prototype.getUnderlineColor = function() {
+	if (this.getAttributeType() !== textAttributeType.underlineColor) {
+		return null;
+	}
+	const v = this.getUnderlineColorInternal();
+	const type = Math.round(v[1].r);
+	return {type, color: type === textUnderlineColor.custom ? v[0] : null};
+};
+
+binding.lib.FontAttribute.prototype.getOTFeatures = function() {
+	if (this.getAttributeType() !== textAttributeType.features) {
+		return null;
+	}
+	return this.getOTFeaturesInternal();
 };
 
 const brushType = {
@@ -292,6 +421,13 @@ function promiseResolve(asyncId) {
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
+module.exports.textItalic = textItalic;
+module.exports.textStretch = textStretch;
+module.exports.textAttributeType = textAttributeType;
+module.exports.textUnderline = textUnderline;
+module.exports.textUnderlineColor = textUnderlineColor;
+module.exports.textAlign = textAlign;
+module.exports.forEach = forEach;
 module.exports.Size = Size;
 module.exports.Point = Point;
 module.exports.Color = Color;

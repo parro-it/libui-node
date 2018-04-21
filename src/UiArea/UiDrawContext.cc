@@ -31,7 +31,7 @@ void UiDrawContext::restore() {
 }
 
 void UiDrawContext::text(double x, double y, DrawTextLayout *layout) {
-	uiDrawText(c, x, y, layout->getHandle());
+	uiDrawText(c, layout->getHandle(), x, y);
 }
 
 NBIND_CLASS(UiDrawContext) {

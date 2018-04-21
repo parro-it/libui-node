@@ -26,6 +26,7 @@
 				["OS=='linux'", {
 					"sources": [
 						"<!@(ls -1 src/*.cc)",
+						"<!@(ls -1 src/Font/*.cc)",
 						"<!@(ls -1 src/UiArea/*.cc)",
 						"<!@(ls -1 src/arch/unix/*.cc)"
 					],
@@ -43,6 +44,7 @@
 				["OS=='mac'", {
 					"sources": [
 						"<!@(ls -1 src/*.cc)",
+						"<!@(ls -1 src/Font/*.cc)",
 						"<!@(ls -1 src/UiArea/*.cc)",
 						"<!@(ls -1 src/arch/darwin/*.mm)"
 					],
