@@ -27,6 +27,7 @@ static void backgroundNodeEventsPoller(void *arg) {
 		// wait for the main thread
 		// to be blocked waiting for GUI events
 		uv_mutex_lock(&mainThreadWaitingGuiEvents);
+
 		// immediately release the lock
 		uv_mutex_unlock(&mainThreadWaitingGuiEvents);
 
@@ -37,15 +38,13 @@ static void backgroundNodeEventsPoller(void *arg) {
 		if (timeout != 0) {
 			do {
 
-				DEBUG_F("--- entering waitForNodeEvents with timeout %d\n",
-						timeout);
+				DEBUG_F("--- entering wait with timeout %d\n", timeout);
 				/* wait for pending events*/
 				pendingEvents = waitForNodeEvents(uv_default_loop(), timeout);
 			} while (pendingEvents == -1 && errno == EINTR);
 		}
 
-		DEBUG_F("--- pendingEvents == %d, running = %u\n", pendingEvents,
-				unsigned(running));
+		DEBUG_F("--- pendingEvents == %d\n", pendingEvents);
 
 		if (running && mainThreadStillWaitingGuiEvents && pendingEvents > 0) {
 			DEBUG("--- wake up main thread\n");
@@ -77,6 +76,11 @@ void redraw(uv_timer_t *handle);
 
 void uv_awaken_cb(uv_prepare_t *handle) {
 	uv_prepare_stop(&mainThreadAwakenPhase);
+
+	if (!running) {
+		return;
+	}
+
 	DEBUG("+++ mainThreadAwakenFromBackground unlocking.\n");
 	uv_mutex_unlock(&mainThreadAwakenFromBackground);
 	DEBUG("+++ mainThreadAwakenFromBackground unlocked.\n");
@@ -165,15 +169,19 @@ void stopAsync(uv_timer_t *handle) {
 	DEBUG("handle\n");
 	uv_close((uv_handle_t *)handle, NULL);
 
-	uv_mutex_unlock(&mainThreadWaitingGuiEvents);
-	uv_mutex_lock(&mainThreadAwakenFromBackground);
+	if (uv_mutex_trylock(&mainThreadWaitingGuiEvents)) {
+		uv_mutex_unlock(&mainThreadWaitingGuiEvents);
+	}
+
+	if (uv_mutex_trylock(&mainThreadAwakenFromBackground)) {
+		uv_mutex_unlock(&mainThreadAwakenFromBackground);
+	}
 
 	/* await for the background thread to finish */
 	DEBUG("uv_thread_join wait\n");
+	uv_async_send(&keepAliveTimer);
 	uv_thread_join(thread);
 	DEBUG("uv_thread_join done\n");
-
-	uv_mutex_unlock(&mainThreadAwakenFromBackground);
 
 	uv_mutex_destroy(&mainThreadWaitingGuiEvents);
 	uv_mutex_destroy(&mainThreadAwakenFromBackground);
@@ -182,12 +190,6 @@ void stopAsync(uv_timer_t *handle) {
 	uv_close((uv_handle_t *)&keepAliveTimer, NULL);
 
 	// uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
-
-	/*
-	  delete handle;
-	  delete redrawTimer;
-	  delete thread;
-	*/
 
 	/* quit libui event loop */
 	uiQuit();
