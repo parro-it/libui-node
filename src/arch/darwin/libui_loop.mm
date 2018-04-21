@@ -12,8 +12,7 @@ int uiLoopWakeup() {
 										   data1:0
 										   data2:0]
 			 atStart:NO];
-	// give main thread some time to react
-	// usleep(50 * 1000);
+
 	return 0;
 }
 

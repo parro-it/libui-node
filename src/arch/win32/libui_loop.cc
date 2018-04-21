@@ -6,7 +6,6 @@ void noop(void *data) {}
 int uiLoopWakeup() {
 	uiQueueMain(noop, NULL);
 	// give main thread some time to react
-	usleep(50 * 1000);
 	return 0;
 }
 
@@ -21,6 +20,10 @@ int waitForNodeEvents(uv_loop_t *loop, int timeout) {
 	OVERLAPPED *overlapped;
 
 	struct _internal_uv_loop_s *_loop = (_internal_uv_loop_s *)loop;
+
+	if (timeout == -1) {
+		timeout = INFINITE;
+	}
 
 	int ret = GetQueuedCompletionStatus(_loop->iocp, &bytes, &key, &overlapped,
 										timeout);
