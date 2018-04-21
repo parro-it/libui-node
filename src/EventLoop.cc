@@ -54,7 +54,7 @@ static void backgroundNodeEventsPoller(void *arg) {
 
 		DEBUG_F("--- pendingEvents == %d\n", pendingEvents);
 
-		if (mainThreadStillWaitingGuiEvents && pendingEvents > 0) {
+		if (running && mainThreadStillWaitingGuiEvents && pendingEvents > 0) {
 			DEBUG("--- wake up main thread\n");
 			// this allow the background thread
 			// to wait for the main thread to complete
@@ -62,7 +62,7 @@ static void backgroundNodeEventsPoller(void *arg) {
 			uiLoopWakeup();
 		}
 
-		if (pendingEvents > 0) {
+		if (running && pendingEvents > 0) {
 			// wait for the main thread to complete
 			// its awaken phase.
 			DEBUG("--- mainThreadAwakenFromBackground locking.\n");
@@ -145,9 +145,11 @@ void redraw(uv_timer_t *handle) {
 
 	// uv_timer_start(redrawTimer, redraw, 100, 0);
 
-	uv_prepare_start(&mainThreadAwakenPhase, uv_awaken_cb);
+	if (running) {
+		uv_prepare_start(&mainThreadAwakenPhase, uv_awaken_cb);
 
-	DEBUG("+++ prepare handler started.\n");
+		DEBUG("+++ prepare handler started.\n");
+	}
 }
 
 /* This function start the event loop and exit immediately */
@@ -177,10 +179,9 @@ void stopAsync(uv_timer_t *handle) {
 	uv_thread_join(thread);
 
 	uv_mutex_destroy(&mainThreadWaitingGuiEvents);
-
 	uv_mutex_destroy(&mainThreadAwakenFromBackground);
 
-	uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
+	// uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
 
 	/*
 	  delete handle;
