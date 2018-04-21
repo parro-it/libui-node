@@ -34,7 +34,7 @@
 		"build": "node-gyp configure build",
 		"clean": "rm -rf build; rm -rf node_modules;",
 		"precommit": "check-clang-format \"'npm run lint'\"",
-		"lint": "clang-format -i --glob='{src/**/*.{h,cc},index.js,docs.js,examples/**/*.js}'"
+		"lint": "clang-format -i --glob='{src/**/*.{h,cc,mm},index.js,examples/**/*.js}'"
 	},
 	"keywords": [
 		"libui",
@@ -43,7 +43,7 @@
 		"GUI"
 	],
 	"engines": {
-		"node": ">=4"
+		"node": ">=8"
 	},
 	"files": [
 		"list-sources.js",

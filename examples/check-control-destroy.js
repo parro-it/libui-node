@@ -137,7 +137,6 @@ function op() {
 	global.gc();
 	const win = createWindow();
 	win.show();
-	return;
 	setTimeout(() => {
 		win.close();
 		op();

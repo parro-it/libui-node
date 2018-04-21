@@ -1,17 +1,83 @@
 const nbind = require('nbind');
+const async_hooks = require('async_hooks');
 
 const binding = nbind.init(__dirname);
-
+let asyncHook = null;
 module.exports = binding.lib;
 
 binding.lib.Ui.init();
 
+var setTimeoutNode;
+var clearTimeoutNode;
+var setIntervalNode;
+var clearIntervalNode;
+
 function stopLoop() {
 	binding.lib.EventLoop.stop();
+
+	if (!setTimeoutNode) {
+		return;
+	}
+
+	asyncHook.disable();
+
+	global.setTimeout = setTimeoutNode;
+	global.clearTimeout = clearTimeoutNode;
+	global.setInterval = setIntervalNode;
+	global.clearInterval = clearIntervalNode;
+
+	setTimeoutNode = null;
+	clearTimeoutNode = null;
+	setIntervalNode = null;
+	clearIntervalNode = null;
 }
 
 function startLoop() {
 	binding.lib.EventLoop.start();
+
+	if (setTimeoutNode) {
+		return;
+	}
+
+	// Create a new AsyncHook instance.
+
+	asyncHook = async_hooks.createHook({init});
+
+	// Allow callbacks of this AsyncHook instance to call. This is not an implicit
+	// action after running the constructor, and must be explicitly run to begin
+	// executing callbacks.
+	asyncHook.enable();
+
+	setTimeoutNode = global.setTimeout;
+
+	global.setTimeout = function(cb, t) {
+		const args = Array.prototype.slice.call(arguments, 2);
+		return binding.lib.setTimeout(function() {
+			cb.apply(null, args);
+		}, t);
+	};
+
+	clearTimeoutNode = global.clearTimeout;
+	global.clearTimeout = binding.lib.clearTimeout;
+
+	setIntervalNode = global.setInterval;
+	global.setInterval = function(cb, t) {
+		const args = Array.prototype.slice.call(arguments, 2);
+		return binding.lib.setInterval(function() {
+			cb.apply(null, args);
+		}, t);
+	};
+
+	clearIntervalNode = global.clearInterval;
+	global.clearInterval = binding.lib.clearInterval;
+}
+
+// This is called when a new async handle
+// is created. It's used to signal the background
+// thread to stop awaiting calls and upgrade it's list of handles
+// it's awaiting for.
+function init(asyncId, type, triggerAsyncId, resource) {
+	binding.lib.EventLoop.wakeupBackgroundThread();
 }
 
 function Color(r, g, b, a) {
@@ -323,6 +389,8 @@ const extKeys = {
 	nDivide: 39
 };
 
+module.exports.textStretch = textStretch;
+module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
 module.exports.textItalic = textItalic;
 module.exports.textStretch = textStretch;
@@ -345,3 +413,4 @@ module.exports.modifierKeys = modifierKeys;
 module.exports.extKeys = extKeys;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;
+module.exports.onShouldQuit = binding.lib.Ui.onShouldQuit;

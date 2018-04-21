@@ -4,16 +4,20 @@ const libui = require('..');
 
 const win = new libui.UiWindow('Test window', 800, 600, false);
 win.margined = 1;
-win.onClosing(() => {
-	libui.stopLoop();
-});
 
 const box = new libui.UiVerticalBox();
 const hBox = new libui.UiHorizontalBox();
 const e1 = new libui.UiEntry();
 e1.enabled = 0;
-hBox.append(new libui.UiLabel('ciao'), false);
+const lblCiao = new libui.UiLabel('ciao');
+hBox.append(lblCiao, false);
+
 hBox.append(e1, false);
+
+win.onClosing(() => {
+	win.close();
+	libui.stopLoop();
+});
 
 box.append(new libui.UiEntry(), false);
 box.append(hBox, false);
