@@ -43,7 +43,7 @@
 		"GUI"
 	],
 	"engines": {
-		"node": ">=4"
+		"node": ">=8"
 	},
 	"files": [
 		"list-sources.js",
