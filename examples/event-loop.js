@@ -1,4 +1,5 @@
 'use strict';
+const http = require('http');
 const libui = require('..');
 
 let setIntervalHandle = null;
@@ -149,13 +150,15 @@ function makeToolbar() {
 	});
 
 	const btnHttp = new libui.UiButton('Http');
-	const http = require('http');
 
 	let server = null;
 	btnHttp.onClicked(() => {
 		let i = 0;
 		if (server) {
 			server.close();
+			server = null;
+			logAppend('server closed.');
+			return;
 		}
 		server = http.createServer((req, res) => {
 			console.log('******** Connessione...')

@@ -2,7 +2,7 @@ const nbind = require('nbind');
 const async_hooks = require('async_hooks');
 
 const binding = nbind.init(__dirname);
-
+let asyncHook = null;
 module.exports = binding.lib;
 
 binding.lib.Ui.init();
@@ -18,6 +18,8 @@ function stopLoop() {
 	if (!setTimeoutNode) {
 		return;
 	}
+
+	asyncHook.disable();
 
 	global.setTimeout = setTimeoutNode;
 	global.clearTimeout = clearTimeoutNode;
@@ -37,9 +39,9 @@ function startLoop() {
 		return;
 	}
 
-	// Create a new AsyncHook instance. All of these callbacks are optional.
-	const asyncHook =
-		async_hooks.createHook({init /*, before, after, destroy, promiseResolve*/});
+	// Create a new AsyncHook instance.
+
+	asyncHook = async_hooks.createHook({init});
 
 	// Allow callbacks of this AsyncHook instance to call. This is not an implicit
 	// action after running the constructor, and must be explicitly run to begin
@@ -47,6 +49,7 @@ function startLoop() {
 	asyncHook.enable();
 
 	setTimeoutNode = global.setTimeout;
+
 	global.setTimeout = function(cb, t) {
 		const args = Array.prototype.slice.call(arguments, 2);
 		return binding.lib.setTimeout(function() {
@@ -69,38 +72,13 @@ function startLoop() {
 	global.clearInterval = binding.lib.clearInterval;
 }
 
-// init is called during object construction. The resource may not have
-// completed construction when this callback runs, therefore all fields of the
-// resource referenced by "asyncId" may not have been populated.
+// This is called when a new async handle
+// is created. It's used to signal the background
+// thread to stop awaiting calls and upgrade it's list of handles
+// it's awaiting for.
 function init(asyncId, type, triggerAsyncId, resource) {
-	// console.log('init', asyncId);
 	binding.lib.EventLoop.wakeupBackgroundThread();
 }
-/*
-// before is called just before the resource's callback is called. It can be
-// called 0-N times for handles (e.g. TCPWrap), and will be called exactly 1
-// time for requests (e.g. FSReqWrap).
-function before(asyncId) {
-	console.log('before', asyncId);
-}
-
-// after is called just after the resource's callback has finished.
-function after(asyncId) {
-	console.log('after', asyncId);
-}
-
-// destroy is called when an AsyncWrap instance is destroyed.
-function destroy(asyncId) {
-	console.log('destroy', asyncId);
-}
-
-// promiseResolve is called only for promise resources, when the
-// `resolve` function passed to the `Promise` constructor is invoked
-// (either directly or through other means of resolving a promise).
-function promiseResolve(asyncId) {
-	console.log('promiseResolve', asyncId);
-}
-*/
 
 function Color(r, g, b, a) {
 	this.r = r;

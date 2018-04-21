@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include "event-loop.h"
 
 static std::atomic<bool> running;
@@ -34,16 +33,6 @@ static void backgroundNodeEventsPoller(void *arg) {
 		int pendingEvents = 1;
 		int timeout = uv_backend_timeout(uv_default_loop());
 		DEBUG_F("--- uv_backend_timeout == %d\n", timeout);
-
-		// hack: we should limit the max timout
-		// in order to let new handler to be listened on.
-		// this will be solved using a patched version of node
-
-		/*
-		if (timeout > 1000) {
-			timeout = 1000;
-		}
-		*/
 
 		if (timeout != 0) {
 			do {
@@ -252,6 +241,10 @@ struct EventLoop {
 		DEBUG("redrawTimer...\n");
 	}
 
+	// this function signal make background
+	// to stop awaiting node events, allowing it
+	// to update the list of handles it's
+	// awaiting for.
 	static void wakeupBackgroundThread() {
 		uv_async_send(&keepAliveTimer);
 	}
