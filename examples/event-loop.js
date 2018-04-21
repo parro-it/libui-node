@@ -98,13 +98,9 @@ function makeToolbar() {
 	const btnCustom = new libui.UiButton('Custom setTimeout');
 	btnCustom.onClicked(() => {
 		const now = Date.now();
-		const longTimeout = setTimeout((a, b, c) => {
-			logAppend(`THIS SHOULD NOT HAPPEN!`);
-		}, 200);
 
 		setTimeout((a, b, c) => {
-			clearTimeout(longTimeout);
-			// const elapsed = Date.now() - now;
+			const elapsed = Date.now() - now;
 			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms. Args: ${a} ${b} ${c}`);
 		}, 10000, 'custom', 'args', 2);
 	});
