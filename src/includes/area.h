@@ -164,63 +164,118 @@ class UiDrawPath {
 	void end();
 };
 
-class DrawTextFontMetrics {
+class OpenTypeFeatures {
   private:
-	uiDrawTextFontMetrics *m;
+	uiOpenTypeFeatures *f;
 
   public:
-	DrawTextFontMetrics(uiDrawTextFontMetrics *metrics);
-	double getAscent();
-	double getDescent();
-	double getLeading();
-	double getUnderlinePos();
-	double getUnderlineThickness();
+	OpenTypeFeatures();
+	OpenTypeFeatures(OpenTypeFeatures &&other);
+	OpenTypeFeatures(uiOpenTypeFeatures *feat);
+	~OpenTypeFeatures();
+	uiOpenTypeFeatures *getHandle();
+
+	static OpenTypeFeatures clone(OpenTypeFeatures *f2);
+	void add(const char *tag, uint32_t value);
+	void remove(const char *tag);
+	std::array<unsigned int, 2> getInternal(const char *tag);
+
+	void forEach(nbind::cbFunction &cb);
 };
 
-class DrawTextFontDescriptor {
+class FontAttribute {
   private:
-	uiDrawTextFontDescriptor *d;
+	uiAttribute *a;
+	int appended = 0;
 
   public:
-	DrawTextFontDescriptor(uiDrawTextFontDescriptor *descr);
-	const char *getFamily();
+	FontAttribute(FontAttribute &&other);
+	FontAttribute(uiAttribute *a);
+	~FontAttribute();
+	void setAppended();
+	int getAttributeType();
+	uiAttribute *getHandle();
+
+	const char *getFamilyInternal();
+	double getSizeInternal();
+	int getWeightInternal();
+	int getItalicInternal();
+	int getStretchInternal();
+	Color getColorInternal();
+	int getUnderlineInternal();
+	std::vector<Color> getUnderlineColorInternal();
+	OpenTypeFeatures getOTFeaturesInternal();
+
+	static FontAttribute newFamily(const char *family);
+	static FontAttribute newSize(double size);
+	static FontAttribute newWeight(int weightAttribute);
+	static FontAttribute newItalic(int italicAttribute);
+	static FontAttribute newStretch(int stretchAttribute);
+	static FontAttribute newColor(Color c);
+	static FontAttribute newBackgroundColor(Color c);
+	static FontAttribute newUnderline(int underlineAttr);
+	static FontAttribute newUnderlineColor2(int underlineColorAttr, Color c);
+	static FontAttribute newOTFeatures(OpenTypeFeatures *otf);
+};
+
+class AttributedString {
+  private:
+	uiAttributedString *s;
+
+  public:
+	AttributedString(uiAttributedString *str);
+	AttributedString(const char *str);
+	~AttributedString();
+	uiAttributedString *getHandle();
+	const char *toString();
+	size_t toStringLen();
+
+	void appendUnattributed(const char *str);
+	void insertUnattributed(const char *str, size_t at);
+	void deleteString(size_t start, size_t end);
+	void setAttribute(FontAttribute *attr, size_t start, size_t end);
+
+	void appendAttributedInternal(const char *str,
+								  std::vector<FontAttribute *> attrs);
+	void insertAttributedInternal(const char *str, size_t start,
+								  std::vector<FontAttribute *> attrs);
+
+	void forEach(nbind::cbFunction &cb);
+
+	size_t numGraphemes();
+	size_t byteIndexToGrapheme(size_t pos);
+	size_t graphemeToByteIndex(size_t pos);
+};
+
+class FontDescriptor {
+  private:
+	uiFontDescriptor *d;
+	int buttonCleanup = 0;
+
+  public:
+	FontDescriptor(FontDescriptor &&other);
+	FontDescriptor(uiFontDescriptor *d);
+	FontDescriptor(const char *family, double size, int weight, int italic,
+				   int stretch);
+	~FontDescriptor();
+	char *getFamily();
 	double getSize();
 	int getWeight();
 	int getItalic();
 	int getStretch();
-};
-
-class DrawTextFont {
-  private:
-	uiDrawTextFont *handle;
-
-  public:
-	DrawTextFont();
-	DrawTextFont(uiDrawTextFont *h);
-
-	uiDrawTextFont *getHandle();
-	void free();
-	DrawTextFontDescriptor *describe();
-	DrawTextFontMetrics *getMetrics();
-
-	static std::vector<char *> listFontFamilies();
-	void loadClosestFont(const char *family, double size, int weight,
-						 int italic, int stretch);
+	uiFontDescriptor *getHandle();
 };
 
 class DrawTextLayout {
   private:
 	uiDrawTextLayout *handle;
-	double w;
 
   public:
-	DrawTextLayout(const char *text, DrawTextFont *defaultFont, double width);
-	void free();
-	void setWidth(double value);
-	double getWidth();
+	DrawTextLayout(AttributedString *s, FontDescriptor *defaultFont,
+				   double width, int align);
+	~DrawTextLayout();
 	SizeDouble getExtents();
 	uiDrawTextLayout *getHandle();
-	void setColor(int startChar, int endChar, Color color);
 };
 
 class UiDrawContext {

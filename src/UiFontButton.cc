@@ -9,8 +9,8 @@ class UiFontButton : public UiControl {
 
   public:
 	UiFontButton();
-	DrawTextFont *getFont();
 	~UiFontButton();
+	FontDescriptor getFont();
 	void onDestroy(uiControl *control) override;
 };
 
@@ -31,13 +31,16 @@ UiFontButton::UiFontButton() : UiControl((uiControl *)uiNewFontButton()) {}
 
 IMPLEMENT_EVENT(UiFontButton, uiFontButton, onChanged, uiFontButtonOnChanged)
 
-DrawTextFont *UiFontButton::getFont() {
-	return new DrawTextFont(uiFontButtonFont((uiFontButton *)getHandle()));
+FontDescriptor UiFontButton::getFont() {
+	uiFontDescriptor *desc = new uiFontDescriptor();
+	uiFontButtonFont((uiFontButton *)getHandle(), desc);
+	return FontDescriptor(desc);
 }
 
 NBIND_CLASS(UiFontButton) {
 	inherit(UiControl);
 	construct<>();
+	getter(getFont);
 	method(getFont);
 	method(onChanged);
 }

@@ -7,5 +7,6 @@ function listDir(dir) {
 }
 
 listDir('src');
+listDir('src/Font');
 listDir('src/UiArea');
 listDir('src/arch/win32');

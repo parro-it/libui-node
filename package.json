@@ -4,7 +4,7 @@
 	"description": "Node.js bindings for libui",
 	"repository": "parro-it/libui-node",
 	"license": "MIT",
-	"libui": "alpha3.5-004",
+	"libui": "alpha3.5-master-002",
 	"contributors": [
 		{
 			"name": "Andrea Parodi",
@@ -34,7 +34,7 @@
 		"build": "node-gyp configure build",
 		"clean": "rm -rf build; rm -rf node_modules;",
 		"precommit": "check-clang-format \"'npm run lint'\"",
-		"lint": "clang-format -i --glob='{src/**/*.{h,cc},index.js,examples/**/*.js}'"
+		"lint": "clang-format -i --glob='{src/**/*.{h,cc},index.js,docs.js,examples/**/*.js}'"
 	},
 	"keywords": [
 		"libui",
