@@ -6,7 +6,7 @@
 #include "nbind/nbind.h"
 #include "ui.h"
 
-#define UI_NODE_DEBUG 1
+// #define UI_NODE_DEBUG 1
 
 #ifdef UI_NODE_DEBUG
 #define DEBUG(msg) fprintf(stderr, msg)

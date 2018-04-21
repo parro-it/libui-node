@@ -89,7 +89,7 @@ void uv_awaken_cb(uv_prepare_t *handle) {
 	// how to find a correct amount of time to schedule next call?
 	//.because too long and UI is not responsive, too short and node
 	// become really slow
-	uv_timer_start(redrawTimer, redraw, 0, 0);
+	uv_timer_start(redrawTimer, redraw, 10, 0);
 }
 
 /*

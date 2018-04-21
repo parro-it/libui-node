@@ -26,10 +26,17 @@ box.append(form, true);
 const log = new libui.UiMultilineEntry();
 box.append(log, true);
 
+let server = null;
+
 win.onClosing(() => {
 	if (setIntervalHandle !== null) {
 		clearInterval(setIntervalHandle);
 		setIntervalHandle = null;
+	}
+	if (server) {
+		server.close();
+		server = null;
+		return;
 	}
 	win.close();
 	libui.stopLoop();
@@ -102,7 +109,7 @@ function makeToolbar() {
 		setTimeout((a, b, c) => {
 			const elapsed = Date.now() - now;
 			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms. Args: ${a} ${b} ${c}`);
-		}, 10000, 'custom', 'args', 2);
+		}, 10, 'custom', 'args', 2);
 	});
 	toolbar.append(btnCustom, false);
 
@@ -147,7 +154,6 @@ function makeToolbar() {
 
 	const btnHttp = new libui.UiButton('Http');
 
-	let server = null;
 	btnHttp.onClicked(() => {
 		let i = 0;
 		if (server) {
