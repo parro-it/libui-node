@@ -184,12 +184,19 @@ void stopAsync(uv_timer_t *handle) {
 	DEBUG("uv_thread_join done\n");
 
 	uv_mutex_destroy(&mainThreadWaitingGuiEvents);
-	uv_mutex_destroy(&mainThreadAwakenFromBackground);
+	DEBUG("uv_mutex_destroy mainThreadWaitingGuiEvents done\n");
+
+	// TODO: improve synchronization
+	// some examples crash while running this
+	// uv_mutex_destroy(&mainThreadAwakenFromBackground);
+	DEBUG("uv_mutex_destroy mainThreadAwakenFromBackground done\n");
 
 	/* stop keep alive timer */
 	uv_close((uv_handle_t *)&keepAliveTimer, NULL);
 
-	// uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
+	DEBUG("uv_close keepAliveTimer done\n");
+
+	uv_close((uv_handle_t *)&mainThreadAwakenPhase, NULL);
 
 	/* quit libui event loop */
 	uiQuit();
