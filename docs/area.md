@@ -649,7 +649,7 @@ Frees the object.
 
 ### setM11/getM11/...
 
-These methods can be used to set or get a specific value in the matrix: 
+These methods can be used to set or get a specific value in the matrix:
 
 * `getM11()`/`setM11()`
 * `getM12()`/`setM12()`
@@ -851,7 +851,7 @@ Example: to test if the Ctrl Key was pressed:
 
 ```js
 if(evt.getModifiers() & libui.modifierKeys.ctrl){
-	// ctrl was pressed	
+	// ctrl was pressed
 }
 ```
 
@@ -909,4 +909,3 @@ Also accessible using `s.width`.
 * h: number
 
 Also accessible using `s.height`.
-
