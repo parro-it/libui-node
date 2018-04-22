@@ -1,5 +1,5 @@
 const nbind = require('nbind');
-const async_hooks = require('async_hooks');
+const async_hooks = require('@creditkarma/async-hooks');
 
 const binding = nbind.init(__dirname);
 let asyncHook = null;
