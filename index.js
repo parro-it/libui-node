@@ -76,8 +76,16 @@ function startLoop() {
 // is created. It's used to signal the background
 // thread to stop awaiting calls and upgrade it's list of handles
 // it's awaiting for.
+let wakingup = false
 function init(asyncId, type, triggerAsyncId, resource) {
-	binding.lib.EventLoop.wakeupBackgroundThread();
+	if (wakingup) {
+		return;
+	}
+	wakingup = true;
+	setImmediate(() => {
+		binding.lib.EventLoop.wakeupBackgroundThread();
+		wakingup = false;
+	});
 }
 
 function Color(r, g, b, a) {

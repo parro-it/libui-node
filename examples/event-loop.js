@@ -34,9 +34,9 @@ win.onClosing(() => {
 		setIntervalHandle = null;
 	}
 	if (server) {
+		console.log('Closing server');
 		server.close();
 		server = null;
-		return;
 	}
 	win.close();
 	libui.stopLoop();
@@ -151,6 +151,7 @@ function makeToolbar() {
 			logAppend(`ReadFile: chunk ${i++} - ` + data.length);
 		});
 	});
+	toolbar.append(btnReadFile, false);
 
 	const btnHttp = new libui.UiButton('Http');
 
