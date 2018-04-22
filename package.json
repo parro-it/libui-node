@@ -43,7 +43,7 @@
 		"GUI"
 	],
 	"engines": {
-		"node": ">=6"
+		"node": ">=4"
 	},
 	"files": [
 		"list-sources.js",
@@ -62,7 +62,7 @@
 		"proc-stats": "0.0.4"
 	},
 	"dependencies": {
-		"@creditkarma/async-hooks": "0.0.3",
+		"@mischnic/async-hooks": "^0.0.4",
 		"autogypi": "^0.2.2",
 		"libui-download": "^1.0.0",
 		"nbind": "^0.3.14",

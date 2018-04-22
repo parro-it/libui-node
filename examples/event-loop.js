@@ -144,7 +144,7 @@ function makeToolbar() {
 
 	const btnReadFile = new libui.UiButton('ReadFile');
 	btnReadFile.onClicked(() => {
-		const {createReadStream} = require('fs');
+		const createReadStream = require('fs').createReadStream;
 		const stream = createReadStream('/tmp/big');
 		let i = 0;
 		stream.on('data', data => {
