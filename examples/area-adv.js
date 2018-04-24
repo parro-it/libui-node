@@ -39,6 +39,7 @@ function handlerDraw(area, p) {
 	// ------
 
 	path = new libui.UiDrawPath(libui.fillMode.winding);
+	path.newFigure(0, 0);
 	path.arcTo(250, 300, 50, 0, 2 * Math.PI, false);
 	path.end();
 	p.getContext().fill(path, radialBrush);
