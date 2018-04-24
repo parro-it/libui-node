@@ -13,13 +13,21 @@ const box = new libui.UiVerticalBox();
 box.padded = true;
 win.setChild(box);
 
+const sliderbox = new libui.UiHorizontalBox();
+sliderbox.padded = true;
+
 const setIntervalMs = new libui.UiSlider(0, 1000);
 setIntervalMs.onChanged(setIntervalChanged);
 setIntervalMs.value = 0;
 
+const sliderLabel = new libui.UiLabel("0");
+
+sliderbox.append(setIntervalMs, 1);
+sliderbox.append(sliderLabel, 0);
+
 const form = new libui.UiForm();
 form.padded = true;
-form.append('setInterval', setIntervalMs, 0);
+form.append('setInterval', sliderbox, 0);
 form.append('actions', makeToolbar(), 0);
 box.append(form, true);
 
@@ -46,12 +54,14 @@ win.onClosing(() => {
 win.show();
 libui.startLoop();
 
+const linebreak = process.platform === "win32" ? '\r\n' : '\n';
+
 function logAppend(line) {
-	const lines = log.text.split('\n');
+	const lines = log.text.split(linebreak);
 	if (lines.length > 20) {
-		log.text = lines.slice(1).join('\n');
+		log.text = lines.slice(1).join(linebreak);
 	}
-	log.append(line + '\n');
+	log.append(line + linebreak);
 }
 
 function setIntervalChanged() {
@@ -59,6 +69,7 @@ function setIntervalChanged() {
 	if (Math.abs(ms - lastTimeout) < 100) {
 		return;
 	}
+	sliderLabel.text = ms;
 	lastTimeout = ms;
 	if (setIntervalHandle !== null) {
 		clearInterval(setIntervalHandle);
