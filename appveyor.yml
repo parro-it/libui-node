@@ -11,7 +11,7 @@ environment:
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
-  - npm i npm@latest -g
+  - npm i npm@5.7 -g
   - npm install
 
 
