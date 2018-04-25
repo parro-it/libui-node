@@ -29,7 +29,7 @@ const form = new libui.UiForm();
 form.padded = true;
 form.append('setInterval', sliderbox, 0);
 form.append('actions', makeToolbar(), 0);
-box.append(form, true);
+box.append(form, false);
 
 const log = new libui.UiMultilineEntry();
 box.append(log, true);
@@ -57,7 +57,7 @@ libui.startLoop();
 const linebreak = process.platform === "win32" ? '\r\n' : '\n';
 
 function logAppend(line) {
-	const lines = log.text.split(linebreak);
+	const lines = log.text.split("\n");
 	if (lines.length > 20) {
 		log.text = lines.slice(1).join(linebreak);
 	}
