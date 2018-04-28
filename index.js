@@ -50,27 +50,41 @@ function startLoop() {
 	asyncHook.enable();
 
 	setTimeoutNode = global.setTimeout;
-
-	global.setTimeout = function(cb, t) {
+	global.setTimeout = function(cb, timeout) {
+		const timeoutHandle = {running: true};
 		const args = Array.prototype.slice.call(arguments, 2);
-		return binding.lib.setTimeout(function() {
-			cb.apply(null, args);
-		}, t);
-	};
+		binding.lib.Ui.startTimer(timeout, function() {
+			if (timeoutHandle.running) {
+				cb.apply(null, args);
+			}
+			return false;
+		});
+		return timeoutHandle;
+	}
 
 	clearTimeoutNode = global.clearTimeout;
-	global.clearTimeout = binding.lib.clearTimeout;
+	global.clearTimeout = function(timeoutHandle) {
+		timeoutHandle.running = false;
+	}
 
 	setIntervalNode = global.setInterval;
-	global.setInterval = function(cb, t) {
+	global.setInterval = function(cb, timeout) {
+		const timeoutHandle = {running: true};
 		const args = Array.prototype.slice.call(arguments, 2);
-		return binding.lib.setInterval(function() {
-			cb.apply(null, args);
-		}, t);
-	};
+		binding.lib.Ui.startTimer(timeout, function() {
+			if (timeoutHandle.running) {
+				cb.apply(null, args);
+				return true;
+			}
+			return false;
+		});
+		return timeoutHandle;
+	}
 
 	clearIntervalNode = global.clearInterval;
-	global.clearInterval = binding.lib.clearInterval;
+	global.clearInterval = function(timeoutHandle) {
+		timeoutHandle.running = false;
+	}
 }
 
 // This is called when a new async handle

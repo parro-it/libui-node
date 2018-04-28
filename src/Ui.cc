@@ -10,6 +10,11 @@ static int onShouldQuit_cb(void *data) {
 	return 0;
 }
 
+static int uiTimer_cb(void *data) {
+	nbind::cbFunction *cb = (nbind::cbFunction *)data;
+	return cb->call<int>();
+}
+
 struct Ui {
 	static void main() {
 		uiMain();
@@ -40,6 +45,11 @@ struct Ui {
 			uiFreeInitError(err);
 		}
 	}
+
+	static void startTimer(int ms, nbind::cbFunction &cb) {
+		nbind::cbFunction *callbackJs = new nbind::cbFunction(cb);
+		uiTimer(ms, uiTimer_cb, callbackJs);
+	}
 };
 
 NBIND_CLASS(Ui) {
@@ -49,4 +59,5 @@ NBIND_CLASS(Ui) {
 	method(mainStep);
 	method(mainSteps);
 	method(onShouldQuit);
+	method(startTimer);
 }
