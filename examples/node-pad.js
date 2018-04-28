@@ -26,6 +26,7 @@ let currentFileName = '';
 function newFile() {
 	editor.text = '';
 	currentFileName = '';
+	status.text = 'Not saved';
 }
 
 function openFile() {
@@ -39,7 +40,7 @@ function openFile() {
 					err.stack);
 			}
 			editor.text = content;
-			status.text = `Open ${filename}`;
+			status.text = filename;
 			currentFileName = filename;
 		});
 	}
@@ -48,6 +49,7 @@ function openFile() {
 function saveFileAs() {
 	const filename = libui.UiDialogs.saveFile(win);
 	if (filename) {
+		currentFileName = filename;
 		writeFile(currentFileName, editor.text, err => {
 			if (err) {
 				return libui.UiDialogs.msgBoxError(
@@ -55,7 +57,6 @@ function saveFileAs() {
 					'Error while writing file',
 					err.stack);
 			}
-			currentFileName = filename;
 		});
 	}
 }
@@ -87,10 +88,10 @@ menu([
 				label: 'Open',
 				click: openFile
 			},
-			{
-				label: 'Close current tab',
-				click: () => {}
-			},
+			// {
+			// 	label: 'Close current tab',
+			// 	click: () => {}
+			// },
 			{
 				label: 'Save',
 				click: saveFile
@@ -140,7 +141,7 @@ win = window(
 	tab(
 		{stretchy: true},
 		(editor = multilineEntry({stretchy: true, tabTitle: 'New file'}))),
-	(status = label({stretchy: false, text: 'File not changed'})));
+	(status = label({stretchy: false, text: 'Not saved'})));
 
 win.show();
 libui.startLoop();

@@ -1,5 +1,6 @@
 'use strict';
 const http = require('http');
+const os = require('os');
 const libui = require('..');
 
 let setIntervalHandle = null;
@@ -20,7 +21,7 @@ const setIntervalMs = new libui.UiSlider(0, 1000);
 setIntervalMs.onChanged(setIntervalChanged);
 setIntervalMs.value = 0;
 
-const sliderLabel = new libui.UiLabel("0");
+const sliderLabel = new libui.UiLabel('0');
 
 sliderbox.append(setIntervalMs, 1);
 sliderbox.append(sliderLabel, 0);
@@ -54,14 +55,12 @@ win.onClosing(() => {
 win.show();
 libui.startLoop();
 
-const linebreak = process.platform === "win32" ? '\r\n' : '\n';
-
 function logAppend(line) {
-	const lines = log.text.split("\n");
-	if (lines.length > 20) {
-		log.text = lines.slice(1).join(linebreak);
+	const lines = log.text.split('\n');
+	if (lines.length > 25) {
+		log.text = lines.slice(1).join(os.EOL);
 	}
-	log.append(line + linebreak);
+	log.append(line + os.EOL);
 }
 
 function setIntervalChanged() {
