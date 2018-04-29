@@ -22,10 +22,10 @@
 	}
 
 #define DISPOSE_EVENT(NAME)                                                    \
-	//if (NAME##Callback != nullptr) {                                         \
-	//	delete NAME##Callback;                                                 \
-	//	NAME##Callback = nullptr;                                              \
-	//}
+	/*if (NAME##Callback != nullptr) {                                         \
+		delete NAME##Callback;                                                 \
+		NAME##Callback = nullptr;                                              \
+	}*/
 
 typedef void (*DestroyCb)(uiControl *);
 
