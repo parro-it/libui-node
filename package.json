@@ -64,7 +64,7 @@
 	"dependencies": {
 		"@mischnic/async-hooks": "^0.0.4",
 		"autogypi": "^0.2.2",
-		"libui-download": "^1.0.0",
+		"libui-download": "^1.1.0",
 		"nbind": "^0.3.14",
 		"node-gyp": "^3.3.1"
 	}
