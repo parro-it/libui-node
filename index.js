@@ -59,8 +59,14 @@ function startLoop() {
 
 	clearTimeoutNode = global.clearTimeout;
 	global.clearTimeout = function(obj) {
-		if (obj) {
+		if (obj && obj.constructor === binding.lib.TimeoutHandle) {
+			// console.log('patched clearTimeout called');
 			binding.lib.clearTimeout(obj);
+		} else {
+			// console.log('node clearTimeout called');
+			// not created by us, use original
+			// clearTimeoutNode
+			clearTimeoutNode(obj);
 		}
 	};
 
@@ -74,8 +80,14 @@ function startLoop() {
 
 	clearIntervalNode = global.clearInterval;
 	global.clearInterval = function(obj) {
-		if (obj) {
+		if (obj && obj.constructor === binding.lib.TimeoutHandle) {
+			// console.log('patched clearInterval called');
 			binding.lib.clearInterval(obj);
+		} else {
+			// console.log('node clearInterval called');
+			// not created by us, use original
+			// clearTimeoutNode
+			clearIntervalNode(obj);
 		}
 	}
 }
