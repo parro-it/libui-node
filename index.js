@@ -50,7 +50,6 @@ function startLoop() {
 	asyncHook.enable();
 
 	setTimeoutNode = global.setTimeout;
-
 	global.setTimeout = function(cb, t) {
 		const args = Array.prototype.slice.call(arguments, 2);
 		return binding.lib.setTimeout(function() {
@@ -59,7 +58,11 @@ function startLoop() {
 	};
 
 	clearTimeoutNode = global.clearTimeout;
-	global.clearTimeout = binding.lib.clearTimeout;
+	global.clearTimeout = function(obj) {
+		if (obj) {
+			binding.lib.clearTimeout(obj);
+		}
+	};
 
 	setIntervalNode = global.setInterval;
 	global.setInterval = function(cb, t) {
@@ -70,7 +73,11 @@ function startLoop() {
 	};
 
 	clearIntervalNode = global.clearInterval;
-	global.clearInterval = binding.lib.clearInterval;
+	global.clearInterval = function(obj) {
+		if (obj) {
+			binding.lib.clearInterval(obj);
+		}
+	}
 }
 
 // This is called when a new async handle
