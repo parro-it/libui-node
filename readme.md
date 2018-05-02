@@ -102,7 +102,7 @@ These works will become in future the base for a React-Native like project.
 
 # Contribution & design
 
-* Each `libui` widget implementaion is written in it's own C++ file in `src` folder.
+* Each `libui` widget implementation is written in it's own C++ file in `src` folder.
 * Each widget is implemented in it's own C++ class, each class is a simple wrapper for related libui C functions.
 * There is an header file called `src/ui-node.h` that contains all classes definitions.
 * Widget events does not follow `node` convention: if you attach an handler to an event, previous one will be overwritten and never be called. This will be resolved on future high-level API repo, where each widget will be an `EventEmitter` instance.
