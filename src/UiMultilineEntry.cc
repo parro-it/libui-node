@@ -1,50 +1,75 @@
-#include "../ui.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
 
-UiMultilineEntry::UiMultilineEntry()
-    : UiControl((uiControl*)uiNewNonWrappingMultilineEntry()) {}
+class UiMultilineEntry : public UiControl {
+	DEFINE_EVENT(onChanged)
 
-INHERITS_CONTROL_METHODS(UiMultilineEntry)
+  public:
+	UiMultilineEntry();
+	void setText(std::string text);
+	std::string getText();
+	void setReadOnly(bool readOnly);
+	bool getReadOnly();
+	void append(std::string text);
+	~UiMultilineEntry();
+	void onDestroy(uiControl *control) override;
+};
 
-IMPLEMENT_EVENT(UiMultilineEntry,
-                uiMultilineEntry,
-                onChanged,
-                uiMultilineEntryOnChanged)
-
-void UiMultilineEntry::setText(const char* text) {
-  uiMultilineEntrySetText((uiMultilineEntry*)getHandle(), text);
-  if (onChangedCallback != NULL) {
-    (*onChangedCallback)();
-  }
+UiMultilineEntry::~UiMultilineEntry() {
+	// printf("UiMultilineEntry %p destroyed with wrapper %p.\n", getHandle(),
+	// 	   this);
 }
 
-const char* UiMultilineEntry::getText() {
-  return uiMultilineEntryText((uiMultilineEntry*)getHandle());
+void UiMultilineEntry::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onChanged);
+}
+UiMultilineEntry::UiMultilineEntry()
+	: UiControl(uiControl(uiNewNonWrappingMultilineEntry())) {}
+
+IMPLEMENT_EVENT(UiMultilineEntry, uiMultilineEntry, onChanged,
+				uiMultilineEntryOnChanged)
+
+void UiMultilineEntry::setText(std::string text) {
+	uiMultilineEntrySetText(uiMultilineEntry(getHandle()), text.c_str());
+	if (onChangedCallback != NULL) {
+		(*onChangedCallback)();
+	}
+}
+
+std::string UiMultilineEntry::getText() {
+	char *char_ptr = uiMultilineEntryText(uiMultilineEntry(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 void UiMultilineEntry::setReadOnly(bool readOnly) {
-  uiMultilineEntrySetReadOnly((uiMultilineEntry*)getHandle(), readOnly);
+	uiMultilineEntrySetReadOnly(uiMultilineEntry(getHandle()), readOnly);
 }
 
 bool UiMultilineEntry::getReadOnly() {
-  return uiMultilineEntryReadOnly((uiMultilineEntry*)getHandle());
+	return uiMultilineEntryReadOnly(uiMultilineEntry(getHandle()));
 }
 
-void UiMultilineEntry::append(const char* text) {
-  uiMultilineEntryAppend((uiMultilineEntry*)getHandle(), text);
+void UiMultilineEntry::append(std::string text) {
+	uiMultilineEntryAppend(uiMultilineEntry(getHandle()), text.c_str());
 }
 
 NBIND_CLASS(UiMultilineEntry) {
-  construct<>();
-  DECLARE_CHILD_CONTROL_METHODS()
-  getset(getText, setText);
-  getset(getReadOnly, setReadOnly);
-  method(getText);
-  method(setText);
-  method(getReadOnly);
-  method(setReadOnly);
-  method(append);
-  method(onChanged);
+	inherit(UiControl);
+	construct<>();
+	getset(getText, setText);
+	getset(getReadOnly, setReadOnly);
+	method(getText);
+	method(setText);
+	method(getReadOnly);
+	method(setReadOnly);
+	method(append);
+	method(onChanged);
 }

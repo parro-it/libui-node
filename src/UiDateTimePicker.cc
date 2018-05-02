@@ -1,32 +1,40 @@
-#include "../ui.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
+
+class UiDateTimePicker : public UiControl {
+  public:
+	UiDateTimePicker();
+};
 
 UiDateTimePicker::UiDateTimePicker()
-		: UiControl((uiControl*)uiNewDateTimePicker()) {}
-
-INHERITS_CONTROL_METHODS(UiDateTimePicker)
+	: UiControl((uiControl *)uiNewDateTimePicker()) {}
 
 NBIND_CLASS(UiDateTimePicker) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 }
 
-UiTimePicker::UiTimePicker() : UiControl((uiControl*)uiNewTimePicker()) {}
+class UiTimePicker : public UiControl {
+  public:
+	UiTimePicker();
+};
 
-INHERITS_CONTROL_METHODS(UiTimePicker)
+UiTimePicker::UiTimePicker() : UiControl((uiControl *)uiNewTimePicker()) {}
 
 NBIND_CLASS(UiTimePicker) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 }
 
-UiDatePicker::UiDatePicker() : UiControl((uiControl*)uiNewDatePicker()) {}
+class UiDatePicker : public UiControl {
+  public:
+	UiDatePicker();
+};
 
-INHERITS_CONTROL_METHODS(UiDatePicker)
+UiDatePicker::UiDatePicker() : UiControl((uiControl *)uiNewDatePicker()) {}
 
 NBIND_CLASS(UiDatePicker) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 }

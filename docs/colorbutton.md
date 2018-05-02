@@ -1,7 +1,7 @@
 
 # ColorButton
 
-> A button that open a color palette popup.
+> A button that opens a color palette popup.
 
 ![UiColorButton example](media/UiColorButton.png)
 

@@ -1,44 +1,71 @@
-#include "../ui.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
+
+class UiCheckbox : public UiControl {
+	DEFINE_EVENT(onToggled)
+
+  public:
+	UiCheckbox(std::string text);
+	UiCheckbox();
+	void setText(std::string text);
+	std::string getText();
+	void setChecked(bool checked);
+	bool getChecked();
+	~UiCheckbox();
+	void onDestroy(uiControl *control) override;
+};
+
+void UiCheckbox::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onToggled);
+}
+
+UiCheckbox::~UiCheckbox() {
+	// printf("UiCheckbox %p destroyed with wrapper %p.\n", getHandle(), this);
+}
 
 IMPLEMENT_EVENT(UiCheckbox, uiCheckbox, onToggled, uiCheckboxOnToggled)
 
-UiCheckbox::UiCheckbox(const char* text)
-    : UiControl((uiControl*)uiNewCheckbox(text)) {}
-UiCheckbox::UiCheckbox() : UiControl((uiControl*)uiNewCheckbox("")) {}
+UiCheckbox::UiCheckbox(std::string text)
+	: UiControl(uiControl(uiNewCheckbox(text.c_str()))) {}
+UiCheckbox::UiCheckbox() : UiControl(uiControl(uiNewCheckbox(""))) {}
 
-INHERITS_CONTROL_METHODS(UiCheckbox)
-
-void UiCheckbox::setText(const char* text) {
-  uiCheckboxSetText((uiCheckbox*)getHandle(), text);
+void UiCheckbox::setText(std::string text) {
+	uiCheckboxSetText(uiCheckbox(getHandle()), text.c_str());
 }
 
-const char* UiCheckbox::getText() {
-  return uiCheckboxText((uiCheckbox*)getHandle());
+std::string UiCheckbox::getText() {
+	char *char_ptr = uiCheckboxText(uiCheckbox(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 void UiCheckbox::setChecked(bool checked) {
-  uiCheckboxSetChecked((uiCheckbox*)getHandle(), checked);
-  if (onToggledCallback != NULL) {
-    (*onToggledCallback)();
-  }
+	uiCheckboxSetChecked(uiCheckbox(getHandle()), checked);
+	if (onToggledCallback != NULL) {
+		(*onToggledCallback)();
+	}
 }
 
 bool UiCheckbox::getChecked() {
-  return uiCheckboxChecked((uiCheckbox*)getHandle());
+	return uiCheckboxChecked(uiCheckbox(getHandle()));
 }
 
 NBIND_CLASS(UiCheckbox) {
-  construct<const char*>();
-  construct<>();
-  DECLARE_CHILD_CONTROL_METHODS()
-  getset(getChecked, setChecked);
-  getset(getText, setText);
-  method(getChecked);
-  method(setChecked);
-  method(getText);
-  method(setText);
-  method(onToggled);
+	inherit(UiControl);
+	construct<std::string>();
+	construct<>();
+	getset(getChecked, setChecked);
+	getset(getText, setText);
+	method(getChecked);
+	method(setChecked);
+	method(getText);
+	method(setText);
+	method(onToggled);
 }

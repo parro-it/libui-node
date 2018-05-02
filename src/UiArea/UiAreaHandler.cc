@@ -1,38 +1,34 @@
-#include "../../ui.h"
-#include "../ui-node.h"
-#include "nbind/nbind.h"
+#include "area.h"
+#include "ui.h"
 
-
-void Draw (UiAreaHandler *self, uiArea *area, uiAreaDrawParams *params) {
+void Draw(UiAreaHandler *self, uiArea *area, uiAreaDrawParams *params) {
 	UiAreaDrawParams *pp = new UiAreaDrawParams(params);
-	(*self->draw)(areasMap[area], pp);
+	(*self->draw)(controlsMap[uiControl(area)], pp);
 }
 
-void MouseEvent (UiAreaHandler *self, uiArea *area, uiAreaMouseEvent *event) {
+void MouseEvent(UiAreaHandler *self, uiArea *area, uiAreaMouseEvent *event) {
 	UiAreaMouseEvent *ev = new UiAreaMouseEvent(event);
-	(*(self->mouseEvent))(areasMap[area], ev);
+	(*(self->mouseEvent))(controlsMap[uiControl(area)], ev);
 }
 
-void MouseCrossed (UiAreaHandler *self, uiArea *area, int left) {
-	(*(self->mouseCrossed))(areasMap[area], left);
+void MouseCrossed(UiAreaHandler *self, uiArea *area, int left) {
+	(*(self->mouseCrossed))(controlsMap[uiControl(area)], left);
 }
 
-void DragBroken (UiAreaHandler *self, uiArea *area) {
-	(*(self->dragBroken))(areasMap[area]);
+void DragBroken(UiAreaHandler *self, uiArea *area) {
+	(*(self->dragBroken))(controlsMap[uiControl(area)]);
 }
 
-int KeyEvent (UiAreaHandler *self, uiArea *area, uiAreaKeyEvent *event) {
-	UiAreaKeyEvent * ev = new UiAreaKeyEvent(event);
-	return (self->keyEvent)->call<int>(areasMap[area], ev);
+int KeyEvent(UiAreaHandler *self, uiArea *area, uiAreaKeyEvent *event) {
+	UiAreaKeyEvent *ev = new UiAreaKeyEvent(event);
+	return (self->keyEvent)->call<int>(controlsMap[uiControl(area)], ev);
 }
 
-UiAreaHandler * UiAreaHandlerFactory::build(
-	nbind::cbFunction &drawCb,
-	nbind::cbFunction &mouseEventCb ,
-	nbind::cbFunction &mouseCrossedCb,
-	nbind::cbFunction &dragBrokenCb,
-	nbind::cbFunction &keyEventCb
-) {
+UiAreaHandler *UiAreaHandlerFactory::build(nbind::cbFunction &drawCb,
+										   nbind::cbFunction &mouseEventCb,
+										   nbind::cbFunction &mouseCrossedCb,
+										   nbind::cbFunction &dragBrokenCb,
+										   nbind::cbFunction &keyEventCb) {
 	UiAreaHandler *handler = new UiAreaHandler();
 	handler->draw = new nbind::cbFunction(drawCb);
 	handler->mouseEvent = new nbind::cbFunction(mouseEventCb);

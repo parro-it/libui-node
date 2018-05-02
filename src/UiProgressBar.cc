@@ -1,25 +1,32 @@
-#include "../ui.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
 
-UiProgressBar::UiProgressBar() : UiControl((uiControl*)uiNewProgressBar()) {}
+class UiProgressBar : public UiControl {
+  private:
+	int value = 0;
 
-INHERITS_CONTROL_METHODS(UiProgressBar)
+  public:
+	UiProgressBar();
+	int getValue();
+	void setValue(int value);
+};
+
+UiProgressBar::UiProgressBar() : UiControl((uiControl *)uiNewProgressBar()) {}
 
 void UiProgressBar::setValue(int val) {
-  value = val;
-  uiProgressBarSetValue((uiProgressBar*)getHandle(), value);
+	value = val;
+	uiProgressBarSetValue((uiProgressBar *)getHandle(), value);
 }
 
 int UiProgressBar::getValue() {
-  return value;
+	return value;
 }
 
 NBIND_CLASS(UiProgressBar) {
-  construct<>();
-  DECLARE_CHILD_CONTROL_METHODS()
-  getset(getValue, setValue);
-  method(getValue);
-  method(setValue);
+	inherit(UiControl);
+	construct<>();
+	getset(getValue, setValue);
+	method(getValue);
+	method(setValue);
 }

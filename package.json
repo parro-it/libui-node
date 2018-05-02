@@ -4,7 +4,7 @@
 	"description": "Node.js bindings for libui",
 	"repository": "parro-it/libui-node",
 	"license": "MIT",
-	"libui": "alpha3.5-004",
+	"libui": "alpha3.5-master-002",
 	"contributors": [
 		{
 			"name": "Andrea Parodi",
@@ -24,7 +24,7 @@
 		}
 	],
 	"scripts": {
-		"test": "ava && xo",
+		"test": "ava",
 		"start": "node examples/control-gallery.js",
 		"start-np": "node examples/node-pad.js",
 		"start-core": "node examples/core-api.js",
@@ -32,13 +32,21 @@
 		"node-gyp": "node-gyp",
 		"install": "libui-download && autogypi && npm run build",
 		"build": "node-gyp configure build",
-		"clean": "rm -rf build; rm -rf node_modules;"
+		"clean": "rm -rf build; rm -rf node_modules;",
+		"precommit": "check-clang-format \"'npm run lint'\"",
+		"lint": "clang-format -i --glob='{src/**/*.{h,cc,mm},index.js,examples/**/*.js}'"
 	},
-	"keywords": ["libui", "desktop", "multiplatform", "GUI"],
+	"keywords": [
+		"libui",
+		"desktop",
+		"multiplatform",
+		"GUI"
+	],
 	"engines": {
 		"node": ">=4"
 	},
 	"files": [
+		"list-sources.js",
 		"index.js",
 		"src",
 		"binding.gyp",
@@ -48,13 +56,15 @@
 	],
 	"devDependencies": {
 		"ava": "^0.25.0",
+		"clang-format": "^1.2.2",
 		"humanize": "0.0.9",
-		"proc-stats": "0.0.4",
-		"xo": "^0.20.3"
+		"husky": "^0.14.3",
+		"proc-stats": "0.0.4"
 	},
 	"dependencies": {
+		"@mischnic/async-hooks": "^0.0.4",
 		"autogypi": "^0.2.2",
-		"libui-download": "^1.0.0",
+		"libui-download": "^1.1.0",
 		"nbind": "^0.3.14",
 		"node-gyp": "^3.3.1"
 	}

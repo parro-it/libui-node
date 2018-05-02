@@ -1,28 +1,54 @@
-#include "../ui.h"
+#include <string>
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
 
-UiButton::UiButton(const char* text)
-		: UiControl((uiControl*)uiNewButton(text)) {}
-UiButton::UiButton() : UiControl((uiControl*)uiNewButton("")) {}
+class UiButton : public UiControl {
+	DEFINE_EVENT(onClicked)
 
-INHERITS_CONTROL_METHODS(UiButton)
+  public:
+	UiButton(std::string text);
+	UiButton();
+	void setText(std::string text);
+	std::string getText();
+	~UiButton();
+	void onDestroy(uiControl *control) override;
+};
 
-void UiButton::setText(const char* text) {
-	uiButtonSetText((uiButton*)getHandle(), text);
+void UiButton::onDestroy(uiControl *control) {
+	/*
+		freeing event callbacks to allow JS to garbage collect this class
+		when there are no references to it left in JS code.
+	*/
+	DISPOSE_EVENT(onClicked);
 }
 
-const char* UiButton::getText() {
-	return uiButtonText((uiButton*)getHandle());
+UiButton::~UiButton() {
+	// printf("UiButton %p destroyed with wrapper %p.\n", getHandle(), this);
+}
+
+UiButton::UiButton(std::string text)
+	: UiControl(uiControl(uiNewButton(text.c_str()))) {}
+
+UiButton::UiButton() : UiControl(uiControl(uiNewButton(""))) {}
+
+void UiButton::setText(std::string text) {
+	uiButtonSetText(uiButton(getHandle()), text.c_str());
+}
+
+std::string UiButton::getText() {
+	char *char_ptr = uiButtonText(uiButton(getHandle()));
+	std::string s(char_ptr);
+	uiFreeText(char_ptr);
+	return s;
 }
 
 IMPLEMENT_EVENT(UiButton, uiButton, onClicked, uiButtonOnClicked)
 
 NBIND_CLASS(UiButton) {
-	construct<const char*>();
+	inherit(UiControl);
+	construct<std::string>();
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 	getset(getText, setText);
 	method(getText);
 	method(setText);

@@ -1,24 +1,28 @@
-#include "../ui.h"
 #include "nbind/api.h"
-#include "nbind/nbind.h"
-#include "ui-node.h"
+#include "control.h"
+#include "ui.h"
 
+class UiHorizontalSeparator : public UiControl {
+  public:
+	UiHorizontalSeparator();
+};
+
+class UiVerticalSeparator : public UiControl {
+  public:
+	UiVerticalSeparator();
+};
 UiHorizontalSeparator::UiHorizontalSeparator()
-		: UiControl((uiControl*)uiNewHorizontalSeparator()) {}
-
-INHERITS_CONTROL_METHODS(UiHorizontalSeparator)
+	: UiControl((uiControl *)uiNewHorizontalSeparator()) {}
 
 NBIND_CLASS(UiHorizontalSeparator) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 }
 
 UiVerticalSeparator::UiVerticalSeparator()
-		: UiControl((uiControl*)uiNewVerticalSeparator()) {}
-
-INHERITS_CONTROL_METHODS(UiVerticalSeparator)
+	: UiControl((uiControl *)uiNewVerticalSeparator()) {}
 
 NBIND_CLASS(UiVerticalSeparator) {
+	inherit(UiControl);
 	construct<>();
-	DECLARE_CHILD_CONTROL_METHODS()
 }
