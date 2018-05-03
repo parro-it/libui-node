@@ -128,9 +128,9 @@ function makeToolbar() {
 		timeoutHandle = setTimeout((a, b, c) => {
 			const elapsed = Date.now() - now;
 			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms. Args: ${a} ${b} ${c}`);
+			timeoutHandle = null;
 		}, 1000, 'custom', 'args', 2);
 		console.log('after timeoutHandle', timeoutHandle);
-
 	});
 	toolbar.append(btnCustom, false);
 
