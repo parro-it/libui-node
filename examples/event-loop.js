@@ -116,7 +116,10 @@ function makeToolbar() {
 	let timeoutHandle = null;
 	btnCustom.onClicked(() => {
 		if (timeoutHandle) {
+			console.log('before clearTimeout', timeoutHandle);
 			clearTimeout(timeoutHandle);
+			console.log('after clearTimeout', timeoutHandle);
+
 			timeoutHandle = null;
 			return;
 		}
@@ -126,6 +129,8 @@ function makeToolbar() {
 			const elapsed = Date.now() - now;
 			logAppend(`Custom setTimeout: ${now} - elapsed ${elapsed} ms. Args: ${a} ${b} ${c}`);
 		}, 1000, 'custom', 'args', 2);
+		console.log('after timeoutHandle', timeoutHandle);
+
 	});
 	toolbar.append(btnCustom, false);
 

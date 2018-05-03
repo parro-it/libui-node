@@ -55,6 +55,7 @@ function startLoop() {
 
 		const args = Array.prototype.slice.call(arguments, 2);
 		binding.lib.Ui.startTimer(timeout, function() {
+			console.log('timeoutHandle.running ', timeoutHandle.running);
 			if (timeoutHandle.running) {
 				cb.apply(null, args);
 			}
@@ -68,8 +69,9 @@ function startLoop() {
 	global.clearTimeout = function(timeoutHandle) {
 		if (timeoutHandle && typeof timeoutHandle.running === 'boolean') {
 			timeoutHandle.running = false;
+			console.log('patched clearTimeout called');
 		} else {
-			// console.log('node clearTimeout called');
+			console.log('node clearTimeout called');
 			// not created by us, use original
 			// clearTimeoutNode
 			clearTimeoutNode(timeoutHandle);
@@ -95,9 +97,9 @@ function startLoop() {
 	global.clearInterval = function(timeoutHandle) {
 		if (timeoutHandle && typeof timeoutHandle.running === 'boolean') {
 			timeoutHandle.running = false;
-			// console.log('patched clearInterval called');
+			console.log('patched clearInterval called');
 		} else {
-			// console.log('node clearInterval called');
+			console.log('node clearInterval called');
 			// not created by us, use original
 			// clearTimeoutNode
 			clearIntervalNode(timeoutHandle);
