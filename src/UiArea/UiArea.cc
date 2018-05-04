@@ -2,18 +2,6 @@
 #include "control.h"
 #include "ui.h"
 
-void UiArea::setSize(int width, int height) {
-	uiAreaSetSize((uiArea *)getHandle(), width, height);
-}
-
-void UiArea::queueRedrawAll() {
-	uiAreaQueueRedrawAll((uiArea *)getHandle());
-}
-
-void UiArea::scrollTo(double x, double y, double width, double height) {
-	uiAreaScrollTo((uiArea *)getHandle(), x, y, width, height);
-}
-
 UiArea::UiArea(nbind::cbFunction &drawCb, nbind::cbFunction &mouseEventCb,
 			   nbind::cbFunction &mouseCrossedCb,
 			   nbind::cbFunction &dragBrokenCb, nbind::cbFunction &keyEventCb)
@@ -31,6 +19,26 @@ UiArea::UiArea(nbind::cbFunction &drawCb, nbind::cbFunction &mouseEventCb,
 			  drawCb, mouseEventCb, mouseCrossedCb, dragBrokenCb, keyEventCb),
 		  width, height)) {}
 
+void UiArea::setSize(int width, int height) {
+	uiAreaSetSize((uiArea *)getHandle(), width, height);
+}
+
+void UiArea::queueRedrawAll() {
+	uiAreaQueueRedrawAll((uiArea *)getHandle());
+}
+
+void UiArea::scrollTo(double x, double y, double width, double height) {
+	uiAreaScrollTo((uiArea *)getHandle(), x, y, width, height);
+}
+
+void UiArea::beginWindowMove() {
+	uiAreaBeginUserWindowMove((uiArea *)getHandle());
+}
+
+void UiArea::beginWindowResize(int resizeEdge) {
+	uiAreaBeginUserWindowResize((uiArea *)getHandle(), resizeEdge);
+}
+
 #include "nbind/api.h"
 
 NBIND_CLASS(UiArea) {
@@ -42,4 +50,6 @@ NBIND_CLASS(UiArea) {
 	method(setSize);
 	method(queueRedrawAll);
 	method(scrollTo);
+	method(beginWindowMove);
+	method(beginWindowResize);
 }

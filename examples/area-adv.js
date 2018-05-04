@@ -38,6 +38,7 @@ function handlerDraw(area, p) {
 
 	// ------
 
+	// Circle
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	path.newFigure(0, 0);
 	path.arcTo(250, 300, 50, 0, 2 * Math.PI, false);
@@ -45,6 +46,7 @@ function handlerDraw(area, p) {
 	p.getContext().fill(path, radialBrush);
 	path.freePath();
 
+	// Dashed line
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	path.newFigure(250, 20);
 	path.lineTo(300, 150);
@@ -52,12 +54,28 @@ function handlerDraw(area, p) {
 	p.getContext().stroke(path, solidBrush, dashedStroke);
 	path.freePath();
 
+	// Move handle
+	path = new libui.UiDrawPath(libui.fillMode.winding);
+	path.addRectangle(330, 0, 20, 20);
+	path.end();
+	p.getContext().fill(path, solidBrush);
+	path.freePath();
+
+	// Rotated square
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	p.getContext().transform(matrix);
 	path.addRectangle(20, 230, 100, 100);
 	path.end();
 	p.getContext().fill(path, solidBrush);
 	path.freePath();
+}
+
+function mouseEvent(area, evt) {
+	const x = evt.getX(), y = evt.getY();
+
+	if (330 <= x && x <= 350 && 0 <= y && y <= 20) {
+		area.beginWindowMove();
+	}
 }
 
 function noop() {}
@@ -70,7 +88,7 @@ function main() {
 		libui.stopLoop();
 	});
 
-	const textDrawArea = new libui.UiArea(handlerDraw, noop, noop, noop, noop);
+	const textDrawArea = new libui.UiArea(handlerDraw, mouseEvent, noop, noop, noop);
 	const wrapper = new libui.UiVerticalBox();
 	wrapper.append(textDrawArea, true);
 	mainwin.setChild(wrapper);

@@ -20,6 +20,8 @@ class UiArea : public UiControl {
 	void setSize(int width, int height);
 	void queueRedrawAll();
 	void scrollTo(double x, double y, double width, double height);
+	void beginWindowMove();
+	void beginWindowResize(int resizeEdge);
 };
 
 class DrawStrokeParams {
