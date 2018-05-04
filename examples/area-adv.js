@@ -68,13 +68,7 @@ function handlerDraw(area, p) {
 	p.getContext().fill(path, redBrush);
 	path.freePath();
 
-	// Resize handle
-	path = new libui.UiDrawPath(libui.fillMode.winding);
-	path.addRectangle(0, p.getAreaHeight() - 20, p.getAreaWidth(), 20);
-	path.end();
-	p.getContext().fill(path, blueBrush);
-	path.freePath();
-
+	p.getContext().save();
 	// Rotated square
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	p.getContext().transform(matrix);
@@ -82,16 +76,27 @@ function handlerDraw(area, p) {
 	path.end();
 	p.getContext().fill(path, redBrush);
 	path.freePath();
+	p.getContext().restore();
+
+	// Resize handle
+	path = new libui.UiDrawPath(libui.fillMode.winding);
+	path.addRectangle(0, p.getAreaHeight() - 20, p.getAreaWidth(), 20);
+	path.end();
+	p.getContext().fill(path, blueBrush);
+	path.freePath();
 }
 
 function mouseEvent(area, evt) {
 	const x = evt.getX(), y = evt.getY();
 
-	if (onMoveHandle(x, y)) {
-		area.beginWindowMove();
-	}
-	if (onResizeHandle(x, y, evt)) {
-		area.beginWindowResize(libui.resizeEdge.bottom);
+	if(evt.getDown() === 1) {
+		if (onMoveHandle(x, y)) {
+			area.beginWindowMove();
+		}
+
+		if (onResizeHandle(x, y, evt)) {
+			area.beginWindowResize(libui.resizeEdge.bottom);
+		}
 	}
 }
 
