@@ -2,9 +2,13 @@
 /* eslint-disable unicorn/number-literal-case */
 const libui = require('..');
 
-const solidBrush = new libui.DrawBrush();
-solidBrush.type = libui.brushType.solid;
-solidBrush.color = new libui.Color(1, 0, 0, 1);
+const redBrush = new libui.DrawBrush();
+redBrush.type = libui.brushType.solid;
+redBrush.color = new libui.Color(1, 0, 0, 1);
+
+const blueBrush = new libui.DrawBrush();
+blueBrush.type = libui.brushType.solid;
+blueBrush.color = new libui.Color(0, 0, 1, 1);
 
 const dashedStroke = new libui.DrawStrokeParams();
 dashedStroke.thickness = 6;
@@ -29,6 +33,9 @@ const matrix = new libui.UiDrawMatrix();
 matrix.setIdentity();
 matrix.rotate(70, 280, (Math.PI / 180) * 45)
 
+const onMoveHandle = (x, y) => (330 <= x && x <= 350 && 0 <= y && y <= 20);
+const onResizeHandle = (x, y, p) => (0 <= x && x <= p.getAreaWidth() && (p.getAreaHeight() - 20) <= y && y <= p.getAreaHeight());
+
 function handlerDraw(area, p) {
 	let path = new libui.UiDrawPath(libui.fillMode.winding);
 	path.addRectangle(0, 0, 200, 200);
@@ -51,14 +58,21 @@ function handlerDraw(area, p) {
 	path.newFigure(250, 20);
 	path.lineTo(300, 150);
 	path.end();
-	p.getContext().stroke(path, solidBrush, dashedStroke);
+	p.getContext().stroke(path, redBrush, dashedStroke);
 	path.freePath();
 
 	// Move handle
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	path.addRectangle(330, 0, 20, 20);
 	path.end();
-	p.getContext().fill(path, solidBrush);
+	p.getContext().fill(path, redBrush);
+	path.freePath();
+
+	// Resize handle
+	path = new libui.UiDrawPath(libui.fillMode.winding);
+	path.addRectangle(0, p.getAreaHeight() - 20, p.getAreaWidth(), 20);
+	path.end();
+	p.getContext().fill(path, blueBrush);
 	path.freePath();
 
 	// Rotated square
@@ -66,22 +80,25 @@ function handlerDraw(area, p) {
 	p.getContext().transform(matrix);
 	path.addRectangle(20, 230, 100, 100);
 	path.end();
-	p.getContext().fill(path, solidBrush);
+	p.getContext().fill(path, redBrush);
 	path.freePath();
 }
 
 function mouseEvent(area, evt) {
 	const x = evt.getX(), y = evt.getY();
 
-	if (330 <= x && x <= 350 && 0 <= y && y <= 20) {
+	if (onMoveHandle(x, y)) {
 		area.beginWindowMove();
+	}
+	if (onResizeHandle(x, y, evt)) {
+		area.beginWindowResize(libui.resizeEdge.bottom);
 	}
 }
 
 function noop() {}
 
 function main() {
-	const mainwin = new libui.UiWindow('libui textDrawArea Example', 400, 400, 1);
+	const mainwin = new libui.UiWindow('libui textDrawArea Example', 400, 430, 1);
 	mainwin.margined = true;
 	mainwin.onClosing(() => {
 		mainwin.close();
