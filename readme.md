@@ -11,7 +11,10 @@ It is in early stage of development, but is evolving at great pace and is really
 [![NPM module](https://img.shields.io/npm/v/libui-node.svg)](https://npmjs.org/package/libui-node)
 [![NPM downloads](https://img.shields.io/npm/dt/libui-node.svg)](https://npmjs.org/package/libui-node)
 
-**Linux**
+# Screenshots
+
+<p style="text-align:center">Linux</p>
+
 ![Linux](docs/media/Window-Linux.png)
 
 **macOS**
