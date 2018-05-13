@@ -13,6 +13,8 @@ It is in early stage of development, but is evolving at great pace and is really
 
 # Screenshots
 
+---
+
 <p align="center">
 macOS
 </p>
@@ -35,8 +37,7 @@ Windows
 
 ![Windows](docs/media/Window-Windows.png)
 
-
-
+---
 
 # Supported platforms
 
