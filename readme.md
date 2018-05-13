@@ -13,15 +13,25 @@ It is in early stage of development, but is evolving at great pace and is really
 
 # Screenshots
 
-<p style="text-align:center">Linux</p>
+
 
 ![Linux](docs/media/Window-Linux.png)
 
-**macOS**
+<p align="center">
+Linux
+</p>
+
 ![macOS](docs/media/Window-macOS.png)
 
-**Windows**
+<p align="center">
+macOS
+</p>
+
 ![Windows](docs/media/Window-Windows.png)
+
+<p align="center">
+Windows
+</p>
 
 
 # Supported platforms
