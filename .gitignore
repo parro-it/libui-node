@@ -104,3 +104,4 @@ nbind.node
 *.dll
 *.exp
 *.lib
+.idea

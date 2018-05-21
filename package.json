@@ -55,11 +55,14 @@
 		"autogypi.json"
 	],
 	"devDependencies": {
+		"@types/node": "^8.10.17",
 		"ava": "^0.25.0",
 		"clang-format": "^1.2.2",
 		"humanize": "0.0.9",
 		"husky": "^0.14.3",
-		"proc-stats": "0.0.4"
+		"prettier": "^1.12.1",
+		"proc-stats": "0.0.4",
+		"typescript": "^2.8.3"
 	},
 	"dependencies": {
 		"@mischnic/async-hooks": "^0.0.4",
@@ -67,5 +70,7 @@
 		"libui-download": "^1.1.0",
 		"nbind": "^0.3.14",
 		"node-gyp": "^3.3.1"
-	}
+	},
+	"main": "./index.js",
+	"types": "./index.d.ts"
 }
