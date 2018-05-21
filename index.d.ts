@@ -149,33 +149,32 @@ export function startLoop(): void;
 export class FontAttribute {
 	static newUnderlineColor(
 		type: textUnderlineColor,
-		color: Color
-	): FontAttribute;
+		color: Color): FontAttribute;
 
-	static getFamily(): textAttributeType | null;
+	static getFamily(): textAttributeType|null;
 
-	static getSize(): number | null;
+	static getSize(): number|null;
 
-	static getWeight(): textWeight | null;
+	static getWeight(): textWeight|null;
 
-	static getItalic(): textItalic | null;
+	static getItalic(): textItalic|null;
 
-	static getStretch(): textStretch | null;
+	static getStretch(): textStretch|null;
 
-	static getColor(): Color | null;
+	static getColor(): Color|null;
 
-	static getUnderline(): textUnderline | null;
+	static getUnderline(): textUnderline|null;
 
 	static getUnderlineColor(): {
 		type: textAttributeType;
 		color: Color | null;
-	} | null;
+	}|null;
 
-	static getOTFeatures(): OpenTypeFeatures | null;
+	static getOTFeatures(): OpenTypeFeatures|null;
 }
 
 export class OpenTypeFeatures {
-	static get(str: string): number | null;
+	static get(str: string): number|null;
 }
 
 export class Color {
