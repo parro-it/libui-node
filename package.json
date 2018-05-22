@@ -71,6 +71,5 @@
 		"nbind": "^0.3.14",
 		"node-gyp": "^3.3.1"
 	},
-	"main": "./index.js",
 	"types": "./index.d.ts"
 }
