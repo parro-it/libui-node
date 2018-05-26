@@ -1,5 +1,4 @@
 'use strict';
-const os = require('os');
 
 const libui = require('..');
 
@@ -210,11 +209,6 @@ const winProps = {
 	onContentSizeChanged: onPositionChanged
 };
 
-const onDarwin = os.platform() === 'darwin';
-const searchText = {
-	text: 'Search Entry'
-};
-
 win = window(
 	winProps,
 	hBox(
@@ -225,7 +219,7 @@ win = window(
 			(colorBtn = colorButton({})),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
-			onDarwin ? entry(searchText) : searchEntry(searchText),
+			searchEntry({ text: 'Search Entry' }),
 			passwordEntry({text: 'Password Entry'}),
 			label({text: 'Label'}),
 			separator({}),
