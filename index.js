@@ -50,44 +50,59 @@ function startLoop() {
 	asyncHook.enable();
 
 	setTimeoutNode = global.setTimeout;
-	global.setTimeout = function(cb, t) {
+	global.setTimeout = function(cb, timeout) {
+		const timeoutHandle = {running: true};
+
 		const args = Array.prototype.slice.call(arguments, 2);
-		return binding.lib.setTimeout(function() {
-			cb.apply(null, args);
-		}, t);
-	};
+		binding.lib.Ui.startTimer(timeout, function() {
+			// console.log('timeoutHandle.running ', timeoutHandle.running);
+			if (timeoutHandle.running) {
+				cb.apply(null, args);
+			}
+			return false;
+		});
+		return timeoutHandle;
+	}
 
 	clearTimeoutNode = global.clearTimeout;
-	global.clearTimeout = function(obj) {
-		if (obj && obj.constructor === binding.lib.TimeoutHandle) {
+
+	global.clearTimeout = function(timeoutHandle) {
+		if (timeoutHandle && typeof timeoutHandle.running === 'boolean') {
+			timeoutHandle.running = false;
 			// console.log('patched clearTimeout called');
-			binding.lib.clearTimeout(obj);
 		} else {
 			// console.log('node clearTimeout called');
 			// not created by us, use original
 			// clearTimeoutNode
-			clearTimeoutNode(obj);
+			clearTimeoutNode(timeoutHandle);
 		}
 	};
 
 	setIntervalNode = global.setInterval;
-	global.setInterval = function(cb, t) {
+	global.setInterval = function(cb, timeout) {
+		const timeoutHandle = {running: true};
 		const args = Array.prototype.slice.call(arguments, 2);
-		return binding.lib.setInterval(function() {
-			cb.apply(null, args);
-		}, t);
-	};
+		binding.lib.Ui.startTimer(timeout, function() {
+			if (timeoutHandle.running) {
+				cb.apply(null, args);
+				return true;
+			}
+			return false;
+		});
+		return timeoutHandle;
+	}
 
 	clearIntervalNode = global.clearInterval;
-	global.clearInterval = function(obj) {
-		if (obj && obj.constructor === binding.lib.TimeoutHandle) {
+
+	global.clearInterval = function(timeoutHandle) {
+		if (timeoutHandle && typeof timeoutHandle.running === 'boolean') {
+			timeoutHandle.running = false;
 			// console.log('patched clearInterval called');
-			binding.lib.clearInterval(obj);
 		} else {
 			// console.log('node clearInterval called');
 			// not created by us, use original
 			// clearTimeoutNode
-			clearIntervalNode(obj);
+			clearIntervalNode(timeoutHandle);
 		}
 	}
 }
