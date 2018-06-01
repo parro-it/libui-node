@@ -163,18 +163,26 @@ NBIND_CLASS(UiWindow) {
 
 struct UiDialogs {
 
-	static std::string openFile(UiWindow *parent) {
+	static std::string openFileInternal(UiWindow *parent) {
 		char *char_ptr = uiOpenFile(parent->getHandle());
-		std::string s(char_ptr);
-		uiFreeText(char_ptr);
-		return s;
+		if (char_ptr == NULL) {
+			return std::string("");
+		} else {
+			std::string s(char_ptr);
+			uiFreeText(char_ptr);
+			return s;
+		}
 	}
 
-	static std::string saveFile(UiWindow *parent) {
+	static std::string saveFileInternal(UiWindow *parent) {
 		char *char_ptr = uiSaveFile(parent->getHandle());
-		std::string s(char_ptr);
-		uiFreeText(char_ptr);
-		return s;
+		if (char_ptr == NULL) {
+			return std::string("");
+		} else {
+			std::string s(char_ptr);
+			uiFreeText(char_ptr);
+			return s;
+		}
 	}
 
 	static void msgBox(UiWindow *parent, std::string title,
@@ -189,8 +197,8 @@ struct UiDialogs {
 };
 
 NBIND_CLASS(UiDialogs) {
-	method(openFile);
-	method(saveFile);
+	method(openFileInternal);
+	method(saveFileInternal);
 	method(msgBox);
 	method(msgBoxError);
 }

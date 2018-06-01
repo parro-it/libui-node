@@ -359,6 +359,24 @@ binding.lib.FontAttribute.prototype.getOTFeatures = function() {
 	return this.getOTFeaturesInternal();
 };
 
+binding.lib.UiDialogs.openFile = function(parent) {
+	const v = binding.lib.UiDialogs.openFileInternal(parent);
+	if (v) {
+		return v;
+	} else {
+		return null;
+	}
+};
+
+binding.lib.UiDialogs.saveFile = function(parent) {
+	const v = binding.lib.UiDialogs.saveFileInternal(parent);
+	if (v) {
+		return v;
+	} else {
+		return null;
+	}
+};
+
 const brushType = {
 	solid: 0,
 	linearGradient: 1,
