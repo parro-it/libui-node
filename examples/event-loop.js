@@ -58,9 +58,9 @@ libui.startLoop();
 function logAppend(line) {
 	const lines = log.text.split('\n');
 	if (lines.length > 25) {
-		log.text = lines.slice(1).join(os.EOL);
+		log.text = lines.slice(1).join("\n");
 	}
-	log.append(line + os.EOL);
+	log.append(line + "\n");
 }
 
 function setIntervalChanged() {
