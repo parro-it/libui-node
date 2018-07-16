@@ -9,9 +9,6 @@ UiDrawContext *UiAreaDrawParams::getContext() {
 	return new UiDrawContext(p->Context);
 }
 
-// TODO: make readony properties
-//
-
 double UiAreaDrawParams::getAreaWidth() {
 	return p->AreaWidth;
 }
@@ -38,6 +35,13 @@ double UiAreaDrawParams::getClipHeight() {
 
 NBIND_CLASS(UiAreaDrawParams) {
 	construct<uiAreaDrawParams *>();
+	getter(getContext);
+	getter(getAreaWidth);
+	getter(getAreaHeight);
+	getter(getClipX);
+	getter(getClipY);
+	getter(getClipWidth);
+	getter(getClipHeight);
 	method(getContext);
 	method(getAreaWidth);
 	method(getAreaHeight);

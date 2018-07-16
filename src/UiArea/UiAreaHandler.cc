@@ -3,25 +3,26 @@
 
 void Draw(UiAreaHandler *self, uiArea *area, uiAreaDrawParams *params) {
 	UiAreaDrawParams *pp = new UiAreaDrawParams(params);
-	(*self->draw)(controlsMap[uiControl(area)], pp);
+	(*self->draw)((UiArea *)controlsMap[uiControl(area)], pp);
 }
 
 void MouseEvent(UiAreaHandler *self, uiArea *area, uiAreaMouseEvent *event) {
 	UiAreaMouseEvent *ev = new UiAreaMouseEvent(event);
-	(*(self->mouseEvent))(controlsMap[uiControl(area)], ev);
+	(*(self->mouseEvent))((UiArea *)controlsMap[uiControl(area)], ev);
 }
 
 void MouseCrossed(UiAreaHandler *self, uiArea *area, int left) {
-	(*(self->mouseCrossed))(controlsMap[uiControl(area)], left);
+	(*(self->mouseCrossed))((UiArea *)controlsMap[uiControl(area)], left);
 }
 
 void DragBroken(UiAreaHandler *self, uiArea *area) {
-	(*(self->dragBroken))(controlsMap[uiControl(area)]);
+	(*(self->dragBroken))((UiArea *)controlsMap[uiControl(area)]);
 }
 
 int KeyEvent(UiAreaHandler *self, uiArea *area, uiAreaKeyEvent *event) {
 	UiAreaKeyEvent *ev = new UiAreaKeyEvent(event);
-	return (self->keyEvent)->call<int>(controlsMap[uiControl(area)], ev);
+	return (self->keyEvent)
+		->call<int>((UiArea *)controlsMap[uiControl(area)], ev);
 }
 
 UiAreaHandler *UiAreaHandlerFactory::build(nbind::cbFunction &drawCb,

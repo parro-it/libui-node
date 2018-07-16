@@ -450,6 +450,17 @@ const extKeys = {
 	nDivide: 39
 };
 
+const resizeEdge = {
+	left: 0,
+	top: 1,
+	right: 2,
+	bottom: 3,
+	topLeft: 4,
+	topRight: 5,
+	bottomLeft: 6,
+	bottomRight: 7
+};
+
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
@@ -472,6 +483,7 @@ module.exports.lineJoin = lineJoin;
 module.exports.fillMode = fillMode;
 module.exports.modifierKeys = modifierKeys;
 module.exports.extKeys = extKeys;
+module.exports.resizeEdge = resizeEdge;
 module.exports.startLoop = startLoop;
 module.exports.stopLoop = stopLoop;
 module.exports.onShouldQuit = binding.lib.Ui.onShouldQuit;
