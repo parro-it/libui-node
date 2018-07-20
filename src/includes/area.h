@@ -150,7 +150,7 @@ class UiDrawPath {
   public:
 	uiDrawPath *getHandle();
 	UiDrawPath(int fillMode);
-	void freePath();
+	~UiDrawPath();
 	void newFigure(double x, double y);
 	void newFigureWithArc(double xCenter, double yCenter, double radius,
 						  double startAngle, double sweep, int negative);

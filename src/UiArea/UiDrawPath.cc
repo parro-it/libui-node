@@ -5,7 +5,7 @@ UiDrawPath::UiDrawPath(int fillMode) {
 	handle = uiDrawNewPath(fillMode);
 }
 
-void UiDrawPath::freePath() {
+UiDrawPath::~UiDrawPath() {
 	uiDrawFreePath(handle);
 }
 
@@ -53,7 +53,6 @@ uiDrawPath *UiDrawPath::getHandle() {
 
 NBIND_CLASS(UiDrawPath) {
 	construct<int>();
-	method(freePath);
 	method(newFigure);
 	method(newFigureWithArc);
 	method(lineTo);

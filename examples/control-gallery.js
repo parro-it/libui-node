@@ -219,7 +219,7 @@ win = window(
 			(colorBtn = colorButton({})),
 			checkBox({text: 'Checkbox'}),
 			entry({text: 'Entry'}),
-			searchEntry({ text: 'Search Entry' }),
+			searchEntry({text: 'Search Entry'}),
 			passwordEntry({text: 'Password Entry'}),
 			label({text: 'Label'}),
 			separator({}),

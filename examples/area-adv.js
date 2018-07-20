@@ -34,7 +34,6 @@ function handlerDraw(area, p) {
 	path.addRectangle(0, 0, 200, 200);
 	path.end();
 	p.getContext().fill(path, linearBrush);
-	path.freePath();
 
 	// ------
 
@@ -43,21 +42,18 @@ function handlerDraw(area, p) {
 	path.arcTo(250, 300, 50, 0, 2 * Math.PI, false);
 	path.end();
 	p.getContext().fill(path, radialBrush);
-	path.freePath();
 
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	path.newFigure(250, 20);
 	path.lineTo(300, 150);
 	path.end();
 	p.getContext().stroke(path, solidBrush, dashedStroke);
-	path.freePath();
 
 	path = new libui.UiDrawPath(libui.fillMode.winding);
 	p.getContext().transform(matrix);
 	path.addRectangle(20, 230, 100, 100);
 	path.end();
 	p.getContext().fill(path, solidBrush);
-	path.freePath();
 }
 
 function noop() {}
