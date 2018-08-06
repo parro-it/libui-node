@@ -53,8 +53,8 @@ libui.Ui.onShouldQuit(() => {
 	onClosing();
 });
 
-function onPositionChanged() {
-	status.text = `(${win.position.x}, ${win.position.y}) - (${win.contentSize.w} x ${win.contentSize.h})`;
+function conContentSizeChanged() {
+	status.text = `window size: (${win.contentSize.w} x ${win.contentSize.h})`;
 }
 
 const updateValue = value => {
@@ -206,7 +206,7 @@ const winProps = {
 	width: 640,
 	height: 480,
 	onClosing,
-	onContentSizeChanged: onPositionChanged
+	onContentSizeChanged: conContentSizeChanged
 };
 
 win = window(
@@ -270,7 +270,7 @@ win = window(
 						stretchy: true
 					}),
 					area)))),
-	(status = label({stretchy: true, text: '(0, 0)'})));
+	(status = label({stretchy: true, text: `window size: (${winProps.width} x ${winProps.height})`})));
 
 win.show();
 libui.startLoop();

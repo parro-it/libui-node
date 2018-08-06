@@ -136,7 +136,8 @@ function window(
 		hasMenubar = false,
 		fullscreen = false,
 		borderless = false,
-		onClosing = null
+    onClosing = null,
+    onContentSizeChanged = null
 	},
 	...children) {
 	const win = new libui.UiWindow(title, width, height, hasMenubar);
@@ -146,7 +147,10 @@ function window(
 
 	if (onClosing) {
 		win.onClosing(onClosing);
-	}
+  }
+  if (onContentSizeChanged) {
+    win.onContentSizeChanged(onContentSizeChanged)
+  }
 
 	win.setChild(wrapChildren(children));
 
