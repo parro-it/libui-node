@@ -53,7 +53,7 @@ libui.Ui.onShouldQuit(() => {
 	onClosing();
 });
 
-function conContentSizeChanged() {
+function onContentSizeChanged() {
 	status.text = `window size: (${win.contentSize.w} x ${win.contentSize.h})`;
 }
 
@@ -206,7 +206,7 @@ const winProps = {
 	width: 640,
 	height: 480,
 	onClosing,
-	onContentSizeChanged: conContentSizeChanged
+	onContentSizeChanged: onContentSizeChanged
 };
 
 win = window(
