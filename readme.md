@@ -130,6 +130,7 @@ node <path to example file>
 * [libui](https://github.com/andlabs/libui) - Simple and portable (but not inflexible) GUI library in C that uses the native GUI technologies of each platform it supports.
 * [nbind](https://github.com/charto/nbind) - Magical headers that make your C++ library accessible from JavaScript
 * [proton-native](https://github.com/kusti8/proton-native) - A React environment for cross platform native desktop apps https://proton-native.js.org
+* [Vuido](https://github.com/mimecorg/vuido) - A Vue.js component implementation built on top of LibUI-Node
 
 # Contributors
 
