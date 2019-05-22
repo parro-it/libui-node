@@ -21,7 +21,7 @@ const {
 	startLoop,
 	stopLoop,
 	onShouldQuit
-} = require('libui');
+} = require('libui-node');
 
 
 const menu = new UiMenu('File');
