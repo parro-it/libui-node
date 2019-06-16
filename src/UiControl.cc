@@ -41,7 +41,11 @@ void UiControl::destroy() {
 }
 
 void UiControl::setParent(UiControl *parent) {
-	uiControlSetParent(handle, parent->getHandle());
+	if (parent == NULL) {
+		uiControlSetParent(handle, NULL);
+	} else {
+		uiControlSetParent(handle, parent->getHandle());
+	}
 }
 
 bool UiControl::toplevel() {
@@ -74,7 +78,7 @@ void UiControl::setEnabled(bool enabled) {
 
 NBIND_CLASS(UiControl) {
 	method(destroy);
-	method(setParent);
+	method(setParent, "setParent", nbind::Nullable());
 	method(toplevel);
 	method(getVisible);
 	method(setVisible);
