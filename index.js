@@ -438,7 +438,6 @@ const extKeys = {
 module.exports.textStretch = textStretch;
 module.exports.textItalic = textItalic;
 module.exports.textWeight = textWeight;
-module.exports.textStretch = textStretch;
 module.exports.textAttributeType = textAttributeType;
 module.exports.textUnderline = textUnderline;
 module.exports.textUnderlineColor = textUnderlineColor;
