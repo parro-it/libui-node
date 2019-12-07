@@ -44,7 +44,7 @@ Windows
 * Windows: Windows Vista SP2 with Platform Update or newer
 * Unix: GTK+ 3.10 or newer
 * Mac OS X: OS X 10.8 or newer
-* Node.js version 4 or greater.
+* Node.js: v8 and v10 (but not v12 due to charto/nbind#133)
 
 # Prerequisites
 
