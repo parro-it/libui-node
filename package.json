@@ -43,7 +43,7 @@
 		"GUI"
 	],
 	"engines": {
-		"node": ">=4"
+		"node": ">=8.9.4 <9 || >=10.0.0 <11"
 	},
 	"files": [
 		"list-sources.js",
@@ -55,7 +55,7 @@
 		"autogypi.json"
 	],
 	"devDependencies": {
-		"ava": "^0.25.0",
+		"ava": "^2.4.0",
 		"clang-format": "^1.2.2",
 		"humanize": "0.0.9",
 		"husky": "^0.14.3",
@@ -65,7 +65,7 @@
 		"@mischnic/async-hooks": "^0.0.4",
 		"autogypi": "^0.2.2",
 		"libui-download": "^1.1.0",
-		"nbind": "^0.3.14",
-		"node-gyp": "^3.3.1"
+		"nbind": "^0.3.15",
+		"node-gyp": "^6.0.1"
 	}
 }
