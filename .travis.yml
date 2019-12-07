@@ -10,8 +10,6 @@ node_js:
   - '10'
   - '9'
   - '8'
-  - '6'
-  - '4'
 
 sudo: required
 
