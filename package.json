@@ -30,7 +30,9 @@
 		"start-core": "node examples/core-api.js",
 		"autogypi": "autogypi",
 		"node-gyp": "node-gyp",
-		"install": "libui-download && autogypi && npm run build",
+		"install": "run-script-os",
+		"install:win32": "libui-download %npm_package_libui% && autogypi && npm run build",
+		"install:darwin:linux": "libui-download $npm_package_libui && autogypi && npm run build",
 		"build": "node-gyp configure build",
 		"clean": "rm -rf build; rm -rf node_modules;",
 		"precommit": "check-clang-format \"'npm run lint'\"",
@@ -66,6 +68,7 @@
 		"autogypi": "^0.2.2",
 		"libui-download": "^1.1.0",
 		"nbind": "^0.3.14",
-		"node-gyp": "^3.3.1"
+		"node-gyp": "^3.3.1",
+		"run-script-os": "^1.1.6"
 	}
 }
